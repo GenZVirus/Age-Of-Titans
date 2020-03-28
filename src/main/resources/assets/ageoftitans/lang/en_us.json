@@ -1,0 +1,18 @@
+{
+	"itemGroup.ageoftitans": "Age of Titans",	
+
+	"item.ageoftitans.example_item": "Example Item",
+	
+	"item.ageoftitans.example_sword": "Example Sword",
+	"item.ageoftitans.example_pickaxe": "Example Pickaxe",
+	"item.ageoftitans.example_axe": "Example Axe",
+	"item.ageoftitans.example_shovel": "Example Shovel",
+	"item.ageoftitans.example_hoe": "Example Hoe",
+	
+	"item.ageoftitans.test_helmet": "Test Helmet",
+	"item.ageoftitans.test_chestplate": "Test Chestplate",
+	"item.ageoftitans.test_leggings": "Test Leggings",
+	"item.ageoftitans.test_boots": "Test Boots",
+	
+	"block.ageoftitans.example_block": "Example Block"
+}
