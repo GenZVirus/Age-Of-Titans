@@ -1,18 +1,20 @@
 {
 	"itemGroup.ageoftitans": "Age of Titans",	
 
-	"item.ageoftitans.example_item": "Example Item",
+	"item.ageoftitans.fruit_of_the_gods": "Fruit of the Gods",
+	"item.ageoftitans.orb_of_eden": "Orb of Eden",
 	
-	"item.ageoftitans.example_sword": "Example Sword",
-	"item.ageoftitans.example_pickaxe": "Example Pickaxe",
-	"item.ageoftitans.example_axe": "Example Axe",
-	"item.ageoftitans.example_shovel": "Example Shovel",
-	"item.ageoftitans.example_hoe": "Example Hoe",
+	"item.ageoftitans.titanium_sword": "Titanium Sword",
+	"item.ageoftitans.titanium_pickaxe": "Titanium Pickaxe",
+	"item.ageoftitans.titanium_axe": "Titanium Axe",
+	"item.ageoftitans.titanium_shovel": "Titanium Shovel",
+	"item.ageoftitans.titanium_hoe": "Titanium Hoe",
 	
-	"item.ageoftitans.test_helmet": "Test Helmet",
-	"item.ageoftitans.test_chestplate": "Test Chestplate",
-	"item.ageoftitans.test_leggings": "Test Leggings",
-	"item.ageoftitans.test_boots": "Test Boots",
+	"item.ageoftitans.titanium_helmet": "Titanium Helmet",
+	"item.ageoftitans.titanium_chestplate": "Titanium Chestplate",
+	"item.ageoftitans.titanium_leggings": "Titanium Leggings",
+	"item.ageoftitans.titanium_boots": "Titanium Boots",
 	
-	"block.ageoftitans.example_block": "Example Block"
+	"block.ageoftitans.titanium_block": "Titanium Block",
+	"block.ageoftitans.titanium_ore": "Titanium Ore"
 }

@@ -1,7 +1,7 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "ageoftitans:blocks/example_block"
+        "all": "ageoftitans:blocks/titanium_block"
     }
 }
  

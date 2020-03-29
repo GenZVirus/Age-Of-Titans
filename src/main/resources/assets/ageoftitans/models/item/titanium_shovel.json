@@ -1,7 +1,7 @@
 {
     "parent": "item/handheld",
     "textures": {
-        "layer0": "ageoftitans:items/example_hoe"
+        "layer0": "ageoftitans:items/titanium_shovel"
     }
 }
  

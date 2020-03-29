@@ -27,16 +27,16 @@ public class BlockInit {
      * Here are the instances of custom blocks added to the game
     */
 	
-	public static final Block example_block = null;
-	public static final Block special_block = null;	
+	public static final Block TITANIUM_BLOCK = null;
+	public static final Block TITANIUM_ORE = null;	
 	/*
      * This function registers the blocks
     */
 	
 	@SubscribeEvent
 	public static void registerBlocks(final RegistryEvent.Register<Block> event) {
-		event.getRegistry().register(new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(10.0F, 1000.0F).sound(SoundType.SAND).harvestLevel(3)).setRegistryName("example_block"));
-		event.getRegistry().register(new SpecialBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(10.0F, 1000.0F).sound(SoundType.SAND).harvestLevel(3)).setRegistryName("special_block"));
+		event.getRegistry().register(new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(10.0F, 1000.0F).sound(SoundType.SAND).harvestLevel(3)).setRegistryName("titanium_block"));
+		event.getRegistry().register(new SpecialBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(10.0F, 1000.0F).sound(SoundType.SAND).harvestLevel(3)).setRegistryName("titanium_ore"));
 
 	}
 	
@@ -46,8 +46,8 @@ public class BlockInit {
 	
 	@SubscribeEvent
 	public static void registerBlockItems(final RegistryEvent.Register<Item> event) {
-		event.getRegistry().register(new BlockItem(example_block, new Item.Properties().group(AgeOfTitansItemGroup.instance)).setRegistryName("example_block"));
-		event.getRegistry().register(new BlockItem(special_block, new Item.Properties().group(AgeOfTitansItemGroup.instance)).setRegistryName("special_block"));
+		event.getRegistry().register(new BlockItem(TITANIUM_BLOCK, new Item.Properties().group(AgeOfTitansItemGroup.instance)).setRegistryName("titanium_block"));
+		event.getRegistry().register(new BlockItem(TITANIUM_ORE, new Item.Properties().group(AgeOfTitansItemGroup.instance)).setRegistryName("titanium_ore"));
 	}
 	
 }

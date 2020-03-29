@@ -109,7 +109,7 @@ public class AgeOfTitans
     	
     	@Override
     	public ItemStack createIcon() {
-    		return new ItemStack(ItemInit.example_item);
+    		return new ItemStack(ItemInit.FRUIT_OF_THE_GODS);
     	}
     }
 }

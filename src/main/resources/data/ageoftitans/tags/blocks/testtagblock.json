@@ -1,7 +1,7 @@
 {
 	"replace": false,
 	"values": [
-		"ageoftitans:example_block",
+		"ageoftitans:titanium_block",
 		"minecraft:cactus"
 	]
 }

@@ -1,7 +1,7 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "ageoftitans:items/example_item"
+        "layer0": "ageoftitans:items/titanium_helmet"
     }
 }
  

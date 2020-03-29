@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ageoftitans:example_block"
+          "name": "ageoftitans:titanium_block"
         },
         {
           "type": "minecraft:item",

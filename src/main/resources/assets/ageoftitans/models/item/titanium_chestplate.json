@@ -1,7 +1,7 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "ageoftitans:items/test_leggings"
+        "layer0": "ageoftitans:items/titanium_chestplate"
     }
 }
  

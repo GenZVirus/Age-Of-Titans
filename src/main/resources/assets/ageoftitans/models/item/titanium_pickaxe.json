@@ -1,7 +1,7 @@
 {
     "parent": "item/handheld",
     "textures": {
-        "layer0": "ageoftitans:items/example_pickaxe"
+        "layer0": "ageoftitans:items/titanium_pickaxe"
     }
 }
  

@@ -21,7 +21,7 @@ public class TestJumpEvent {
 		AgeOfTitans.LOGGER.info("testJumpEvent fired");
 		LivingEntity livingEntity = event.getEntityLiving();
 		World world = livingEntity.getEntityWorld();
-		world.setBlockState(livingEntity.getPosition().add(0, 5, 0), BlockInit.example_block.getDefaultState());
+		world.setBlockState(livingEntity.getPosition().add(0, 5, 0), BlockInit.TITANIUM_BLOCK.getDefaultState());
 		livingEntity.addPotionEffect(new EffectInstance(Effects.JUMP_BOOST, 600, 255));
 		livingEntity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 600, 255));
 		livingEntity.setGlowing(true);
