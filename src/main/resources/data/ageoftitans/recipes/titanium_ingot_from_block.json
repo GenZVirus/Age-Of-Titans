@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shapeless",
+ 
+    "ingredients":
+    [
+ 
+    {
+      "item": "ageoftitans:titanium_block"
+    }
+   
+    ],
+ 
+    "result":
+    {
+        "item": "ageoftitans:titanium_ingot",
+        "count": 9
+    }
+}

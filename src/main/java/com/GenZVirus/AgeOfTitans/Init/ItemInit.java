@@ -44,6 +44,9 @@ public class ItemInit {
 	public static final Item FRUIT_OF_THE_GODS = null;
 	public static final Item ORB_OF_EDEN = null;
 	
+	//Ingots
+	public static final Item TITANIUM_INGOT = null;
+	
 	//Tools
 	public static final Item TITANIUM_SWORD = null;
 	public static final Item TITANIUM_PICKAXE = null;
@@ -65,6 +68,9 @@ public class ItemInit {
 	public static void registerItems(final RegistryEvent.Register<Item> event) {
 		event.getRegistry().register(new Item(new Item.Properties().group(AgeOfTitansItemGroup.instance).food(new Food.Builder().hunger(10).saturation(3.0f).setAlwaysEdible().effect(new EffectInstance(Effects.ABSORPTION, 6000, 5), 1.0f).build())).setRegistryName("fruit_of_the_gods"));
 		event.getRegistry().register(new SpecialItem(new Item.Properties().group(AgeOfTitansItemGroup.instance)).setRegistryName("orb_of_eden"));
+		
+		//Ingots
+		event.getRegistry().register(new Item(new Item.Properties().group(AgeOfTitansItemGroup.instance)).setRegistryName("titanium_ingot"));
 		
 		//Tools
 		event.getRegistry().register(new SwordItem(ModItemTier.MATERIAL_TITANIUM, 7, 5.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)).setRegistryName("titanium_sword"));

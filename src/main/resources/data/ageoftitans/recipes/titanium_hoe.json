@@ -1,0 +1,29 @@
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern":
+    [
+        "TT ",
+        " S ",
+        " S "
+    ],
+    
+    "key":
+    {
+        "T":
+        {
+            "item": "ageoftitans:titanium_ingot"
+        },
+         "S":
+        {
+            "item": "minecraft:stick"
+        }
+    },
+    
+    
+    "result":
+    {
+        "item": "ageoftitans:titanium_hoe",
+        "count": 1
+    }
+}

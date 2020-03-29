@@ -1,0 +1,33 @@
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern":
+    [
+        "  T",
+        "GT ",
+        "SG "
+    ],
+    
+    "key":
+    {
+        "T":
+        {
+            "item": "ageoftitans:titanium_ingot"
+        },
+         "G":
+        {
+            "item": "minecraft:gold_ingot"
+        },
+         "S":
+        {
+            "item": "minecraft:stick"
+        }
+    },
+    
+    
+    "result":
+    {
+        "item": "ageoftitans:titanium_sword",
+        "count": 1
+    }
+}
