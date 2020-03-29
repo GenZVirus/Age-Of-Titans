@@ -25,70 +25,47 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
 
 /*
  * ItemInit class
 */
 
-@Mod.EventBusSubscriber(modid = AgeOfTitans.MOD_ID, bus = Bus.MOD)
-@ObjectHolder(AgeOfTitans.MOD_ID)
 public class ItemInit {
+
+	public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, AgeOfTitans.MOD_ID);
 
 	/*
      * Here are the instances of custom items added to the game
     */
-	
-	public static final Item FRUIT_OF_THE_GODS = null;
-	public static final Item ORB_OF_EDEN = null;
+	public static final RegistryObject<Item> FRUIT_OF_THE_GODS = ITEMS.register("fruit_of_the_gods", () -> new Item(new Item.Properties().group(AgeOfTitansItemGroup.instance).food(new Food.Builder().hunger(10).saturation(3.0f).setAlwaysEdible().effect(new EffectInstance(Effects.ABSORPTION, 6000, 5), 1.0f).build())));
+	public static final RegistryObject<Item> ORB_OF_EDEN = ITEMS.register("orb_of_eden", () -> new SpecialItem(new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+
 	
 	//Ingots
-	public static final Item TITANIUM_INGOT = null;
+	public static final RegistryObject<Item> TITANIUM_INGOT = ITEMS.register("titanium_ingot", () -> new Item(new Item.Properties().group(AgeOfTitansItemGroup.instance)));
 	
 	//Tools
-	public static final Item TITANIUM_SWORD = null;
-	public static final Item TITANIUM_PICKAXE = null;
-	public static final Item TITANIUM_SHOVEL = null;
-	public static final Item TITANIUM_AXE = null;
-	public static final Item TITANIUM_HOE = null;
-	
+	public static final RegistryObject<Item> TITANIUM_SWORD = ITEMS.register("titanium_sword", () -> new SwordItem(ModItemTier.MATERIAL_TITANIUM, 7, 5.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	public static final RegistryObject<Item> TITANIUM_PICKAXE = ITEMS.register("titanium_pickaxe", () -> new PickaxeItem(ModItemTier.MATERIAL_TITANIUM, 4, 5.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	public static final RegistryObject<Item> TITANIUM_SHOVEL = ITEMS.register("titanium_shovel", () -> new ShovelItem(ModItemTier.MATERIAL_TITANIUM, 2, 5.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	public static final RegistryObject<Item> TITANIUM_AXE = ITEMS.register("titanium_axe", () -> new AxeItem(ModItemTier.MATERIAL_TITANIUM, 11, 3.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	public static final RegistryObject<Item> TITANIUM_HOE = ITEMS.register("titanium_hoe", () -> new HoeItem(ModItemTier.MATERIAL_TITANIUM, 5.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+		
 	//Armor
-	public static final Item TITANIUM_HELMET = null;
-	public static final Item TITANIUM_CHESTPLATE = null;
-	public static final Item TITANIUM_LEGGINGS = null;
-	public static final Item TITANIUM_BOOTS = null;
-	
-	/*
-     * This function registers the items
-    */
-	
-	@SubscribeEvent
-	public static void registerItems(final RegistryEvent.Register<Item> event) {
-		event.getRegistry().register(new Item(new Item.Properties().group(AgeOfTitansItemGroup.instance).food(new Food.Builder().hunger(10).saturation(3.0f).setAlwaysEdible().effect(new EffectInstance(Effects.ABSORPTION, 6000, 5), 1.0f).build())).setRegistryName("fruit_of_the_gods"));
-		event.getRegistry().register(new SpecialItem(new Item.Properties().group(AgeOfTitansItemGroup.instance)).setRegistryName("orb_of_eden"));
-		
-		//Ingots
-		event.getRegistry().register(new Item(new Item.Properties().group(AgeOfTitansItemGroup.instance)).setRegistryName("titanium_ingot"));
-		
-		//Tools
-		event.getRegistry().register(new SwordItem(ModItemTier.MATERIAL_TITANIUM, 7, 5.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)).setRegistryName("titanium_sword"));
-		event.getRegistry().register(new PickaxeItem(ModItemTier.MATERIAL_TITANIUM, 4, 5.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)).setRegistryName("titanium_pickaxe"));
-		event.getRegistry().register(new ShovelItem(ModItemTier.MATERIAL_TITANIUM, 2, 5.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)).setRegistryName("titanium_shovel"));
-		event.getRegistry().register(new AxeItem(ModItemTier.MATERIAL_TITANIUM, 11, 3.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)).setRegistryName("titanium_axe"));
-		event.getRegistry().register(new HoeItem(ModItemTier.MATERIAL_TITANIUM, 5.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)).setRegistryName("titanium_hoe"));
-		
-		//Armor
-		event.getRegistry().register(new ArmorItem(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.HEAD, new Item.Properties().group(AgeOfTitansItemGroup.instance)).setRegistryName("titanium_helmet"));
-		event.getRegistry().register(new ArmorItem(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.CHEST, new Item.Properties().group(AgeOfTitansItemGroup.instance)).setRegistryName("titanium_chestplate"));
-		event.getRegistry().register(new ArmorItem(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.LEGS, new Item.Properties().group(AgeOfTitansItemGroup.instance)).setRegistryName("titanium_leggings"));
-		event.getRegistry().register(new ArmorItem(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.FEET, new Item.Properties().group(AgeOfTitansItemGroup.instance)).setRegistryName("titanium_boots"));
-	}
+	public static final RegistryObject<Item> TITANIUM_HELMET = ITEMS.register("titanium_helmet", () -> new ArmorItem(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.HEAD, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	public static final RegistryObject<Item> TITANIUM_CHESTPLATE = ITEMS.register("titanium_chestplate", () -> new ArmorItem(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.CHEST, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	public static final RegistryObject<Item> TITANIUM_LEGGINGS = ITEMS.register("titanium_leggings", () -> new ArmorItem(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.LEGS, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	public static final RegistryObject<Item> TITANIUM_BOOTS = ITEMS.register("titanium_boots", () -> new ArmorItem(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.FEET, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
 	
 	public enum ModItemTier implements IItemTier{
 		MATERIAL_TITANIUM(4, 1500, 15.0F, 7.0F, 250, () -> {
-			return Ingredient.fromItems(ItemInit.FRUIT_OF_THE_GODS);
+			return Ingredient.fromItems(ItemInit.FRUIT_OF_THE_GODS.get());
 		}); 
 		
 		private final int harvestLevel;
@@ -141,7 +118,7 @@ public class ItemInit {
 	
 	public enum ModArmorMaterial implements IArmorMaterial{
 		ARMOR_MATERIAL_TITANIUM(AgeOfTitans.MOD_ID + ":test", 5, new int[] {7, 9, 11, 8}, 420, SoundEvents.field_226124_Y_, 6.9F, () -> {
-			return Ingredient.fromItems(ItemInit.FRUIT_OF_THE_GODS);
+			return Ingredient.fromItems(ItemInit.FRUIT_OF_THE_GODS.get());
 		});
 		
 		private static final int[] MAX_DAMAGE_ARRAY = new int[] {16, 16, 16, 16};
