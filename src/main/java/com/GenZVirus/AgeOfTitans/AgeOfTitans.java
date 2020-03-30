@@ -3,6 +3,7 @@ package com.GenZVirus.AgeOfTitans;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.GenZVirus.AgeOfTitans.Init.BiomeInit;
 import com.GenZVirus.AgeOfTitans.Init.BlockInit;
 import com.GenZVirus.AgeOfTitans.Init.ItemInit;
 import com.GenZVirus.AgeOfTitans.World.Gen.ModOreGen;
@@ -11,6 +12,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -59,6 +61,7 @@ public class AgeOfTitans
     	
     	ItemInit.ITEMS.register(modEventBus);
     	BlockInit.BLOCKS.register(modEventBus);
+    	BiomeInit.BIOMES.register(modEventBus);
     	
         instance = this;
         
@@ -78,6 +81,11 @@ public class AgeOfTitans
 
 		LOGGER.debug("Registered BlockItems!");
 	}
+    
+    @SubscribeEvent
+    public static void onRegisterBiomes(final RegistryEvent.Register<Biome> event) {
+    	BiomeInit.registeBiomes();
+    }
     
     /*
      * Unknown
