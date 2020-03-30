@@ -13,6 +13,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModOreGen {
 
+	@SuppressWarnings("rawtypes")
 	public static void generateOre() {
 		for (Biome biome : ForgeRegistries.BIOMES) {
 				ConfiguredPlacement customConfig = Placement.COUNT_RANGE.configure(new CountRangeConfig(20, 0, 5, 50));

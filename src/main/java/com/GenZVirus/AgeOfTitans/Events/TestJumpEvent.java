@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 @Mod.EventBusSubscriber(modid = AgeOfTitans.MOD_ID, bus = Bus.FORGE)
 public class TestJumpEvent {
 
+	@SuppressWarnings("resource")
 	@SubscribeEvent
 	public static void testJumpEvent(LivingJumpEvent event) {
 		if(!event.getEntityLiving().getEntityWorld().isRemote) return;

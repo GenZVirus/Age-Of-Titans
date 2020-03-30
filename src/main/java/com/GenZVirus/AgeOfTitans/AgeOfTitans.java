@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.GenZVirus.AgeOfTitans.Init.BiomeInit;
 import com.GenZVirus.AgeOfTitans.Init.BlockInit;
+import com.GenZVirus.AgeOfTitans.Init.DimensionInit;
 import com.GenZVirus.AgeOfTitans.Init.ItemInit;
 import com.GenZVirus.AgeOfTitans.World.Gen.ModOreGen;
 
@@ -12,6 +13,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -48,6 +50,8 @@ public class AgeOfTitans
     */
 	public static AgeOfTitans instance;
 	
+	public static final ResourceLocation EDEN_DIMENSION_TYPE = new ResourceLocation(MOD_ID, "eden");
+	
     /*
      * AgeOfTitans class constructor
     */
@@ -62,6 +66,7 @@ public class AgeOfTitans
     	ItemInit.ITEMS.register(modEventBus);
     	BlockInit.BLOCKS.register(modEventBus);
     	BiomeInit.BIOMES.register(modEventBus);
+    	DimensionInit.MOD_DIMENSIONS.register(modEventBus);
     	
         instance = this;
         
