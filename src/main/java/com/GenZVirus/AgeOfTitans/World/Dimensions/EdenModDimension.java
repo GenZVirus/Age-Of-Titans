@@ -12,6 +12,5 @@ public class EdenModDimension extends ModDimension{
 	@Override
 	public BiFunction<World, DimensionType, ? extends Dimension> getFactory() {
 		return EdenDimension::new;
-	}
-
+	}	
 }

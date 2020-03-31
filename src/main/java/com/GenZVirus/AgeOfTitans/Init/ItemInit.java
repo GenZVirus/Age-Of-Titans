@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.AgeOfTitans.AgeOfTitansItemGroup;
-import com.GenZVirus.AgeOfTitans.Objects.Items.SpecialItem;
+import com.GenZVirus.AgeOfTitans.Objects.Items.OrbOfEden;
 
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
@@ -39,7 +39,7 @@ public class ItemInit {
      * Here are the instances of custom items added to the game
     */
 	public static final RegistryObject<Item> FRUIT_OF_THE_GODS = ITEMS.register("fruit_of_the_gods", () -> new Item(new Item.Properties().group(AgeOfTitansItemGroup.instance).food(new Food.Builder().hunger(10).saturation(3.0f).setAlwaysEdible().effect(new EffectInstance(Effects.ABSORPTION, 6000, 5), 1.0f).build())));
-	public static final RegistryObject<Item> ORB_OF_EDEN = ITEMS.register("orb_of_eden", () -> new SpecialItem(new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	public static final RegistryObject<Item> ORB_OF_EDEN = ITEMS.register("orb_of_eden", () -> new OrbOfEden(new Item.Properties().group(AgeOfTitansItemGroup.instance)));
 
 	
 	//Ingots
