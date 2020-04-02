@@ -1,7 +1,6 @@
 package com.GenZVirus.AgeOfTitans.Objects.Items;
 
 import java.util.List;
-import java.util.Random;
 
 import com.GenZVirus.AgeOfTitans.Util.Helpers.KeyboardHelper;
 
@@ -14,10 +13,11 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 
-public class OrbOfSummoning extends Item {
+public class OrbOfNether extends Item {
 
-	public OrbOfSummoning(Properties properties) {
+	public OrbOfNether(Properties properties) {
 		super(properties);
 	}
 
@@ -29,7 +29,7 @@ public class OrbOfSummoning extends Item {
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		if (KeyboardHelper.isHoldingShift()) {
-			tooltip.add(new StringTextComponent("Summons a random player to you location"));
+			tooltip.add(new StringTextComponent("Teleports player between Nether and Overworld"));
 		} else {
 			tooltip.add(new StringTextComponent("Hold" + "\u00A7e" + " Shift " + "\u00A77" + "for more information!"));
 		}
@@ -38,34 +38,25 @@ public class OrbOfSummoning extends Item {
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		if (worldIn.isRemote) {
+		if (worldIn.isRemote)
 			return super.onItemRightClick(worldIn, playerIn, handIn);
-		}
-		if(worldIn.getPlayers().size() == 1) {
-			System.out.println("One player on the server");
-			return super.onItemRightClick(worldIn, playerIn, handIn);
-		}
-		PlayerEntity targetPlayer = worldIn.getPlayers().get(new Random().nextInt(worldIn.getPlayers().size()));
-		while(targetPlayer == playerIn) {
-			targetPlayer = worldIn.getPlayers().get(new Random().nextInt(worldIn.getPlayers().size()));
-		}
-		if(targetPlayer.dimension == playerIn.dimension) {
-			playerIn.getServer().getCommandManager()
-			.handleCommand(worldIn.getServer().getCommandSource(),
-					"/teleport " 
-							+ targetPlayer.getName().getFormattedText()
+		if (worldIn.getDimension().getType() != DimensionType.THE_NETHER) {
+			playerIn.getServer().getCommandManager().handleCommand(worldIn.getServer().getCommandSource(),
+					"/forge setdimension" 
+							+ " " + playerIn.getName().getFormattedText()
+							+ " " + "minecraft:the_nether"
 							+ " " + playerIn.getPosition().getX()
 							+ " " + playerIn.getPosition().getY()
 							+ " " + playerIn.getPosition().getZ());
-		} else {
-		playerIn.getServer().getCommandManager()
-				.handleCommand(worldIn.getServer().getCommandSource(),
-						"/forge setdimension " 
-								+ targetPlayer.getName().getFormattedText()
-								+ " " + playerIn.dimension.getRegistryName().toString()
-								+ " " + playerIn.getPosition().getX()
-								+ " " + playerIn.getPosition().getY()
-								+ " " + playerIn.getPosition().getZ());
+		} else {	
+			playerIn.getServer().getCommandManager().handleCommand(worldIn.getServer().getCommandSource(),
+					"/forge setdimension" 
+							+ " " + playerIn.getName().getFormattedText() 
+							+ " " + "minecraft:overworld"
+							+ " " + playerIn.getPosition().getX()
+							+ " " + playerIn.getPosition().getY()
+							+ " " + playerIn.getPosition().getZ());
+
 		}
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}

@@ -28,9 +28,11 @@ public class BlockInit {
 	/*
      * Here are the instances of custom blocks added to the game
     */
+	public static final RegistryObject<Block> TEST_BLOCK = BLOCKS.register("test_block", () -> new SpecialBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(1.0F, 1.0F).sound(SoundType.METAL).harvestLevel(3)));
+
 	
 	public static final RegistryObject<Block> TITANIUM_BLOCK = BLOCKS.register("titanium_block", () -> new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(10.0F, 1000.0F).sound(SoundType.METAL).harvestLevel(3)));
-	public static final RegistryObject<Block> TITANIUM_ORE = BLOCKS.register("titanium_ore", () -> new SpecialBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3)));
+	public static final RegistryObject<Block> TITANIUM_ORE = BLOCKS.register("titanium_ore", () -> new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3)));
 	
 	public static final RegistryObject<Block> EDEN_WOOD_PLANKS = BLOCKS.register("eden_wood_planks", () -> new Block(Block.Properties.create(Material.WOOD).hardnessAndResistance(1.0F, 1.0F).sound(SoundType.WOOD).harvestLevel(3)));
 	public static final RegistryObject<Block> EDEN_WOOD_LOG = BLOCKS.register("eden_wood_log", () -> new LogBlock(MaterialColor.WOOD, Block.Properties.create(Material.WOOD).hardnessAndResistance(5.0F, 5.0F).sound(SoundType.WOOD).harvestLevel(3)));

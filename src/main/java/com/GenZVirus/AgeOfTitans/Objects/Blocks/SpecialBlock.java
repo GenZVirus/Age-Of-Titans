@@ -15,6 +15,7 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -65,8 +66,9 @@ public class SpecialBlock  extends Block{
 			Hand handIn, BlockRayTraceResult hit) {
 		if(!worldIn.isRemote) {
 			ServerWorld serverWorld = (ServerWorld)worldIn;
-			LightningBoltEntity entity = new LightningBoltEntity(serverWorld, pos.getX(), pos.getY(), pos.getZ(), true);
+			LightningBoltEntity entity = new LightningBoltEntity(serverWorld, pos.getX() - 1, pos.getY() + 1, pos.getZ() - 1, true);
 			serverWorld.addLightningBolt(entity);
+			serverWorld.createExplosion(null, pos.getX(), pos.getY() + 1, pos.getZ(), 5.0F, Explosion.Mode.DESTROY);
 		}
 		return ActionResultType.SUCCESS;
 	}

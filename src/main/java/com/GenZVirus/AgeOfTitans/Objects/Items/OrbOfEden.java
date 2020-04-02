@@ -25,7 +25,7 @@ public class OrbOfEden extends Item {
 
 	@Override
 	public boolean hasEffect(ItemStack stack) {
-		return true;
+		return false;
 	}
 
 	@Override
