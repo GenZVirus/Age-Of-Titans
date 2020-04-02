@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "ageoftitans:blocks/eden_wood_log_top",
+        "side": "ageoftitans:blocks/eden_wood_log"
+    }
+}

@@ -29,9 +29,9 @@ public class BiomeInit {
 					.waterColor(0x00FFFF)
 					.waterFogColor(0x00FFFF)
 					.surfaceBuilder(SurfaceBuilder.DEFAULT, new SurfaceBuilderConfig(
-							BlockInit.TITANIUM_BLOCK.get().getDefaultState(),
-							BlockInit.TITANIUM_ORE.get().getDefaultState(), 
-							Blocks.DIRT.getDefaultState()))
+							Blocks.GRASS_BLOCK.getDefaultState(),
+							Blocks.DIRT.getDefaultState(), 
+							Blocks.SAND.getDefaultState()))
 					.category(Category.PLAINS)
 					.downfall(0.5F)
 					.depth(0.12F)

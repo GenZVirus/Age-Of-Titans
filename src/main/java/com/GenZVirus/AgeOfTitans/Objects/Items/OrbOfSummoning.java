@@ -1,6 +1,7 @@
 package com.GenZVirus.AgeOfTitans.Objects.Items;
 
 import java.util.List;
+import java.util.Random;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Init.DimensionInit;
@@ -17,9 +18,9 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 
-public class OrbOfEden extends Item {
+public class OrbOfSummoning extends Item {
 
-	public OrbOfEden(Properties properties) {
+	public OrbOfSummoning(Properties properties) {
 		super(properties);
 	}
 
@@ -40,26 +41,27 @@ public class OrbOfEden extends Item {
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		if (worldIn.isRemote)
+		if (worldIn.isRemote) {
 			return super.onItemRightClick(worldIn, playerIn, handIn);
-		if (worldIn.getDimension().getType() != DimensionManager.registerOrGetDimension(AgeOfTitans.EDEN_DIMENSION_TYPE,
-				DimensionInit.EDEN.get(), null, true)) {
-			playerIn.getServer().getCommandManager().handleCommand(worldIn.getServer().getCommandSource(),
-					"/forge setdimension" 
-							+ " " + playerIn.getName().getFormattedText()
-							+ " " + "ageoftitans:eden"
+		}
+		PlayerEntity targetPlayer = worldIn.getPlayers().get(new Random().nextInt(worldIn.getPlayers().size()));
+		if(targetPlayer.dimension == playerIn.dimension) {
+			playerIn.getServer().getCommandManager()
+			.handleCommand(worldIn.getServer().getCommandSource(),
+					"/teleport " 
+							+ targetPlayer.getName().getFormattedText()
 							+ " " + playerIn.getPosition().getX()
 							+ " " + playerIn.getPosition().getY()
 							+ " " + playerIn.getPosition().getZ());
 		} else {
-			playerIn.getServer().getCommandManager().handleCommand(worldIn.getServer().getCommandSource(),
-					"/forge setdimension" 
-							+ " " + playerIn.getName().getFormattedText() 
-							+ " " + "minecraft:overworld"
-							+ " " + playerIn.getPosition().getX()
-							+ " " + playerIn.getPosition().getY()
-							+ " " + playerIn.getPosition().getZ());
-
+		playerIn.getServer().getCommandManager()
+				.handleCommand(worldIn.getServer().getCommandSource(),
+						"/forge setdimension " 
+								+ targetPlayer.getName().getFormattedText()
+								+ " " + playerIn.dimension.getRegistryName().toString()
+								+ " " + playerIn.getPosition().getX()
+								+ " " + playerIn.getPosition().getY()
+								+ " " + playerIn.getPosition().getZ());
 		}
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}

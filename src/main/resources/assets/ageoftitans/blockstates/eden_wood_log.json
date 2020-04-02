@@ -1,0 +1,7 @@
+{
+	"variants":{
+		"axis=y":	{ "model": "ageoftitans:block/eden_wood_log"},
+		"axis=z":	{ "model": "ageoftitans:block/eden_wood_log", "x": 90 },
+		"axis=x":	{ "model": "ageoftitans:block/eden_wood_log", "x": 90, "y": 90 }
+	}
+}
