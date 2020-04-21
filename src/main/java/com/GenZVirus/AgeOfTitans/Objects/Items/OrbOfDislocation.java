@@ -61,18 +61,8 @@ public class OrbOfDislocation extends Item {
 		Commands manager = playerIn.getServer().getCommandManager();
 		CommandSource source = worldIn.getServer().getCommandSource();
 		if(targetPlayer.dimension == playerIn.dimension) {
-			manager.handleCommand(source,
-					"/teleport " 
-							+ targetPlayer.getName().getFormattedText()
-							+ " " + conjurerPos.getX()
-							+ " " + conjurerPos.getY()
-							+ " " + conjurerPos.getZ());
-			manager.handleCommand(source,
-					"/teleport " 
-							+ conjurer.getName().getFormattedText()
-							+ " " + targetPlayerPos.getX()
-							+ " " + targetPlayerPos.getY()
-							+ " " + targetPlayerPos.getZ());
+			targetPlayer.setPositionAndUpdate(conjurerPos.getX(), conjurerPos.getY(), conjurerPos.getZ());
+			conjurer.setPositionAndUpdate(targetPlayerPos.getX(), targetPlayerPos.getY(), targetPlayerPos.getZ());
 		} else {
 			manager.handleCommand(source,
 						"/forge setdimension " 

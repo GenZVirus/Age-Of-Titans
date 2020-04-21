@@ -3,10 +3,14 @@ package com.GenZVirus.AgeOfTitans;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.GenZVirus.AgeOfTitans.Client.Keybind.ModKeybind;
 import com.GenZVirus.AgeOfTitans.Init.BiomeInit;
 import com.GenZVirus.AgeOfTitans.Init.BlockInit;
 import com.GenZVirus.AgeOfTitans.Init.DimensionInit;
 import com.GenZVirus.AgeOfTitans.Init.ItemInit;
+import com.GenZVirus.AgeOfTitans.Init.ModContainerTypes;
+import com.GenZVirus.AgeOfTitans.Init.ModEntityTypes;
+import com.GenZVirus.AgeOfTitans.Init.ModTileEntityTypes;
 import com.GenZVirus.AgeOfTitans.World.Gen.ModOreGen;
 
 import net.minecraft.item.BlockItem;
@@ -38,6 +42,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class AgeOfTitans
 {
 	
+	
 	public static final Logger LOGGER = LogManager.getLogger();
 	
 	/*
@@ -65,12 +70,19 @@ public class AgeOfTitans
     	
     	ItemInit.ITEMS.register(modEventBus);
     	BlockInit.BLOCKS.register(modEventBus);
+    	ModTileEntityTypes.TILE_ENTITY_TYPES.register(modEventBus);
+    	ModContainerTypes.CONTAINER_TYPES.register(modEventBus);
+    	
+    	ModEntityTypes.ENTITY_TYPES.register(modEventBus);
+    	
     	BiomeInit.BIOMES.register(modEventBus);
     	DimensionInit.MOD_DIMENSIONS.register(modEventBus);
     	
-        instance = this;
+    	ModKeybind.register();
+
+    	instance = this;
         
-        MinecraftForge.EVENT_BUS.register(this);
+    	MinecraftForge.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent

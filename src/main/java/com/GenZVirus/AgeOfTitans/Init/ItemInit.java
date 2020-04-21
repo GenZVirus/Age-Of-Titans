@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.AgeOfTitans.AgeOfTitansItemGroup;
+import com.GenZVirus.AgeOfTitans.Objects.Items.Keystone;
 import com.GenZVirus.AgeOfTitans.Objects.Items.OrbOfDislocation;
 import com.GenZVirus.AgeOfTitans.Objects.Items.OrbOfEden;
 import com.GenZVirus.AgeOfTitans.Objects.Items.OrbOfNether;
@@ -46,7 +47,8 @@ public class ItemInit {
 	public static final RegistryObject<Item> ORB_OF_NETHER = ITEMS.register("orb_of_nether", () -> new OrbOfNether(new Item.Properties().group(AgeOfTitansItemGroup.instance).maxStackSize(1)));
 	public static final RegistryObject<Item> ORB_OF_SUMMONING = ITEMS.register("orb_of_summoning", () -> new OrbOfSummoning(new Item.Properties().group(AgeOfTitansItemGroup.instance).maxStackSize(1)));
 	public static final RegistryObject<Item> ORB_OF_DISLOCATION = ITEMS.register("orb_of_dislocation", () -> new OrbOfDislocation(new Item.Properties().group(AgeOfTitansItemGroup.instance).maxStackSize(1)));
-	
+	public static final RegistryObject<Item> KEYSTONE = ITEMS.register("keystone", () -> new Keystone(new Item.Properties().group(AgeOfTitansItemGroup.instance).maxStackSize(1)));
+
 	//Ingots
 	public static final RegistryObject<Item> TITANIUM_INGOT = ITEMS.register("titanium_ingot", () -> new Item(new Item.Properties().group(AgeOfTitansItemGroup.instance)));
 	

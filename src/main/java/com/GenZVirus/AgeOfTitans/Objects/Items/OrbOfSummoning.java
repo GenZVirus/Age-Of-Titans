@@ -50,13 +50,7 @@ public class OrbOfSummoning extends Item {
 			targetPlayer = worldIn.getPlayers().get(new Random().nextInt(worldIn.getPlayers().size()));
 		}
 		if(targetPlayer.dimension == playerIn.dimension) {
-			playerIn.getServer().getCommandManager()
-			.handleCommand(worldIn.getServer().getCommandSource(),
-					"/teleport " 
-							+ targetPlayer.getName().getFormattedText()
-							+ " " + playerIn.getPosition().getX()
-							+ " " + playerIn.getPosition().getY()
-							+ " " + playerIn.getPosition().getZ());
+			targetPlayer.setPositionAndUpdate(playerIn.getPosition().getX(), playerIn.getPosition().getY(), playerIn.getPosition().getZ());
 		} else {
 		playerIn.getServer().getCommandManager()
 				.handleCommand(worldIn.getServer().getCommandSource(),

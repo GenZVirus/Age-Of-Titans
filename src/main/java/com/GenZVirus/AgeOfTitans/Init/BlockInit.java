@@ -1,6 +1,7 @@
 package com.GenZVirus.AgeOfTitans.Init;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
+import com.GenZVirus.AgeOfTitans.Objects.Blocks.ExampleChestBlock;
 import com.GenZVirus.AgeOfTitans.Objects.Blocks.ModSaplingBlock;
 import com.GenZVirus.AgeOfTitans.Objects.Blocks.SpecialBlock;
 import com.GenZVirus.AgeOfTitans.World.Feature.EdenTree;
@@ -39,5 +40,6 @@ public class BlockInit {
 	public static final RegistryObject<Block> EDEN_LEAVES = BLOCKS.register("eden_leaves", () -> new LeavesBlock(Block.Properties.from(Blocks.OAK_LEAVES)));
 	public static final RegistryObject<Block> EDEN_SAPLING = BLOCKS.register("eden_sapling", () -> new ModSaplingBlock(() -> new EdenTree(), Block.Properties.from(Blocks.OAK_SAPLING)));
 
-	
+	public static final RegistryObject<Block> EXAMPLE_CHEST = BLOCKS.register("example_chest", () -> new ExampleChestBlock(Block.Properties.from(BlockInit.TITANIUM_BLOCK.get())));
+
 }

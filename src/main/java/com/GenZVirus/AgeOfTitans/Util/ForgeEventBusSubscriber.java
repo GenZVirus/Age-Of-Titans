@@ -1,4 +1,4 @@
-package com.GenZVirus.AgeOfTitans.Util.Helpers;
+package com.GenZVirus.AgeOfTitans.Util;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Init.DimensionInit;
