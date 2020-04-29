@@ -29,6 +29,7 @@ public class ExampleChestScreen extends ContainerScreen<ExampleChestContainer> {
 		this.renderBackground();
 		super.render(mouseX, mouseY, partialTicks);
 		this.renderHoveredToolTip(mouseX, mouseY);
+		
 	}
 
 	@Override

@@ -3,6 +3,8 @@ package com.GenZVirus.AgeOfTitans;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.GenZVirus.AgeOfTitans.Capabilities.Instances.SpellInstance;
+import com.GenZVirus.AgeOfTitans.Capabilities.Interfaces.ISpell;
 import com.GenZVirus.AgeOfTitans.Client.Keybind.ModKeybind;
 import com.GenZVirus.AgeOfTitans.Init.BiomeInit;
 import com.GenZVirus.AgeOfTitans.Init.BlockInit;
@@ -11,6 +13,7 @@ import com.GenZVirus.AgeOfTitans.Init.ItemInit;
 import com.GenZVirus.AgeOfTitans.Init.ModContainerTypes;
 import com.GenZVirus.AgeOfTitans.Init.ModEntityTypes;
 import com.GenZVirus.AgeOfTitans.Init.ModTileEntityTypes;
+import com.GenZVirus.AgeOfTitans.Network.PacketHandler;
 import com.GenZVirus.AgeOfTitans.World.Gen.ModOreGen;
 
 import net.minecraft.item.BlockItem;
@@ -20,6 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -36,7 +40,6 @@ import net.minecraftforge.registries.IForgeRegistry;
 /*
  * AgeOfTitans class
 */
-
 @Mod("ageoftitans")
 @Mod.EventBusSubscriber(modid = AgeOfTitans.MOD_ID, bus = Bus.MOD)
 public class AgeOfTitans
@@ -60,7 +63,6 @@ public class AgeOfTitans
     /*
      * AgeOfTitans class constructor
     */
-	
     public AgeOfTitans() {
     	
     	final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -78,12 +80,11 @@ public class AgeOfTitans
     	BiomeInit.BIOMES.register(modEventBus);
     	DimensionInit.MOD_DIMENSIONS.register(modEventBus);
     	
-    	ModKeybind.register();
-
     	instance = this;
         
     	MinecraftForge.EVENT_BUS.register(this);
     }
+
 
     @SubscribeEvent
 	public static void onRegisterItems(final RegistryEvent.Register<Item> event) {
@@ -98,7 +99,7 @@ public class AgeOfTitans
 
 		LOGGER.debug("Registered BlockItems!");
 	}
-    
+
     @SubscribeEvent
     public static void onRegisterBiomes(final RegistryEvent.Register<Biome> event) {
     	BiomeInit.registeBiomes();
@@ -111,6 +112,9 @@ public class AgeOfTitans
     private void setup(final FMLCommonSetupEvent event)
     {
 
+    	PacketHandler.init();
+    	CapabilityManager.INSTANCE.register(ISpell.class, new SpellInstance.Storage(), () -> new SpellInstance());
+    	
     }
 
     /*
@@ -118,18 +122,18 @@ public class AgeOfTitans
     */
     
     private void doClientStuff(final FMLClientSetupEvent event) {
-
+    	ModKeybind.register();
     }
 
     /*
      * Server side stuff
     */
-    
+
     @SubscribeEvent
     public void onServerStarting(FMLServerStartingEvent event) {
 
     }
-    
+
     @SubscribeEvent
     public static void loadCompleteEvent(FMLLoadCompleteEvent event) {
     	ModOreGen.generateOre();
