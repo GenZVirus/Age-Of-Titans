@@ -7,7 +7,7 @@ import com.GenZVirus.AgeOfTitans.Util.Helpers.KeyboardHelper;
 
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
+import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -20,7 +20,7 @@ public class KeyPressedEvent {
 	private static boolean PRESSED = false;
 	
 	@SubscribeEvent
-	public static void keyPressedEvent(FurnaceFuelBurnTimeEvent event) {
+	public static void keyPressedEvent(ClientTickEvent event) {
 		if(timer > 0) timer--;
 		if(timer == 0 && KeyboardHelper.isCharacterKeyDown()) {
 			timer = 5;

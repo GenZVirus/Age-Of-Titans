@@ -3,8 +3,7 @@ package com.GenZVirus.AgeOfTitans.Client.GUI.Character;
 import java.util.List;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
-import com.GenZVirus.AgeOfTitans.Capabilities.SpellCapability;
-import com.GenZVirus.AgeOfTitans.Capabilities.Interfaces.ISpell;
+import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
@@ -30,7 +29,7 @@ public class ModScreen extends Screen {
 	private int ySize = 256;
 	public ModButton Human;
 	public ModButton Reaper;
-	public ModSkillButton Test;
+	public ModSkillButton Test, Test2;
 	public ModSkillSlot slot1, slot2, slot3, slot4;
 
 	public ModScreen(ITextComponent titleIn) {
@@ -89,55 +88,63 @@ public class ModScreen extends Screen {
 				super.onPress();
 			}
 		};
-		this.Test = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + 4 + 48, 16, 16, I18n.format("")) {
+		
+		this.slot1 = new ModSkillSlot((this.width - this.xSize) / 2 + 4, (this.height - this.ySize) / 2 + this.ySize - 4 - 25, 25, 25, I18n.format(""), 1) {
 			@Override
 			public void onPress() {
 				super.onPress();
 			}
 		};
 		
-		this.slot1 = new ModSkillSlot((this.width - this.xSize) / 2 + 4, (this.height - this.ySize) / 2 + this.ySize - 4 - 25, 25, 25, I18n.format(""), 0) {
+		this.slot2 = new ModSkillSlot((this.width - this.xSize) / 2 + 4 + 25, (this.height - this.ySize) / 2 + this.ySize- 4 - 25, 25, 25, I18n.format(""), 2) {
 			@Override
 			public void onPress() {
 				super.onPress();
-				this.isSelected = true;
 			}
 		};
 		
-		this.slot2 = new ModSkillSlot((this.width - this.xSize) / 2 + 4 + 25, (this.height - this.ySize) / 2 + this.ySize- 4 - 25, 25, 25, I18n.format(""), 1) {
+		this.slot3 = new ModSkillSlot((this.width - this.xSize) / 2 + 4 + 50, (this.height - this.ySize) / 2 + this.ySize- 4 - 25, 25, 25, I18n.format(""), 3) {
 			@Override
 			public void onPress() {
 				super.onPress();
-				this.isSelected = true;
 			}
 		};
 		
-		this.slot3 = new ModSkillSlot((this.width - this.xSize) / 2 + 4 + 50, (this.height - this.ySize) / 2 + this.ySize- 4 - 25, 25, 25, I18n.format(""), 2) {
+		this.slot4 = new ModSkillSlot((this.width - this.xSize) / 2 + 4 + 75, (this.height - this.ySize) / 2 + this.ySize - 4 - 25, 25, 25, I18n.format(""), 4) {
 			@Override
 			public void onPress() {
 				super.onPress();
-				this.isSelected = true;
 			}
 		};
 		
-		this.slot4 = new ModSkillSlot((this.width - this.xSize) / 2 + 4 + 75, (this.height - this.ySize) / 2 + this.ySize - 4 - 25, 25, 25, I18n.format(""), 3) {
+		this.Test = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + 4 + 48, 16, 16, I18n.format(""), Spell.SPELL_LIST.get(1)) {
 			@Override
 			public void onPress() {
 				super.onPress();
-				this.isSelected = true;
+			}
+		};
+		
+		this.Test2 = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + 4 + 24, 16, 16, I18n.format(""), Spell.SPELL_LIST.get(2)) {
+			@Override
+			public void onPress() {
+				super.onPress();
 			}
 		};
 		
 		buttons.clear();
-		buttons.add(Human);
-		buttons.add(Reaper);
+		
+		buttons.add(Test);
+		buttons.add(Test2);
 		
 		buttons.add(slot1);
 		buttons.add(slot2);
 		buttons.add(slot3);
 		buttons.add(slot4);
 		
-		buttons.add(Test);
+		buttons.add(Human);
+		buttons.add(Reaper);
+				
+		
 	}
 
 	@Override
@@ -147,9 +154,6 @@ public class ModScreen extends Screen {
 
 	@Override
 	public void render(int mouseX, int mouseY, float partialTicks) {
-		
-		 ISpell cap = Minecraft.getInstance().player.getCapability(SpellCapability.SPELL_CAPABILITY).orElse(null);
-	        if (cap == null) System.out.println("hello");
 		
 		RenderSystem.disableRescaleNormal();
 		RenderSystem.disableDepthTest();

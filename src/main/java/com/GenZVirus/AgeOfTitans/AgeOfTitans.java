@@ -14,6 +14,7 @@ import com.GenZVirus.AgeOfTitans.Init.ModContainerTypes;
 import com.GenZVirus.AgeOfTitans.Init.ModEntityTypes;
 import com.GenZVirus.AgeOfTitans.Init.ModTileEntityTypes;
 import com.GenZVirus.AgeOfTitans.Network.PacketHandler;
+import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
 import com.GenZVirus.AgeOfTitans.World.Gen.ModOreGen;
 
 import net.minecraft.item.BlockItem;
@@ -79,6 +80,8 @@ public class AgeOfTitans
     	
     	BiomeInit.BIOMES.register(modEventBus);
     	DimensionInit.MOD_DIMENSIONS.register(modEventBus);
+    	
+    	Spell.registerSpells();
     	
     	instance = this;
         
