@@ -27,6 +27,7 @@ public class SpellCapability implements ICapabilitySerializable<CompoundNBT> {
 	@Nonnull
 	@Override
 	public CompoundNBT serializeNBT() {
+		System.out.println("serilizeNBT was called");
 		return (CompoundNBT) SPELL_CAPABILITY.getStorage().writeNBT(SPELL_CAPABILITY, instance.orElseThrow(() -> new IllegalArgumentException("LazyOptional cannot be empty!")), null); 
 
 	}
@@ -34,6 +35,7 @@ public class SpellCapability implements ICapabilitySerializable<CompoundNBT> {
 	@Nonnull
 	@Override
 	public void deserializeNBT(CompoundNBT nbt) {
+		System.out.println("deserilizeNBT was called");
 		SPELL_CAPABILITY.getStorage().readNBT(SPELL_CAPABILITY, instance.orElseThrow(() -> new IllegalArgumentException("LazyOptional cannot be empty!")), null, nbt);
 	}
 

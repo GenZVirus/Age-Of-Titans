@@ -42,7 +42,12 @@ public class SpellPacket {
 				if(player != null) {
 					player.getCapability(SpellCapability.SPELL_CAPABILITY).ifPresent(cap ->{
 						cap.setSpell(pkt.slot1, pkt.slot2, pkt.slot3, pkt.slot4);
-						cap.setPlayerUuid(player.getUniqueID());
+						cap.setPlayerUuid(pkt.playerUuid);
+						System.out.println("Slot1: " + cap.getSpellSlotbyID(1));
+						System.out.println("Slot2: " + cap.getSpellSlotbyID(2));
+						System.out.println("Slot3: " + cap.getSpellSlotbyID(3));
+						System.out.println("Slot4: " + cap.getSpellSlotbyID(4));
+						System.out.println("Handle: " + cap.getPlayerUuid());
 					});
 				}
 			});
