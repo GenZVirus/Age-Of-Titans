@@ -32,7 +32,7 @@ public class Spell {
 	}
 	
 	public static final List<Spell> SPELL_LIST = Lists.newArrayList();
-	private static final Spell NO_SPELL = new Spell(0, null, null);
+	private static final Spell NO_SPELL = new Spell(0, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/noimage.png"), "");
 	private static final Spell TEST1 = new Spell(1, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/test.png"), "Test");	
 	private static final Spell TEST2 = new Spell(2, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/test2.png"), "Test2");
 	

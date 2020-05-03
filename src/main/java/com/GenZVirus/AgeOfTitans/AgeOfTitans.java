@@ -3,8 +3,6 @@ package com.GenZVirus.AgeOfTitans;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.GenZVirus.AgeOfTitans.Capabilities.Instances.SpellInstance;
-import com.GenZVirus.AgeOfTitans.Capabilities.Interfaces.ISpell;
 import com.GenZVirus.AgeOfTitans.Client.Keybind.ModKeybind;
 import com.GenZVirus.AgeOfTitans.Init.BiomeInit;
 import com.GenZVirus.AgeOfTitans.Init.BlockInit;
@@ -14,6 +12,7 @@ import com.GenZVirus.AgeOfTitans.Init.ModContainerTypes;
 import com.GenZVirus.AgeOfTitans.Init.ModEntityTypes;
 import com.GenZVirus.AgeOfTitans.Init.ModTileEntityTypes;
 import com.GenZVirus.AgeOfTitans.Network.PacketHandler;
+import com.GenZVirus.AgeOfTitans.SpellSystem.FileSystem;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
 import com.GenZVirus.AgeOfTitans.World.Gen.ModOreGen;
 
@@ -24,7 +23,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -116,7 +114,8 @@ public class AgeOfTitans
     {
 
     	PacketHandler.init();
-    	CapabilityManager.INSTANCE.register(ISpell.class, new SpellInstance.Storage(), () -> new SpellInstance());
+    	
+    	new FileSystem();
     	
     }
 

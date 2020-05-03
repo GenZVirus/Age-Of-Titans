@@ -119,7 +119,7 @@ public class ItemInit {
 	}
 	
 	public enum ModArmorMaterial implements IArmorMaterial{
-		ARMOR_MATERIAL_TITANIUM(AgeOfTitans.MOD_ID + ":test", 5, new int[] {7, 9, 11, 8}, 420, SoundEvents.field_226124_Y_, 6.9F, () -> {
+		ARMOR_MATERIAL_TITANIUM(AgeOfTitans.MOD_ID + ":test", 5, new int[] {7, 9, 11, 8}, 420, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 6.9F, () -> {
 			return Ingredient.fromItems(ItemInit.FRUIT_OF_THE_GODS.get());
 		});
 		

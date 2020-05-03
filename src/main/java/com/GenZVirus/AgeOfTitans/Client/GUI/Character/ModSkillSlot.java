@@ -1,11 +1,6 @@
 package com.GenZVirus.AgeOfTitans.Client.GUI.Character;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
-import com.GenZVirus.AgeOfTitans.Capabilities.SpellCapability;
-import com.GenZVirus.AgeOfTitans.Capabilities.Instances.SpellInstance;
-import com.GenZVirus.AgeOfTitans.Capabilities.Interfaces.ISpell;
-import com.GenZVirus.AgeOfTitans.Network.PacketHandler;
-import com.GenZVirus.AgeOfTitans.Network.SpellPacket;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -26,7 +21,7 @@ public class ModSkillSlot extends Widget {
 	public ModSkillSlot(int xIn, int yIn, int widthIn, int heightIn, String msg, int slot) {
 		super(xIn, yIn, widthIn, heightIn, msg);
 		this.slot = slot;
-		this.spell = Minecraft.getInstance().player.getCapability(SpellCapability.SPELL_CAPABILITY).orElse(null).getSpell(this.slot);
+		this.spell = Spell.SPELL_LIST.get(0);
 	}
 	
 	public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
@@ -56,11 +51,10 @@ public class ModSkillSlot extends Widget {
 
 	public void onPress() {
 		this.playDownSound(Minecraft.getInstance().getSoundHandler());
-		ISpell cap = Minecraft.getInstance().player.getCapability(SpellCapability.SPELL_CAPABILITY).orElse(null);
-		int slot1 = cap.getSpellSlotbyID(1);
-		int slot2 = cap.getSpellSlotbyID(2);
-		int slot3 = cap.getSpellSlotbyID(3);
-		int slot4 = cap.getSpellSlotbyID(4);
+		int slot1 = Spell.SPELL_LIST.get(0).getId();
+		int slot2 = Spell.SPELL_LIST.get(0).getId();
+		int slot3 = Spell.SPELL_LIST.get(0).getId();
+		int slot4 = Spell.SPELL_LIST.get(0).getId();
 		Spell selectedSpell = Spell.SPELL_LIST.get(0);
 		
 		for(Widget button : ModScreen.SCREEN.getButtons()) {
@@ -101,12 +95,8 @@ public class ModSkillSlot extends Widget {
 			this.spell = selectedSpell;
 		}
 		
-		sendPacket(slot1, slot2, slot3, slot4);
+
 		
-	}
-	
-	public void sendPacket(int slot1, int slot2, int slot3, int slot4) {		
-		PacketHandler.INSTANCE.sendToServer(new SpellPacket(slot1, slot2, slot3, slot4, Minecraft.getInstance().player.getUniqueID()));
 	}
 	
 }

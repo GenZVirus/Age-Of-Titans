@@ -3,6 +3,8 @@ package com.GenZVirus.AgeOfTitans.Client.GUI.Character;
 import java.util.List;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
+import com.GenZVirus.AgeOfTitans.Network.PacketHandler;
+import com.GenZVirus.AgeOfTitans.Network.SpellPacket;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -44,11 +46,6 @@ public class ModScreen extends Screen {
 	@Override
 	public boolean isPauseScreen() {
 		return false;
-	}
-
-	@Override
-	public void onClose() {
-		super.onClose();
 	}
 
 	@Override
@@ -151,6 +148,12 @@ public class ModScreen extends Screen {
 	public void tick() {
 		super.tick();
 	}
+	
+	@Override
+	public void onClose() {
+		sendPacket(slot1.spell.getId(), slot2.spell.getId(), slot3.spell.getId(), slot4.spell.getId());
+		super.onClose();
+	}
 
 	@Override
 	public void render(int mouseX, int mouseY, float partialTicks) {
@@ -178,4 +181,9 @@ public class ModScreen extends Screen {
 	public List<Widget> getButtons() {
 		return this.buttons;
 	}
+	
+	public void sendPacket(int slot1, int slot2, int slot3, int slot4) {		
+		PacketHandler.INSTANCE.sendToServer(new SpellPacket(slot1, slot2, slot3, slot4, Minecraft.getInstance().player.getUniqueID()));
+	}
+	
 }

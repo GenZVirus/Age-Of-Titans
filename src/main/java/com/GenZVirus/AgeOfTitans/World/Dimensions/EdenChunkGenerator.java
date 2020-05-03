@@ -167,7 +167,7 @@ public class EdenChunkGenerator extends NoiseChunkGenerator<EdenGenSettings> {
 		this.phantomSpawner.tick(worldIn, spawnHostileMobs, spawnPeacefulMobs);
 		this.patrolSpawner.tick(worldIn, spawnHostileMobs, spawnPeacefulMobs);
 		this.catSpawner.tick(worldIn, spawnHostileMobs, spawnPeacefulMobs);
-		this.villageSiege.func_225477_a(worldIn, spawnHostileMobs, spawnPeacefulMobs);
+//		this.villageSiege.func_225477_a(worldIn, spawnHostileMobs, spawnPeacefulMobs);
 	}
 
 	public int getGroundHeight() {

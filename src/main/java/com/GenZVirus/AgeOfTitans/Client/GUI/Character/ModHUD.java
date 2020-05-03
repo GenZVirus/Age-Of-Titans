@@ -8,7 +8,10 @@ import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.ChatVisibility;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class ModHUD {
 
 	public static ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(AgeOfTitans.MOD_ID,"textures/gui/hud.png");
@@ -28,10 +31,6 @@ public class ModHUD {
 		}
 
 		assert mc.player != null;
-		boolean isOnServer = !mc.isSingleplayer() || mc.player.connection.getPlayerInfoMap().size() > 1;
-		if (isOnServer) {
-			return;
-		}
 
 		if (!Minecraft.isGuiEnabled()) {
 			return;
