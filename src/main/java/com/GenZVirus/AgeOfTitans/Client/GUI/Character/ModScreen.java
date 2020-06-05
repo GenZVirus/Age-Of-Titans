@@ -3,6 +3,7 @@ package com.GenZVirus.AgeOfTitans.Client.GUI.Character;
 import java.util.List;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
+import com.GenZVirus.AgeOfTitans.Events.KeyPressedEvent;
 import com.GenZVirus.AgeOfTitans.Network.PacketHandler;
 import com.GenZVirus.AgeOfTitans.Network.SpellPacket;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
@@ -22,16 +23,37 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class ModScreen extends Screen {
 
+	// This class handles the GUI that displays the skill tree
+	
+	// Initializing the class so it is unique
 	public static final ModScreen SCREEN = new ModScreen();
+	
+	// The texture for human skill tree
+	
 	public ResourceLocation BACKGROUND_TEXTURE_HUMAN = new ResourceLocation(AgeOfTitans.MOD_ID,
 			"textures/gui/character_background_human.png");
+	
+	// The texture for reaper skill tree
+	
 	public ResourceLocation BACKGROUND_TEXTURE_REAPER = new ResourceLocation(AgeOfTitans.MOD_ID,
 			"textures/gui/character_background_reaper.png");
+	
+	// The size of the GUI
+	
 	private int xSize = 320;
 	private int ySize = 256;
+	
+	// The buttons for changing the skill tree
+	
 	public ModButton Human;
 	public ModButton Reaper;
+	
+	// The button for spells in the skill tree
+	
 	public ModSkillButton Test, Test2;
+	
+	// The skill slots in the skill tree
+	
 	public ModSkillSlot slot1, slot2, slot3, slot4;
 
 	public ModScreen(ITextComponent titleIn) {
@@ -51,6 +73,9 @@ public class ModScreen extends Screen {
 	@Override
 	public void init() {
 		super.init();
+		
+		// If you press on the human button the background changes to the Human one
+		
 		this.Human = new ModButton((this.width - this.xSize) / 2 + 4, (this.height - this.ySize) / 2 + 4, 156, 20,
 				I18n.format("gui.human")) {
 			@Override
@@ -67,8 +92,14 @@ public class ModScreen extends Screen {
 				super.onPress();
 			}
 		};
+		
+		// By default human background is selected
+		
 		Human.isPressed = true;
 		Human.active = false;
+		
+		// If you press on the human button the background changes to the Human one
+		
 		this.Reaper = new ModButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + 4, 156,
 				20, I18n.format("gui.reaper")) {
 			@Override
@@ -86,47 +117,17 @@ public class ModScreen extends Screen {
 			}
 		};
 		
-		this.slot1 = new ModSkillSlot((this.width - this.xSize) / 2 + 4, (this.height - this.ySize) / 2 + this.ySize - 4 - 25, 25, 25, I18n.format(""), 1) {
-			@Override
-			public void onPress() {
-				super.onPress();
-			}
-		};
+		// The four spell slots
 		
-		this.slot2 = new ModSkillSlot((this.width - this.xSize) / 2 + 4 + 25, (this.height - this.ySize) / 2 + this.ySize- 4 - 25, 25, 25, I18n.format(""), 2) {
-			@Override
-			public void onPress() {
-				super.onPress();
-			}
-		};
+		this.slot1 = new ModSkillSlot((this.width - this.xSize) / 2 + 4, (this.height - this.ySize) / 2 + this.ySize - 4 - 25, 25, 25, I18n.format(""), 1);		
+		this.slot2 = new ModSkillSlot((this.width - this.xSize) / 2 + 4 + 25, (this.height - this.ySize) / 2 + this.ySize - 4 - 25, 25, 25, I18n.format(""), 2);		
+		this.slot3 = new ModSkillSlot((this.width - this.xSize) / 2 + 4 + 50, (this.height - this.ySize) / 2 + this.ySize - 4 - 25, 25, 25, I18n.format(""), 3);		
+		this.slot4 = new ModSkillSlot((this.width - this.xSize) / 2 + 4 + 75, (this.height - this.ySize) / 2 + this.ySize - 4 - 25, 25, 25, I18n.format(""), 4);
 		
-		this.slot3 = new ModSkillSlot((this.width - this.xSize) / 2 + 4 + 50, (this.height - this.ySize) / 2 + this.ySize- 4 - 25, 25, 25, I18n.format(""), 3) {
-			@Override
-			public void onPress() {
-				super.onPress();
-			}
-		};
+		// The spell buttons
 		
-		this.slot4 = new ModSkillSlot((this.width - this.xSize) / 2 + 4 + 75, (this.height - this.ySize) / 2 + this.ySize - 4 - 25, 25, 25, I18n.format(""), 4) {
-			@Override
-			public void onPress() {
-				super.onPress();
-			}
-		};
-		
-		this.Test = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + 4 + 48, 16, 16, I18n.format(""), Spell.SPELL_LIST.get(1)) {
-			@Override
-			public void onPress() {
-				super.onPress();
-			}
-		};
-		
-		this.Test2 = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + 4 + 24, 16, 16, I18n.format(""), Spell.SPELL_LIST.get(2)) {
-			@Override
-			public void onPress() {
-				super.onPress();
-			}
-		};
+		this.Test = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + 4 + 60, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(1));		
+		this.Test2 = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + 4 + 30, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(2));
 		
 		buttons.clear();
 		
@@ -151,25 +152,51 @@ public class ModScreen extends Screen {
 	
 	@Override
 	public void onClose() {
+		
+	// When the keyPressedEvent fires and the screen is already opened it sets wasPRESSED on false to not close other existing screens like chat screen
+		
+		KeyPressedEvent.wasPRESSED = false;
+		
+	// Sends a packet to the server to save to the custom playerdata file
+		
 		sendPacket(slot1.spell.getId(), slot2.spell.getId(), slot3.spell.getId(), slot4.spell.getId());
 		super.onClose();
 	}
 
+	// Screen renderer
+	
 	@Override
 	public void render(int mouseX, int mouseY, float partialTicks) {
 		
 		RenderSystem.disableRescaleNormal();
 		RenderSystem.disableDepthTest();
 		this.renderBackground();
+		
+	// Decides if it renders the human background or the reaper background
+		
 		if (this.Human.isPressed) {
 			this.minecraft.getTextureManager().bindTexture(BACKGROUND_TEXTURE_HUMAN);
 		} else if (this.Reaper.isPressed) {
 			this.minecraft.getTextureManager().bindTexture(BACKGROUND_TEXTURE_REAPER);
 		} else
 			this.minecraft.getTextureManager().bindTexture(BACKGROUND_TEXTURE_HUMAN);
+		
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		int x = (this.width - this.xSize) / 2;
 		int y = (this.height - this.ySize) / 2;
+		
+		/*
+	       *  First param is the X position
+	       *  Second param is the y position
+	       *  Third param is the blit offset
+	       *  Fourth param is the X position from where it starts to display pixels in the texture image
+	       *  Fifth param is the Y position from where it starts to display pixels in the texture image
+	       *  Sixth param is the Width of the image that we want to display
+	       *  Seventh param is the Height of the image that we want to display
+	       *  Eighth param is the Height of the texture image
+	       *  Ninth param is the Width of the texture image
+	       */
+		
 		AbstractGui.blit(x, y, 0, 0, 0, this.xSize, this.ySize, this.ySize, this.xSize);
 		super.render(mouseX, mouseY, partialTicks);
 	}
@@ -183,7 +210,7 @@ public class ModScreen extends Screen {
 	}
 	
 	public void sendPacket(int slot1, int slot2, int slot3, int slot4) {		
-		PacketHandler.INSTANCE.sendToServer(new SpellPacket(slot1, slot2, slot3, slot4, Minecraft.getInstance().player.getUniqueID()));
+		PacketHandler.INSTANCE.sendToServer(new SpellPacket(slot1, slot2, slot3, slot4, Minecraft.getInstance().player.getUniqueID(), false));
 	}
 	
 }

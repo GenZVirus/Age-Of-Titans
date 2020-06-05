@@ -34,7 +34,7 @@ public class ModSkillButton extends Widget {
 	      RenderSystem.enableBlend();
 	      RenderSystem.defaultBlendFunc();
 	      RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-	      AbstractGui.blit(this.x, this.y, 0, 0, 0, this.width, this.height, 16, 16);
+	      AbstractGui.blit(this.x, this.y, 0, 0, 0, this.width, this.height, this.height, this.width);
 	      
 	      this.renderBg(minecraft, p_renderButton_1_, p_renderButton_2_);
 	      int j = getFGColor();

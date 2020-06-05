@@ -14,6 +14,8 @@ import net.minecraft.world.gen.placement.Placement;
 
 public class HolyGround extends Biome {
 
+	// This is the Holy Ground biome class
+	
 	public HolyGround(Builder biomeBuilder) {
 		super(biomeBuilder);
 		addSpawn(EntityClassification.CREATURE, new SpawnListEntry(EntityType.BEE, 20, 2, 10));

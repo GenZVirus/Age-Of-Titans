@@ -33,6 +33,9 @@ public class EdenChunkGenerator extends NoiseChunkGenerator<EdenGenSettings> {
 		}
 
 	});
+	
+	// This class is the chunk generation it has an Overworld 
+	
 	private final OctavesNoiseGenerator depthNoise;
 	private final boolean isAmplified;
 	private final PhantomSpawner phantomSpawner = new PhantomSpawner();

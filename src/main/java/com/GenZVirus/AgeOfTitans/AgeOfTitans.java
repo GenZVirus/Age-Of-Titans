@@ -64,20 +64,42 @@ public class AgeOfTitans
     */
     public AgeOfTitans() {
     	
+    // Creating an event bus for all registries
+    	
     	final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
     	
     	modEventBus.addListener(this::setup);
     	modEventBus.addListener(this::doClientStuff);
     	
+    // Registering custom items
+    	
     	ItemInit.ITEMS.register(modEventBus);
+    	
+    // Registering custom blocks
+    	
     	BlockInit.BLOCKS.register(modEventBus);
+    	
+    // Registering custom tile entity types
+    	
     	ModTileEntityTypes.TILE_ENTITY_TYPES.register(modEventBus);
+    	
+    // Registering custom container types
+    	
     	ModContainerTypes.CONTAINER_TYPES.register(modEventBus);
+    	
+    // Registering custom entity types
     	
     	ModEntityTypes.ENTITY_TYPES.register(modEventBus);
     	
+    // Registering custom biomes
+    	
     	BiomeInit.BIOMES.register(modEventBus);
+    	
+    // Register custom Dimensions
+    	
     	DimensionInit.MOD_DIMENSIONS.register(modEventBus);
+    	
+    // Register Spell
     	
     	Spell.registerSpells();
     	
@@ -89,6 +111,9 @@ public class AgeOfTitans
 
     @SubscribeEvent
 	public static void onRegisterItems(final RegistryEvent.Register<Item> event) {
+    	
+    // Registering items from blocks
+    	
 		final IForgeRegistry<Item> registry = event.getRegistry();
 
 		BlockInit.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(block -> {
@@ -103,6 +128,9 @@ public class AgeOfTitans
 
     @SubscribeEvent
     public static void onRegisterBiomes(final RegistryEvent.Register<Biome> event) {
+    	
+    // Registering custom biomes
+    	
     	BiomeInit.registeBiomes();
     }
     
@@ -113,7 +141,11 @@ public class AgeOfTitans
     private void setup(final FMLCommonSetupEvent event)
     {
 
+    // Initializing the PacketHandler
+    	
     	PacketHandler.init();
+    	
+    // Initializing the FileSystem
     	
     	new FileSystem();
     	
@@ -124,6 +156,9 @@ public class AgeOfTitans
     */
     
     private void doClientStuff(final FMLClientSetupEvent event) {
+    	
+    // Registering the custom Keybinds
+    	
     	ModKeybind.register();
     }
 
@@ -138,6 +173,9 @@ public class AgeOfTitans
 
     @SubscribeEvent
     public static void loadCompleteEvent(FMLLoadCompleteEvent event) {
+    	
+    // Generating ores
+    	
     	ModOreGen.generateOre();
     }
     

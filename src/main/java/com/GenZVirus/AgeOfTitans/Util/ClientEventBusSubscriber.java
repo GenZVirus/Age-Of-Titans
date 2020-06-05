@@ -2,6 +2,8 @@ package com.GenZVirus.AgeOfTitans.Util;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Client.Entity.Render.ReaperEntityRender;
+import com.GenZVirus.AgeOfTitans.Client.Entity.Render.ShockwaveRender;
+import com.GenZVirus.AgeOfTitans.Client.Entity.Render.TippedArrowRenderer;
 import com.GenZVirus.AgeOfTitans.Client.GUI.ExampleChestScreen;
 import com.GenZVirus.AgeOfTitans.Init.BlockInit;
 import com.GenZVirus.AgeOfTitans.Init.ModContainerTypes;
@@ -20,11 +22,15 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 @Mod.EventBusSubscriber(modid = AgeOfTitans.MOD_ID, bus = Bus.MOD, value = Dist.CLIENT)
 public class ClientEventBusSubscriber {
 
+	// Client Side Events
+	
 	@SubscribeEvent
 	public static void clientSetup(FMLClientSetupEvent event) {
 		ScreenManager.registerFactory(ModContainerTypes.EXAMPLE_CHEST.get(), ExampleChestScreen::new);
 		RenderTypeLookup.setRenderLayer(BlockInit.EDEN_SAPLING.get(), RenderType.getCutout());
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.REAPER.get(), ReaperEntityRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SHOCKWAVE.get(), ShockwaveRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARROW.get(), TippedArrowRenderer::new);
 	}
 	
 }

@@ -15,6 +15,7 @@ import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -24,6 +25,7 @@ public class ReaperEntity extends CreatureEntity{
 	
 	private EatGrassGoal eatGrassGoal;
 	private int exampleTimer;
+	public boolean isInvulnerable = false;
 
 	public ReaperEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -98,4 +100,18 @@ public class ReaperEntity extends CreatureEntity{
 		this.setGlowing(true);
 	}
 	
+	   @Override
+	public boolean isInvulnerable() {
+		if(this.isInvulnerable)
+			return true;
+		return super.isInvulnerable();
+	}
+	   
+	   @Override
+	public boolean isInvulnerableTo(DamageSource source) {
+			if(this.isInvulnerable)
+				return true;
+		return super.isInvulnerableTo(source);
+	}
+	   
 }

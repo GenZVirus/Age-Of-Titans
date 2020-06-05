@@ -9,6 +9,7 @@ import com.GenZVirus.AgeOfTitans.Objects.Items.OrbOfDislocation;
 import com.GenZVirus.AgeOfTitans.Objects.Items.OrbOfEden;
 import com.GenZVirus.AgeOfTitans.Objects.Items.OrbOfNether;
 import com.GenZVirus.AgeOfTitans.Objects.Items.OrbOfSummoning;
+import com.GenZVirus.AgeOfTitans.Objects.Items.SpecialItem;
 
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
@@ -51,6 +52,9 @@ public class ItemInit {
 
 	//Ingots
 	public static final RegistryObject<Item> TITANIUM_INGOT = ITEMS.register("titanium_ingot", () -> new Item(new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	
+	//TestItem
+	public static final RegistryObject<Item> TEST_ITEM = ITEMS.register("test_item", () -> new SpecialItem(new Item.Properties().group(AgeOfTitansItemGroup.instance)));
 	
 	//Tools
 	public static final RegistryObject<Item> TITANIUM_SWORD = ITEMS.register("titanium_sword", () -> new SwordItem(ModItemTier.MATERIAL_TITANIUM, 7, 5.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));

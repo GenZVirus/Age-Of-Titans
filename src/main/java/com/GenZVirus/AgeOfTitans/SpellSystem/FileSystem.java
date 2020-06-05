@@ -15,8 +15,12 @@ import com.google.common.collect.Lists;
 
 public class FileSystem {
 	
+	// This class is the custom player data storing system
+	
 	private static File file;
 
+	// Calling the constructor will check if the file exits and if not it will create the file
+	
 	public FileSystem() {
 		try {
 		      FileSystem.file = new File("world/ageoftitans/playerdata.txt");
@@ -34,6 +38,8 @@ public class FileSystem {
 		      e.printStackTrace();
 		    }
 		  }
+	
+	// Edits the file with the data provided
 	
 	public static void editFile(String PlayerName, int slot1ID, int slot2ID, int slot3ID, int slot4ID) {
 		ArrayList<String> lines = new ArrayList<String>();
@@ -66,6 +72,8 @@ public class FileSystem {
         }
 	}
 	
+	// Checks if the player exists, if it does it reads the file, else it writes it into the file with the data provided
+	
 	public static List<Integer> readOrWrite(String UniquePlayerName, int slot1ID, int slot2ID, int slot3ID, int slot4ID) {
 		try {
 			Scanner myReader = new Scanner(file);
@@ -89,6 +97,8 @@ public class FileSystem {
 		}
 		return Lists.newArrayList();
 	}
+	
+	// Reads the file searching for the player requested
 	
 	public static List<Integer> readFile(String UniquePlayerName) {
 		
@@ -126,6 +136,8 @@ public class FileSystem {
 		return slotList;
 		
 	}
+	
+	// Writes to the file the data provided
 	
 	public static void writeFile(String UniquePlayerName, int slot1ID, int slot2ID, int slot3ID, int slot4ID) {
 		

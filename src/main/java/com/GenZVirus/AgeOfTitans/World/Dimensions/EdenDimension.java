@@ -16,15 +16,21 @@ import net.minecraft.world.gen.Heightmap;
 
 public class EdenDimension extends Dimension{
 
+	// This is the main class of the Eden Dimension
+	
 	public EdenDimension(World world, DimensionType dimensionType) {
 		super(world, dimensionType, 0.0F);
 	}
 
+	// This is call the chunk generator method
+	
 	@Override
 	public ChunkGenerator<?> createChunkGenerator() {
 		return new EdenChunkGenerator(world, new EdenBiomeProvider(), new EdenGenSettings());
 	}
 
+	// This methods finds a good spawn location if the respawn is allowed
+	
 	@Override
 	public BlockPos findSpawn(ChunkPos chunkPosIn, boolean checkValid) {
 		 for(int i = chunkPosIn.getXStart(); i <= chunkPosIn.getXEnd(); ++i) {
@@ -39,6 +45,8 @@ public class EdenDimension extends Dimension{
 	      return null;
 	}
 
+	// This methods finds a good spawn location if the respawn is allowed
+	
 	@Override
 	public BlockPos findSpawn(int posX, int posZ, boolean checkValid) {
 		 BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable(posX, 0, posZ);
@@ -71,6 +79,8 @@ public class EdenDimension extends Dimension{
 	      }
 	}
 	
+	// This method calculates the sun and moon cycle
+	
 	@Override
 	public float calculateCelestialAngle(long worldTime, float partialTicks) {
 	      double d0 = MathHelper.frac((double)worldTime / 24000.0D - 0.25D);
@@ -78,11 +88,15 @@ public class EdenDimension extends Dimension{
 	      return (float)(d0 * 2.0D + d1) / 3.0F;
 	}
 
+	// Returns 'true' if in the "main surface world", but 'false' if in the Nether or End dimensions.
+	
 	@Override
 	public boolean isSurfaceWorld() {
 		return false;
 	}
 
+	// Return Vec3D with biome specific fog color
+	
 	@Override
 	public Vec3d getFogColor(float celestialAngle, float partialTicks) {
 		float f = MathHelper.cos(celestialAngle * ((float)Math.PI * 2F)) * 2.0F + 0.5F;
@@ -96,11 +110,15 @@ public class EdenDimension extends Dimension{
 	      return new Vec3d((double)f1, (double)f2, (double)f3);
 	}
 
+	// True if the player can respawn in this dimension
+	
 	@Override
 	public boolean canRespawnHere() {
 		return true;
 	}
 
+	// Returns true if the given X,Z coordinate should show environmental fog.
+	
 	@Override
 	public boolean doesXZShowFog(int x, int z) {
 		return false;

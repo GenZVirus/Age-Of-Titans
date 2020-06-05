@@ -7,13 +7,15 @@ import com.GenZVirus.AgeOfTitans.Entities.ReaperEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class ReaperEntityRender extends MobRenderer<ReaperEntity, ReaperEntityModel<ReaperEntity>>{
+public class ReaperEntityRender extends MobRenderer<ReaperEntity, ReaperEntityModel>{
 
 	protected static final ResourceLocation TEXTURE = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/entity/reaper_entity.png");
 	
 	public ReaperEntityRender(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new ReaperEntityModel<ReaperEntity>(), 0.5F);
+		super(renderManagerIn, new ReaperEntityModel(), 0.5F);
 	}
 	
 	@Override

@@ -18,9 +18,15 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class BiomeInit {
 
+	// This is an initialization class for biomes
+	
+	// Registering with deferred registries
+	
 	public static final DeferredRegister<Biome> BIOMES = new DeferredRegister<>(ForgeRegistries.BIOMES,
 			AgeOfTitans.MOD_ID);
-
+	
+	// Creating the object
+	
 	public static final RegistryObject<Biome> HOLY_GROUND = BIOMES.register("holy_ground",
 			() -> new HolyGround(new Biome.Builder()
 					.precipitation(RainType.RAIN)
@@ -37,10 +43,14 @@ public class BiomeInit {
 					.depth(0.12F)
 					.parent(null)));
 	
+	// Register all biomes
+	
 	public static void registeBiomes() {
 		registerBiome(HOLY_GROUND.get(), Type.PLAINS, Type.OVERWORLD);
 	}
 
+	// Register requested biome
+	
 	private static void registerBiome(Biome biome, Type... types) {
 		BiomeDictionary.addTypes(biome, types);
 		BiomeManager.addSpawnBiome(biome);

@@ -10,12 +10,17 @@ import net.minecraft.world.biome.provider.BiomeProvider;
 
 public class EdenBiomeProvider extends BiomeProvider{
 	
+	// This is the biome provider class for Eden Dimension
+	
+	// Biome list
+	
 	private static final Set<Biome> biomeList = ImmutableSet.of(BiomeInit.HOLY_GROUND.get());
 	
 	public EdenBiomeProvider() {
 		super(biomeList);
 	}
 
+	// Biome getter
 	
 	@Override
 	public Biome getNoiseBiome(int x, int y, int z) {

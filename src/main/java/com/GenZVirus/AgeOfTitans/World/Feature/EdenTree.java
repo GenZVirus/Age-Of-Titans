@@ -14,6 +14,10 @@ import net.minecraftforge.common.IPlantable;
 
 public class EdenTree extends Tree {
 
+	// This class is the eden tree configuration
+	
+	// Tree configuration
+	
 	public static final TreeFeatureConfig EDEN_TREE_CONFIG = (new TreeFeatureConfig.Builder(
 			new SimpleBlockStateProvider(BlockInit.EDEN_WOOD_LOG.get().getDefaultState()),
 			new SimpleBlockStateProvider(BlockInit.EDEN_LEAVES.get().getDefaultState()), 
@@ -25,6 +29,8 @@ public class EdenTree extends Tree {
 					.ignoreVines()
 					.setSapling((IPlantable) BlockInit.EDEN_SAPLING.get()).build();
 
+	// Get tree feature method
+	
 	@Override
 	protected ConfiguredFeature<TreeFeatureConfig, ?> getTreeFeature(Random randomIn, boolean bool) {
 		return Feature.NORMAL_TREE.withConfiguration(EDEN_TREE_CONFIG);

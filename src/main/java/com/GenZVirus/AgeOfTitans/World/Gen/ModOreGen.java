@@ -13,6 +13,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModOreGen {
 
+	// This class generates the custom ores
+	
+	// Ore generation method
+	
 	@SuppressWarnings("rawtypes")
 	public static void generateOre() {
 		for (Biome biome : ForgeRegistries.BIOMES) {
