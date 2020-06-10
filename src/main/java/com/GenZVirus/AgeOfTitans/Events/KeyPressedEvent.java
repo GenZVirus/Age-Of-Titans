@@ -23,6 +23,11 @@ public class KeyPressedEvent {
 	private static int timer = 0; // cooldown for for keys
 	public static boolean wasPRESSED = false; // checks if a was pressed
 	
+	// Minecraft width and height
+	
+		private static int oldMinecraftWidth = Minecraft.getInstance().getMainWindow().getWidth();
+		private static int oldMinecraftHeight = Minecraft.getInstance().getMainWindow().getHeight();
+	
 	@SubscribeEvent
 	public static void keyPressedEvent(ClientTickEvent event) {
 		if(timer > 0) timer--;
@@ -71,7 +76,23 @@ public class KeyPressedEvent {
 		if(timer == 0 && KeyboardHelper.isScrollDownKeyDown() && !ModHUD.next) {
 			ModHUD.previous = true;
 		}
-		event.
+	}
+	
+	@SubscribeEvent
+	public static void clientCheckResize(ClientTickEvent event) {
+		Minecraft mc = Minecraft.getInstance();
+		if(mc.world == null || mc.currentScreen == null) {
+			return;
+		}
+		int newMinecraftWidth = Minecraft.getInstance().getMainWindow().getWidth();
+		int newMinecraftHeight = Minecraft.getInstance().getMainWindow().getHeight();
+		
+		
+		if(oldMinecraftHeight != newMinecraftHeight || oldMinecraftWidth != newMinecraftWidth) {
+			oldMinecraftHeight = newMinecraftHeight;
+			oldMinecraftWidth = newMinecraftWidth;
+			PacketHandler.INSTANCE.sendToServer(new SpellPacket(0, 0, 0, 0, mc.player.getUniqueID(), true)); 
+		}
 	}
 	
 }

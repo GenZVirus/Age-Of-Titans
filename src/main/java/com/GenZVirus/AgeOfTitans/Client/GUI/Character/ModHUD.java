@@ -6,7 +6,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.ChatVisibility;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -16,14 +15,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ModHUD {
 
 	public static ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(AgeOfTitans.MOD_ID,"textures/gui/hud.png");
-	public static ResourceLocation SPELL1_TEXTURE = Spell.SPELL_LIST.get(0).getIcon();
-	public static ResourceLocation SPELL2_TEXTURE = Spell.SPELL_LIST.get(0).getIcon();
-	public static ResourceLocation SPELL3_TEXTURE = Spell.SPELL_LIST.get(0).getIcon();
-	public static ResourceLocation SPELL4_TEXTURE = Spell.SPELL_LIST.get(0).getIcon();
+	public static Spell SPELL1 = Spell.SPELL_LIST.get(0);
+	public static Spell SPELL2 = Spell.SPELL_LIST.get(0);
+	public static Spell SPELL3 = Spell.SPELL_LIST.get(0);
+	public static Spell SPELL4 = Spell.SPELL_LIST.get(0);
+	public static Spell selectedSpell = SPELL1;
 	private static Minecraft mc = Minecraft.getInstance();
 	private static final int ICON_SIZE = 32;
 	private static final int IMAGE_SIZE = 384;
-	private static final int RESIZE = 2;
+	private static final int RESIZE = 3;
 	private static final int IMAGE_RESIZED = IMAGE_SIZE / RESIZE;
 	private static int i = 0;
 	private static int j = 0;
@@ -83,37 +83,37 @@ public class ModHUD {
 			spellPos--;
 		}
 		
-		mc.getTextureManager().bindTexture(SPELL1_TEXTURE);
+		mc.getTextureManager().bindTexture(SPELL1.getIconHUD());
 		switch(spellPos) {
-		case 0: {renderPos0(posX, posY);break;}
+		case 0: {renderPos0(posX, posY);selectedSpell = SPELL1;break;}
 		case 1: {renderPos1(posX, posY);break;}
 		case 2: {renderPos2(posX, posY);break;}
 		case 3: {renderPos3(posX, posY);break;}
 		default: break;
 		}
 		
-		mc.getTextureManager().bindTexture(SPELL2_TEXTURE);
+		mc.getTextureManager().bindTexture(SPELL2.getIconHUD());
 		switch(spellPos) {
 		case 0: {renderPos1(posX, posY);break;}
 		case 1: {renderPos2(posX, posY);break;}
 		case 2: {renderPos3(posX, posY);break;}
-		case 3: {renderPos0(posX, posY);break;}
+		case 3: {renderPos0(posX, posY);selectedSpell = SPELL2;break;}
 		default: break;
 		}
 		
-		mc.getTextureManager().bindTexture(SPELL3_TEXTURE);
+		mc.getTextureManager().bindTexture(SPELL3.getIconHUD());
 		switch(spellPos) {
 		case 0: {renderPos2(posX, posY);break;}
 		case 1: {renderPos3(posX, posY);break;}
-		case 2: {renderPos0(posX, posY);break;}
+		case 2: {renderPos0(posX, posY);selectedSpell = SPELL3;break;}
 		case 3: {renderPos1(posX, posY);break;}
 		default: break;
 		}
 		
-		mc.getTextureManager().bindTexture(SPELL4_TEXTURE);
+		mc.getTextureManager().bindTexture(SPELL4.getIconHUD());
 		switch(spellPos) {
 		case 0: {renderPos3(posX, posY);break;}
-		case 1: {renderPos0(posX, posY);break;}
+		case 1: {renderPos0(posX, posY);selectedSpell = SPELL4;break;}
 		case 2: {renderPos1(posX, posY);break;}
 		case 3: {renderPos2(posX, posY);break;}
 		default: break;
@@ -158,19 +158,19 @@ public class ModHUD {
 	}
 	
 	public static void renderPos0(int posX, int posY) {
-		AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE - 4), posY + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE - 4), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
+		AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 4), posY + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 2), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
 	}
 	
 	public static void renderPos1(int posX, int posY) {
-		AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE - 4), posY + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE - 4), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
+		AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 3), posY + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 4), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
 	}
 	
 	public static void renderPos2(int posX, int posY) {
-		AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE - 4), posY + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE - 4), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
+		AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 3), posY + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 3), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
 	}
 
 	public static void renderPos3(int posX, int posY) {
-		AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE - 4), posY + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE - 4), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
+		AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 2), posY + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 2), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
 	}
 	
 }

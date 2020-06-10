@@ -103,10 +103,10 @@ public class SpellPacket {
 				
 	// Sending data to the GUI
 				
-				ModHUD.SPELL1_TEXTURE = Spell.SPELL_LIST.get(pkt.slot1).getIcon();
-				ModHUD.SPELL2_TEXTURE = Spell.SPELL_LIST.get(pkt.slot2).getIcon();
-				ModHUD.SPELL3_TEXTURE = Spell.SPELL_LIST.get(pkt.slot3).getIcon();
-				ModHUD.SPELL4_TEXTURE = Spell.SPELL_LIST.get(pkt.slot4).getIcon();
+				ModHUD.SPELL1 = Spell.SPELL_LIST.get(pkt.slot1);
+				ModHUD.SPELL2 = Spell.SPELL_LIST.get(pkt.slot2);
+				ModHUD.SPELL3 = Spell.SPELL_LIST.get(pkt.slot3);
+				ModHUD.SPELL4 = Spell.SPELL_LIST.get(pkt.slot4);
 				
 				if(KeyPressedEvent.wasPRESSED) {
 					ModScreen.SCREEN.slot1.spell = Spell.SPELL_LIST.get(pkt.slot1);

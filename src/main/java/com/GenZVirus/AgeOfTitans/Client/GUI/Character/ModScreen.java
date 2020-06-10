@@ -55,6 +55,8 @@ public class ModScreen extends Screen {
 	// The skill slots in the skill tree
 	
 	public ModSkillSlot slot1, slot2, slot3, slot4;
+	
+	
 
 	public ModScreen(ITextComponent titleIn) {
 		super(titleIn);
@@ -129,22 +131,33 @@ public class ModScreen extends Screen {
 		this.Test = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + 4 + 60, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(1));		
 		this.Test2 = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + 4 + 30, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(2));
 		
-		buttons.clear();
+		this.addButtons();
 		
-		buttons.add(Test);
-		buttons.add(Test2);
+	}
+
+	public void addButtons() {
+		buttons.clear();
+
+		this.loadSpells();
 		
 		buttons.add(slot1);
 		buttons.add(slot2);
 		buttons.add(slot3);
 		buttons.add(slot4);
 		
+		
 		buttons.add(Human);
 		buttons.add(Reaper);
-				
-		
 	}
-
+	
+	public void loadSpells() {
+		
+		if(this.Human.isPressed) {
+			buttons.add(Test);
+			buttons.add(Test2);
+		}
+	}
+	
 	@Override
 	public void tick() {
 		super.tick();
@@ -176,10 +189,13 @@ public class ModScreen extends Screen {
 		
 		if (this.Human.isPressed) {
 			this.minecraft.getTextureManager().bindTexture(BACKGROUND_TEXTURE_HUMAN);
+			this.addButtons();
 		} else if (this.Reaper.isPressed) {
 			this.minecraft.getTextureManager().bindTexture(BACKGROUND_TEXTURE_REAPER);
-		} else
+			this.addButtons();
+		} else {
 			this.minecraft.getTextureManager().bindTexture(BACKGROUND_TEXTURE_HUMAN);
+		}
 		
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		int x = (this.width - this.xSize) / 2;

@@ -21,5 +21,11 @@ public class PacketHandler {
 				.decoder(SpellPacket::decode)
 				.consumer(SpellPacket::handle)
 				.add();
+		
+		INSTANCE.messageBuilder(PlayerUseSpellPacket.class, id++)
+				.encoder(PlayerUseSpellPacket::encode)
+				.decoder(PlayerUseSpellPacket::decode)
+				.consumer(PlayerUseSpellPacket::handle)
+				.add();
 	}
 }
