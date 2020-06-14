@@ -7,6 +7,7 @@ import com.GenZVirus.AgeOfTitans.Client.Keybind.ModKeybind;
 import com.GenZVirus.AgeOfTitans.Init.BiomeInit;
 import com.GenZVirus.AgeOfTitans.Init.BlockInit;
 import com.GenZVirus.AgeOfTitans.Init.DimensionInit;
+import com.GenZVirus.AgeOfTitans.Init.EffectInit;
 import com.GenZVirus.AgeOfTitans.Init.ItemInit;
 import com.GenZVirus.AgeOfTitans.Init.ModContainerTypes;
 import com.GenZVirus.AgeOfTitans.Init.ModEntityTypes;
@@ -74,6 +75,10 @@ public class AgeOfTitans
     // Registering custom items
     	
     	ItemInit.ITEMS.register(modEventBus);
+    	
+    	// Register custom effects
+    	
+    	EffectInit.MOD_EFFECTS.register(modEventBus);
     	
     // Registering custom blocks
     	

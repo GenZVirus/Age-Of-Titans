@@ -2,7 +2,7 @@ package com.GenZVirus.AgeOfTitans.Objects.Items;
 
 import java.util.List;
 
-import com.GenZVirus.AgeOfTitans.Entities.ShockwaveEntity;
+import com.GenZVirus.AgeOfTitans.Entities.SwordSlashEntity;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
 import com.GenZVirus.AgeOfTitans.Util.Helpers.KeyboardHelper;
 

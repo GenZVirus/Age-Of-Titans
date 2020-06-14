@@ -158,15 +158,15 @@ public class ModHUD {
 	}
 	
 	public static void renderPos0(int posX, int posY) {
-		AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 4), posY + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 2), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
+		AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 2), posY + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 2), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
 	}
 	
 	public static void renderPos1(int posX, int posY) {
-		AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 3), posY + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 4), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
+		AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 3), posY + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 2), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
 	}
 	
 	public static void renderPos2(int posX, int posY) {
-		AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 3), posY + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 3), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
+		AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 1), posY + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 3), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
 	}
 
 	public static void renderPos3(int posX, int posY) {

@@ -3,13 +3,14 @@ package com.GenZVirus.AgeOfTitans.SpellSystem;
 import java.util.List;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
-import com.GenZVirus.AgeOfTitans.Entities.ShockwaveEntity;
+import com.GenZVirus.AgeOfTitans.Entities.SwordSlashEntity;
+import com.GenZVirus.AgeOfTitans.Init.EffectInit;
 import com.GenZVirus.AgeOfTitans.Util.Helpers.ConeShape;
 import com.google.common.collect.Lists;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -53,7 +54,7 @@ public class Spell {
 	
 	public static final List<Spell> SPELL_LIST = Lists.newArrayList();
 	private static final Spell NO_SPELL = new Spell(0, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/noimage.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/noimage.png"), "");
-	private static final Spell SHOCKWAVE = new Spell(1, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shockwaveicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shockwaveiconhud.png"), "Shockwave"){
+	private static final Spell SWORD_SLASH = new Spell(1, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashiconhud.png"), "Sword Slash"){
 		@Override
 		public void effect(World worldIn, PlayerEntity playerIn) {
 			double offset = 1.0D;
@@ -64,7 +65,7 @@ public class Spell {
 			double newPosX = offset * -Math.sin( yawRadian ) * Math.cos( pitchRadian );
 			double newPosY = offset * -Math.sin( pitchRadian );
 			double newPosZ = offset *  Math.cos( yawRadian ) * Math.cos( pitchRadian );
-			ShockwaveEntity shockwaveEntity = new ShockwaveEntity(playerIn.world, playerIn, newPosX, newPosY, newPosZ);
+			SwordSlashEntity shockwaveEntity = new SwordSlashEntity(playerIn.world, playerIn, newPosX, newPosY, newPosZ);
 		      double d0 = (double)MathHelper.sqrt(newPosX * newPosX + newPosY * newPosY + newPosZ * newPosZ);
 		      shockwaveEntity.accelerationX =  newPosX / d0 * 0.1D;
 		      shockwaveEntity.accelerationY =  newPosY / d0 * 0.1D;
@@ -74,48 +75,61 @@ public class Spell {
 		}
 		
 	};	
-	private static final Spell TEST2 = new Spell(2, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/test2.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/test2.png"), "Test2") {
+	private static final Spell SHIELD_BASH = new Spell(2, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashiconhud.png"), "Shield Bash") {
 		@Override
 		public void effect(World worldIn, PlayerEntity playerIn) {
-			double offset = 10.0D;
+			double offset = 5.0D;
 			double pitch = playerIn.getPitchYaw().x;
 			double yaw   = playerIn.getPitchYaw().y;
+			AxisAlignedBB CUBE_BOX = VoxelShapes.fullCube().getBoundingBox();
+			Vec3d pos_offset = new Vec3d(playerIn.getPosition()).add(0, 1.6D, 0);
+			AxisAlignedBB aabb = CUBE_BOX.offset(pos_offset).grow(offset);
+			List<Entity> list = worldIn.getEntitiesWithinAABBExcludingEntity(playerIn, aabb);		
 			double pitchRadian = pitch * (Math.PI / 180); // X rotation
-			double yawRadian   = yaw   * (Math.PI / 180); // Y rotation 
+			double yawRadian = yaw * (Math.PI / 180); // Y rotation 
 			double newPosX = offset * -Math.sin( yawRadian ) * Math.cos( pitchRadian );
 			double newPosY = offset * -Math.sin( pitchRadian );
 			double newPosZ = offset *  Math.cos( yawRadian ) * Math.cos( pitchRadian );
-			AxisAlignedBB CUBE_BOX = VoxelShapes.fullCube().getBoundingBox();
-			Vec3d pos_offset = new Vec3d(playerIn.getPosition()).add(0, 1.6D, 0);
-			AxisAlignedBB aabb = CUBE_BOX.offset(pos_offset).grow(10.0D);
 			ConeShape coneShape = new ConeShape(pos_offset.add(newPosX, newPosY, newPosZ), pos_offset, 10.0D, 0.1D);
-			List<Entity> list = worldIn.getEntitiesWithinAABBExcludingEntity(playerIn, aabb);
-			for(Entity entity : list) {
-				if(coneShape.containsPoint(entity.getPosX(), entity.getPosY(), entity.getPosZ())) {
-					double distance = Math.sqrt((entity.getPosX() - playerIn.getPosX()) * (entity.getPosX() - playerIn.getPosX()) + (entity.getPosY() - playerIn.getPosY()) * (entity.getPosY() - playerIn.getPosY()) + (entity.getPosZ() - playerIn.getPosZ()) * (entity.getPosZ() - playerIn.getPosZ()));
-					Vec3d vec = new Vec3d((entity.getPosX() - playerIn.getPosX()) * 10.0D, (entity.getPosY() - playerIn.getPosY()) * 10.0D, (entity.getPosZ() - playerIn.getPosZ()) * 10.0D);
-					entity.setVelocity(vec.x / distance / 2, vec.y / distance / 2, vec.z / distance / 2);
-					
+			for(double k = 0.0D; k <= 2 * (offset - 1); k += 1.0D) {
+				for(double j = 0.0D; j <= 2 * (offset - 1); j += 1.0D) {
+					for(double i = 0.0D; i <= 2 * (offset - 1); i += 1.0D) {
+						BlockPos pos = new BlockPos(new Vec3d(playerIn.getPosX() - (offset - 1) + i, playerIn.getPosY() - (offset - 1) + k, playerIn.getPosZ() - (offset - 1) + j));
+						if(coneShape.containsPoint(pos.getX(), pos.getY(), pos.getZ()))
+							if(worldIn.getBlockState(pos).getBlock().getExplosionResistance() <= 0.3F) {
+								worldIn.destroyBlock(pos, false);														
+							}
+					}
 				}
 			}
-			System.out.println(newPosX);
-			System.out.println(newPosY);
-			System.out.println(newPosZ);
-			for(double k = 1.0D; Math.abs(newPosY / 10.0D) * k <= 10.0D; k += 0.5D) {
-			for(double j = 1.0D; Math.abs(newPosZ / 10.0D) * j <= 10.0D; j += 0.5D) {
-			for(double i = 1.0D; Math.abs(newPosX / 10.0D) * i <= 10.0D; i += 0.5D) {
-			BlockPos pos = new BlockPos(new Vec3d(playerIn.getPosX() + newPosX / i, playerIn.getPosY() + newPosY / k, playerIn.getPosZ() + newPosZ / j));
-			worldIn.setBlockState(pos, Blocks.GLASS.getDefaultState());
+			for(Entity entity : list) {
+				if(coneShape.containsPoint(entity.getPosX(), entity.getPosY(), entity.getPosZ())) {
+					Vec3d vec = new Vec3d((entity.getPosX() - playerIn.getPosX()) * offset, (entity.getPosY() - playerIn.getPosY()) * offset, (entity.getPosZ() - playerIn.getPosZ()) * offset);
+					entity.setVelocity(vec.x / 2, vec.y / 2, vec.z / 2);
+				}
 			}
-			}
-			}
+			
+//			ShockwaveEntity entity = new ShockwaveEntity(ModEntityTypes.SHOCKWAVE.get(), worldIn);
+//			double x = playerIn.getPosX();
+//			double y = playerIn.getPosY();
+//			double z = playerIn.getPosZ();
+//			entity.setPositionAndRotation(x, y, z,(float) yaw,(float) pitch);
+//			worldIn.addEntity(entity);
+		}
+	};
+	
+	private static final Spell BERSERKER = new Spell(3, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/test2.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/test2.png"), "Berserker") {
+		@Override
+		public void effect(World worldIn, PlayerEntity playerIn) {
+			playerIn.addPotionEffect(new EffectInstance(EffectInit.BERSERKER.get(), 600));
 		}
 	};
 	
 	public static void registerSpells() {
 		SPELL_LIST.add(NO_SPELL.getId(), NO_SPELL);
-		SPELL_LIST.add(SHOCKWAVE.getId(), SHOCKWAVE);
-		SPELL_LIST.add(TEST2.getId(), TEST2);
+		SPELL_LIST.add(SWORD_SLASH.getId(), SWORD_SLASH);
+		SPELL_LIST.add(SHIELD_BASH.getId(), SHIELD_BASH);
+		SPELL_LIST.add(BERSERKER.getId(), BERSERKER);
 	}
 	
 }

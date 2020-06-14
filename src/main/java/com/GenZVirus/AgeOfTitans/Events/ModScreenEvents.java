@@ -48,8 +48,14 @@ public class ModScreenEvents {
 		
 		if(ModHUD.selectedSpell.getId() == 2 && timer == 0) {
 			if(player.getActiveHand() == Hand.OFF_HAND && player.getActiveItemStack().getItem() instanceof ShieldItem) {
-				timer = 60;
+				timer = 120;
 				PacketHandler.INSTANCE.sendToServer(new PlayerUseSpellPacket(2, player.getUniqueID()));
+			}
+		}
+		if(ModHUD.selectedSpell.getId() == 3 && timer == 0) {
+			if(player.getActiveHand() == Hand.OFF_HAND && player.isCrouching()) {
+				timer = 20;
+				PacketHandler.INSTANCE.sendToServer(new PlayerUseSpellPacket(3, player.getUniqueID()));
 			}
 		}
 	}
