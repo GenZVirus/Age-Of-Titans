@@ -53,7 +53,7 @@ public class Spell {
 	}
 	
 	public static final List<Spell> SPELL_LIST = Lists.newArrayList();
-	private static final Spell NO_SPELL = new Spell(0, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/noimage.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/noimage.png"), "");
+	private static final Spell NO_SPELL = new Spell(0, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/nospell.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/nospell.png"), "");
 	private static final Spell SWORD_SLASH = new Spell(1, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashiconhud.png"), "Sword Slash"){
 		@Override
 		public void effect(World worldIn, PlayerEntity playerIn) {
@@ -118,7 +118,7 @@ public class Spell {
 		}
 	};
 	
-	private static final Spell BERSERKER = new Spell(3, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/test2.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/test2.png"), "Berserker") {
+	private static final Spell BERSERKER = new Spell(3, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonhud.png"), "Berserker") {
 		@Override
 		public void effect(World worldIn, PlayerEntity playerIn) {
 			playerIn.addPotionEffect(new EffectInstance(EffectInit.BERSERKER.get(), 600));

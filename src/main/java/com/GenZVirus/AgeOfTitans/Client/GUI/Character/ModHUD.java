@@ -21,7 +21,7 @@ public class ModHUD {
 	public static Spell SPELL4 = Spell.SPELL_LIST.get(0);
 	public static Spell selectedSpell = SPELL1;
 	private static Minecraft mc = Minecraft.getInstance();
-	private static final int ICON_SIZE = 32;
+	private static final int ICON_SIZE = 34;
 	private static final int IMAGE_SIZE = 384;
 	private static final int RESIZE = 3;
 	private static final int IMAGE_RESIZED = IMAGE_SIZE / RESIZE;
@@ -85,37 +85,37 @@ public class ModHUD {
 		
 		mc.getTextureManager().bindTexture(SPELL1.getIconHUD());
 		switch(spellPos) {
-		case 0: {renderPos0(posX, posY);selectedSpell = SPELL1;break;}
-		case 1: {renderPos1(posX, posY);break;}
-		case 2: {renderPos2(posX, posY);break;}
-		case 3: {renderPos3(posX, posY);break;}
+		case 0: {renderPos0(posX, posY, j);selectedSpell = SPELL1;break;}
+		case 1: {renderPos1(posX, posY, j);break;}
+		case 2: {renderPos2(posX, posY, j);break;}
+		case 3: {renderPos3(posX, posY, j);break;}
 		default: break;
 		}
 		
 		mc.getTextureManager().bindTexture(SPELL2.getIconHUD());
 		switch(spellPos) {
-		case 0: {renderPos1(posX, posY);break;}
-		case 1: {renderPos2(posX, posY);break;}
-		case 2: {renderPos3(posX, posY);break;}
-		case 3: {renderPos0(posX, posY);selectedSpell = SPELL2;break;}
+		case 0: {renderPos1(posX, posY, j);break;}
+		case 1: {renderPos2(posX, posY, j);break;}
+		case 2: {renderPos3(posX, posY, j);break;}
+		case 3: {renderPos0(posX, posY, j);selectedSpell = SPELL2;break;}
 		default: break;
 		}
 		
 		mc.getTextureManager().bindTexture(SPELL3.getIconHUD());
 		switch(spellPos) {
-		case 0: {renderPos2(posX, posY);break;}
-		case 1: {renderPos3(posX, posY);break;}
-		case 2: {renderPos0(posX, posY);selectedSpell = SPELL3;break;}
-		case 3: {renderPos1(posX, posY);break;}
+		case 0: {renderPos2(posX, posY, j);break;}
+		case 1: {renderPos3(posX, posY, j);break;}
+		case 2: {renderPos0(posX, posY, j);selectedSpell = SPELL3;break;}
+		case 3: {renderPos1(posX, posY, j);break;}
 		default: break;
 		}
 		
 		mc.getTextureManager().bindTexture(SPELL4.getIconHUD());
 		switch(spellPos) {
-		case 0: {renderPos3(posX, posY);break;}
-		case 1: {renderPos0(posX, posY);selectedSpell = SPELL4;break;}
-		case 2: {renderPos1(posX, posY);break;}
-		case 3: {renderPos2(posX, posY);break;}
+		case 0: {renderPos3(posX, posY, j);break;}
+		case 1: {renderPos0(posX, posY, j);selectedSpell = SPELL4;break;}
+		case 2: {renderPos1(posX, posY, j);break;}
+		case 3: {renderPos2(posX, posY, j);break;}
 		default: break;
 		}
 		
@@ -157,20 +157,40 @@ public class ModHUD {
 		}
 	}
 	
-	public static void renderPos0(int posX, int posY) {
-		AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 2), posY + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 2), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
+	public static void renderPos0(int posX, int posY, int j) {
+		switch(j) {
+		case 0: {AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2), posY + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 2), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);break;}
+		case 1: {AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 1), posY + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 3), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);break;}
+		case 2: {AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 2), posY + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 2), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);break;}
+		case 3: {AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 1), posY + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 1), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);break;}
+		}
 	}
 	
-	public static void renderPos1(int posX, int posY) {
-		AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 3), posY + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 2), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
+	public static void renderPos1(int posX, int posY, int j) {
+		switch(j) {
+		case 0: {AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2), posY + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 1), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);break;}
+		case 1: {AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 1), posY + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);break;}
+		case 2: {AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 2), posY + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 1), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);break;}
+		case 3: {AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 1), posY + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 2), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);break;}
+		}
 	}
 	
-	public static void renderPos2(int posX, int posY) {
-		AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 1), posY + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 3), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
+	public static void renderPos2(int posX, int posY, int j) {
+		switch(j) {
+		case 0: {AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 3), posY + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 1), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);break;}
+		case 1: {AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 2), posY + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);break;}
+		case 2: {AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 1), posY + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 1), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);break;}
+		case 3: {AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 2), posY + IMAGE_RESIZED / 8 * 3 + (ICON_SIZE/2 + 2), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);break;}
+		}
 	}
 
-	public static void renderPos3(int posX, int posY) {
-		AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 2), posY + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 2), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
+	public static void renderPos3(int posX, int posY, int j) {
+		switch(j) {
+		case 0: {AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 3), posY + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 2), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);break;}
+		case 1: {AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 2), posY + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 3), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);break;}
+		case 2: {AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 1), posY + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 2), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);break;}
+		case 3: {AbstractGui.blit(posX + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 2), posY + IMAGE_RESIZED / 8 * 3 - (ICON_SIZE/2 + 1), 0, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);break;}
+		}
 	}
 	
 }

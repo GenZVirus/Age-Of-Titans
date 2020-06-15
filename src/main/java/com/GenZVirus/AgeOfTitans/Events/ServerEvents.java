@@ -4,16 +4,20 @@ import java.util.List;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Init.EffectInit;
-import com.GenZVirus.AgeOfTitans.Util.Helpers.ConeShape;
+import com.GenZVirus.AgeOfTitans.Util.Helpers.HalfSphereShape;
 
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -42,6 +46,35 @@ public class ServerEvents {
 	
 	@SubscribeEvent
 	public static void skullCrasher(LivingAttackEvent event) {
+		if(!(event.getSource().getTrueSource() instanceof PlayerEntity)) {
+			return;
+		}
+		PlayerEntity player = (PlayerEntity)event.getSource().getTrueSource();
+		LivingEntity target =  event.getEntityLiving();
+		if(player.isPotionActive(EffectInit.BERSERKER.get())) {
+			boolean flag = player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(Effects.BLINDNESS);
+			if(flag) {
+				List<ItemStack> list = (List<ItemStack>) target.getArmorInventoryList();
+				if(list.get(3).getEquipmentSlot() == EquipmentSlotType.HEAD) { 
+					if(list.get(3).getItem().getMaxDamage() >= 1000) {
+						list.get(3).setDamage(list.get(3).getDamage() - 1000);
+					} else {
+						list.get(3).setDamage(0);
+					}
+				} else if(target.isNonBoss()) {
+					target.attackEntityFrom(new DamageSource("Skull Crasher"){
+						@Override 
+						public ITextComponent getDeathMessage(LivingEntity entityLivingBaseIn) {
+							System.out.println("TEST");
+						      LivingEntity livingentity = entityLivingBaseIn.getAttackingEntity();
+						      String s = "death.attack." + this.damageType;
+						      String s1 = s + ".player";
+						      return livingentity != null ? new TranslationTextComponent(s1, entityLivingBaseIn.getDisplayName(), livingentity.getDisplayName()) : new TranslationTextComponent(s, entityLivingBaseIn.getDisplayName());
+						   }
+					}.setDamageBypassesArmor().setDamageIsAbsolute() , Float.MAX_VALUE);
+				}
+			}
+		}
 	}
 	
 	@SubscribeEvent
@@ -55,25 +88,22 @@ public class ServerEvents {
 		PlayerEntity player = event.player;
 		if(player.getHeldItemMainhand().getItem().equals(Items.AIR) && player.isPotionActive(EffectInit.BERSERKER.get())) {
 			if(player.swingProgressInt == -1) {
-				double offset = 2.0D;
+				double offset = 3.0D;
 				double pitch = player.getPitchYaw().x;
 				double yaw   = player.getPitchYaw().y;
-				AxisAlignedBB CUBE_BOX = VoxelShapes.fullCube().getBoundingBox();
-				Vec3d pos_offset = new Vec3d(player.getPosition()).add(0, 1.6D, 0);
-				AxisAlignedBB aabb = CUBE_BOX.offset(pos_offset).grow(offset);
-				List<Entity> list = player.world.getEntitiesWithinAABBExcludingEntity(player, aabb);		
+				Vec3d pos_offset = new Vec3d(player.getPosition()).add(0, 1.6D, 0);		
 				double pitchRadian = pitch * (Math.PI / 180); // X rotation
 				double yawRadian = yaw * (Math.PI / 180); // Y rotation 
 				double newPosX = offset * -Math.sin( yawRadian ) * Math.cos( pitchRadian );
 				double newPosY = offset * -Math.sin( pitchRadian );
 				double newPosZ = offset *  Math.cos( yawRadian ) * Math.cos( pitchRadian );
-				ConeShape coneShape = new ConeShape(pos_offset.add(newPosX, newPosY, newPosZ), pos_offset, 10.0D, 0.1D);
-				for(double k = 0.0D; k <= 2 * (offset - 1); k += 1.0D) {
-					for(double j = 0.0D; j <= 2 * (offset - 1); j += 1.0D) {
-						for(double i = 0.0D; i <= 2 * (offset - 1); i += 1.0D) {
-							BlockPos pos = new BlockPos(new Vec3d(player.getPosX() - (offset - 1) + i, player.getPosY() - (offset - 1) + k, player.getPosZ() - (offset - 1) + j));
-							if(coneShape.containsPoint(pos.getX(), pos.getY(), pos.getZ()))
-									player.world.destroyBlock(pos, false);														
+				HalfSphereShape halfSphereShape = new HalfSphereShape(pos_offset.add(newPosX, newPosY, newPosZ), pos_offset);
+				for(double k = 0.0D; k <= 2 * offset; k += 1.0D) {
+					for(double j = 0.0D; j <= 2 * offset; j += 1.0D) {
+						for(double i = 0.0D; i <= 2 * offset; i += 1.0D) {
+							BlockPos pos = new BlockPos(new Vec3d(player.getPosX() - offset + i, player.getPosY() - offset + k, player.getPosZ() - offset + j));
+							if(halfSphereShape.containsPoint(pos.getX(), pos.getY(), pos.getZ()))
+									player.world.destroyBlock(pos, true);														
 						}
 					}
 				}

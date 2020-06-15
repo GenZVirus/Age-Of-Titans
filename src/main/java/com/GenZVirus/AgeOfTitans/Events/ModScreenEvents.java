@@ -53,7 +53,7 @@ public class ModScreenEvents {
 			}
 		}
 		if(ModHUD.selectedSpell.getId() == 3 && timer == 0) {
-			if(player.getActiveHand() == Hand.OFF_HAND && player.isCrouching()) {
+			if(player.isCrouching()) {
 				timer = 20;
 				PacketHandler.INSTANCE.sendToServer(new PlayerUseSpellPacket(3, player.getUniqueID()));
 			}
