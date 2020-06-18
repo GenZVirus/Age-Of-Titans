@@ -1,6 +1,7 @@
 package com.GenZVirus.AgeOfTitans.Init;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
+import com.GenZVirus.AgeOfTitans.Entities.ChainEntity;
 import com.GenZVirus.AgeOfTitans.Entities.ReaperEntity;
 import com.GenZVirus.AgeOfTitans.Entities.ShockwaveEntity;
 import com.GenZVirus.AgeOfTitans.Entities.SwordSlashEntity;
@@ -31,5 +32,10 @@ public class ModEntityTypes {
 			() -> EntityType.Builder.<ShockwaveEntity>create(ShockwaveEntity::new, EntityClassification.CREATURE)
 					.size(1.0F, 1.0F)
 					.build(new ResourceLocation(AgeOfTitans.MOD_ID, "shockwave").toString()));
+	
+	public static final RegistryObject<EntityType<ChainEntity>> CHAIN = ENTITY_TYPES.register("chain",
+			() -> EntityType.Builder.<ChainEntity>create(ChainEntity::new, EntityClassification.CREATURE)
+					.size(1.0F, 1.0F)
+					.build(new ResourceLocation(AgeOfTitans.MOD_ID, "chain").toString()));
 	
 }

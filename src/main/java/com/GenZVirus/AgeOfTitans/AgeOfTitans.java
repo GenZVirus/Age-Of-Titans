@@ -12,6 +12,7 @@ import com.GenZVirus.AgeOfTitans.Init.ItemInit;
 import com.GenZVirus.AgeOfTitans.Init.ModContainerTypes;
 import com.GenZVirus.AgeOfTitans.Init.ModEntityTypes;
 import com.GenZVirus.AgeOfTitans.Init.ModTileEntityTypes;
+import com.GenZVirus.AgeOfTitans.Init.ParticleInit;
 import com.GenZVirus.AgeOfTitans.Network.PacketHandler;
 import com.GenZVirus.AgeOfTitans.SpellSystem.FileSystem;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
@@ -71,12 +72,16 @@ public class AgeOfTitans
     	
     	modEventBus.addListener(this::setup);
     	modEventBus.addListener(this::doClientStuff);
+    
+    //Registering custom particles
+    	
+    	ParticleInit.PARTICLES.register(modEventBus);
     	
     // Registering custom items
     	
     	ItemInit.ITEMS.register(modEventBus);
     	
-    	// Register custom effects
+    // Register custom effects
     	
     	EffectInit.MOD_EFFECTS.register(modEventBus);
     	

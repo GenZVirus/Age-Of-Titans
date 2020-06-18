@@ -27,5 +27,11 @@ public class PacketHandler {
 				.decoder(PlayerUseSpellPacket::decode)
 				.consumer(PlayerUseSpellPacket::handle)
 				.add();
+		
+		INSTANCE.messageBuilder(SyncPlayerMotionPacket.class, id++)
+				.encoder(SyncPlayerMotionPacket::encode)
+				.decoder(SyncPlayerMotionPacket::decode)
+				.consumer(SyncPlayerMotionPacket::handle)
+				.add();
 	}
 }

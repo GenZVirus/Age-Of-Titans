@@ -20,6 +20,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -111,5 +112,11 @@ public class ServerEvents {
 		}
 	}
 	
+	@SubscribeEvent
+	public static void onImpact(ProjectileImpactEvent.Fireball event) {
+		if(event.getEntity().world.isRemote) return;
+		System.out.println(event.getFireball().shootingEntity);
+		event.getFireball().shootingEntity.setMotion(0, 2, 0);
+	}
 	
 }
