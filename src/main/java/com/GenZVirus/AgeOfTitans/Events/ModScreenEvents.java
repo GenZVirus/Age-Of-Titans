@@ -11,7 +11,9 @@ import com.GenZVirus.AgeOfTitans.Client.GUI.Character.ModSkillSlot;
 import com.GenZVirus.AgeOfTitans.Network.PacketHandler;
 import com.GenZVirus.AgeOfTitans.Network.PlayerUseSpellPacket;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.Widget;
+import net.minecraft.entity.player.ChatVisibility;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ShieldItem;
 import net.minecraft.item.SwordItem;
@@ -19,8 +21,8 @@ import net.minecraft.util.Hand;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.GuiScreenEvent.MouseClickedEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.event.TickEvent.Phase;
-import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -29,18 +31,25 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 public class ModScreenEvents {
 
 	private static int timer = 0;
-	
+
+	@SuppressWarnings("resource")
 	@SubscribeEvent
-	public static void PlayerSpellUseEvent(PlayerTickEvent event) {
+	public static void PlayerSpellUseEvent(ClientTickEvent event) {
 		if(event.phase == Phase.START) {
 			return;
 		}
+		Minecraft mc = Minecraft.getInstance();
+		if ((mc.currentScreen != null && mc.gameSettings.chatVisibility != ChatVisibility.HIDDEN) || mc.world == null) {
+			return;
+		}
+		
 		if(timer > 0) {
 			timer--;
 		}
-		PlayerEntity player = event.player;
+		PlayerEntity player = Minecraft.getInstance().player;
+		if(player == null) return;
 		if(ModHUD.selectedSpell.getId() == 1 && player.getHeldItemMainhand().getItem() instanceof SwordItem && timer == 0) {
-			if(player.isSwingInProgress) {
+			if(mc.mouseHelper.isLeftDown()) {
 				timer = 120;
 				PacketHandler.INSTANCE.sendToServer(new PlayerUseSpellPacket(1, player.getUniqueID())); 
 			}
@@ -53,9 +62,15 @@ public class ModScreenEvents {
 			}
 		}
 		if(ModHUD.selectedSpell.getId() == 3 && timer == 0) {
-			if(player.isCrouching()) {
+			if(mc.mouseHelper.isRightDown()) {
 				timer = 20;
 				PacketHandler.INSTANCE.sendToServer(new PlayerUseSpellPacket(3, player.getUniqueID()));
+			}
+		}
+		if(ModHUD.selectedSpell.getId() == 4 && timer == 0) {
+			if(mc.mouseHelper.isRightDown()) {
+				timer = 20;
+				PacketHandler.INSTANCE.sendToServer(new PlayerUseSpellPacket(4, player.getUniqueID()));
 			}
 		}
 	}

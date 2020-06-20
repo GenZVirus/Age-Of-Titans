@@ -28,6 +28,7 @@ public class ChainEntity extends DamagingProjectileEntity{
 	public boolean isInvulnerable = true;
 	public int timeLife = 20;
 	public PlayerEntity shooter;
+	public float borderSize = 0.1F;
 	
 	public ChainEntity(EntityType<? extends DamagingProjectileEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -40,10 +41,19 @@ public class ChainEntity extends DamagingProjectileEntity{
 
 	@Override
 	public void tick() {
-		timeLife--;
-		if(timeLife <= 0)
+		this.timeLife--;
+		if(this.timeLife <= 0)
 			this.remove();
-		this.world.addParticle(new ChainParticle.ChainParticleData(1.0f, 1.0f, 1.0f, 1.0f), this.getPosX(), this.getPosY() + 0.5D, this.getPosZ(), 0, 0, 0);
+        Vec3d vec3d = this.getMotion();
+        double d0 = this.getPosX() + vec3d.x * 2;
+        double d1 = this.getPosY() + vec3d.y * 2;
+        double d2 = this.getPosZ() + vec3d.z * 2;
+		this.world.addParticle(this.getParticle(), d0, d1 + 0.5D, d2, 0, 0, 0);
+		d0 = this.getPosX() + vec3d.x * 3;
+        d1 = this.getPosY() + vec3d.y * 3;
+        d2 = this.getPosZ() + vec3d.z * 3;
+		this.world.addParticle(this.getParticle(), d0, d1 + 0.5D, d2, 0, 0, 0);
+		if(this.timeLife < 18)
 		super.tick();
 		
 	}
@@ -64,7 +74,6 @@ public class ChainEntity extends DamagingProjectileEntity{
 	         if (result.getType() == RayTraceResult.Type.ENTITY) {
 	            Entity entity = ((EntityRayTraceResult)result).getEntity();
 	            if (this.shootingEntity != null) {
-	            	Vec3d vec1 = new Vec3d(shootingEntity.getPosX() - entity.getPosX(), shootingEntity.getPosY() - entity.getPosY() + 1.0D, shootingEntity.getPosZ() - entity.getPosZ());
 	            	entity.setPosition(this.shootingEntity.getPosX(), this.shootingEntity.getPosY(), this.shootingEntity.getPosZ());
 	               entity.attackEntityFrom(DamageSource.MAGIC, 5.0F);
 	            }
@@ -87,6 +96,11 @@ public class ChainEntity extends DamagingProjectileEntity{
 	   protected IParticleData getParticle() {
 		      return new ChainParticle.ChainParticleData(1.0f, 1.0f, 1.0f, 1.0f);
 		   }
+	   
+	   @Override
+	public float getCollisionBorderSize() {
+		return this.borderSize;
+	}
 	   
 	@Override
 	public IPacket<?> createSpawnPacket() {

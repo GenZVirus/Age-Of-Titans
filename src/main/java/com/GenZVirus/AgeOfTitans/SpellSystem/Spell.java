@@ -133,7 +133,7 @@ public class Spell {
 		}
 	};
 	
-	private static final Spell CHAIN = new Spell(4, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashiconhud.png"), "Sword Slash"){
+	private static final Spell CHAIN = new Spell(4, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainiconhud.png"), "Chain"){
 		@Override
 		public void effect(World worldIn, PlayerEntity playerIn) {
 			double offset = 1.0D;
@@ -149,7 +149,7 @@ public class Spell {
 			chainEntity.accelerationX =  newPosX / d0 * 0.5D;
 			chainEntity.accelerationY =  newPosY / d0 * 0.5D;
 			chainEntity.accelerationZ =  newPosZ / d0 * 0.5D;
-			chainEntity.setRawPosition(playerIn.getPosX(), 1.6 + playerIn.getPosY(), playerIn.getPosZ());
+			chainEntity.setRawPosition(playerIn.getPosX() + newPosX, 1.0D + playerIn.getPosY() + newPosY, playerIn.getPosZ() + newPosZ);
 			playerIn.world.addEntity(chainEntity);
 		}
 		

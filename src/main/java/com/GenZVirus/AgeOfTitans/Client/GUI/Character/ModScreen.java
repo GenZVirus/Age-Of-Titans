@@ -50,7 +50,7 @@ public class ModScreen extends Screen {
 	
 	// The button for spells in the skill tree
 	
-	public ModSkillButton SwordSlash, ShieldBash, Berserker;
+	public ModSkillButton SwordSlash, ShieldBash, Berserker, Chain;
 	
 	// The skill slots in the skill tree
 	
@@ -131,6 +131,7 @@ public class ModScreen extends Screen {
 		this.SwordSlash = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + 4 + 60, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(1));		
 		this.ShieldBash = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + 4 + 30, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(2));
 		this.Berserker = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + 4 + 90, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(3));
+		this.Chain = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + 4 + 120, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(4));
 		
 		this.addButtons();
 		
@@ -157,6 +158,7 @@ public class ModScreen extends Screen {
 			buttons.add(SwordSlash);
 			buttons.add(ShieldBash);
 			buttons.add(Berserker);
+			buttons.add(Chain);
 		}
 	}
 	

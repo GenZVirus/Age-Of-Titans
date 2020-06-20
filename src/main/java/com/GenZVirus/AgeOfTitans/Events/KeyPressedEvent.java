@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.ChatVisibility;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
+import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -30,6 +31,9 @@ public class KeyPressedEvent {
 	
 	@SubscribeEvent
 	public static void keyPressedEvent(ClientTickEvent event) {
+		if(event.phase == Phase.START) {
+			return;
+		}
 		if(timer > 0) timer--;
 		Minecraft mc = Minecraft.getInstance();
 		if(timer == 0 && KeyboardHelper.isCharacterKeyDown()) {

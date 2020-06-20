@@ -1,6 +1,6 @@
 package com.GenZVirus.AgeOfTitans.Events;
 
-import java.util.List;
+import java.util.Random;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Init.EffectInit;
@@ -8,8 +8,9 @@ import com.GenZVirus.AgeOfTitans.Util.Helpers.HalfSphereShape;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
@@ -20,7 +21,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -55,28 +55,26 @@ public class ServerEvents {
 		if(player.isPotionActive(EffectInit.BERSERKER.get())) {
 			boolean flag = player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(Effects.BLINDNESS);
 			if(flag) {
-				List<ItemStack> list = (List<ItemStack>) target.getArmorInventoryList();
-				if(list.get(3).getEquipmentSlot() == EquipmentSlotType.HEAD) { 
-					if(list.get(3).getItem().getMaxDamage() >= 1000) {
-						list.get(3).setDamage(list.get(3).getDamage() - 1000);
-					} else {
-						list.get(3).setDamage(0);
-					}
+				if(target.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() != Items.AIR) { 
+					target.getItemStackFromSlot(EquipmentSlotType.HEAD).attemptDamageItem(1000, new Random(), (ServerPlayerEntity)player);
 				} else if(target.isNonBoss()) {
 					target.attackEntityFrom(new DamageSource("Skull Crasher"){
 						@Override 
 						public ITextComponent getDeathMessage(LivingEntity entityLivingBaseIn) {
-							System.out.println("TEST");
 						      LivingEntity livingentity = entityLivingBaseIn.getAttackingEntity();
 						      String s = "death.attack." + this.damageType;
 						      String s1 = s + ".player";
 						      return livingentity != null ? new TranslationTextComponent(s1, entityLivingBaseIn.getDisplayName(), livingentity.getDisplayName()) : new TranslationTextComponent(s, entityLivingBaseIn.getDisplayName());
 						   }
-					}.setDamageBypassesArmor().setDamageIsAbsolute() , Float.MAX_VALUE);
+					}.setDamageBypassesArmor().setDamageIsAbsolute() , 2000000000.0F);
+					event.setCanceled(true);
 				}
 			}
 		}
+		
 	}
+	
+	private static Item oldItem = Items.AIR;
 	
 	@SubscribeEvent
 	public static void blockBreaker(PlayerTickEvent event) {
@@ -87,7 +85,11 @@ public class ServerEvents {
 			return;
 		}
 		PlayerEntity player = event.player;
-		if(player.getHeldItemMainhand().getItem().equals(Items.AIR) && player.isPotionActive(EffectInit.BERSERKER.get())) {
+		if(!player.getHeldItemMainhand().getItem().equals(oldItem)) {
+		oldItem = player.getHeldItemMainhand().getItem();
+		return;
+		}
+		if(oldItem.equals(Items.AIR) && player.isPotionActive(EffectInit.BERSERKER.get())) {
 			if(player.swingProgressInt == -1) {
 				double offset = 3.0D;
 				double pitch = player.getPitchYaw().x;
@@ -110,13 +112,5 @@ public class ServerEvents {
 				}
 			}
 		}
-	}
-	
-	@SubscribeEvent
-	public static void onImpact(ProjectileImpactEvent.Fireball event) {
-		if(event.getEntity().world.isRemote) return;
-		System.out.println(event.getFireball().shootingEntity);
-		event.getFireball().shootingEntity.setMotion(0, 2, 0);
-	}
-	
+	}	
 }

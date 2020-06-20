@@ -34,6 +34,16 @@ public class ForgeEventBusSubscriber {
 	
 	public static List<UUID> uuids = Lists.newArrayList();
 	
+	@SubscribeEvent
+	public static void onPlayerDeath(PlayerEvent.Clone e) {
+		players.remove(e.getOriginal());
+		uuids.remove(e.getOriginal().getUniqueID());
+		players.add(e.getPlayer());
+		uuids.add(e.getPlayer().getUniqueID());
+		List<Integer> list = FileSystem.readOrWrite(e.getPlayer().getUniqueID().toString(), 0, 0, 0, 0);
+		PacketHandler.INSTANCE.sendTo(new SpellPacket(list.get(0), list.get(1), list.get(2), list.get(3), e.getPlayer().getUniqueID(), false), ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+	}
+	
 	// When a player leaves the server all lists clear his data from them
 	
 	@SubscribeEvent
