@@ -128,10 +128,10 @@ public class ModScreen extends Screen {
 		
 		// The spell buttons
 		
-		this.SwordSlash = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + 4 + 60, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(1));		
-		this.ShieldBash = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + 4 + 30, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(2));
-		this.Berserker = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + 4 + 90, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(3));
-		this.Chain = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + 4 + 120, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(4));
+		this.SwordSlash = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 26, (this.height - this.ySize) / 2 + 4 + 30, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(1));		
+		this.ShieldBash = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 106, (this.height - this.ySize) / 2 + 4 + 30, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(2));
+		this.Berserker = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 186, (this.height - this.ySize) / 2 + 4 + 30, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(3));
+		this.Chain = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 266, (this.height - this.ySize) / 2 + 4 + 30, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(4));
 		
 		this.addButtons();
 		
@@ -155,8 +155,8 @@ public class ModScreen extends Screen {
 	public void loadSpells() {
 		
 		if(this.Human.isPressed) {
-			buttons.add(SwordSlash);
 			buttons.add(ShieldBash);
+			buttons.add(SwordSlash);
 			buttons.add(Berserker);
 			buttons.add(Chain);
 		}
@@ -229,6 +229,7 @@ public class ModScreen extends Screen {
 		return this.buttons;
 	}
 	
+	@SuppressWarnings("resource")
 	public void sendPacket(int slot1, int slot2, int slot3, int slot4) {		
 		PacketHandler.INSTANCE.sendToServer(new SpellPacket(slot1, slot2, slot3, slot4, Minecraft.getInstance().player.getUniqueID(), false));
 	}

@@ -42,6 +42,11 @@ public class Spell {
 		return this.id;
 	}
 	
+	public List<String> getDescription(){
+		List<String> list = Lists.newArrayList();
+		return list;
+	}
+	
 	public ResourceLocation getIcon() {
 		return this.icon;
 	}
@@ -77,6 +82,17 @@ public class Spell {
 		      shockwaveEntity.accelerationZ =  newPosZ / d0 * 0.1D;
 		      shockwaveEntity.setRawPosition(playerIn.getPosX(), 1.6 + playerIn.getPosY(), playerIn.getPosZ());
 		      playerIn.world.addEntity(shockwaveEntity);
+		}
+		
+		public List<String> getDescription(){
+			List<String> list = Lists.newArrayList();
+			list.add("Sword Slash is a powerful ability that");
+			list.add("empowers the users sword with unending");
+			list.add("burning flames.Upon swinging the sword");
+			list.add("the flames will fly towards the target");
+			list.add("creating an fire explosion on hit and ");
+			list.add("damaging all nearby targets.");
+			return list;
 		}
 		
 	};	
@@ -124,6 +140,17 @@ public class Spell {
 //			entity.setPositionAndRotation(x, y, z,(float) yaw,(float) pitch);
 //			worldIn.addEntity(entity);
 		}
+		
+		public List<String> getDescription(){
+			List<String> list = Lists.newArrayList();
+			list.add("Shield Bash turns a any shield into a deadly");
+			list.add("weapon.Upon blocking, all targets in front");
+			list.add("of the shield will be knockbacked. Blocks");
+			list.add("with weak resistance will colaps when hit");
+			list.add("by the shockwave.");
+			return list;
+		}
+		
 	};
 	
 	private static final Spell BERSERKER = new Spell(3, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonhud.png"), "Berserker") {
@@ -131,6 +158,19 @@ public class Spell {
 		public void effect(World worldIn, PlayerEntity playerIn) {
 			playerIn.addPotionEffect(new EffectInstance(EffectInit.BERSERKER.get(), 600));
 		}
+		
+		public List<String> getDescription(){
+			List<String> list = Lists.newArrayList();
+			list.add("Berserker is all or nothing. Empowers");
+			list.add("the user, giving him strength and speed.");
+			list.add("Jumping over mountains is an easy fit.");
+			list.add("Even blocks and enemies can't resist");
+			list.add("your punches. If the target enemy doesn't ");
+			list.add("have an helmet to protect his skull, a");
+			list.add("critical hit will be their undoing.");
+			return list;
+		}
+		
 	};
 	
 	private static final Spell CHAIN = new Spell(4, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainiconhud.png"), "Chain"){
@@ -151,6 +191,15 @@ public class Spell {
 			chainEntity.accelerationZ =  newPosZ / d0 * 0.5D;
 			chainEntity.setRawPosition(playerIn.getPosX() + newPosX, 1.0D + playerIn.getPosY() + newPosY, playerIn.getPosZ() + newPosZ);
 			playerIn.world.addEntity(chainEntity);
+		}
+		
+		public List<String> getDescription(){
+			List<String> list = Lists.newArrayList();
+			list.add("Chain provides high utility. Giving the");
+			list.add("user mobility by hooking blocks to thrust");
+			list.add("themselves towards the blocks. Or hook");
+			list.add("an enemy to pull them towards them.");
+			return list;
 		}
 		
 	};

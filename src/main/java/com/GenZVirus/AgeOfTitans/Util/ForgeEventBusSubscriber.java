@@ -7,7 +7,7 @@ import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Init.DimensionInit;
 import com.GenZVirus.AgeOfTitans.Network.PacketHandler;
 import com.GenZVirus.AgeOfTitans.Network.SpellPacket;
-import com.GenZVirus.AgeOfTitans.SpellSystem.FileSystem;
+import com.GenZVirus.AgeOfTitans.SpellSystem.XMLFileJava;
 import com.google.common.collect.Lists;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -40,9 +40,15 @@ public class ForgeEventBusSubscriber {
 		uuids.remove(e.getOriginal().getUniqueID());
 		players.add(e.getPlayer());
 		uuids.add(e.getPlayer().getUniqueID());
-		List<Integer> list = FileSystem.readOrWrite(e.getPlayer().getUniqueID().toString(), 0, 0, 0, 0);
-		PacketHandler.INSTANCE.sendTo(new SpellPacket(list.get(0), list.get(1), list.get(2), list.get(3), e.getPlayer().getUniqueID(), false), ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
-	}
+		String playerName = e.getPlayer().getName().getFormattedText();
+		UUID uuid = e.getPlayer().getUniqueID();
+		XMLFileJava.checkFileAndMake(uuid, playerName);
+		PacketHandler.INSTANCE.sendTo(new SpellPacket(Integer.parseInt(XMLFileJava.readElement(uuid, "Slot1_Spell_ID")), 
+														Integer.parseInt(XMLFileJava.readElement(uuid, "Slot2_Spell_ID")), 
+														Integer.parseInt(XMLFileJava.readElement(uuid, "Slot3_Spell_ID")), 
+														Integer.parseInt(XMLFileJava.readElement(uuid, "Slot4_Spell_ID")), 
+														e.getPlayer().getUniqueID(), false), ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		}
 	
 	// When a player leaves the server all lists clear his data from them
 	
@@ -58,8 +64,15 @@ public class ForgeEventBusSubscriber {
 	public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent e) {
 		players.add(e.getPlayer());
 		uuids.add(e.getPlayer().getUniqueID());
-		List<Integer> list = FileSystem.readOrWrite(e.getPlayer().getUniqueID().toString(), 0, 0, 0, 0);
-		PacketHandler.INSTANCE.sendTo(new SpellPacket(list.get(0), list.get(1), list.get(2), list.get(3), e.getPlayer().getUniqueID(), false), ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		String playerName = e.getPlayer().getName().getFormattedText();
+		UUID uuid = e.getPlayer().getUniqueID();
+		XMLFileJava.checkFileAndMake(uuid, playerName);
+		System.out.println(uuid.toString());
+		PacketHandler.INSTANCE.sendTo(new SpellPacket(Integer.parseInt(XMLFileJava.readElement(uuid, "Slot1_Spell_ID")), 
+														Integer.parseInt(XMLFileJava.readElement(uuid, "Slot2_Spell_ID")), 
+														Integer.parseInt(XMLFileJava.readElement(uuid, "Slot3_Spell_ID")), 
+														Integer.parseInt(XMLFileJava.readElement(uuid, "Slot4_Spell_ID")), 
+														e.getPlayer().getUniqueID(), false), ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 	}
 	
 	// This event registers the Eden Dimension

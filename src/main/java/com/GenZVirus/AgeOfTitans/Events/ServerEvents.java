@@ -8,7 +8,6 @@ import com.GenZVirus.AgeOfTitans.Util.Helpers.HalfSphereShape;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -56,7 +55,7 @@ public class ServerEvents {
 			boolean flag = player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(Effects.BLINDNESS);
 			if(flag) {
 				if(target.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() != Items.AIR) { 
-					target.getItemStackFromSlot(EquipmentSlotType.HEAD).attemptDamageItem(1000, new Random(), (ServerPlayerEntity)player);
+					target.getItemStackFromSlot(EquipmentSlotType.HEAD).attemptDamageItem(1000, new Random(), null);
 				} else if(target.isNonBoss()) {
 					target.attackEntityFrom(new DamageSource("Skull Crasher"){
 						@Override 

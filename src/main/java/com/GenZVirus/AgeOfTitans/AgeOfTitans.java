@@ -14,7 +14,7 @@ import com.GenZVirus.AgeOfTitans.Init.ModEntityTypes;
 import com.GenZVirus.AgeOfTitans.Init.ModTileEntityTypes;
 import com.GenZVirus.AgeOfTitans.Init.ParticleInit;
 import com.GenZVirus.AgeOfTitans.Network.PacketHandler;
-import com.GenZVirus.AgeOfTitans.SpellSystem.FileSystem;
+import com.GenZVirus.AgeOfTitans.SpellSystem.XMLFileJava;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
 import com.GenZVirus.AgeOfTitans.World.Gen.ModOreGen;
 
@@ -154,10 +154,6 @@ public class AgeOfTitans
     // Initializing the PacketHandler
     	
     	PacketHandler.init();
-    	
-    // Initializing the FileSystem
-    	
-    	new FileSystem();
     	
     }
 

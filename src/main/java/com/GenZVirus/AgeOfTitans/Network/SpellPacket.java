@@ -1,17 +1,17 @@
 package com.GenZVirus.AgeOfTitans.Network;
 
-import java.util.List;
 import java.util.UUID;
 import java.util.function.Supplier;
 
 import com.GenZVirus.AgeOfTitans.Client.GUI.Character.ModHUD;
 import com.GenZVirus.AgeOfTitans.Client.GUI.Character.ModScreen;
 import com.GenZVirus.AgeOfTitans.Events.KeyPressedEvent;
-import com.GenZVirus.AgeOfTitans.SpellSystem.FileSystem;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
+import com.GenZVirus.AgeOfTitans.SpellSystem.XMLFileJava;
 import com.GenZVirus.AgeOfTitans.Util.ForgeEventBusSubscriber;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -73,12 +73,20 @@ public class SpellPacket {
 	// If the packet is destined to write something in the file
 				
 				if (!pkt.read) {
-					FileSystem.editFile(pkt.uuid.toString(), pkt.slot1, pkt.slot2, pkt.slot3, pkt.slot4);
-					List<Integer> list = FileSystem.readFile(pkt.uuid.toString());
+					XMLFileJava.editElement(pkt.uuid, "Slot1_Spell_ID", Integer.toString(pkt.slot1));
+					XMLFileJava.editElement(pkt.uuid, "Slot2_Spell_ID", Integer.toString(pkt.slot2));
+					XMLFileJava.editElement(pkt.uuid, "Slot3_Spell_ID", Integer.toString(pkt.slot3));
+					XMLFileJava.editElement(pkt.uuid, "Slot4_Spell_ID", Integer.toString(pkt.slot4));
 					for (PlayerEntity player : ForgeEventBusSubscriber.players) {
 						if (player.getUniqueID().toString().contentEquals(pkt.uuid.toString())) {
-							PacketHandler.INSTANCE.sendTo(
-									new SpellPacket(list.get(0), list.get(1), list.get(2), list.get(3),	player.getUniqueID(), false), ctx.get().getSender().connection.getNetworkManager(),	NetworkDirection.PLAY_TO_CLIENT);
+							String playerName = player.getName().getFormattedText();
+							UUID uuid = player.getUniqueID();
+							XMLFileJava.checkFileAndMake(uuid, playerName);
+							PacketHandler.INSTANCE.sendTo(new SpellPacket(Integer.parseInt(XMLFileJava.readElement(uuid, "Slot1_Spell_ID")), 
+																			Integer.parseInt(XMLFileJava.readElement(uuid, "Slot2_Spell_ID")), 
+																			Integer.parseInt(XMLFileJava.readElement(uuid, "Slot3_Spell_ID")), 
+																			Integer.parseInt(XMLFileJava.readElement(uuid, "Slot4_Spell_ID")), 
+																			player.getUniqueID(), false), ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 						}
 					}
 	
@@ -88,11 +96,16 @@ public class SpellPacket {
 					
 	// In case the player doesn't exist in the file which shouldn't happen because it is checked in the Login Event Handler
 					
-					List<Integer> list = FileSystem.readOrWrite(pkt.uuid.toString(), 0, 0, 0, 0);
 					for (PlayerEntity player : ForgeEventBusSubscriber.players) {
 						if (player.getUniqueID().toString().contentEquals(pkt.uuid.toString())) {
-							PacketHandler.INSTANCE.sendTo(
-									new SpellPacket(list.get(0), list.get(1), list.get(2), list.get(3),	player.getUniqueID(), false), ctx.get().getSender().connection.getNetworkManager(),	NetworkDirection.PLAY_TO_CLIENT);
+							String playerName = player.getName().getFormattedText();
+							UUID uuid = player.getUniqueID();
+							XMLFileJava.checkFileAndMake(uuid, playerName);
+							PacketHandler.INSTANCE.sendTo(new SpellPacket(Integer.parseInt(XMLFileJava.readElement(uuid, "Slot1_Spell_ID")), 
+																			Integer.parseInt(XMLFileJava.readElement(uuid, "Slot2_Spell_ID")), 
+																			Integer.parseInt(XMLFileJava.readElement(uuid, "Slot3_Spell_ID")), 
+																			Integer.parseInt(XMLFileJava.readElement(uuid, "Slot4_Spell_ID")), 
+																			player.getUniqueID(), false), ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 						}
 					}
 				}

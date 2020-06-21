@@ -28,7 +28,7 @@ public class ChainEntity extends DamagingProjectileEntity{
 	public boolean isInvulnerable = true;
 	public int timeLife = 20;
 	public PlayerEntity shooter;
-	public float borderSize = 0.1F;
+	public float borderSize = 0.3F;
 	
 	public ChainEntity(EntityType<? extends DamagingProjectileEntity> type, World worldIn) {
 		super(type, worldIn);
