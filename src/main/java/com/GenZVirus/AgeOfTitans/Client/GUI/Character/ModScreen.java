@@ -1,4 +1,4 @@
-package com.GenZVirus.AgeOfTitans.Client.GUI.Character;
+ package com.GenZVirus.AgeOfTitans.Client.GUI.Character;
 
 import java.util.List;
 
@@ -40,13 +40,17 @@ public class ModScreen extends Screen {
 	
 	// The size of the GUI
 	
-	private int xSize = 320;
-	private int ySize = 256;
+	public int xSize = 320;
+	public int ySize = 256;
 	
 	// The buttons for changing the skill tree
 	
 	public ModButton Human;
 	public ModButton Reaper;
+	
+	// The button for learning spells
+	
+	public ModButton LearnSpells;
 	
 	// The button for spells in the skill tree
 	
@@ -78,8 +82,7 @@ public class ModScreen extends Screen {
 		
 		// If you press on the human button the background changes to the Human one
 		
-		this.Human = new ModButton((this.width - this.xSize) / 2 + 4, (this.height - this.ySize) / 2 + 4, 156, 20,
-				I18n.format("gui.human")) {
+		this.Human = new ModButton((this.width - this.xSize) / 2 + 4, (this.height - this.ySize) / 2 + 4, 156, 20, I18n.format("gui.human")) {
 			@Override
 			public void onPress() {
 				this.isPressed = true;
@@ -102,8 +105,7 @@ public class ModScreen extends Screen {
 		
 		// If you press on the human button the background changes to the Human one
 		
-		this.Reaper = new ModButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + 4, 156,
-				20, I18n.format("gui.reaper")) {
+		this.Reaper = new ModButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + 4, 156, 20, I18n.format("gui.reaper")) {
 			@Override
 			public void onPress() {
 				this.isPressed = true;
@@ -133,6 +135,29 @@ public class ModScreen extends Screen {
 		this.Berserker = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 186, (this.height - this.ySize) / 2 + 4 + 30, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(3));
 		this.Chain = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 266, (this.height - this.ySize) / 2 + 4 + 30, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(4));
 		
+		this.LearnSpells = new ModButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + this.ySize - 4 - 20, 156, 20, I18n.format("gui.learn_spells")) {
+			@Override
+			public void onPress() {
+				if(!isPressed) {
+					isPressed = true;
+					for(Widget button : buttons) {
+						if(button instanceof ModSkillButton) {
+							((ModSkillButton) button).renderAS = true;
+						}
+					}
+					
+				} else {
+					isPressed = false;
+					for(Widget button : buttons) {
+						if(button instanceof ModSkillButton) {
+							((ModSkillButton) button).renderAS = false;
+						}
+					}
+				}
+				this.playDownSound(Minecraft.getInstance().getSoundHandler());
+			}
+		};
+		
 		this.addButtons();
 		
 	}
@@ -150,6 +175,8 @@ public class ModScreen extends Screen {
 		
 		buttons.add(Human);
 		buttons.add(Reaper);
+		
+		buttons.add(LearnSpells);
 	}
 	
 	public void loadSpells() {

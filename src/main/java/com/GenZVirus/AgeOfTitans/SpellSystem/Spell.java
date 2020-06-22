@@ -30,12 +30,15 @@ public class Spell {
 	private String name;
 	private ResourceLocation icon;
 	private ResourceLocation iconHUD;
+	public int level = 0;
+	public static int points = 0;
 	
-	public Spell(int id, ResourceLocation icon, ResourceLocation iconHUD, String name) {
+	public Spell(int id, ResourceLocation icon, ResourceLocation iconHUD, String name, int level) {
 		this.id = id;
 		this.icon = icon;
 		this.iconHUD = iconHUD;
 		this.name = name;
+		this.level = level;
 	}
 
 	public int getId() {
@@ -63,8 +66,8 @@ public class Spell {
 	}
 	
 	public static final List<Spell> SPELL_LIST = Lists.newArrayList();
-	private static final Spell NO_SPELL = new Spell(0, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/nospell.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/nospell.png"), "");
-	private static final Spell SWORD_SLASH = new Spell(1, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashiconhud.png"), "Sword Slash"){
+	private static final Spell NO_SPELL = new Spell(0, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/nospell.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/nospell.png"), "", 0);
+	private static final Spell SWORD_SLASH = new Spell(1, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashiconhud.png"), "Sword Slash", 0){
 		@Override
 		public void effect(World worldIn, PlayerEntity playerIn) {
 			double offset = 1.0D;
@@ -96,7 +99,8 @@ public class Spell {
 		}
 		
 	};	
-	private static final Spell SHIELD_BASH = new Spell(2, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashiconhud.png"), "Shield Bash") {
+	private static final Spell SHIELD_BASH = new Spell(2, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashiconhud.png"), "Shield Bash", 0) {
+		@SuppressWarnings("deprecation")
 		@Override
 		public void effect(World worldIn, PlayerEntity playerIn) {
 			double offset = 5.0D;
@@ -153,7 +157,7 @@ public class Spell {
 		
 	};
 	
-	private static final Spell BERSERKER = new Spell(3, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonhud.png"), "Berserker") {
+	private static final Spell BERSERKER = new Spell(3, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonhud.png"), "Berserker", 0) {
 		@Override
 		public void effect(World worldIn, PlayerEntity playerIn) {
 			playerIn.addPotionEffect(new EffectInstance(EffectInit.BERSERKER.get(), 600));
@@ -173,7 +177,7 @@ public class Spell {
 		
 	};
 	
-	private static final Spell CHAIN = new Spell(4, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainiconhud.png"), "Chain"){
+	private static final Spell CHAIN = new Spell(4, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainiconhud.png"), "Chain", 0){
 		@Override
 		public void effect(World worldIn, PlayerEntity playerIn) {
 			double offset = 1.0D;

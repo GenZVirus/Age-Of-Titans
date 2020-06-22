@@ -33,5 +33,17 @@ public class PacketHandler {
 				.decoder(SyncPlayerMotionPacket::decode)
 				.consumer(SyncPlayerMotionPacket::handle)
 				.add();
+		
+		INSTANCE.messageBuilder(ReadElementPacket.class, id++)
+				.encoder(ReadElementPacket::encode)
+				.decoder(ReadElementPacket::decode)
+				.consumer(ReadElementPacket::handle)
+				.add();
+		
+		INSTANCE.messageBuilder(EditElementPacket.class, id++)
+				.encoder(EditElementPacket::encode)
+				.decoder(EditElementPacket::decode)
+				.consumer(EditElementPacket::handle)
+				.add();
 	}
 }

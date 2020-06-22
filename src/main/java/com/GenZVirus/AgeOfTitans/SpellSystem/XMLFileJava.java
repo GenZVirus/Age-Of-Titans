@@ -50,6 +50,11 @@ public class XMLFileJava {
 	             playerlevel.appendChild(document.createTextNode(Integer.toString(0)));
 	             playername.appendChild(playerlevel);
 	             
+	             // player name element
+	             Element playerPoints = document.createElement("PlayerPoints");
+	             playerPoints.appendChild(document.createTextNode(Integer.toString(10)));
+	             playername.appendChild(playerPoints);
+	             
 	             // player experience element
 	             Element playerexp = document.createElement("PlayerExp");
 	             playerexp.appendChild(document.createTextNode(Integer.toString(0)));
@@ -76,22 +81,22 @@ public class XMLFileJava {
 	             playername.appendChild(slot4);
 	             
 	             // spell1 element
-	             Element Spell1 = document.createElement("Spell1_Level");
+	             Element Spell1 = document.createElement("Spell_Level1");
 	             Spell1.appendChild(document.createTextNode(Integer.toString(0)));
 	             playername.appendChild(Spell1);
 	             
 	        	 // spell2 element
-	             Element Spell2 = document.createElement("Spell2_Level");
+	             Element Spell2 = document.createElement("Spell_Level2");
 	             Spell2.appendChild(document.createTextNode(Integer.toString(0)));
 	             playername.appendChild(Spell2);
 	             
 	        	 // spell3 element
-	             Element Spell3 = document.createElement("Spell3_Level");
+	             Element Spell3 = document.createElement("Spell_Level3");
 	             Spell3.appendChild(document.createTextNode(Integer.toString(0)));
 	             playername.appendChild(Spell3);
 	             
 	        	 // spell4 element
-	             Element Spell4 = document.createElement("Spell4_Level");
+	             Element Spell4 = document.createElement("Spell_Level4");
 	             Spell4.appendChild(document.createTextNode(Integer.toString(0)));
 	             playername.appendChild(Spell4);
 	  

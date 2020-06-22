@@ -5,6 +5,10 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
+import com.GenZVirus.AgeOfTitans.AgeOfTitans;
+import com.GenZVirus.AgeOfTitans.Network.EditElementPacket;
+import com.GenZVirus.AgeOfTitans.Network.PacketHandler;
+import com.GenZVirus.AgeOfTitans.Network.ReadElementPacket;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -18,6 +22,8 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Matrix4f;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -26,13 +32,67 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ModSkillButton extends Widget {
 
 	private ResourceLocation BUTTONS_LOCATION;
+	private ResourceLocation arrow_up = new ResourceLocation(AgeOfTitans.MOD_ID,"textures/gui/arrowup.png");
+	private ResourceLocation arrow_down = new ResourceLocation(AgeOfTitans.MOD_ID,"textures/gui/arrowdown.png");
 	public boolean isSelected = false;
 	public Spell spell;
+	public boolean renderAS = false;
+	public ModButton add, subtract;
 	
 	public ModSkillButton(int xIn, int yIn, int widthIn, int heightIn, String msg, Spell spell) {
 		super(xIn, yIn, widthIn, heightIn, msg);
 		this.BUTTONS_LOCATION = spell.getIcon();
 		this.spell = spell;
+		add = new ModASButton(this.x + 21, this.y - 1, 10, 10, I18n.format("")) {
+			@Override
+			public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+					if(Spell.points > 0) {
+						BUTTONS_LOCATION = new ResourceLocation(AgeOfTitans.MOD_ID,"textures/gui/arrowup.png");
+					} else {
+						BUTTONS_LOCATION = new ResourceLocation(AgeOfTitans.MOD_ID,"textures/gui/arrowupoff.png");
+					}
+				super.renderButton(p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
+			}
+			@SuppressWarnings("resource")
+			@Override
+			public void onPress() {
+				PlayerEntity player = Minecraft.getInstance().player;
+				String element = "Spell" + "_Level" + spell.getId();
+				PacketHandler.INSTANCE.sendToServer(new ReadElementPacket(player.getUniqueID(), "PlayerPoints", 0));
+				if(Spell.points > 0) {
+					PacketHandler.INSTANCE.sendToServer(new EditElementPacket(player.getUniqueID(), element, 1));
+					PacketHandler.INSTANCE.sendToServer(new EditElementPacket(player.getUniqueID(), "PlayerPoints", -1));
+				}
+				super.onPress();
+			}
+		};
+		subtract = new ModASButton(this.x + 21, this.y + 11, 10, 10, I18n.format("")) {
+			@Override
+			public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+					if(spell.level > 0) {
+						BUTTONS_LOCATION = new ResourceLocation(AgeOfTitans.MOD_ID,"textures/gui/arrowdown.png");
+					} else {
+						BUTTONS_LOCATION = new ResourceLocation(AgeOfTitans.MOD_ID,"textures/gui/arrowdownoff.png");
+					}
+				super.renderButton(p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
+			}			
+			@SuppressWarnings("resource")
+			@Override
+			public void onPress() {
+				PlayerEntity player = Minecraft.getInstance().player;
+		
+				String element = "Spell" + "_Level" + spell.getId();
+				PacketHandler.INSTANCE.sendToServer(new ReadElementPacket(player.getUniqueID(), element, 0));
+				if(spell.level > 0) {
+					PacketHandler.INSTANCE.sendToServer(new EditElementPacket(player.getUniqueID(), element, -1));
+					PacketHandler.INSTANCE.sendToServer(new EditElementPacket(player.getUniqueID(), "PlayerPoints", 1));
+				}
+				
+				super.onPress();
+			}
+		};
+		add.BUTTONS_LOCATION = arrow_up;
+		subtract.BUTTONS_LOCATION = arrow_down;
 	}
 	@SuppressWarnings("resource")
 	public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
@@ -43,9 +103,15 @@ public class ModSkillButton extends Widget {
 	      	      
 	      if(this.isHovered) {
 	    	  List<String> stringList = spell.getDescription();
-	    	  System.out.println(this.x + " / " + (int)Minecraft.getInstance().mouseHelper.getMouseX());
-	    	  
 	    	  this.renderTooltip(stringList, (int)Minecraft.getInstance().mouseHelper.getMouseX() / 2 - 100, this.y + 36, Minecraft.getInstance().fontRenderer);
+	      }
+	      
+	      if(renderAS) {
+		      ModScreen.SCREEN.getButtons().add(add);
+		      ModScreen.SCREEN.getButtons().add(subtract);
+	      } else if(ModScreen.SCREEN.getButtons().contains(add) && ModScreen.SCREEN.getButtons().contains(subtract)) {
+		      ModScreen.SCREEN.getButtons().remove(add);
+		      ModScreen.SCREEN.getButtons().remove(subtract);
 	      }
 	   }
 	
