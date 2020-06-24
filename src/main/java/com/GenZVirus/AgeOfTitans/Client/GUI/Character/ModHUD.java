@@ -31,9 +31,15 @@ public class ModHUD {
 	public static boolean next = false;
 	public static boolean previous = false;
 	public static int nr = 0;
+	public static boolean locked = true;
 
 	public static void renderHUD() {
 
+		if(locked) {
+			selectedSpell = Spell.SPELL_LIST.get(0);
+			return;
+		}
+		
 		Minecraft mc = Minecraft.getInstance();
 		if ((mc.currentScreen != null && mc.gameSettings.chatVisibility != ChatVisibility.HIDDEN) || mc.world == null) {
 			return;

@@ -81,7 +81,7 @@ public class ChainEntity extends DamagingProjectileEntity{
 	         if(result.getType() == RayTraceResult.Type.BLOCK && this.shooter != null) {
 	        	 BlockPos pos = ((BlockRayTraceResult)result).getPos();
 	        	 Vec3d vec = new Vec3d((double)pos.getX() - shooter.getPosX(), (double)pos.getY() - shooter.getPosY(), (double)pos.getZ() - shooter.getPosZ());
-	        	 shooter.setMotion(vec);
+	        	 shooter.setMotion(vec.getX() / vec.length() * 3, vec.getY() / vec.length() * 3 + 0.5D, vec.getZ() / vec.length() * 3);
 					PacketHandler.INSTANCE.sendTo(new SyncPlayerMotionPacket(this.shooter.getUniqueID(), vec.getX() / vec.length() * 3, vec.getY() / vec.length() * 3 + 0.5D, vec.getZ() / vec.length() * 3), ((ServerPlayerEntity)this.shooter).connection.getNetworkManager(),	NetworkDirection.PLAY_TO_CLIENT);
 	         }
 	         this.remove();

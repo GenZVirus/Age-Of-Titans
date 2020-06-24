@@ -58,7 +58,7 @@ public class ModSkillButton extends Widget {
 			public void onPress() {
 				PlayerEntity player = Minecraft.getInstance().player;
 				String element = "Spell" + "_Level" + spell.getId();
-				PacketHandler.INSTANCE.sendToServer(new ReadElementPacket(player.getUniqueID(), "PlayerPoints", 0));
+				PacketHandler.INSTANCE.sendToServer(new ReadElementPacket(player.getUniqueID(), "PlayerPoints", 1));
 				if(Spell.points > 0) {
 					PacketHandler.INSTANCE.sendToServer(new EditElementPacket(player.getUniqueID(), element, 1));
 					PacketHandler.INSTANCE.sendToServer(new EditElementPacket(player.getUniqueID(), "PlayerPoints", -1));
@@ -80,9 +80,9 @@ public class ModSkillButton extends Widget {
 			@Override
 			public void onPress() {
 				PlayerEntity player = Minecraft.getInstance().player;
-		
+				PacketHandler.INSTANCE.sendToServer(new ReadElementPacket(player.getUniqueID(), "PlayerPoints", 1));
 				String element = "Spell" + "_Level" + spell.getId();
-				PacketHandler.INSTANCE.sendToServer(new ReadElementPacket(player.getUniqueID(), element, 0));
+				PacketHandler.INSTANCE.sendToServer(new ReadElementPacket(player.getUniqueID(), element, 1));
 				if(spell.level > 0) {
 					PacketHandler.INSTANCE.sendToServer(new EditElementPacket(player.getUniqueID(), element, -1));
 					PacketHandler.INSTANCE.sendToServer(new EditElementPacket(player.getUniqueID(), "PlayerPoints", 1));
@@ -97,6 +97,11 @@ public class ModSkillButton extends Widget {
 	@SuppressWarnings("resource")
 	public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
 	      Minecraft minecraft = Minecraft.getInstance();
+	      if(spell.level > 0) {
+	    	  BUTTONS_LOCATION = spell.getIcon();
+	      } else {
+	    	  BUTTONS_LOCATION = spell.getIconOff();
+	      }
 	      minecraft.getTextureManager().bindTexture(BUTTONS_LOCATION);
 
 	      AbstractGui.blit(this.x, this.y, 0, 0, 0, this.width, this.height, this.height, this.width);
@@ -271,7 +276,7 @@ public class ModSkillButton extends Widget {
 	        RenderSystem.enableAlphaTest();
 	        RenderSystem.enableTexture();
 	    }
-	
+	 
 	public void onPress() {
 		this.playDownSound(Minecraft.getInstance().getSoundHandler());
 		for(Widget button : ModScreen.SCREEN.getButtons()) {
@@ -279,7 +284,9 @@ public class ModSkillButton extends Widget {
 				((ModSkillButton) button).isSelected = false;
 			}
 		}
-		this.isSelected = true;
+		if(this.spell.level > 0) {
+			this.isSelected = true;
+		}
 	}
 
 }

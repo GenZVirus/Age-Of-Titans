@@ -32,7 +32,8 @@ public class ReadElementPacket {
 	}
 	
 	public static ReadElementPacket decode(PacketBuffer buf) {
-		return new ReadElementPacket(buf.readUniqueId(), buf.readString(), buf.readInt());
+		System.out.println("YES");
+		return new ReadElementPacket(buf.readUniqueId(), buf.readString(32767), buf.readInt());
 	}
 	
 	public static void handle(ReadElementPacket pkt, Supplier<NetworkEvent.Context> ctx) {

@@ -4,31 +4,49 @@ import java.util.Random;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Init.EffectInit;
-import com.GenZVirus.AgeOfTitans.Util.Helpers.HalfSphereShape;
+import com.GenZVirus.AgeOfTitans.Init.ItemInit;
+import com.GenZVirus.AgeOfTitans.Network.PacketHandler;
+import com.GenZVirus.AgeOfTitans.Network.ReadElementPacket;
+import com.GenZVirus.AgeOfTitans.Network.SyncPlayerMotionPacket;
+import com.GenZVirus.AgeOfTitans.SpellSystem.XMLFileJava;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.event.TickEvent.Phase;
-import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.fml.network.NetworkDirection;
 
 @Mod.EventBusSubscriber(modid = AgeOfTitans.MOD_ID, bus = Bus.FORGE)
 public class ServerEvents {
 
+	@SubscribeEvent
+	public static void eatingApples(LivingEntityUseItemEvent.Finish event) {
+		if(event.getEntityLiving().world.isRemote) return;
+		if(!(event.getEntityLiving() instanceof PlayerEntity)) return;
+		if(event.getItem().getItem().equals(ItemInit.FRUIT_OF_THE_GODS.get())) {
+			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+		XMLFileJava.editElement(player.getUniqueID(), "ApplesEaten", Integer.toString((Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "ApplesEaten")) + 1)));
+		XMLFileJava.editElement(player.getUniqueID(), "PlayerLevel", Integer.toString((Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "PlayerLevel")) + 1)));	
+		PacketHandler.INSTANCE.sendTo(new ReadElementPacket(player.getUniqueID(), "PlayerLevels", Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "PlayerLevel"))), ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		XMLFileJava.editElement(player.getUniqueID(), "PlayerPoints", Integer.toString((Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "PlayerPoints")) + 1)));	
+		PacketHandler.INSTANCE.sendTo(new ReadElementPacket(player.getUniqueID(), "PlayerPoints", Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "PlayerPoints"))), ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		}
+	}
+	
 	@SubscribeEvent
 	public static void jumpEvent(LivingJumpEvent event) {
 	      if (event.getEntityLiving().isPotionActive(EffectInit.BERSERKER.get())) {
@@ -69,47 +87,38 @@ public class ServerEvents {
 					event.setCanceled(true);
 				}
 			}
-		}
-		
+		}	
 	}
 	
-	private static Item oldItem = Items.AIR;
-	
 	@SubscribeEvent
-	public static void blockBreaker(PlayerTickEvent event) {
-		if(event.player.world.isRemote) {
+	public static void berserkerJump(LivingFallEvent event) {
+		if(event.getEntityLiving().isPotionActive(EffectInit.BERSERKER.get())) {
+			event.setDamageMultiplier(0);
+		}
+	}
+		
+	@SubscribeEvent
+	public static void berserkerPunch(LivingAttackEvent event) {
+		if(!(event.getSource().getTrueSource() instanceof PlayerEntity)) {
 			return;
 		}
-		if(event.phase == Phase.END) {
-			return;
-		}
-		PlayerEntity player = event.player;
-		if(!player.getHeldItemMainhand().getItem().equals(oldItem)) {
-		oldItem = player.getHeldItemMainhand().getItem();
-		return;
-		}
-		if(oldItem.equals(Items.AIR) && player.isPotionActive(EffectInit.BERSERKER.get())) {
-			if(player.swingProgressInt == -1) {
-				double offset = 3.0D;
+		PlayerEntity player = (PlayerEntity)event.getSource().getTrueSource();
+		LivingEntity target =  event.getEntityLiving();
+		if(player.isPotionActive(EffectInit.BERSERKER.get())) {
+			if(target.isNonBoss()) {
+				double offset = 4.0D;
 				double pitch = player.getPitchYaw().x;
 				double yaw   = player.getPitchYaw().y;
-				Vec3d pos_offset = new Vec3d(player.getPosition()).add(0, 1.6D, 0);		
 				double pitchRadian = pitch * (Math.PI / 180); // X rotation
-				double yawRadian = yaw * (Math.PI / 180); // Y rotation 
+				double yawRadian   = yaw   * (Math.PI / 180); // Y rotation 
 				double newPosX = offset * -Math.sin( yawRadian ) * Math.cos( pitchRadian );
 				double newPosY = offset * -Math.sin( pitchRadian );
 				double newPosZ = offset *  Math.cos( yawRadian ) * Math.cos( pitchRadian );
-				HalfSphereShape halfSphereShape = new HalfSphereShape(pos_offset.add(newPosX, newPosY, newPosZ), pos_offset);
-				for(double k = 0.0D; k <= 2 * offset; k += 1.0D) {
-					for(double j = 0.0D; j <= 2 * offset; j += 1.0D) {
-						for(double i = 0.0D; i <= 2 * offset; i += 1.0D) {
-							BlockPos pos = new BlockPos(new Vec3d(player.getPosX() - offset + i, player.getPosY() - offset + k, player.getPosZ() - offset + j));
-							if(halfSphereShape.containsPoint(pos.getX(), pos.getY(), pos.getZ()))
-									player.world.destroyBlock(pos, true);														
-						}
-					}
-				}
+				Vec3d vec = new Vec3d(newPosX, newPosY, newPosZ);
+				target.setMotion(vec);
+				if(target instanceof PlayerEntity)
+				PacketHandler.INSTANCE.sendTo(new SyncPlayerMotionPacket(target.getUniqueID(), vec.getX(), vec.getY(), vec.getZ()), ((ServerPlayerEntity)target).connection.getNetworkManager(),	NetworkDirection.PLAY_TO_CLIENT);
 			}
-		}
-	}	
+		}	
+	}
 }

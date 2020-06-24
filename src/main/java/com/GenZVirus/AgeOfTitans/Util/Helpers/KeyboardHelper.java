@@ -49,4 +49,11 @@ public class KeyboardHelper {
 	public static boolean isScrollDownKeyDown() {
 		return InputMappings.isKeyDown(WINDOW, ModKeybind.SCROLL_DOWN.getKey().getKeyCode());
 	}
+	
+	/// Checks if the LOCKHUD is being held down, which is a key that changes what skill is selected from the HUD
+	
+	@OnlyIn(Dist.CLIENT)
+	public static boolean isLockHUDKeyDown() {
+		return InputMappings.isKeyDown(WINDOW, ModKeybind.LOCKSHUD.getKey().getKeyCode());
+	}
 }

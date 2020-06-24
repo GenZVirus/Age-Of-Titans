@@ -50,9 +50,14 @@ public class XMLFileJava {
 	             playerlevel.appendChild(document.createTextNode(Integer.toString(0)));
 	             playername.appendChild(playerlevel);
 	             
+	             // apples eaten element
+	             Element applesEaten = document.createElement("ApplesEaten");
+	             applesEaten.appendChild(document.createTextNode(Integer.toString(0)));
+	             playername.appendChild(applesEaten);
+	             
 	             // player name element
 	             Element playerPoints = document.createElement("PlayerPoints");
-	             playerPoints.appendChild(document.createTextNode(Integer.toString(10)));
+	             playerPoints.appendChild(document.createTextNode(Integer.toString(99999)));
 	             playername.appendChild(playerPoints);
 	             
 	             // player experience element

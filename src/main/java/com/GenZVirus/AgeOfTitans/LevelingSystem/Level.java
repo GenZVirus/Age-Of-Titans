@@ -18,6 +18,7 @@ public class Level {
 
 		if(Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "PlayerExp")) == 100) {
 		XMLFileJava.editElement(player.getUniqueID(), "PlayerLevel", Integer.toString((Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "PlayerLevel")) + 1)));
+		XMLFileJava.editElement(player.getUniqueID(), "PlayerPoints", Integer.toString((Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "PlayerPoints")) + 1)));
 		XMLFileJava.editElement(player.getUniqueID(), "PlayerExp", "0");
 		} else {
 			XMLFileJava.editElement(player.getUniqueID(), "PlayerExp", Integer.toString((Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "PlayerExp")) + 10)));

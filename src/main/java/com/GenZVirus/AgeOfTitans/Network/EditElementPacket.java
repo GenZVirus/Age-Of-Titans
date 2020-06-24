@@ -31,7 +31,7 @@ public class EditElementPacket {
 	}
 	
 	public static EditElementPacket decode(PacketBuffer buf) {
-		return new EditElementPacket(buf.readUniqueId(), buf.readString(), buf.readInt());
+		return new EditElementPacket(buf.readUniqueId(), buf.readString(32767), buf.readInt());
 	}
 	
 	public static void handle(EditElementPacket pkt, Supplier<NetworkEvent.Context> ctx) {

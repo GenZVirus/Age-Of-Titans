@@ -2,6 +2,15 @@
 	"gui.human": "Human",
 	"gui.reaper": "Reaper",
 	"gui.learn_spells": "Learn",
+	
+	
+	"key.categories.ageoftitans": "Age of Titans",
+	"key.character": "Skill Tree",
+	"key.lockhud": "Lock/Unlock HUD",
+	"key.scroll_up": "Next Spell",
+	"key.scroll_down": "Previous Spell",
+
+	"effect.ageoftitans.berserker": "Berserker",
 
 	"itemGroup.ageoftitans": "Age of Titans",
 	

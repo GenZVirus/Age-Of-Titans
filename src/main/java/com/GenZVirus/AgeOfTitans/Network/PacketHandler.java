@@ -45,5 +45,11 @@ public class PacketHandler {
 				.decoder(EditElementPacket::decode)
 				.consumer(EditElementPacket::handle)
 				.add();
+		
+		INSTANCE.messageBuilder(berserkerBlockBreakerPacket.class, id++)
+				.encoder(berserkerBlockBreakerPacket::encode)
+				.decoder(berserkerBlockBreakerPacket::decode)
+				.consumer(berserkerBlockBreakerPacket::handle)
+				.add();
 	}
 }
