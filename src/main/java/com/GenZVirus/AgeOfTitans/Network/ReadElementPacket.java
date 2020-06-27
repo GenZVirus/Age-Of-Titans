@@ -32,7 +32,6 @@ public class ReadElementPacket {
 	}
 	
 	public static ReadElementPacket decode(PacketBuffer buf) {
-		System.out.println("YES");
 		return new ReadElementPacket(buf.readUniqueId(), buf.readString(32767), buf.readInt());
 	}
 	
@@ -54,12 +53,15 @@ public class ReadElementPacket {
 				if(pkt.element.contains("Spell_Level")) {
 					int ID = Integer.parseInt(pkt.element.replaceFirst("Spell_Level", ""));
 					Spell.SPELL_LIST.get(ID).level = pkt.value;
-					System.out.println(Spell.SPELL_LIST.get(ID).level);
 				}
 				
 				if(pkt.element.contains("PlayerPoints")) {
 					Spell.points = pkt.value;
-					System.out.println("PlayerPoints: " + pkt.value);
+				}
+				
+				if(pkt.element.contains("ApplesEaten"))
+				{
+					Spell.applesEaten = pkt.value;
 				}
 			}
 		});

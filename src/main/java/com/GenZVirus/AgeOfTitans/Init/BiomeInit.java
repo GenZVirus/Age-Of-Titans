@@ -27,11 +27,11 @@ public class BiomeInit {
 	
 	// Creating the object
 	
-	public static final RegistryObject<Biome> HOLY_GROUND = BIOMES.register("holy_ground",
+	public static final RegistryObject<Biome> HOLY_GROUND_PLAINS = BIOMES.register("holy_ground_plains",
 			() -> new HolyGround(new Biome.Builder()
 					.precipitation(RainType.RAIN)
-					.scale(1.2F)
-					.temperature(0.5F)
+					.scale(0.05F)
+					.temperature(1.0F)
 					.waterColor(0x00FFFF)
 					.waterFogColor(0x00FFFF)
 					.surfaceBuilder(SurfaceBuilder.DEFAULT, new SurfaceBuilderConfig(
@@ -43,10 +43,44 @@ public class BiomeInit {
 					.depth(0.12F)
 					.parent(null)));
 	
+	public static final RegistryObject<Biome> HOLY_GROUND_HILLS = BIOMES.register("holy_ground_hills",
+			() -> new HolyGround(new Biome.Builder()
+					.precipitation(RainType.RAIN)
+					.scale(0.3F)
+					.temperature(1.0F)
+					.waterColor(0x00FFFF)
+					.waterFogColor(0x00FFFF)
+					.surfaceBuilder(SurfaceBuilder.DEFAULT, new SurfaceBuilderConfig(
+							Blocks.GRASS_BLOCK.getDefaultState(),
+							Blocks.DIRT.getDefaultState(), 
+							Blocks.SAND.getDefaultState()))
+					.category(Category.JUNGLE)
+					.downfall(0.5F)
+					.depth(0.45F)
+					.parent(null)));
+	
+	public static final RegistryObject<Biome> HOLY_GROUND_MOUNTAIN = BIOMES.register("holy_ground_mountain",
+			() -> new HolyGround(new Biome.Builder()
+					.precipitation(RainType.RAIN)
+					.scale(0.5F)
+					.temperature(1.0F)
+					.waterColor(0x00FFFF)
+					.waterFogColor(0x00FFFF)
+					.surfaceBuilder(SurfaceBuilder.DEFAULT, new SurfaceBuilderConfig(
+							Blocks.GRASS_BLOCK.getDefaultState(),
+							Blocks.DIRT.getDefaultState(), 
+							Blocks.SAND.getDefaultState()))
+					.category(Category.EXTREME_HILLS)
+					.downfall(0.5F)
+					.depth(1.0F)
+					.parent(null)));
+	
 	// Register all biomes
 	
-	public static void registeBiomes() {
-		registerBiome(HOLY_GROUND.get(), Type.PLAINS, Type.OVERWORLD);
+	public static void registerBiomes() {
+		registerBiome(HOLY_GROUND_PLAINS.get(), Type.PLAINS, Type.OVERWORLD);
+		registerBiome(HOLY_GROUND_HILLS.get(), Type.HILLS, Type.OVERWORLD);
+		registerBiome(HOLY_GROUND_MOUNTAIN.get(), Type.MOUNTAIN, Type.OVERWORLD);
 	}
 
 	// Register requested biome

@@ -22,7 +22,7 @@ public class ModOreGen {
 		for (Biome biome : ForgeRegistries.BIOMES) {
 				ConfiguredPlacement customConfig = Placement.COUNT_RANGE.configure(new CountRangeConfig(20, 0, 5, 50));
 				biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE
-								.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, BlockInit.TITANIUM_BLOCK.get().getDefaultState(), 10))
+								.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, BlockInit.TITANIUM_ORE.get().getDefaultState(), 10))
 								.withPlacement(customConfig));
 		}
 	}

@@ -141,7 +141,7 @@ public class AgeOfTitans
     	
     // Registering custom biomes
     	
-    	BiomeInit.registeBiomes();
+    	BiomeInit.registerBiomes();
     }
     
     /*
@@ -182,7 +182,7 @@ public class AgeOfTitans
     	
     // Generating ores
     	
-    	ModOreGen.generateOre();
+//    	ModOreGen.generateOre();
     }
     
     /*

@@ -7,6 +7,7 @@ import com.GenZVirus.AgeOfTitans.Init.EffectInit;
 import com.GenZVirus.AgeOfTitans.Network.PacketHandler;
 import com.GenZVirus.AgeOfTitans.Network.SpellPacket;
 import com.GenZVirus.AgeOfTitans.Network.berserkerBlockBreakerPacket;
+import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
 import com.GenZVirus.AgeOfTitans.Util.Helpers.KeyboardHelper;
 
 import net.minecraft.client.Minecraft;
@@ -44,29 +45,31 @@ public class KeyPressedEvent {
 		if(timer > 0) timer--;
 		Minecraft mc = Minecraft.getInstance();
 		if(timer == 0 && KeyboardHelper.isCharacterKeyDown()) {
-			timer = 10;
-			if(!wasPRESSED) {
+			timer = 15;
+			if(Spell.applesEaten > 0) {
+				if(!wasPRESSED) {
 				
-				// checks for others screens or chat screen, if there are not hidden, the character screen will not show up
+					// checks for others screens or chat screen, if there are not hidden, the character screen will not show up
 				
-				if ((mc.currentScreen != null && mc.gameSettings.chatVisibility != ChatVisibility.HIDDEN) || mc.world == null) { 
-					return;
-				}
+					if ((mc.currentScreen != null && mc.gameSettings.chatVisibility != ChatVisibility.HIDDEN) || mc.world == null) { 
+						return;
+					}
 				
-				// display character screen
+					// display character screen
 				
-				Minecraft.getInstance().displayGuiScreen(ModScreen.SCREEN); 
+					Minecraft.getInstance().displayGuiScreen(ModScreen.SCREEN); 
 				
-				// send a packet to the server and tells it to send data to the player requesting it
+					// send a packet to the server and tells it to send data to the player requesting it
 				
-				wasPRESSED = true;
-				PacketHandler.INSTANCE.sendToServer(new SpellPacket(0, 0, 0, 0, mc.player.getUniqueID(), true)); 
+					wasPRESSED = true;
+					PacketHandler.INSTANCE.sendToServer(new SpellPacket(0, 0, 0, 0, mc.player.getUniqueID(), true)); 
 			
-			} else {
+				} else {
 				
-				// closes the screen
+					// closes the screen
 				
-				ModScreen.SCREEN.onClose();
+					ModScreen.SCREEN.onClose();
+				}
 			}
 		}
 		

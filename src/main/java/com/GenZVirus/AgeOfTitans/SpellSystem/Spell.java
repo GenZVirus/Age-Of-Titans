@@ -33,6 +33,7 @@ public class Spell {
 	private ResourceLocation iconHUD;
 	public int level = 0;
 	public static int points = 0;
+	public static int applesEaten = 0;
 	
 	public Spell(int id, ResourceLocation icon, ResourceLocation iconOff, ResourceLocation iconHUD, String name, int level) {
 		this.id = id;

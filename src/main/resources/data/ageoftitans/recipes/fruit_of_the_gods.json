@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:crafting_shapeless",
+ 
+    "ingredients":
+    [
+ 
+    {
+      "item": "minecraft:apple"
+    },
+    {
+      "item": "minecraft:nether_star"
+    }
+   
+    ],
+ 
+    "result":
+    {
+        "item": "ageoftitans:fruit_of_the_gods",
+        "count": 1
+    }
+}

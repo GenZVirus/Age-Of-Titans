@@ -33,7 +33,7 @@ public class ChainParticle extends SpriteTexturedParticle{
 		this.posX = xCoordIn;
 		this.posY = yCoordIn;
 		this.posZ = zCoordIn;
-		this.particleScale = 0.5F;
+		this.particleScale = 0.1F;
 		this.particleRed = data.getRed();
 		this.particleGreen = data.getGreen();
 		this.particleBlue = data.getBlue();

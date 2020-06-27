@@ -34,7 +34,6 @@ public class ReaperEntity extends CreatureEntity{
 	
 	@Override
 	protected void registerGoals() {
-		super.registerGoals();
 		this.eatGrassGoal = new EatGrassGoal(this);
 		this.goalSelector.addGoal(0, new SwimGoal(this));
 		this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));

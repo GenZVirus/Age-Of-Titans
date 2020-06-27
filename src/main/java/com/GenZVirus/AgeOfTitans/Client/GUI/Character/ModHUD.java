@@ -35,7 +35,7 @@ public class ModHUD {
 
 	public static void renderHUD() {
 
-		if(locked) {
+		if(locked || Spell.applesEaten == 0) {
 			selectedSpell = Spell.SPELL_LIST.get(0);
 			return;
 		}

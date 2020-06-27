@@ -14,7 +14,7 @@ public class EdenBiomeProvider extends BiomeProvider{
 	
 	// Biome list
 	
-	private static final Set<Biome> biomeList = ImmutableSet.of(BiomeInit.HOLY_GROUND.get());
+	private static final Set<Biome> biomeList = ImmutableSet.of(BiomeInit.HOLY_GROUND_PLAINS.get(), BiomeInit.HOLY_GROUND_HILLS.get(), BiomeInit.HOLY_GROUND_MOUNTAIN.get());
 	
 	public EdenBiomeProvider() {
 		super(biomeList);
@@ -24,7 +24,7 @@ public class EdenBiomeProvider extends BiomeProvider{
 	
 	@Override
 	public Biome getNoiseBiome(int x, int y, int z) {
-		return BiomeInit.HOLY_GROUND.get();
+		return BiomeInit.HOLY_GROUND_PLAINS.get();
 	}
 
 }
