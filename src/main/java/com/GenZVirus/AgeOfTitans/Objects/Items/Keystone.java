@@ -1,10 +1,13 @@
 package com.GenZVirus.AgeOfTitans.Objects.Items;
 
 import java.util.List;
+import java.util.function.Function;
 
-import com.GenZVirus.AgeOfTitans.Util.Helpers.KeyboardHelper;
+import com.GenZVirus.AgeOfTitans.Init.ItemInit;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -15,9 +18,10 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.util.ITeleporter;
 
 public class Keystone extends Item {
-	private String Location = null, Dimension = null;
 	private BlockPos pos = null;
 	private DimensionType dimType = null;
 
@@ -32,44 +36,26 @@ public class Keystone extends Item {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		if(Location != null || Dimension != null) {
+			tooltip.add(new StringTextComponent("\u00A7e" + "Right-Click" + "\u00A77" + " to teleport to the bed location, if the user is in the same dimension as the bed."));
 			tooltip.add(new StringTextComponent(""));
-			tooltip.add(new StringTextComponent("Dimension: " + Dimension));
-			tooltip.add(new StringTextComponent("Location: " + Location));
-			tooltip.add(new StringTextComponent(""));
-		}
-		if (KeyboardHelper.isHoldingShift()) {
-			tooltip.add(new StringTextComponent("Hold" + "\u00A7e" + "Shift" + "\u00A77" + "to set the location you want to teleport back to"));
-		} else {
-			tooltip.add(new StringTextComponent("Used to teleport player back to the set location"));
-			tooltip.add(new StringTextComponent(""));
-			tooltip.add(new StringTextComponent("Hold" + "\u00A7e" + "Shift" + "\u00A77" + "for more information!"));
-		}
+			tooltip.add(new StringTextComponent("The keystone will be consumed on use."));
+
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
-
+	
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		if (worldIn.isRemote)
 			return super.onItemRightClick(worldIn, playerIn, handIn);
+		pos = playerIn.getBedLocation(playerIn.dimension);
+		dimType = playerIn.dimension;
 		
-		if (KeyboardHelper.isHoldingShift()) {
-				pos = playerIn.getPosition();
-				dimType = playerIn.dimension;
-				Location = "X: " + pos.getX() + " Y: " + pos.getY() + " Z: " + pos.getZ(); 
-				Dimension = dimType.getRegistryName().toString();
-				removeText();
-		}
-		else if(pos != null && dimType != null) {
-			
+		if(pos != null && dimType != null) {
+			if(playerIn.getActiveItemStack().equals(ItemInit.KEYSTONE.get().getDefaultInstance())) {
+				playerIn.getActiveItemStack().shrink(1);
+			}
 		if (playerIn.dimension != dimType) {
-			playerIn.getServer().getCommandManager().handleCommand(worldIn.getServer().getCommandSource(),
-					"/forge setdimension" 
-							+ " " + playerIn.getName().getFormattedText()
-							+ " " + dimType.getRegistryName().toString()
-							+ " " + pos.getX()
-							+ " " + pos.getY()
-							+ " " + pos.getZ());
+			teleportToDimension(playerIn, dimType, pos);
 		}else {
 			playerIn.setPositionAndUpdate(pos.getX(), pos.getY(), pos.getZ());
 		}
@@ -77,23 +63,27 @@ public class Keystone extends Item {
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
 	
-	private void removeText() {
-		
-		String copy = Dimension;
-		copy = copy.substring(copy.indexOf(":") + 1);
-		copy = copy.replaceAll("_", " ");
-		String[] split = copy.split(" ");
-		copy = "";
-		for(String part : split) {
-			copy = copy + part.substring(0, 1).toUpperCase() + part.substring(1) + " ";
-		}
-		System.out.println(copy);
-		Dimension = copy;
-		
-	}
-
 	@Override
 	public int getBurnTime(ItemStack itemStack) {
 		return super.getBurnTime(itemStack);
+	}
+	
+	private void teleportToDimension(PlayerEntity player, DimensionType dimension, BlockPos pos) {
+	    player.changeDimension(dimension, new ITeleporter() {
+	        @Override
+	        public Entity placeEntity(Entity entity, ServerWorld currentWorld, ServerWorld destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
+	            entity = repositionEntity.apply(false);
+	            int i = 0;
+	            while(!entity.world.getBlockState(new BlockPos(pos.getX(), pos.getY() + i, pos.getZ())).getBlock().equals(Blocks.AIR) && !entity.world.getBlockState(new BlockPos(pos.getX(), pos.getY() + i + 1, pos.getZ())).getBlock().equals(Blocks.AIR)) {
+	            	i++;
+	            }
+	            while(entity.world.getBlockState(new BlockPos(pos.getX(), pos.getY() + i - 1, pos.getZ())).getBlock().equals(Blocks.AIR)) {
+	            	i--;
+	            }
+	            entity.setPositionAndUpdate(pos.getX(), pos.getY() + i + 1, pos.getZ());
+	            
+	            return entity;
+	        }
+	    });
 	}
 }

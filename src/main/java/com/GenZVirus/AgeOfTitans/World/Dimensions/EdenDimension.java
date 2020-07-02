@@ -26,7 +26,7 @@ public class EdenDimension extends Dimension{
 	
 	@Override
 	public ChunkGenerator<?> createChunkGenerator() {
-		return new EdenChunkGenerator(world, new EdenBiomeProvider(), new EdenGenSettings());
+		return new EdenChunkGenerator(world, new EdenBiomeProvider(new EdenBiomeProviderSettings(this.world.getWorldInfo())), new EdenGenSettings());
 	}
 
 	// This methods finds a good spawn location if the respawn is allowed
