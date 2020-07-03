@@ -48,13 +48,13 @@ public class ItemInit {
 	public static final RegistryObject<Item> ORB_OF_NETHER = ITEMS.register("orb_of_nether", () -> new OrbOfNether(new Item.Properties().group(AgeOfTitansItemGroup.instance).maxStackSize(1)));
 	public static final RegistryObject<Item> ORB_OF_SUMMONING = ITEMS.register("orb_of_summoning", () -> new OrbOfSummoning(new Item.Properties().group(AgeOfTitansItemGroup.instance).maxStackSize(1)));
 	public static final RegistryObject<Item> ORB_OF_DISLOCATION = ITEMS.register("orb_of_dislocation", () -> new OrbOfDislocation(new Item.Properties().group(AgeOfTitansItemGroup.instance).maxStackSize(1)));
-	public static final RegistryObject<Item> KEYSTONE = ITEMS.register("keystone", () -> new Keystone(new Item.Properties().group(AgeOfTitansItemGroup.instance).maxStackSize(1)));
+	public static final RegistryObject<Item> KEYSTONE = ITEMS.register("keystone", () -> new Keystone(new Item.Properties().group(AgeOfTitansItemGroup.instance)));
 
 	//Ingots
 	public static final RegistryObject<Item> TITANIUM_INGOT = ITEMS.register("titanium_ingot", () -> new Item(new Item.Properties().group(AgeOfTitansItemGroup.instance)));
 	
 	//TestItem
-	public static final RegistryObject<Item> TEST_ITEM = ITEMS.register("test_item", () -> new SpecialItem(new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	public static final RegistryObject<Item> TEST_ITEM = ITEMS.register("test_item", () -> new SpecialItem(new Item.Properties().group(AgeOfTitansItemGroup.instance).maxStackSize(1)));
 	
 	//Tools
 	public static final RegistryObject<Item> TITANIUM_SWORD = ITEMS.register("titanium_sword", () -> new SwordItem(ModItemTier.MATERIAL_TITANIUM, 7, 5.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
@@ -71,7 +71,7 @@ public class ItemInit {
 	
 	public enum ModItemTier implements IItemTier{
 		MATERIAL_TITANIUM(4, 1500, 15.0F, 7.0F, 250, () -> {
-			return Ingredient.fromItems(ItemInit.FRUIT_OF_THE_GODS.get());
+			return Ingredient.fromItems(ItemInit.TITANIUM_INGOT.get());
 		}); 
 		
 		private final int harvestLevel;
@@ -123,8 +123,8 @@ public class ItemInit {
 	}
 	
 	public enum ModArmorMaterial implements IArmorMaterial{
-		ARMOR_MATERIAL_TITANIUM(AgeOfTitans.MOD_ID + ":test", 5, new int[] {7, 9, 11, 8}, 420, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 6.9F, () -> {
-			return Ingredient.fromItems(ItemInit.FRUIT_OF_THE_GODS.get());
+		ARMOR_MATERIAL_TITANIUM(AgeOfTitans.MOD_ID + ":titanium", 5, new int[] {7, 9, 11, 8}, 420, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 6.9F, () -> {
+			return Ingredient.fromItems(ItemInit.TITANIUM_INGOT.get());
 		});
 		
 		private static final int[] MAX_DAMAGE_ARRAY = new int[] {16, 16, 16, 16};

@@ -1,29 +1,22 @@
 package com.GenZVirus.AgeOfTitans.Objects.Items;
 
 import java.util.List;
-import java.util.function.Function;
 
-import com.GenZVirus.AgeOfTitans.Init.ItemInit;
-
-import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionType;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.util.ITeleporter;
 
 public class Keystone extends Item {
 	private BlockPos pos = null;
-	private DimensionType dimType = null;
 
 	public Keystone(Properties properties) {
 		super(properties);
@@ -42,48 +35,26 @@ public class Keystone extends Item {
 
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
-	
+
 	@Override
+	public ActionResultType onItemUse(ItemUseContext context) {
+		return super.onItemUse(context);
+	}
+	
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		if (worldIn.isRemote)
 			return super.onItemRightClick(worldIn, playerIn, handIn);
 		pos = playerIn.getBedLocation(playerIn.dimension);
-		dimType = playerIn.dimension;
-		
-		if(pos != null && dimType != null) {
-			if(playerIn.getActiveItemStack().equals(ItemInit.KEYSTONE.get().getDefaultInstance())) {
-				playerIn.getActiveItemStack().shrink(1);
-			}
-		if (playerIn.dimension != dimType) {
-			teleportToDimension(playerIn, dimType, pos);
-		}else {
-			playerIn.setPositionAndUpdate(pos.getX(), pos.getY(), pos.getZ());
+		if(pos != null) {
+			playerIn.getHeldItem(handIn).shrink(1);
+				playerIn.setPositionAndUpdate(pos.getX(), pos.getY(), pos.getZ());
 		}
-		}
-		return super.onItemRightClick(worldIn, playerIn, handIn);
-	}
+		return ActionResult.resultConsume(playerIn.getHeldItem(handIn));
+	   }
 	
 	@Override
 	public int getBurnTime(ItemStack itemStack) {
 		return super.getBurnTime(itemStack);
 	}
 	
-	private void teleportToDimension(PlayerEntity player, DimensionType dimension, BlockPos pos) {
-	    player.changeDimension(dimension, new ITeleporter() {
-	        @Override
-	        public Entity placeEntity(Entity entity, ServerWorld currentWorld, ServerWorld destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
-	            entity = repositionEntity.apply(false);
-	            int i = 0;
-	            while(!entity.world.getBlockState(new BlockPos(pos.getX(), pos.getY() + i, pos.getZ())).getBlock().equals(Blocks.AIR) && !entity.world.getBlockState(new BlockPos(pos.getX(), pos.getY() + i + 1, pos.getZ())).getBlock().equals(Blocks.AIR)) {
-	            	i++;
-	            }
-	            while(entity.world.getBlockState(new BlockPos(pos.getX(), pos.getY() + i - 1, pos.getZ())).getBlock().equals(Blocks.AIR)) {
-	            	i--;
-	            }
-	            entity.setPositionAndUpdate(pos.getX(), pos.getY() + i + 1, pos.getZ());
-	            
-	            return entity;
-	        }
-	    });
-	}
 }
