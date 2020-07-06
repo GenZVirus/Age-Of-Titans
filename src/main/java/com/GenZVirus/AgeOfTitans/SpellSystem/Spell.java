@@ -6,6 +6,7 @@ import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Entities.ChainEntity;
 import com.GenZVirus.AgeOfTitans.Entities.SwordSlashEntity;
 import com.GenZVirus.AgeOfTitans.Init.EffectInit;
+import com.GenZVirus.AgeOfTitans.Init.SoundInit;
 import com.GenZVirus.AgeOfTitans.Network.PacketHandler;
 import com.GenZVirus.AgeOfTitans.Network.SyncPlayerMotionPacket;
 import com.GenZVirus.AgeOfTitans.Util.Helpers.ConeShape;
@@ -16,6 +17,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -85,13 +87,16 @@ public class Spell {
 			double newPosX = offset * -Math.sin( yawRadian ) * Math.cos( pitchRadian );
 			double newPosY = offset * -Math.sin( pitchRadian );
 			double newPosZ = offset *  Math.cos( yawRadian ) * Math.cos( pitchRadian );
-			SwordSlashEntity shockwaveEntity = new SwordSlashEntity(playerIn.world, playerIn, newPosX, newPosY, newPosZ);
+			SwordSlashEntity swordslashentity = new SwordSlashEntity(playerIn.world, playerIn, newPosX, newPosY, newPosZ);
 		      double d0 = (double)MathHelper.sqrt(newPosX * newPosX + newPosY * newPosY + newPosZ * newPosZ);
-		      shockwaveEntity.accelerationX =  newPosX / d0 * 0.1D;
-		      shockwaveEntity.accelerationY =  newPosY / d0 * 0.1D;
-		      shockwaveEntity.accelerationZ =  newPosZ / d0 * 0.1D;
-		      shockwaveEntity.setRawPosition(playerIn.getPosX(), 1.6 + playerIn.getPosY(), playerIn.getPosZ());
-		      playerIn.world.addEntity(shockwaveEntity);
+		      swordslashentity.accelerationX =  newPosX / d0 * 0.1D;
+		      swordslashentity.accelerationY =  newPosY / d0 * 0.1D;
+		      swordslashentity.accelerationZ =  newPosZ / d0 * 0.1D;
+		      swordslashentity.rotationPitch = (float) pitch;
+		      swordslashentity.rotationYaw = (float) yaw;
+		      swordslashentity.setRawPosition(playerIn.getPosX(), 1.0D + playerIn.getPosY(), playerIn.getPosZ());
+		      playerIn.world.addEntity(swordslashentity);
+		      playerIn.world.playSound(null, playerIn.getPosition(), SoundInit.SWORD_SLASH_LAUNCH.get(), SoundCategory.AMBIENT, 1.0F, 1.0F);
 		}
 		
 		public List<String> getDescription(){
@@ -195,13 +200,13 @@ public class Spell {
 			double newPosX = offset * -Math.sin( yawRadian ) * Math.cos( pitchRadian );
 			double newPosY = offset * -Math.sin( pitchRadian );
 			double newPosZ = offset *  Math.cos( yawRadian ) * Math.cos( pitchRadian );
+			System.out.println(playerIn);
 			ChainEntity chainEntity = new ChainEntity(playerIn.world, playerIn, newPosX, newPosY, newPosZ);
 			double d0 = (double)MathHelper.sqrt(newPosX * newPosX + newPosY * newPosY + newPosZ * newPosZ);
-			chainEntity.accelerationX =  newPosX / d0 * 0.5D;
-			chainEntity.accelerationY =  newPosY / d0 * 0.5D;
-			chainEntity.accelerationZ =  newPosZ / d0 * 0.5D;
-			chainEntity.setRawPosition(playerIn.getPosX() + newPosX, 1.0D + playerIn.getPosY() + newPosY, playerIn.getPosZ() + newPosZ);
+			chainEntity.shoot(playerIn, (float)pitch, (float)yaw, 0.0F, 1.5F, 0.0F);;
+			chainEntity.setRawPosition(playerIn.getPosX() + newPosX * 2, 1.0D + playerIn.getPosY() + newPosY * 2, playerIn.getPosZ() + newPosZ * 2);
 			playerIn.world.addEntity(chainEntity);
+			playerIn.world.playSound(null, playerIn.getPosition(), SoundInit.CHAIN.get(), SoundCategory.AMBIENT, 1.0F, 1.0F);
 		}
 		
 		public List<String> getDescription(){

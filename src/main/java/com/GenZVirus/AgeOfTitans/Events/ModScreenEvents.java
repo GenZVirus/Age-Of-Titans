@@ -50,14 +50,14 @@ public class ModScreenEvents {
 		if(player == null) return;
 		if(ModHUD.selectedSpell.getId() == 1 && player.getHeldItemMainhand().getItem() instanceof SwordItem && timer == 0) {
 			if(mc.mouseHelper.isLeftDown()) {
-				timer = 120;
+				timer = 20;
 				PacketHandler.INSTANCE.sendToServer(new PlayerUseSpellPacket(1, player.getUniqueID())); 
 			}
 		}
 		
 		if(ModHUD.selectedSpell.getId() == 2 && timer == 0) {
 			if(player.getActiveHand() == Hand.OFF_HAND && player.getActiveItemStack().getItem() instanceof ShieldItem) {
-				timer = 120;
+				timer = 20;
 				PacketHandler.INSTANCE.sendToServer(new PlayerUseSpellPacket(2, player.getUniqueID()));
 			}
 		}

@@ -25,7 +25,7 @@ public class ModEntityTypes {
 	
 	public static final RegistryObject<EntityType<SwordSlashEntity>> SWORD_SLASH = ENTITY_TYPES.register("swordslash",
 			() -> EntityType.Builder.<SwordSlashEntity>create(SwordSlashEntity::new, EntityClassification.CREATURE)
-					.size(1.0F, 1.0F)
+					.size(0.5F, 0.5F)
 					.build(new ResourceLocation(AgeOfTitans.MOD_ID, "swordslash").toString()));
 	
 	public static final RegistryObject<EntityType<ShockwaveEntity>> SHOCKWAVE = ENTITY_TYPES.register("shockwave",

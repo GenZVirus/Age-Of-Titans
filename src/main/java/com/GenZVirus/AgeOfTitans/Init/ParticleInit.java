@@ -3,6 +3,8 @@ package com.GenZVirus.AgeOfTitans.Init;
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Particles.ChainParticle;
 import com.GenZVirus.AgeOfTitans.Particles.ChainParticle.ChainParticleData;
+import com.GenZVirus.AgeOfTitans.Particles.SwordSlashParticle;
+import com.GenZVirus.AgeOfTitans.Particles.SwordSlashParticle.SwordSlashParticleData;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.particles.ParticleType;
@@ -21,10 +23,12 @@ public class ParticleInit {
 	public static final DeferredRegister<ParticleType<?>> PARTICLES = new DeferredRegister<>(ForgeRegistries.PARTICLE_TYPES, AgeOfTitans.MOD_ID);
 
 	public static final RegistryObject<ParticleType<ChainParticleData>> CHAIN = PARTICLES.register("chain", () -> new ParticleType<ChainParticleData>(false, ChainParticleData.DESERIALIZER));
+	public static final RegistryObject<ParticleType<SwordSlashParticleData>> SWORD_SLASH = PARTICLES.register("swordslash", () -> new ParticleType<SwordSlashParticleData>(false, SwordSlashParticleData.DESERIALIZER));
 	
 	@SuppressWarnings("resource")
 	@SubscribeEvent
 	public static void registerParticleFactory(ParticleFactoryRegisterEvent event) {
 		Minecraft.getInstance().particles.registerFactory(ParticleInit.CHAIN.get(), ChainParticle.Factory::new);
+		Minecraft.getInstance().particles.registerFactory(ParticleInit.SWORD_SLASH.get(), SwordSlashParticle.Factory::new);
 	}
 }

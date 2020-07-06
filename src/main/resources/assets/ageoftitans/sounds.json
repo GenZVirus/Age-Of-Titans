@@ -1,0 +1,32 @@
+{
+	"entity.chain.ambient": {
+		"category": "entity",
+		"subtitle": "entity.chain.ambient",
+		"sounds":[
+		{
+			"name": "ageoftitans:entity/entity.chain.ambient",
+			"stream": true  
+		}
+		]
+	},
+	"entity.sword_slash.launch": {
+		"category": "entity",
+		"subtitle": "entity.sword_slash.launch",
+		"sounds":[
+		{
+			"name": "ageoftitans:entity/entity.sword_slash.launch",
+			"stream": true  
+		}
+		]
+	},
+	"entity.sword_slash.ambient": {
+		"category": "entity",
+		"subtitle": "entity.sword_slash.ambient",
+		"sounds":[
+		{
+			"name": "ageoftitans:entity/entity.sword_slash.ambient",
+			"stream": true  
+		}
+		]
+	}
+}

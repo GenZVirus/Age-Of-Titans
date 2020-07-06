@@ -20,12 +20,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class ChainParticle extends SpriteTexturedParticle{
+public class SwordSlashParticle extends SpriteTexturedParticle{
 
 	private double posX, posY, posZ;
 
-	public ChainParticle(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn,
-			double xSpeedIn, double ySpeedIn, double zSpeedIn, ChainParticleData data, IAnimatedSprite sprite) {
+	public SwordSlashParticle(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn,
+			double xSpeedIn, double ySpeedIn, double zSpeedIn, SwordSlashParticleData data, IAnimatedSprite sprite) {
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
 		this.motionX = xSpeedIn;
 		this.motionY = ySpeedIn;
@@ -33,11 +33,11 @@ public class ChainParticle extends SpriteTexturedParticle{
 		this.posX = xCoordIn;
 		this.posY = yCoordIn;
 		this.posZ = zCoordIn;
-		this.particleScale = 0.5F;
+		this.particleScale = 0.1F;
 		this.particleRed = data.getRed();
 		this.particleGreen = data.getGreen();
 		this.particleBlue = data.getBlue();
-		this.maxAge = 10;
+		this.maxAge = 0;
 		this.age = 0;
 	}
 
@@ -57,7 +57,7 @@ public class ChainParticle extends SpriteTexturedParticle{
 	}
 	
 	@OnlyIn(Dist.CLIENT)
-	public static class Factory implements IParticleFactory<ChainParticleData>{
+	public static class Factory implements IParticleFactory<SwordSlashParticleData>{
 		private final IAnimatedSprite spriteSet;
 		
 		public Factory(IAnimatedSprite spriteIn) {
@@ -65,17 +65,17 @@ public class ChainParticle extends SpriteTexturedParticle{
 		}
 
 		@Override
-		public Particle makeParticle(ChainParticleData typeIn, World worldIn, double x, double y, double z,
+		public Particle makeParticle(SwordSlashParticleData typeIn, World worldIn, double x, double y, double z,
 				double xSpeed, double ySpeed, double zSpeed) {
-			ChainParticle particle = new ChainParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, typeIn, spriteSet);
+			SwordSlashParticle particle = new SwordSlashParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, typeIn, spriteSet);
 			particle.selectSpriteRandomly(spriteSet);
 			return particle;
 		}
 	}
 	
-	public static class ChainParticleData implements IParticleData{
-		public static final IParticleData.IDeserializer<ChainParticleData> DESERIALIZER = new IParticleData.IDeserializer<ChainParticleData>() {
-			public ChainParticleData deserialize(ParticleType<ChainParticleData> particleTypeIn, StringReader reader) throws CommandSyntaxException{
+	public static class SwordSlashParticleData implements IParticleData{
+		public static final IParticleData.IDeserializer<SwordSlashParticleData> DESERIALIZER = new IParticleData.IDeserializer<SwordSlashParticleData>() {
+			public SwordSlashParticleData deserialize(ParticleType<SwordSlashParticleData> particleTypeIn, StringReader reader) throws CommandSyntaxException{
 				reader.expect(' ');
 				float red = (float) reader.readDouble();
 				reader.expect(' ');
@@ -84,11 +84,11 @@ public class ChainParticle extends SpriteTexturedParticle{
 				float blue = (float) reader.readDouble();
 				reader.expect(' ');
 				float alpha = (float) reader.readDouble();
-				return new ChainParticleData(red, green, blue, alpha);
+				return new SwordSlashParticleData(red, green, blue, alpha);
 			}
 			
-			public ChainParticleData read(ParticleType<ChainParticleData> particleTypeIn, PacketBuffer buffer) {
-				return new ChainParticleData(buffer.readFloat(), buffer.readFloat(), buffer.readFloat(), buffer.readFloat());
+			public SwordSlashParticleData read(ParticleType<SwordSlashParticleData> particleTypeIn, PacketBuffer buffer) {
+				return new SwordSlashParticleData(buffer.readFloat(), buffer.readFloat(), buffer.readFloat(), buffer.readFloat());
 			};
 			
 		};
@@ -98,7 +98,7 @@ public class ChainParticle extends SpriteTexturedParticle{
 		private final float blue;
 		private final float alpha;
 		
-		public ChainParticleData(float redIn, float greenIn, float blueIn, float alphatIn) {
+		public SwordSlashParticleData(float redIn, float greenIn, float blueIn, float alphatIn) {
 			this.red = redIn;
 			this.green = greenIn;
 			this.blue = blueIn;
@@ -106,8 +106,8 @@ public class ChainParticle extends SpriteTexturedParticle{
 		}
 
 		@Override
-		public ParticleType<ChainParticleData> getType() {
-			return ParticleInit.CHAIN.get();
+		public ParticleType<SwordSlashParticleData> getType() {
+			return ParticleInit.SWORD_SLASH.get();
 		}
 
 		@Override
