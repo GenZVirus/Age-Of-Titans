@@ -1,9 +1,10 @@
 package com.GenZVirus.AgeOfTitans.Entities;
 
+import java.util.List;
+
 import com.GenZVirus.AgeOfTitans.Init.ModEntityTypes;
 import com.GenZVirus.AgeOfTitans.Network.PacketHandler;
 import com.GenZVirus.AgeOfTitans.Network.SyncPlayerMotionPacket;
-import com.GenZVirus.AgeOfTitans.Particles.ChainParticle;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.command.arguments.EntityAnchorArgument;
@@ -25,6 +26,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -68,6 +70,17 @@ public class ChainEntity extends ThrowableEntity{
 	@SuppressWarnings("unused")
 	@Override
 	public void tick() {
+		if(timeLife == 20) {
+			AxisAlignedBB CUBE_BOX = VoxelShapes.fullCube().getBoundingBox();
+			Vec3d pos_offset = new Vec3d(this.getPosition()).add(0, 0, 0);
+			AxisAlignedBB aabb = CUBE_BOX.offset(pos_offset).grow(0.01D);
+			List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this, aabb);
+			for(Entity entity : list) {
+				if(entity instanceof PlayerEntity) {
+					this.shooter = (PlayerEntity) entity;
+				}
+			}
+		}
 		this.timeLife--;
 		if(this.timeLife <= 0)
 			this.remove();

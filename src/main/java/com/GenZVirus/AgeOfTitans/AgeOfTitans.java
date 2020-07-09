@@ -15,9 +15,7 @@ import com.GenZVirus.AgeOfTitans.Init.ModTileEntityTypes;
 import com.GenZVirus.AgeOfTitans.Init.ParticleInit;
 import com.GenZVirus.AgeOfTitans.Init.SoundInit;
 import com.GenZVirus.AgeOfTitans.Network.PacketHandler;
-import com.GenZVirus.AgeOfTitans.SpellSystem.XMLFileJava;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
-import com.GenZVirus.AgeOfTitans.World.Gen.ModOreGen;
 
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;

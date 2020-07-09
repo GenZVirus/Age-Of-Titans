@@ -58,16 +58,17 @@ public class OrbOfEden extends Item {
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
 
-	@Override
-	public int getBurnTime(ItemStack itemStack) {
-		return super.getBurnTime(itemStack);
-	}
-	
 	private void teleportToDimension(PlayerEntity player, DimensionType dimension, BlockPos pos) {
 	    player.changeDimension(dimension, new ITeleporter() {
 	        @Override
 	        public Entity placeEntity(Entity entity, ServerWorld currentWorld, ServerWorld destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
+	        	
+	        	// true make portal, false don't make portal
+	        	
 	            entity = repositionEntity.apply(false);
+	            
+	            // Begin search for air blocks
+	            
 	            int i = 0;
 	            while(!entity.world.getBlockState(new BlockPos(pos.getX(), pos.getY() + i, pos.getZ())).getBlock().equals(Blocks.AIR) && !entity.world.getBlockState(new BlockPos(pos.getX(), pos.getY() + i + 1, pos.getZ())).getBlock().equals(Blocks.AIR)) {
 	            	i++;
@@ -75,6 +76,9 @@ public class OrbOfEden extends Item {
 	            while(entity.world.getBlockState(new BlockPos(pos.getX(), pos.getY() + i - 1, pos.getZ())).getBlock().equals(Blocks.AIR)) {
 	            	i--;
 	            }
+	            
+	            // End search for air blocks
+	            
 	            entity.setPositionAndUpdate(pos.getX(), pos.getY() + i + 1, pos.getZ());
 	            
 	            return entity;

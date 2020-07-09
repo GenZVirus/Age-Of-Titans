@@ -200,11 +200,10 @@ public class Spell {
 			double newPosX = offset * -Math.sin( yawRadian ) * Math.cos( pitchRadian );
 			double newPosY = offset * -Math.sin( pitchRadian );
 			double newPosZ = offset *  Math.cos( yawRadian ) * Math.cos( pitchRadian );
-			System.out.println(playerIn);
 			ChainEntity chainEntity = new ChainEntity(playerIn.world, playerIn, newPosX, newPosY, newPosZ);
 			double d0 = (double)MathHelper.sqrt(newPosX * newPosX + newPosY * newPosY + newPosZ * newPosZ);
 			chainEntity.shoot(playerIn, (float)pitch, (float)yaw, 0.0F, 1.5F, 0.0F);;
-			chainEntity.setRawPosition(playerIn.getPosX() + newPosX * 2, 1.0D + playerIn.getPosY() + newPosY * 2, playerIn.getPosZ() + newPosZ * 2);
+			chainEntity.setRawPosition(playerIn.getPosX(), 1.0D + playerIn.getPosY(), playerIn.getPosZ());
 			playerIn.world.addEntity(chainEntity);
 			playerIn.world.playSound(null, playerIn.getPosition(), SoundInit.CHAIN.get(), SoundCategory.AMBIENT, 1.0F, 1.0F);
 		}
