@@ -6,10 +6,10 @@ import com.GenZVirus.AgeOfTitans.Client.Entity.Render.ReaperEntityRender;
 import com.GenZVirus.AgeOfTitans.Client.Entity.Render.ShockwaveRender;
 import com.GenZVirus.AgeOfTitans.Client.Entity.Render.SwordSlashRender;
 import com.GenZVirus.AgeOfTitans.Client.GUI.ExampleChestScreen;
-import com.GenZVirus.AgeOfTitans.Init.BlockInit;
-import com.GenZVirus.AgeOfTitans.Init.ModContainerTypes;
-import com.GenZVirus.AgeOfTitans.Init.ModEntityTypes;
-import com.GenZVirus.AgeOfTitans.Init.ParticleInit;
+import com.GenZVirus.AgeOfTitans.Common.Init.BlockInit;
+import com.GenZVirus.AgeOfTitans.Common.Init.ModContainerTypes;
+import com.GenZVirus.AgeOfTitans.Common.Init.ModEntityTypes;
+import com.GenZVirus.AgeOfTitans.Common.Init.ParticleInit;
 
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;

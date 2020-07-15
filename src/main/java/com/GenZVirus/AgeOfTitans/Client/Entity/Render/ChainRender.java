@@ -1,7 +1,7 @@
 package com.GenZVirus.AgeOfTitans.Client.Entity.Render;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
-import com.GenZVirus.AgeOfTitans.Entities.ChainEntity;
+import com.GenZVirus.AgeOfTitans.Common.Entities.ChainEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;

@@ -4,17 +4,18 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.GenZVirus.AgeOfTitans.Client.Keybind.ModKeybind;
-import com.GenZVirus.AgeOfTitans.Init.BiomeInit;
-import com.GenZVirus.AgeOfTitans.Init.BlockInit;
-import com.GenZVirus.AgeOfTitans.Init.DimensionInit;
-import com.GenZVirus.AgeOfTitans.Init.EffectInit;
-import com.GenZVirus.AgeOfTitans.Init.ItemInit;
-import com.GenZVirus.AgeOfTitans.Init.ModContainerTypes;
-import com.GenZVirus.AgeOfTitans.Init.ModEntityTypes;
-import com.GenZVirus.AgeOfTitans.Init.ModTileEntityTypes;
-import com.GenZVirus.AgeOfTitans.Init.ParticleInit;
-import com.GenZVirus.AgeOfTitans.Init.SoundInit;
-import com.GenZVirus.AgeOfTitans.Network.PacketHandler;
+import com.GenZVirus.AgeOfTitans.Common.Config.AOTConfig;
+import com.GenZVirus.AgeOfTitans.Common.Init.BiomeInit;
+import com.GenZVirus.AgeOfTitans.Common.Init.BlockInit;
+import com.GenZVirus.AgeOfTitans.Common.Init.DimensionInit;
+import com.GenZVirus.AgeOfTitans.Common.Init.EffectInit;
+import com.GenZVirus.AgeOfTitans.Common.Init.ItemInit;
+import com.GenZVirus.AgeOfTitans.Common.Init.ModContainerTypes;
+import com.GenZVirus.AgeOfTitans.Common.Init.ModEntityTypes;
+import com.GenZVirus.AgeOfTitans.Common.Init.ModTileEntityTypes;
+import com.GenZVirus.AgeOfTitans.Common.Init.ParticleInit;
+import com.GenZVirus.AgeOfTitans.Common.Init.SoundInit;
+import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandler;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
 
 import net.minecraft.item.BlockItem;
@@ -27,9 +28,11 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
@@ -64,6 +67,8 @@ public class AgeOfTitans
      * AgeOfTitans class constructor
     */
     public AgeOfTitans() {
+    	
+    	ModLoadingContext.get().registerConfig(Type.COMMON, AOTConfig.COMMON_SPEC, "AgeOfTitans.toml");
     	
     // Creating an event bus for all registries
     	

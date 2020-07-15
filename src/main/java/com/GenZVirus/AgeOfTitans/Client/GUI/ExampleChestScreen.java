@@ -1,7 +1,7 @@
 package com.GenZVirus.AgeOfTitans.Client.GUI;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
-import com.GenZVirus.AgeOfTitans.Container.ExampleChestContainer;
+import com.GenZVirus.AgeOfTitans.Client.Container.ExampleChestContainer;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;

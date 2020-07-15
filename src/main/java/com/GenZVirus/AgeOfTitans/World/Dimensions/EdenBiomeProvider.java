@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import com.GenZVirus.AgeOfTitans.Init.BiomeInit;
+import com.GenZVirus.AgeOfTitans.Common.Init.BiomeInit;
 import com.google.common.collect.ImmutableSet;
 
 import net.minecraft.world.biome.Biome;

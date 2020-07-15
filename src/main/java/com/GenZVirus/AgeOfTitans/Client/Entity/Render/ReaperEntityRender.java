@@ -2,7 +2,7 @@ package com.GenZVirus.AgeOfTitans.Client.Entity.Render;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Client.Entity.Model.ReaperEntityModel;
-import com.GenZVirus.AgeOfTitans.Entities.ReaperEntity;
+import com.GenZVirus.AgeOfTitans.Common.Entities.ReaperEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;

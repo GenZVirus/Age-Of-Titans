@@ -1,6 +1,6 @@
 package com.GenZVirus.AgeOfTitans.Client.Entity.Model;
 
-import com.GenZVirus.AgeOfTitans.Entities.ReaperEntity;
+import com.GenZVirus.AgeOfTitans.Common.Entities.ReaperEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 

@@ -2,7 +2,7 @@ package com.GenZVirus.AgeOfTitans.World.Feature;
 
 import java.util.Random;
 
-import com.GenZVirus.AgeOfTitans.Init.BlockInit;
+import com.GenZVirus.AgeOfTitans.Common.Init.BlockInit;
 
 import net.minecraft.block.trees.Tree;
 import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;

@@ -1,6 +1,6 @@
 package com.GenZVirus.AgeOfTitans.World.Gen;
 
-import com.GenZVirus.AgeOfTitans.Init.BlockInit;
+import com.GenZVirus.AgeOfTitans.Common.Init.BlockInit;
 
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;

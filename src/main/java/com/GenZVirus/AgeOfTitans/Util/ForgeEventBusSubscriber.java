@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.UUID;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
-import com.GenZVirus.AgeOfTitans.Init.DimensionInit;
-import com.GenZVirus.AgeOfTitans.Network.PacketHandler;
-import com.GenZVirus.AgeOfTitans.Network.ReadElementPacket;
-import com.GenZVirus.AgeOfTitans.Network.SpellPacket;
+import com.GenZVirus.AgeOfTitans.Common.Init.DimensionInit;
+import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandler;
+import com.GenZVirus.AgeOfTitans.Common.Network.ReadElementPacket;
+import com.GenZVirus.AgeOfTitans.Common.Network.SpellPacket;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
 import com.GenZVirus.AgeOfTitans.SpellSystem.XMLFileJava;
 import com.google.common.collect.Lists;

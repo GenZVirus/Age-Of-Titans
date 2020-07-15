@@ -6,9 +6,9 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
-import com.GenZVirus.AgeOfTitans.Network.EditElementPacket;
-import com.GenZVirus.AgeOfTitans.Network.PacketHandler;
-import com.GenZVirus.AgeOfTitans.Network.ReadElementPacket;
+import com.GenZVirus.AgeOfTitans.Common.Network.EditElementPacket;
+import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandler;
+import com.GenZVirus.AgeOfTitans.Common.Network.ReadElementPacket;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;

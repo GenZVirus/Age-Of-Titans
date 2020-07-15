@@ -1,6 +1,6 @@
 package com.GenZVirus.AgeOfTitans.Client.Entity.Render;
 
-import com.GenZVirus.AgeOfTitans.Entities.SwordSlashEntity;
+import com.GenZVirus.AgeOfTitans.Common.Entities.SwordSlashEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.renderer.IRenderTypeBuffer;

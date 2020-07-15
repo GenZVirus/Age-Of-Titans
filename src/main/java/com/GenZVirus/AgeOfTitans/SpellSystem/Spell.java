@@ -3,12 +3,13 @@ package com.GenZVirus.AgeOfTitans.SpellSystem;
 import java.util.List;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
-import com.GenZVirus.AgeOfTitans.Entities.ChainEntity;
-import com.GenZVirus.AgeOfTitans.Entities.SwordSlashEntity;
-import com.GenZVirus.AgeOfTitans.Init.EffectInit;
-import com.GenZVirus.AgeOfTitans.Init.SoundInit;
-import com.GenZVirus.AgeOfTitans.Network.PacketHandler;
-import com.GenZVirus.AgeOfTitans.Network.SyncPlayerMotionPacket;
+import com.GenZVirus.AgeOfTitans.Common.Config.AOTConfig;
+import com.GenZVirus.AgeOfTitans.Common.Entities.ChainEntity;
+import com.GenZVirus.AgeOfTitans.Common.Entities.SwordSlashEntity;
+import com.GenZVirus.AgeOfTitans.Common.Init.EffectInit;
+import com.GenZVirus.AgeOfTitans.Common.Init.SoundInit;
+import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandler;
+import com.GenZVirus.AgeOfTitans.Common.Network.SyncPlayerMotionPacket;
 import com.GenZVirus.AgeOfTitans.Util.Helpers.ConeShape;
 import com.google.common.collect.Lists;
 
@@ -16,6 +17,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -95,7 +97,9 @@ public class Spell {
 		      swordslashentity.rotationPitch = (float) pitch;
 		      swordslashentity.rotationYaw = (float) yaw;
 		      swordslashentity.setRawPosition(playerIn.getPosX(), 1.0D + playerIn.getPosY(), playerIn.getPosZ());
+		      swordslashentity.setDamage(7.0D + AOTConfig.COMMON.sword_slash_damage_ratio.get() * this.level);
 		      playerIn.world.addEntity(swordslashentity);
+		      System.out.println(swordslashentity.getDamage());
 		      playerIn.world.playSound(null, playerIn.getPosition(), SoundInit.SWORD_SLASH_LAUNCH.get(), SoundCategory.AMBIENT, 1.0F, 1.0F);
 		}
 		
@@ -143,18 +147,13 @@ public class Spell {
 				if(coneShape.containsPoint(entity.getPosX(), entity.getPosY(), entity.getPosZ())) {
 					Vec3d vec = new Vec3d((entity.getPosX() - playerIn.getPosX()) * offset, (entity.getPosY() - playerIn.getPosY()) * offset, (entity.getPosZ() - playerIn.getPosZ()) * offset);
 					entity.setMotion(vec.x / 2, vec.y / 2, vec.z / 2);
+					entity.attackEntityFrom(DamageSource.MAGIC, (float) (1.0D + AOTConfig.COMMON.shield_bash_damage_ratio.get() * this.level));
 					if(entity instanceof PlayerEntity) {
 						PacketHandler.INSTANCE.sendTo(new SyncPlayerMotionPacket(entity.getUniqueID(), vec.getX() / 2 , vec.getY() / 2, vec.getZ() / 2), ((ServerPlayerEntity)entity).connection.getNetworkManager(),	NetworkDirection.PLAY_TO_CLIENT);
 					}
 				}
 			}
-			
-//			ShockwaveEntity entity = new ShockwaveEntity(ModEntityTypes.SHOCKWAVE.get(), worldIn);
-//			double x = playerIn.getPosX();
-//			double y = playerIn.getPosY();
-//			double z = playerIn.getPosZ();
-//			entity.setPositionAndRotation(x, y, z,(float) yaw,(float) pitch);
-//			worldIn.addEntity(entity);
+			 
 	        playerIn.world.playSound(null, playerIn.getPosition(), SoundInit.SWORD_SLASH_LAUNCH.get(), SoundCategory.AMBIENT, 1.0F, 1.0F);
 		}
 		
@@ -173,7 +172,7 @@ public class Spell {
 	private static final Spell BERSERKER = new Spell(3, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonhud.png"), "Berserker", 0) {
 		@Override
 		public void effect(World worldIn, PlayerEntity playerIn) {
-			playerIn.addPotionEffect(new EffectInstance(EffectInit.BERSERKER.get(), 600));
+			playerIn.addPotionEffect(new EffectInstance(EffectInit.BERSERKER.get(), 600 + 20 * this.level));
 		}
 		
 		public List<String> getDescription(){
@@ -202,9 +201,9 @@ public class Spell {
 			double newPosY = offset * -Math.sin( pitchRadian );
 			double newPosZ = offset *  Math.cos( yawRadian ) * Math.cos( pitchRadian );
 			ChainEntity chainEntity = new ChainEntity(playerIn.world, playerIn, newPosX, newPosY, newPosZ);
-			double d0 = (double)MathHelper.sqrt(newPosX * newPosX + newPosY * newPosY + newPosZ * newPosZ);
-			chainEntity.shoot(playerIn, (float)pitch, (float)yaw, 0.0F, 1.5F, 0.0F);;
+			chainEntity.shoot(playerIn, (float)pitch, (float)yaw, 0.0F, 1.5F, 0.0F);
 			chainEntity.setRawPosition(playerIn.getPosX(), 1.0D + playerIn.getPosY(), playerIn.getPosZ());
+			chainEntity.setDamage(5.0 + AOTConfig.COMMON.chain_damage_ratio.get() * this.level);
 			playerIn.world.addEntity(chainEntity);
 			playerIn.world.playSound(null, playerIn.getPosition(), SoundInit.CHAIN.get(), SoundCategory.AMBIENT, 1.0F, 1.0F);
 		}

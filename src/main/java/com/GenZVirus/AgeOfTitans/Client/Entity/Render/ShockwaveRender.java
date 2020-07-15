@@ -2,7 +2,7 @@ package com.GenZVirus.AgeOfTitans.Client.Entity.Render;
 
 import java.util.Random;
 
-import com.GenZVirus.AgeOfTitans.Entities.ShockwaveEntity;
+import com.GenZVirus.AgeOfTitans.Common.Entities.ShockwaveEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.renderer.IRenderTypeBuffer;

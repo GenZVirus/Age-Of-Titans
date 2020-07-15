@@ -1,6 +1,6 @@
 package com.GenZVirus.AgeOfTitans.World.Biomes;
 
-import com.GenZVirus.AgeOfTitans.Init.BlockInit;
+import com.GenZVirus.AgeOfTitans.Common.Init.BlockInit;
 
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
