@@ -19,12 +19,12 @@
 		}
 		]
 	},
-	"entity.sword_slash.ambient": {
+	"entity.shield_bash.launch": {
 		"category": "entity",
-		"subtitle": "entity.sword_slash.ambient",
+		"subtitle": "entity.shield_bash.launch",
 		"sounds":[
 		{
-			"name": "ageoftitans:entity/entity.sword_slash.ambient",
+			"name": "ageoftitans:entity/entity.shield_bash.launch",
 			"stream": true  
 		}
 		]

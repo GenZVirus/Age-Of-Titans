@@ -155,6 +155,7 @@ public class Spell {
 //			double z = playerIn.getPosZ();
 //			entity.setPositionAndRotation(x, y, z,(float) yaw,(float) pitch);
 //			worldIn.addEntity(entity);
+	        playerIn.world.playSound(null, playerIn.getPosition(), SoundInit.SWORD_SLASH_LAUNCH.get(), SoundCategory.AMBIENT, 1.0F, 1.0F);
 		}
 		
 		public List<String> getDescription(){
