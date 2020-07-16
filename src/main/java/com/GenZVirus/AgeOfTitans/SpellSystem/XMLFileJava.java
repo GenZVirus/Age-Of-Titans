@@ -20,11 +20,12 @@ import org.xml.sax.SAXException;
 
 public class XMLFileJava {
 	
-	 public static String defoult_xmlFilePath = "world/ageoftitans/playerdata/";
+	 public static String default_xmlFilePath = "world/ageoftitans/playerdata/";
 	    public static String Player_Name = "PlayerName";
 	    
 	    public XMLFileJava(UUID UniquePlayerName, String playerName) {
-	    	String xmlFilePath = defoult_xmlFilePath + UniquePlayerName.toString() + ".xml";
+
+	    	String xmlFilePath = default_xmlFilePath + UniquePlayerName.toString() + ".xml";
 	    	Player_Name = playerName;
 	    	 try {
 	    		 
@@ -129,14 +130,13 @@ public class XMLFileJava {
 	    }
 	    
 	    public static void editElement(UUID UniquePlayerName, String elementTag, String elementTextContent) {
-	    	String xmlFilePath = defoult_xmlFilePath + UniquePlayerName.toString() + ".xml";
+	    	String xmlFilePath = default_xmlFilePath + UniquePlayerName.toString() + ".xml";
 	    	try {
 	    	 DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
 	         DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
 	         Document document = documentBuilder.parse(xmlFilePath);
 	         
 	         // Get root element
-	         Node PlayerName = document.getFirstChild();
 	         
 	         Node element = document.getElementsByTagName(elementTag).item(0);
 	         element.setTextContent(elementTextContent);
@@ -159,7 +159,7 @@ public class XMLFileJava {
 	    }
 	    
 	    public static String readElement(UUID UniquePlayerName, String elementTag) {
-	    	String xmlFilePath = defoult_xmlFilePath + UniquePlayerName.toString() + ".xml";
+	    	String xmlFilePath = default_xmlFilePath + UniquePlayerName.toString() + ".xml";
 	    	try {
 	    	 DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
 	         DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
@@ -178,7 +178,7 @@ public class XMLFileJava {
 	    }
 	    
 	    public static void checkFileAndMake(UUID UniquePlayerName, String playerName) {
-	    	String xmlFilePath = defoult_xmlFilePath + UniquePlayerName.toString() + ".xml";
+	    	String xmlFilePath = default_xmlFilePath + UniquePlayerName.toString() + ".xml";
 	    	File file = new File(xmlFilePath);
 	    	boolean found = file.exists();
 	    	

@@ -16,6 +16,8 @@ import com.google.common.collect.Lists;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -74,6 +76,13 @@ public class ForgeEventBusSubscriber {
 	public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent e) {
 		players.add(e.getPlayer());
 		uuids.add(e.getPlayer().getUniqueID());
+		
+		MinecraftServer mcSRV = e.getPlayer().world.getServer();
+		if(mcSRV instanceof IntegratedServer) {
+			String folderName = mcSRV.getFolderName();
+			XMLFileJava.default_xmlFilePath = "./saves/" + folderName + "/ageoftitans/playerdata/";
+		}
+		
 		String playerName = e.getPlayer().getName().getFormattedText();
 		UUID uuid = e.getPlayer().getUniqueID();
 		XMLFileJava.checkFileAndMake(uuid, playerName);
