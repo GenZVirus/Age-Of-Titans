@@ -51,5 +51,11 @@ public class PacketHandler {
 				.decoder(berserkerBlockBreakerPacket::decode)
 				.consumer(berserkerBlockBreakerPacket::handle)
 				.add();
+		
+		INSTANCE.messageBuilder(SendPlayerSpellDetailsPacket.class, id++)
+		   		.encoder(SendPlayerSpellDetailsPacket::encode)
+		   		.decoder(SendPlayerSpellDetailsPacket::decode)
+		   		.consumer(SendPlayerSpellDetailsPacket::handle)
+		   		.add();
 	}
 }

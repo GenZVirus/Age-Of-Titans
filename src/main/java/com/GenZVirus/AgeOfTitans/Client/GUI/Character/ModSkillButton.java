@@ -10,6 +10,7 @@ import com.GenZVirus.AgeOfTitans.Common.Network.EditElementPacket;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandler;
 import com.GenZVirus.AgeOfTitans.Common.Network.ReadElementPacket;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
+import com.GenZVirus.AgeOfTitans.Util.Helpers.KeyboardHelper;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -107,7 +108,11 @@ public class ModSkillButton extends Widget {
 	      AbstractGui.blit(this.x, this.y, 0, 0, 0, this.width, this.height, this.height, this.width);
 	      	      
 	      if(this.isHovered) {
-	    	  List<String> stringList = spell.getDescription();
+	    	  List<String> stringList = spell.getDetails();
+	    	  if(KeyboardHelper.isHoldingShift()) {
+	    	  }else {
+	    		  stringList = spell.getDescription();
+	    	  }
 	    	  this.renderTooltip(stringList, (int)Minecraft.getInstance().mouseHelper.getMouseX() / 2 - 100, this.y + 36, Minecraft.getInstance().fontRenderer);
 	      }
 	      
@@ -230,7 +235,7 @@ public class ModSkillButton extends Widget {
             {
                 String line = textLines.get(lineNumber);
                 if (line != null)
-                    font.renderString(line, (float)tooltipX, (float)tooltipY, 65280, true, textLocation, renderType, false, 0, 15728880);
+                    font.renderString(line, (float)tooltipX, (float)tooltipY, 16777215, true, textLocation, renderType, false, 0, 15728880);
 
                 if (lineNumber + 1 == titleLinesCount)
                     tooltipY += 2;

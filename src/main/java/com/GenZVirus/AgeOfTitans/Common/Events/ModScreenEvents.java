@@ -30,7 +30,10 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 @Mod.EventBusSubscriber(modid = AgeOfTitans.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
 public class ModScreenEvents {
 
-	private static int timer = 0;
+	private static int cooldown_SwordSlash = 0;
+	private static int cooldown_ShieldBash = 0;
+	private static int cooldown_Berserker = 0;
+	private static int cooldown_Chain = 0;
 
 	@SuppressWarnings("resource")
 	@SubscribeEvent
@@ -43,33 +46,33 @@ public class ModScreenEvents {
 			return;
 		}
 		
-		if(timer > 0) {
-			timer--;
+		if(cooldown_SwordSlash > 0) {
+			cooldown_SwordSlash--;
 		}
 		PlayerEntity player = Minecraft.getInstance().player;
 		if(player == null) return;
-		if(ModHUD.selectedSpell.getId() == 1 && player.getHeldItemMainhand().getItem() instanceof SwordItem && timer == 0) {
+		if(ModHUD.selectedSpell.getId() == 1 && player.getHeldItemMainhand().getItem() instanceof SwordItem && cooldown_SwordSlash == 0) {
 			if(mc.mouseHelper.isLeftDown()) {
-				timer = 20;
+				cooldown_SwordSlash = 20;
 				PacketHandler.INSTANCE.sendToServer(new PlayerUseSpellPacket(1, player.getUniqueID())); 
 			}
 		}
 		
-		if(ModHUD.selectedSpell.getId() == 2 && timer == 0) {
+		if(ModHUD.selectedSpell.getId() == 2 && cooldown_ShieldBash == 0) {
 			if(player.getActiveHand() == Hand.OFF_HAND && player.getActiveItemStack().getItem() instanceof ShieldItem) {
-				timer = 20;
+				cooldown_ShieldBash = 20;
 				PacketHandler.INSTANCE.sendToServer(new PlayerUseSpellPacket(2, player.getUniqueID()));
 			}
 		}
-		if(ModHUD.selectedSpell.getId() == 3 && timer == 0) {
+		if(ModHUD.selectedSpell.getId() == 3 && cooldown_Berserker == 0) {
 			if(mc.mouseHelper.isRightDown()) {
-				timer = 20;
+				cooldown_Berserker = 20;
 				PacketHandler.INSTANCE.sendToServer(new PlayerUseSpellPacket(3, player.getUniqueID()));
 			}
 		}
-		if(ModHUD.selectedSpell.getId() == 4 && timer == 0) {
+		if(ModHUD.selectedSpell.getId() == 4 && cooldown_Chain == 0) {
 			if(mc.mouseHelper.isRightDown()) {
-				timer = 20;
+				cooldown_Chain = 20;
 				PacketHandler.INSTANCE.sendToServer(new PlayerUseSpellPacket(4, player.getUniqueID()));
 			}
 		}

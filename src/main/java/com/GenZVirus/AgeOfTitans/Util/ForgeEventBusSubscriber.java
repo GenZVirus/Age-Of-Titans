@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.UUID;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
+import com.GenZVirus.AgeOfTitans.Common.Config.AOTConfig;
 import com.GenZVirus.AgeOfTitans.Common.Init.DimensionInit;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandler;
 import com.GenZVirus.AgeOfTitans.Common.Network.ReadElementPacket;
+import com.GenZVirus.AgeOfTitans.Common.Network.SendPlayerSpellDetailsPacket;
 import com.GenZVirus.AgeOfTitans.Common.Network.SpellPacket;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
 import com.GenZVirus.AgeOfTitans.SpellSystem.XMLFileJava;
@@ -75,7 +77,6 @@ public class ForgeEventBusSubscriber {
 		String playerName = e.getPlayer().getName().getFormattedText();
 		UUID uuid = e.getPlayer().getUniqueID();
 		XMLFileJava.checkFileAndMake(uuid, playerName);
-		System.out.println(uuid.toString());
 		PacketHandler.INSTANCE.sendTo(new SpellPacket(Integer.parseInt(XMLFileJava.readElement(uuid, "Slot1_Spell_ID")), 
 														Integer.parseInt(XMLFileJava.readElement(uuid, "Slot2_Spell_ID")), 
 														Integer.parseInt(XMLFileJava.readElement(uuid, "Slot3_Spell_ID")), 
@@ -85,10 +86,13 @@ public class ForgeEventBusSubscriber {
 		PacketHandler.INSTANCE.sendTo(new ReadElementPacket(uuid, "ApplesEaten", Integer.parseInt(XMLFileJava.readElement(uuid, "ApplesEaten"))),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		for(int i = 1; i < Spell.SPELL_LIST.size(); i++) {
 			String element = "Spell" + "_Level" + i;
-			System.out.println(Integer.parseInt(XMLFileJava.readElement(uuid, element)));
 			PacketHandler.INSTANCE.sendTo(new ReadElementPacket(uuid, element, Integer.parseInt(XMLFileJava.readElement(uuid, element))),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		}
-		
+		PacketHandler.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(1, AOTConfig.COMMON.sword_slash_cooldown.get(), AOTConfig.COMMON.sword_slash_damage_ratio.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		PacketHandler.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(2, AOTConfig.COMMON.shield_bash_cooldown.get(), AOTConfig.COMMON.shield_bash_damage_ratio.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		PacketHandler.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(3, AOTConfig.COMMON.berserker_cooldown.get(), AOTConfig.COMMON.berserker_duration_ratio.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		PacketHandler.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(4, AOTConfig.COMMON.chain_cooldown.get(), AOTConfig.COMMON.chain_damage_ratio.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+
 	}
 	
 	// This event registers the Eden Dimension

@@ -1,5 +1,7 @@
 package com.GenZVirus.AgeOfTitans;
 
+import java.io.File;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -68,7 +70,15 @@ public class AgeOfTitans
     */
     public AgeOfTitans() {
     	
-    	ModLoadingContext.get().registerConfig(Type.COMMON, AOTConfig.COMMON_SPEC, "AgeOfTitans.toml");
+    	File folder = new File("config/AgeOfTitans/");
+    	if(!folder.exists()) {
+    		try {
+    			folder.mkdir();
+    		} catch (Exception e) {
+    			System.out.println("Failed to create directory");
+    		}
+    	}
+    	ModLoadingContext.get().registerConfig(Type.COMMON, AOTConfig.COMMON_SPEC, "AgeOfTitans/AgeOfTitansConfigs.toml");
     	
     // Creating an event bus for all registries
     	

@@ -38,6 +38,8 @@ public class Spell {
 	public int level = 0;
 	public static int points = 0;
 	public static int applesEaten = 0;
+	public double ratio = 0;
+	public int cooldown = 0;
 	
 	public Spell(int id, ResourceLocation icon, ResourceLocation iconOff, ResourceLocation iconHUD, String name, int level) {
 		this.id = id;
@@ -76,6 +78,11 @@ public class Spell {
 	public void effect(World worldIn, PlayerEntity playerIn) {
 	}
 	
+	public List<String> getDetails() {
+		List<String> list = Lists.newArrayList();
+		return list;
+	}
+	
 	public static final List<Spell> SPELL_LIST = Lists.newArrayList();
 	private static final Spell NO_SPELL = new Spell(0, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/nospell.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/nospell.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/nospell.png"), "", 0);
 	private static final Spell SWORD_SLASH = new Spell(1, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashiconhud.png"), "Sword Slash", 0){
@@ -99,7 +106,6 @@ public class Spell {
 		      swordslashentity.setRawPosition(playerIn.getPosX(), 1.0D + playerIn.getPosY(), playerIn.getPosZ());
 		      swordslashentity.setDamage(7.0D + AOTConfig.COMMON.sword_slash_damage_ratio.get() * this.level);
 		      playerIn.world.addEntity(swordslashentity);
-		      System.out.println(swordslashentity.getDamage());
 		      playerIn.world.playSound(null, playerIn.getPosition(), SoundInit.SWORD_SLASH_LAUNCH.get(), SoundCategory.AMBIENT, 1.0F, 1.0F);
 		}
 		
@@ -111,6 +117,17 @@ public class Spell {
 			list.add("the flames will fly towards the target");
 			list.add("creating an fire explosion on hit and ");
 			list.add("damaging all nearby targets.");
+			list.add("");
+			list.add("Hold Shift for details");
+			return list;
+		}
+		
+		@Override
+		public List<String> getDetails() {
+			List<String> list = Lists.newArrayList();
+			list.add("Damage " + "(" + Double.toString(7.0D + this.ratio * this.level) + "): " + "\u00A73" + "7" + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
+			list.add("");
+			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
 			return list;
 		}
 		
@@ -164,6 +181,17 @@ public class Spell {
 			list.add("of the shield will be knockbacked. Blocks");
 			list.add("with weak resistance will colaps when hit");
 			list.add("by the shockwave.");
+			list.add("");
+			list.add("Hold Shift for details");
+			return list;
+		}
+		
+		@Override
+		public List<String> getDetails() {
+			List<String> list = Lists.newArrayList();
+			list.add("Damage " + "(" + Double.toString(1.0D + this.ratio * this.level) + "): " + "\u00A73" + "1" + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
+			list.add("");
+			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
 			return list;
 		}
 		
@@ -172,7 +200,7 @@ public class Spell {
 	private static final Spell BERSERKER = new Spell(3, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonhud.png"), "Berserker", 0) {
 		@Override
 		public void effect(World worldIn, PlayerEntity playerIn) {
-			playerIn.addPotionEffect(new EffectInstance(EffectInit.BERSERKER.get(), 600 + 20 * this.level));
+			playerIn.addPotionEffect(new EffectInstance(EffectInit.BERSERKER.get(), (int) (400 + 20 * AOTConfig.COMMON.berserker_duration_ratio.get() * this.level)));
 		}
 		
 		public List<String> getDescription(){
@@ -184,6 +212,19 @@ public class Spell {
 			list.add("your punches. If the target enemy doesn't ");
 			list.add("have an helmet to protect his skull, a");
 			list.add("critical hit will be their undoing.");
+			list.add("");
+			list.add("Hold Shift for details");
+			return list;
+		}
+		
+		@Override
+		public List<String> getDetails() {
+			List<String> list = Lists.newArrayList();
+			list.add("Duration " + "(" + Double.toString(20.0D + this.ratio * this.level) + "): " + "\u00A73" + "20" + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level) + "\u00A7f"  + " seconds");
+			list.add("");
+			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
+			list.add("");
+			list.add("\u00A73" + "Base " + "\u00A7e" + "Ratio " + "\u00A74" + "Level ");
 			return list;
 		}
 		
@@ -214,11 +255,21 @@ public class Spell {
 			list.add("user mobility by hooking blocks to thrust");
 			list.add("themselves towards the blocks. Or hook");
 			list.add("an enemy to pull them towards them.");
+			list.add("");
+			list.add("Hold Shift for details");
+			return list;
+		}
+		
+		@Override
+		public List<String> getDetails() {
+			List<String> list = Lists.newArrayList();
+			list.add("Damage " + "(" + Double.toString(7.0D + this.ratio * this.level) + "): " + "\u00A73" + "5" + "\u00A7f" + " + " +  "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
+			list.add("");
+			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
 			return list;
 		}
 		
 	};
-	
 	public static void registerSpells() {
 		SPELL_LIST.add(NO_SPELL.getId(), NO_SPELL);
 		SPELL_LIST.add(SWORD_SLASH.getId(), SWORD_SLASH);
@@ -226,6 +277,7 @@ public class Spell {
 		SPELL_LIST.add(BERSERKER.getId(), BERSERKER);
 		SPELL_LIST.add(CHAIN.getId(), CHAIN);
 	}
+
 	
 	
 }
