@@ -40,6 +40,7 @@ public class Spell {
 	public static int applesEaten = 0;
 	public double ratio = 0;
 	public int cooldown = 0;
+	public double damage = 0;
 	
 	public Spell(int id, ResourceLocation icon, ResourceLocation iconOff, ResourceLocation iconHUD, String name, int level) {
 		this.id = id;
@@ -104,7 +105,7 @@ public class Spell {
 		      swordslashentity.rotationPitch = (float) pitch;
 		      swordslashentity.rotationYaw = (float) yaw;
 		      swordslashentity.setRawPosition(playerIn.getPosX(), 1.0D + playerIn.getPosY(), playerIn.getPosZ());
-		      swordslashentity.setDamage(7.0D + AOTConfig.COMMON.sword_slash_damage_ratio.get() * this.level);
+		      swordslashentity.setDamage(AOTConfig.COMMON.sword_slash_base_damage.get() + AOTConfig.COMMON.sword_slash_damage_ratio.get() * this.level);
 		      playerIn.world.addEntity(swordslashentity);
 		      playerIn.world.playSound(null, playerIn.getPosition(), SoundInit.SWORD_SLASH_LAUNCH.get(), SoundCategory.AMBIENT, 1.0F, 1.0F);
 		}
@@ -125,7 +126,7 @@ public class Spell {
 		@Override
 		public List<String> getDetails() {
 			List<String> list = Lists.newArrayList();
-			list.add("Damage " + "(" + Double.toString(7.0D + this.ratio * this.level) + "): " + "\u00A73" + "7" + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
+			list.add("Damage " + "(" + Double.toString(this.damage + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.damage) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
 			list.add("");
 			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
 			return list;
@@ -164,7 +165,7 @@ public class Spell {
 				if(coneShape.containsPoint(entity.getPosX(), entity.getPosY(), entity.getPosZ())) {
 					Vec3d vec = new Vec3d((entity.getPosX() - playerIn.getPosX()) * offset, (entity.getPosY() - playerIn.getPosY()) * offset, (entity.getPosZ() - playerIn.getPosZ()) * offset);
 					entity.setMotion(vec.x / 2, vec.y / 2, vec.z / 2);
-					entity.attackEntityFrom(DamageSource.MAGIC, (float) (1.0D + AOTConfig.COMMON.shield_bash_damage_ratio.get() * this.level));
+					entity.attackEntityFrom(DamageSource.MAGIC, (float) (AOTConfig.COMMON.shield_bash_base_damage.get() + AOTConfig.COMMON.shield_bash_damage_ratio.get() * this.level));
 					if(entity instanceof PlayerEntity) {
 						PacketHandler.INSTANCE.sendTo(new SyncPlayerMotionPacket(entity.getUniqueID(), vec.getX() / 2 , vec.getY() / 2, vec.getZ() / 2), ((ServerPlayerEntity)entity).connection.getNetworkManager(),	NetworkDirection.PLAY_TO_CLIENT);
 					}
@@ -189,7 +190,7 @@ public class Spell {
 		@Override
 		public List<String> getDetails() {
 			List<String> list = Lists.newArrayList();
-			list.add("Damage " + "(" + Double.toString(1.0D + this.ratio * this.level) + "): " + "\u00A73" + "1" + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
+			list.add("Damage " + "(" + Double.toString(this.damage + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.damage) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
 			list.add("");
 			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
 			return list;
@@ -220,6 +221,8 @@ public class Spell {
 		@Override
 		public List<String> getDetails() {
 			List<String> list = Lists.newArrayList();
+			list.add("Bonus damage: " + "\u00A73" + Double.toString(this.damage));
+			list.add("");
 			list.add("Duration " + "(" + Double.toString(20.0D + this.ratio * this.level) + "): " + "\u00A73" + "20" + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level) + "\u00A7f"  + " seconds");
 			list.add("");
 			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
@@ -244,7 +247,7 @@ public class Spell {
 			ChainEntity chainEntity = new ChainEntity(playerIn.world, playerIn, newPosX, newPosY, newPosZ);
 			chainEntity.shoot(playerIn, (float)pitch, (float)yaw, 0.0F, 1.5F, 0.0F);
 			chainEntity.setRawPosition(playerIn.getPosX(), 1.0D + playerIn.getPosY(), playerIn.getPosZ());
-			chainEntity.setDamage(5.0 + AOTConfig.COMMON.chain_damage_ratio.get() * this.level);
+			chainEntity.setDamage(AOTConfig.COMMON.chain_base_damage.get()+ AOTConfig.COMMON.chain_damage_ratio.get() * this.level);
 			playerIn.world.addEntity(chainEntity);
 			playerIn.world.playSound(null, playerIn.getPosition(), SoundInit.CHAIN.get(), SoundCategory.AMBIENT, 1.0F, 1.0F);
 		}
@@ -263,7 +266,7 @@ public class Spell {
 		@Override
 		public List<String> getDetails() {
 			List<String> list = Lists.newArrayList();
-			list.add("Damage " + "(" + Double.toString(7.0D + this.ratio * this.level) + "): " + "\u00A73" + "5" + "\u00A7f" + " + " +  "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
+			list.add("Damage " + "(" + Double.toString(this.damage + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.damage) + "\u00A7f" + " + " +  "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
 			list.add("");
 			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
 			return list;

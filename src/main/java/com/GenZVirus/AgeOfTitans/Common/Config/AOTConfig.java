@@ -22,63 +22,116 @@ public abstract class AOTConfig {
 	public static class Common {
 		
 		public final DoubleValue sword_slash_damage_ratio;
-		public final DoubleValue chain_damage_ratio;
-		public final DoubleValue shield_bash_damage_ratio;
-		public final DoubleValue berserker_duration_ratio;
-		
+		public final DoubleValue sword_slash_base_damage;
 		public final IntValue sword_slash_cooldown;
-		public final IntValue chain_cooldown;
+
+		public final DoubleValue shield_bash_damage_ratio;
+		public final DoubleValue shield_bash_base_damage;
 		public final IntValue shield_bash_cooldown;
+
+		public final DoubleValue berserker_duration_ratio;
+		public final DoubleValue berserker_punch_damage;
 		public final IntValue berserker_cooldown;
 		
+		public final DoubleValue chain_damage_ratio;
+		public final DoubleValue chain_base_damage;
+		public final IntValue chain_cooldown;
+		
+		public final IntValue exp_level_up;
+		public final IntValue exp_per_advancement;
+		
 		public Common(ForgeConfigSpec.Builder builder) {
-			builder.comment("This config contains the multipliers of the spells")
-				   .push("spell_ratio");
+			builder.comment("This config contains the stats of the Sword Slash ability")
+				   .push("sword_slash");
 			
 			sword_slash_damage_ratio = builder.comment("This sets the damage multiplier of the Sword Slash ability")
-											  .translation("spell_ratio.configgui.sword_slash_damage_ratio")
+											  .translation("sword_slash.configgui.sword_slash_damage_ratio")
 											  .worldRestart()
 											  .defineInRange("sword_slash_damage_ratio", 0.5D, 0.0D, 1.0D);
 			
-			shield_bash_damage_ratio = builder.comment("This sets the damage multiplier of the Shield Bash ability")
-					  						  .translation("spell_ratio.configgui.shield_bash_damage_ratio")
-					  						  .worldRestart()
-					  						  .defineInRange("shield_bash_damage_ratio", 0.2D, 0.0D, 1.0D);
-
-			berserker_duration_ratio = builder.comment("This sets the duration multiplier of the Berserker ability")
-											  .translation("spell_ratio.configgui.berserker_duration_ratio")
+			sword_slash_base_damage = builder.comment("This sets the damage multiplier of the Sword Slash ability")
+											  .translation("sword_slash.configgui.sword_slash_base_damage")
 											  .worldRestart()
-											  .defineInRange("berserker_duration_ratio", 0.5D, 0.0D, 1.0D);
+											  .defineInRange("sword_slash_base_damage", 7.0D, 0.0D, 1000000.0D);
 			
-			chain_damage_ratio = builder.comment("This sets the damage multiplier of the Chain ability")
-					  					.translation("spell_ratio.configgui.chain_damage_ratio")
-					  					.worldRestart()
-					  					.defineInRange("chain_damage_ratio", 0.5D, 0.0D, 1.0D);
-			
-			builder.pop();
-			
-			builder.comment("This config contains the cooldowns of the spells")
-			   	   .push("spell_cooldown");
-		
 			sword_slash_cooldown = builder.comment("This sets the cooldown in seconds of the Sword Slash ability")
-										  .translation("spell_cooldown.configgui.sword_slash_cooldown")
+										  .translation("sword_slash.configgui.sword_slash_cooldown")
 										  .worldRestart()
 										  .defineInRange("sword_slash_cooldown", 10, 0, 3600);
 			
+			builder.pop();
+			
+			builder.comment("This config contains the stats of the Shield Bash ability")
+			       .push("shield_bash");
+			
+			shield_bash_damage_ratio = builder.comment("This sets the damage multiplier of the Shield Bash ability")
+					  						  .translation("shield_bash.configgui.shield_bash_damage_ratio")
+					  						  .worldRestart()
+					  						  .defineInRange("shield_bash_damage_ratio", 0.2D, 0.0D, 1.0D);
+			
+			shield_bash_base_damage = builder.comment("This sets the damage multiplier of the Shield Bash ability")
+					    					  .translation("shield_bash.configgui.shield_bash_base_damage")
+					    					  .worldRestart()
+					    					  .defineInRange("shield_bash_base_damage", 1.0D, 0.0D, 1000000.0D);
+			
 			shield_bash_cooldown = builder.comment("This sets the cooldown in seconds of the Shield Bash ability")
-					  					  .translation("spell_cooldown.configgui.shield_bash_cooldown")
+					  					  .translation("shield_bash.configgui.shield_bash_cooldown")
 					  					  .worldRestart()
 					  					  .defineInRange("shield_bash_cooldown", 20, 0, 3600);
 			
-			berserker_cooldown = builder.comment("This sets the cooldown in secondsr of the Chain ability")
-					  					.translation("spell_cooldown.configgui.berserker_cooldown")
-					  					.worldRestart()
-					  					.defineInRange("berserker_cooldown", 600, 0, 3600);
+			builder.pop();
 			
-			chain_cooldown = builder.comment("This sets the cooldown in seconds of the Berserker ability")
-									.translation("spell_cooldown.configgui.chain_cooldown")
+			builder.comment("This config contains the stats of the Berserker ability")
+		       	   .push("berserker");
+
+			berserker_duration_ratio = builder.comment("This sets the duration multiplier of the Berserker ability")
+											  .translation("berserker.configgui.berserker_duration_ratio")
+											  .worldRestart()
+											  .defineInRange("berserker_duration_ratio", 0.5D, 0.0D, 1.0D);
+			
+			berserker_punch_damage = builder.comment("This sets the duration multiplier of the Berserker ability")
+											.translation("berserker.configgui.berserker_punch_damage")
+											.worldRestart()
+											.defineInRange("berserker_punch_damage", 10.0D, 0.0D, 1000000.0D);
+			
+			berserker_cooldown = builder.comment("This sets the cooldown in seconds of the Berserker ability")
+  									    .translation("berserker.configgui.berserker_cooldown")
+  									    .worldRestart()
+  									    .defineInRange("berserker_cooldown", 600, 0, 3600);
+			
+			builder.pop();
+			
+			builder.comment("This config contains the stats of the Chain ability")
+			   	   .push("chain");
+		
+			chain_damage_ratio = builder.comment("This sets the damage multiplier of the Chain ability")
+  					    				.translation("chain.configgui.chain_damage_ratio")
+  					    				.worldRestart()
+  					    				.defineInRange("chain_damage_ratio", 0.5D, 0.0D, 1.0D);
+			
+			chain_base_damage = builder.comment("This sets the damage multiplier of the Chain ability")
+	    								.translation("chain.configgui.chain_base_damage")
+	    								.worldRestart()
+	    								.defineInRange("chain_base_damage", 5.0D, 0.0D, 1000000.0D);
+			
+			chain_cooldown = builder.comment("This sets the cooldown in seconds of the Chain ability")
+									.translation("chain.configgui.chain_cooldown")
 									.worldRestart()
 									.defineInRange("chain_cooldown", 10, 0, 3600);
+			builder.pop();
+			
+			builder.comment("WARNING! CAHNGING THE VALUES HAS TO CHECK THIS EQUATION FOR NO EXPERIENCE LOSES: exp_level_up / exp_per_advancement * exp_per_advancement == exp_level_up")
+		   	   .push("leveling");
+	
+			exp_level_up = builder.comment("This sets the amount of experience required to level up")
+										  .translation("leveling.configgui.exp_level_up")
+										  .worldRestart()
+										  .defineInRange("exp_level_up", 100, 100, 1000000);
+			
+			exp_per_advancement = builder.comment("This sets the amount of experience given when completing an advancement")
+									.translation("leveling.configgui.exp_per_advancement")
+									.worldRestart()
+									.defineInRange("exp_per_advancement", 10, 1, 1000000);
 			builder.pop();
 			
 		}

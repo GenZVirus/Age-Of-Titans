@@ -1,6 +1,7 @@
 package com.GenZVirus.AgeOfTitans.Common.Init;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
+import com.GenZVirus.AgeOfTitans.Common.Config.AOTConfig;
 import com.GenZVirus.AgeOfTitans.Common.Effects.ModEffect;
 
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -16,6 +17,6 @@ public class EffectInit {
 	public static final DeferredRegister<Effect> MOD_EFFECTS = new DeferredRegister<>(ForgeRegistries.POTIONS, AgeOfTitans.MOD_ID);
 	
 	public static final RegistryObject<Effect> BERSERKER = MOD_EFFECTS.register("berserker", () -> new ModEffect(EffectType.BENEFICIAL, 0).addAttributesModifier(SharedMonsterAttributes.MOVEMENT_SPEED, "91AEAA56-376B-4498-935B-2F7F68070635", 2.0D, AttributeModifier.Operation.MULTIPLY_TOTAL)
-																																		  .addAttributesModifier(SharedMonsterAttributes.ATTACK_DAMAGE, "648D7064-6A60-4F59-8ABE-C2C23A6DD7A9", 10.0D, AttributeModifier.Operation.ADDITION));
+																																		  .addAttributesModifier(SharedMonsterAttributes.ATTACK_DAMAGE, "648D7064-6A60-4F59-8ABE-C2C23A6DD7A9", AOTConfig.COMMON.berserker_punch_damage.get(), AttributeModifier.Operation.ADDITION));
 	
 }

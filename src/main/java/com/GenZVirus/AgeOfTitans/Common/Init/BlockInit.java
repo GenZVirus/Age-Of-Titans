@@ -42,4 +42,5 @@ public class BlockInit {
 
 	public static final RegistryObject<Block> EXAMPLE_CHEST = BLOCKS.register("example_chest", () -> new ExampleChestBlock(Block.Properties.from(BlockInit.TITANIUM_BLOCK.get())));
 
+
 }

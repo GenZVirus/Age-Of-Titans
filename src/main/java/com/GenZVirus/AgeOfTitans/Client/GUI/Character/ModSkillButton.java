@@ -108,12 +108,16 @@ public class ModSkillButton extends Widget {
 	      AbstractGui.blit(this.x, this.y, 0, 0, 0, this.width, this.height, this.height, this.width);
 	      	      
 	      if(this.isHovered) {
-	    	  List<String> stringList = spell.getDetails();
+	    	  List<String> stringList;
+	    	  int color;
 	    	  if(KeyboardHelper.isHoldingShift()) {
+	    		  color = 16777215;
+	    		  stringList  = spell.getDetails();
 	    	  }else {
+	    		  color = 6553700;
 	    		  stringList = spell.getDescription();
 	    	  }
-	    	  this.renderTooltip(stringList, (int)Minecraft.getInstance().mouseHelper.getMouseX() / 2 - 100, this.y + 36, Minecraft.getInstance().fontRenderer);
+	    	  this.renderTooltip(stringList, (int)Minecraft.getInstance().mouseHelper.getMouseX() / 2 - 100, this.y + 36, Minecraft.getInstance().fontRenderer, color);
 	      }
 	      
 	      if(renderAS) {
@@ -125,11 +129,11 @@ public class ModSkillButton extends Widget {
 	      }
 	   }
 	
-	public void renderTooltip(List<String> stringList, int xIn, int yIn, FontRenderer font) {
-	      drawHoveringText(stringList, xIn, yIn, Minecraft.getInstance().getMainWindow().getWidth(), Minecraft.getInstance().getMainWindow().getHeight(), -1, font);
+	public void renderTooltip(List<String> stringList, int xIn, int yIn, FontRenderer font, int color) {
+	      drawHoveringText(stringList, xIn, yIn, Minecraft.getInstance().getMainWindow().getWidth(), Minecraft.getInstance().getMainWindow().getHeight(), -1, font, color);
 	}
 	
-	public static void drawHoveringText(List<String> textLines, int mouseX, int mouseY, int screenWidth, int screenHeight, int maxTextWidth, FontRenderer font)
+	public static void drawHoveringText(List<String> textLines, int mouseX, int mouseY, int screenWidth, int screenHeight, int maxTextWidth, FontRenderer font, int color)
     {
         if (!textLines.isEmpty())
         {
@@ -235,7 +239,7 @@ public class ModSkillButton extends Widget {
             {
                 String line = textLines.get(lineNumber);
                 if (line != null)
-                    font.renderString(line, (float)tooltipX, (float)tooltipY, 16777215, true, textLocation, renderType, false, 0, 15728880);
+                    font.renderString(line, (float)tooltipX, (float)tooltipY, color, true, textLocation, renderType, false, 0, 15728880);
 
                 if (lineNumber + 1 == titleLinesCount)
                     tooltipY += 2;
