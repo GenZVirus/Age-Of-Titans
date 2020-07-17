@@ -1,6 +1,7 @@
 package com.GenZVirus.AgeOfTitans.Client.GUI.Character;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
+import com.GenZVirus.AgeOfTitans.Common.Config.AOTConfig;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -125,8 +126,9 @@ public class ModHUD {
 		default: break;
 		}
 		
+		int animationReducer = AOTConfig.COMMON.adjust_hud_animation.get(); // can't be < 1
 		mc.getTextureManager().bindTexture(BACKGROUND_TEXTURE);	
-			AbstractGui.blit(posX, posY, 0, IMAGE_RESIZED * j, IMAGE_RESIZED * i, IMAGE_RESIZED, IMAGE_RESIZED, IMAGE_RESIZED*20, IMAGE_RESIZED*4);
+			AbstractGui.blit(posX, posY, 0, IMAGE_RESIZED * j, IMAGE_RESIZED * (i / animationReducer), IMAGE_RESIZED, IMAGE_RESIZED, IMAGE_RESIZED*20, IMAGE_RESIZED*4);
 		
 		if(next) {
 			i++;
@@ -138,13 +140,13 @@ public class ModHUD {
 			nr++;
 		}
 		
-		if(nr > 19) {
+		if(nr > 19 * animationReducer) {
 			next = false;
 			previous = false;
 			nr = 0;
 		}
 		
-		if(i > 19) {
+		if(i > 19 * animationReducer) {
 			i = 0;
 			j++;
 		}
@@ -154,7 +156,7 @@ public class ModHUD {
 		}
 		
 		if(i < 0) {
-			i = 19;
+			i = 19 * animationReducer;
 			j--;
 		}
 		

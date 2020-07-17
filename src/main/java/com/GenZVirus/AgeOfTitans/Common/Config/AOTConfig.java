@@ -40,8 +40,10 @@ public abstract class AOTConfig {
 		public final IntValue exp_level_up;
 		public final IntValue exp_per_advancement;
 		
+		public final IntValue adjust_hud_animation; 
+		
 		public Common(ForgeConfigSpec.Builder builder) {
-			builder.comment("This config contains the stats of the Sword Slash ability")
+			builder.comment("This config affects all players and contains the stats of the Sword Slash ability")
 				   .push("sword_slash");
 			
 			sword_slash_damage_ratio = builder.comment("This sets the damage multiplier of the Sword Slash ability")
@@ -61,7 +63,7 @@ public abstract class AOTConfig {
 			
 			builder.pop();
 			
-			builder.comment("This config contains the stats of the Shield Bash ability")
+			builder.comment("This config affects all players and contains the stats of the Shield Bash ability")
 			       .push("shield_bash");
 			
 			shield_bash_damage_ratio = builder.comment("This sets the damage multiplier of the Shield Bash ability")
@@ -81,7 +83,7 @@ public abstract class AOTConfig {
 			
 			builder.pop();
 			
-			builder.comment("This config contains the stats of the Berserker ability")
+			builder.comment("This config affects all players and contains the stats of the Berserker ability")
 		       	   .push("berserker");
 
 			berserker_duration_ratio = builder.comment("This sets the duration multiplier of the Berserker ability")
@@ -101,7 +103,7 @@ public abstract class AOTConfig {
 			
 			builder.pop();
 			
-			builder.comment("This config contains the stats of the Chain ability")
+			builder.comment("This config affects all players and contains the stats of the Chain ability")
 			   	   .push("chain");
 		
 			chain_damage_ratio = builder.comment("This sets the damage multiplier of the Chain ability")
@@ -120,8 +122,8 @@ public abstract class AOTConfig {
 									.defineInRange("chain_cooldown", 10, 0, 3600);
 			builder.pop();
 			
-			builder.comment("WARNING! CAHNGING THE VALUES HAS TO CHECK THIS EQUATION FOR NO EXPERIENCE LOSES: exp_level_up / exp_per_advancement * exp_per_advancement == exp_level_up")
-		   	   .push("leveling");
+			builder.comment("This config  affects all players. WARNING! CAHNGING THE VALUES HAS TO CHECK THIS EQUATION FOR NO EXPERIENCE LOSES: exp_level_up / exp_per_advancement * exp_per_advancement == exp_level_up")
+		   	   	   .push("leveling");
 	
 			exp_level_up = builder.comment("This sets the amount of experience required to level up")
 										  .translation("leveling.configgui.exp_level_up")
@@ -132,6 +134,19 @@ public abstract class AOTConfig {
 									.translation("leveling.configgui.exp_per_advancement")
 									.worldRestart()
 									.defineInRange("exp_per_advancement", 10, 1, 1000000);
+			builder.pop();
+			
+			builder.comment("This config affects one players. HUD animation adjustments")
+	   	   	       .push("hud");
+			
+			adjust_hud_animation = builder.comment("The higher the number the slower it moves. "
+													+ "HINT: the HUD is made out of 40 images, 10 images for each slot, one image is displayed as many frames as it is being set. "
+													+ "EXAMPLE: if the animation is set to 1 and the player has 10 FPS the hud will cycle to the next slot in a second, increase the number to 2 and it will take 2 seconds to cycle to the next. "
+													+ "The more FPS the faster the animation gets.")
+										  .translation("hud.configgui.adjust_hud_animation")
+										  .worldRestart()
+										  .defineInRange("adjust_hud_animation", 4, 0, 100);
+			
 			builder.pop();
 			
 		}
