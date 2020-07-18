@@ -6,12 +6,24 @@ import net.minecraft.potion.EffectType;
 
 public class ModEffect extends Effect {
 
-	public ModEffect(EffectType typeIn, int liquidColorIn) {
+	private AOTType type;
+	
+	public ModEffect(AOTType type,EffectType typeIn, int liquidColorIn) {
 		super(typeIn, liquidColorIn);
+		this.type = type;
 	}
 
 	@Override
 	public void performEffect(LivingEntity entityLivingBaseIn, int amplifier) {
+	}
+	
+	public AOTType getType() {
+		return type;
+	}
+	
+	public enum AOTType{
+		BIOME,
+		SPELL
 	}
 	
 }

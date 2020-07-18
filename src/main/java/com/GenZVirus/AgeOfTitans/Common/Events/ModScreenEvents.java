@@ -3,13 +3,14 @@ package com.GenZVirus.AgeOfTitans.Common.Events;
 import java.util.List;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
-import com.GenZVirus.AgeOfTitans.Client.GUI.Character.ModButton;
-import com.GenZVirus.AgeOfTitans.Client.GUI.Character.ModHUD;
-import com.GenZVirus.AgeOfTitans.Client.GUI.Character.ModScreen;
-import com.GenZVirus.AgeOfTitans.Client.GUI.Character.ModSkillButton;
-import com.GenZVirus.AgeOfTitans.Client.GUI.Character.ModSkillSlot;
+import com.GenZVirus.AgeOfTitans.Client.GUI.HUD.ModHUD;
+import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModButton;
+import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModScreen;
+import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModSkillButton;
+import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModSkillSlot;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandler;
 import com.GenZVirus.AgeOfTitans.Common.Network.PlayerUseSpellPacket;
+import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.Widget;
@@ -49,28 +50,37 @@ public class ModScreenEvents {
 		if(cooldown_SwordSlash > 0) {
 			cooldown_SwordSlash--;
 		}
+		if(cooldown_ShieldBash > 0) {
+			cooldown_ShieldBash--;
+		}
+		if(cooldown_Berserker > 0) {
+			cooldown_Berserker--;
+		}
+		if(cooldown_Chain > 0) {
+			cooldown_Chain--;
+		}
 		PlayerEntity player = Minecraft.getInstance().player;
 		if(player == null) return;
-		if(ModHUD.selectedSpell.getId() == 1 && player.getHeldItemMainhand().getItem() instanceof SwordItem && cooldown_SwordSlash == 0) {
+		if(ModHUD.selectedSpell.getId() == 1 && player.getHeldItemMainhand().getItem() instanceof SwordItem && cooldown_SwordSlash == 0 && Spell.ragePoints >= Spell.SPELL_LIST.get(1).cost) {
 			if(mc.mouseHelper.isLeftDown()) {
 				cooldown_SwordSlash = 20;
 				PacketHandler.INSTANCE.sendToServer(new PlayerUseSpellPacket(1, player.getUniqueID())); 
 			}
 		}
 		
-		if(ModHUD.selectedSpell.getId() == 2 && cooldown_ShieldBash == 0) {
+		if(ModHUD.selectedSpell.getId() == 2 && cooldown_ShieldBash == 0 && Spell.ragePoints >= Spell.SPELL_LIST.get(2).cost) {
 			if(player.getActiveHand() == Hand.OFF_HAND && player.getActiveItemStack().getItem() instanceof ShieldItem) {
 				cooldown_ShieldBash = 20;
 				PacketHandler.INSTANCE.sendToServer(new PlayerUseSpellPacket(2, player.getUniqueID()));
 			}
 		}
-		if(ModHUD.selectedSpell.getId() == 3 && cooldown_Berserker == 0) {
+		if(ModHUD.selectedSpell.getId() == 3 && cooldown_Berserker == 0 && Spell.ragePoints >= Spell.SPELL_LIST.get(3).cost) {
 			if(mc.mouseHelper.isRightDown()) {
 				cooldown_Berserker = 20;
 				PacketHandler.INSTANCE.sendToServer(new PlayerUseSpellPacket(3, player.getUniqueID()));
 			}
 		}
-		if(ModHUD.selectedSpell.getId() == 4 && cooldown_Chain == 0) {
+		if(ModHUD.selectedSpell.getId() == 4 && cooldown_Chain == 0 && Spell.ragePoints >= Spell.SPELL_LIST.get(4).cost) {
 			if(mc.mouseHelper.isRightDown()) {
 				cooldown_Chain = 20;
 				PacketHandler.INSTANCE.sendToServer(new PlayerUseSpellPacket(4, player.getUniqueID()));

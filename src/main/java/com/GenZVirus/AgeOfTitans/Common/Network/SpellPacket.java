@@ -3,8 +3,8 @@ package com.GenZVirus.AgeOfTitans.Common.Network;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-import com.GenZVirus.AgeOfTitans.Client.GUI.Character.ModHUD;
-import com.GenZVirus.AgeOfTitans.Client.GUI.Character.ModScreen;
+import com.GenZVirus.AgeOfTitans.Client.GUI.HUD.ModHUD;
+import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModScreen;
 import com.GenZVirus.AgeOfTitans.Common.Events.KeyPressedEvent;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
 import com.GenZVirus.AgeOfTitans.SpellSystem.XMLFileJava;

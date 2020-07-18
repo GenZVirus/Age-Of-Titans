@@ -12,12 +12,14 @@ public class SendPlayerSpellDetailsPacket {
 
 	public int ID;
 	public int cooldown;
+	public int cost;
 	public double ratio;
 	public double damage;
 	
-	public SendPlayerSpellDetailsPacket(int ID, int cooldown, double ratio, double damage) {
+	public SendPlayerSpellDetailsPacket(int ID, int cooldown, int cost, double ratio, double damage) {
 		this.ID = ID;
 		this.cooldown = cooldown;
+		this.cost = cost;
 		this.ratio = ratio;
 		this.damage = damage;
 	}
@@ -25,12 +27,13 @@ public class SendPlayerSpellDetailsPacket {
 	public static void encode(SendPlayerSpellDetailsPacket pkt, PacketBuffer buf) {
 		buf.writeInt(pkt.ID);
 		buf.writeInt(pkt.cooldown);
+		buf.writeInt(pkt.cost);
 		buf.writeDouble(pkt.ratio);
 		buf.writeDouble(pkt.damage);
 	}
 	
 	public static SendPlayerSpellDetailsPacket decode(PacketBuffer buf) {
-		return new SendPlayerSpellDetailsPacket(buf.readInt(), buf.readInt(), buf.readDouble(), buf.readDouble());
+		return new SendPlayerSpellDetailsPacket(buf.readInt(), buf.readInt(), buf.readInt(), buf.readDouble(), buf.readDouble());
 	}
 	
 	public static void handle(SendPlayerSpellDetailsPacket pkt, Supplier<NetworkEvent.Context> ctx) {
@@ -38,6 +41,7 @@ public class SendPlayerSpellDetailsPacket {
 		ctx.get().enqueueWork(() ->{
 			if(ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
 				Spell.SPELL_LIST.get(pkt.ID).cooldown = pkt.cooldown;
+				Spell.SPELL_LIST.get(pkt.ID).cost = pkt.cost;
 				Spell.SPELL_LIST.get(pkt.ID).ratio = pkt.ratio;
 				Spell.SPELL_LIST.get(pkt.ID).damage = pkt.damage;
 			}

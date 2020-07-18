@@ -1,4 +1,4 @@
-package com.GenZVirus.AgeOfTitans.Client.GUI.Character;
+package com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;

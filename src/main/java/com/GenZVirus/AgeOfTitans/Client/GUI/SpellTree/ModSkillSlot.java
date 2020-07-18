@@ -1,4 +1,4 @@
-package com.GenZVirus.AgeOfTitans.Client.GUI.Character;
+package com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;

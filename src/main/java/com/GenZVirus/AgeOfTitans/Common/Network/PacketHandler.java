@@ -57,5 +57,11 @@ public class PacketHandler {
 		   		.decoder(SendPlayerSpellDetailsPacket::decode)
 		   		.consumer(SendPlayerSpellDetailsPacket::handle)
 		   		.add();
+		
+		INSTANCE.messageBuilder(SendPlayerRagePointsPacket.class, id++)
+   				.encoder(SendPlayerRagePointsPacket::encode)
+   				.decoder(SendPlayerRagePointsPacket::decode)
+   				.consumer(SendPlayerRagePointsPacket::handle)
+   				.add();
 	}
 }

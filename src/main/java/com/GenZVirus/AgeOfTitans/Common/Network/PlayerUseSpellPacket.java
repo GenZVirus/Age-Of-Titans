@@ -7,6 +7,7 @@ import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
 import com.GenZVirus.AgeOfTitans.Util.ForgeEventBusSubscriber;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -36,7 +37,13 @@ public class PlayerUseSpellPacket {
 			if (ctx.get().getDirection() == NetworkDirection.PLAY_TO_SERVER) {
 				for (PlayerEntity player : ForgeEventBusSubscriber.players) {
 					if (player.getUniqueID().toString().contentEquals(pkt.uuid.toString())) {
-						Spell.SPELL_LIST.get(pkt.spellID).effect(player.world, player);
+						int rageAmount = ForgeEventBusSubscriber.rage.get(ForgeEventBusSubscriber.players.indexOf(player));
+						if(Spell.SPELL_LIST.get(pkt.spellID).cost <= rageAmount) {
+							Spell.SPELL_LIST.get(pkt.spellID).effect(player.world, player);
+							rageAmount -= Spell.SPELL_LIST.get(pkt.spellID).cost;
+							ForgeEventBusSubscriber.rage.set(ForgeEventBusSubscriber.players.indexOf(player), rageAmount);
+							PacketHandler.INSTANCE.sendTo(new SendPlayerRagePointsPacket(rageAmount),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+						}
 					}
 				}
 			}

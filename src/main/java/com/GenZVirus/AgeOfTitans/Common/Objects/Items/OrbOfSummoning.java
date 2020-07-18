@@ -29,7 +29,7 @@ public class OrbOfSummoning extends Item {
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		if (KeyboardHelper.isHoldingShift()) {
-			tooltip.add(new StringTextComponent("Summons a random player to you location"));
+			tooltip.add(new StringTextComponent("Summons a random player to your location"));
 		} else {
 			tooltip.add(new StringTextComponent("Hold" + "\u00A7e" + " Shift " + "\u00A77" + "for more information!"));
 		}

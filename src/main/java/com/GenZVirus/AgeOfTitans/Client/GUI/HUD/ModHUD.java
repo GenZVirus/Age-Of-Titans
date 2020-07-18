@@ -1,4 +1,4 @@
-package com.GenZVirus.AgeOfTitans.Client.GUI.Character;
+package com.GenZVirus.AgeOfTitans.Client.GUI.HUD;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Common.Config.AOTConfig;
@@ -15,7 +15,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class ModHUD {
 
-	public static ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(AgeOfTitans.MOD_ID,"textures/gui/hud.png");
+	public static ResourceLocation SPELL_HUD_TEXTURE = new ResourceLocation(AgeOfTitans.MOD_ID,"textures/gui/hud.png");
+	public static ResourceLocation RAGE_BAR = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/rage_bar.png");
 	public static Spell SPELL1 = Spell.SPELL_LIST.get(0);
 	public static Spell SPELL2 = Spell.SPELL_LIST.get(0);
 	public static Spell SPELL3 = Spell.SPELL_LIST.get(0);
@@ -62,19 +63,13 @@ public class ModHUD {
 	public static void renderOverlay() {
 
 		RenderSystem.scalef(1.0F, 1.0F, 1.0F);
-		
-//		RenderSystem.disableRescaleNormal();
-//		RenderHelper.disableStandardItemLighting();
-//		RenderSystem.disableLighting();
-//		RenderSystem.disableDepthTest();
-
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		
 		int posX = 0;
 		int posY;
 		if(mc.gameSettings.guiScale > mc.getMainWindow().getHeight() / 240) mc.gameSettings.guiScale = mc.getMainWindow().getHeight() / 240;
-		posY = mc.getMainWindow().getHeight() / (mc.gameSettings.guiScale != 0 ? mc.gameSettings.guiScale : mc.getMainWindow().getHeight() / 240) - IMAGE_RESIZED;
-		posX = mc.getMainWindow().getWidth() / (mc.gameSettings.guiScale != 0 ? mc.gameSettings.guiScale : mc.getMainWindow().getWidth() / 240) - IMAGE_RESIZED;
+		posY = mc.getMainWindow().getScaledHeight() - IMAGE_RESIZED;
+		posX = mc.getMainWindow().getScaledWidth() - IMAGE_RESIZED;
 		posX = posX * 5 / 100;
 		posY = posY - posY * 5 / 100;
 		
@@ -127,7 +122,7 @@ public class ModHUD {
 		}
 		
 		int animationReducer = AOTConfig.COMMON.adjust_hud_animation.get(); // can't be < 1
-		mc.getTextureManager().bindTexture(BACKGROUND_TEXTURE);	
+		mc.getTextureManager().bindTexture(SPELL_HUD_TEXTURE);	
 			AbstractGui.blit(posX, posY, 0, IMAGE_RESIZED * j, IMAGE_RESIZED * (i / animationReducer), IMAGE_RESIZED, IMAGE_RESIZED, IMAGE_RESIZED*20, IMAGE_RESIZED*4);
 		
 		if(next) {
@@ -163,6 +158,14 @@ public class ModHUD {
 		if(j < 0){
 			j = 3;
 		}
+		
+		mc.getTextureManager().bindTexture(RAGE_BAR);
+		posY = mc.getMainWindow().getScaledHeight() - 56;
+		posX = mc.getMainWindow().getScaledWidth() / 2 - 91 ;
+		AbstractGui.blit(posX, posY, 0, 0, 0, 182, 16, 16 * 2, 182);
+		int percentage = 182 * Spell.ragePoints / 100; 
+		AbstractGui.blit(posX, posY, 0, 0, 16, percentage, 16, 16 * 2, 182);
+		
 	}
 	
 	public static void renderPos0(int posX, int posY, int j) {

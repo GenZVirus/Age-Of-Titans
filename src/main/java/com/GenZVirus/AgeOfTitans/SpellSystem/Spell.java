@@ -38,17 +38,20 @@ public class Spell {
 	public int level = 0;
 	public static int points = 0;
 	public static int applesEaten = 0;
+	public static int ragePoints = 0;
 	public double ratio = 0;
 	public int cooldown = 0;
 	public double damage = 0;
+	public int cost = 0;
 	
-	public Spell(int id, ResourceLocation icon, ResourceLocation iconOff, ResourceLocation iconHUD, String name, int level) {
+	public Spell(int id, ResourceLocation icon, ResourceLocation iconOff, ResourceLocation iconHUD, String name, int level, int cost) {
 		this.id = id;
 		this.icon = icon;
 		this.iconHUD = iconHUD;
 		this.name = name;
 		this.level = level;
 		this.iconOff = iconOff;
+		this.cost = cost;
 	}
 
 	public int getId() {
@@ -85,8 +88,8 @@ public class Spell {
 	}
 	
 	public static final List<Spell> SPELL_LIST = Lists.newArrayList();
-	private static final Spell NO_SPELL = new Spell(0, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/nospell.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/nospell.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/nospell.png"), "", 0);
-	private static final Spell SWORD_SLASH = new Spell(1, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashiconhud.png"), "Sword Slash", 0){
+	private static final Spell NO_SPELL = new Spell(0, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/nospell.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/nospell.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/nospell.png"), "", 0, 0);
+	private static final Spell SWORD_SLASH = new Spell(1, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashiconhud.png"), "Sword Slash", 0, AOTConfig.COMMON.sword_slash_cost.get()){
 		@Override
 		public void effect(World worldIn, PlayerEntity playerIn) {
 			double offset = 1.0D;
@@ -112,12 +115,8 @@ public class Spell {
 		
 		public List<String> getDescription(){
 			List<String> list = Lists.newArrayList();
-			list.add("Sword Slash is a powerful ability that");
-			list.add("empowers the users sword with unending");
-			list.add("burning flames.Upon swinging the sword");
-			list.add("the flames will fly towards the target");
-			list.add("creating an fire explosion on hit and ");
-			list.add("damaging all nearby targets.");
+			list.add("Sword Slash is a powerful ability that empowers the users sword with unending burning flames. "
+					+ "Upon swinging the sword the flames will fly towards the target creating an fire explosion on hit and damaging all nearby targets.");
 			list.add("");
 			list.add("Hold Shift for details");
 			return list;
@@ -129,11 +128,13 @@ public class Spell {
 			list.add("Damage " + "(" + Double.toString(this.damage + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.damage) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
 			list.add("");
 			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
+			list.add("");
+			list.add("\u00A73" + "Base " + "\u00A7e" + "Ratio " + "\u00A74" + "Level ");
 			return list;
 		}
 		
 	};	
-	private static final Spell SHIELD_BASH = new Spell(2, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashiconhud.png"), "Shield Bash", 0) {
+	private static final Spell SHIELD_BASH = new Spell(2, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashiconhud.png"), "Shield Bash", 0, AOTConfig.COMMON.shield_bash_cost.get()) {
 		@SuppressWarnings("deprecation")
 		@Override
 		public void effect(World worldIn, PlayerEntity playerIn) {
@@ -177,11 +178,9 @@ public class Spell {
 		
 		public List<String> getDescription(){
 			List<String> list = Lists.newArrayList();
-			list.add("Shield Bash turns a any shield into a deadly");
-			list.add("weapon.Upon blocking, all targets in front");
-			list.add("of the shield will be knockbacked. Blocks");
-			list.add("with weak resistance will colaps when hit");
-			list.add("by the shockwave.");
+			list.add("Shield Bash turns a any shield into a deadly weapon. "
+					+ "Upon blocking, all targets in front of the shield will be knockbacked. "
+					+ "Blocks with weak resistance will colaps when hit by the shockwave.");
 			list.add("");
 			list.add("Hold Shift for details");
 			return list;
@@ -193,12 +192,14 @@ public class Spell {
 			list.add("Damage " + "(" + Double.toString(this.damage + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.damage) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
 			list.add("");
 			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
+			list.add("");
+			list.add("\u00A73" + "Base " + "\u00A7e" + "Ratio " + "\u00A74" + "Level ");
 			return list;
 		}
 		
 	};
 	
-	private static final Spell BERSERKER = new Spell(3, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonhud.png"), "Berserker", 0) {
+	private static final Spell BERSERKER = new Spell(3, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonhud.png"), "Berserker", 0, AOTConfig.COMMON.berserker_cost.get()) {
 		@Override
 		public void effect(World worldIn, PlayerEntity playerIn) {
 			playerIn.addPotionEffect(new EffectInstance(EffectInit.BERSERKER.get(), (int) (400 + 20 * AOTConfig.COMMON.berserker_duration_ratio.get() * this.level)));
@@ -206,13 +207,10 @@ public class Spell {
 		
 		public List<String> getDescription(){
 			List<String> list = Lists.newArrayList();
-			list.add("Berserker is all or nothing. Empowers");
-			list.add("the user, giving him strength and speed.");
-			list.add("Jumping over mountains is an easy fit.");
-			list.add("Even blocks and enemies can't resist");
-			list.add("your punches. If the target enemy doesn't ");
-			list.add("have an helmet to protect his skull, a");
-			list.add("critical hit will be their undoing.");
+			list.add("Berserker is all or nothing. "
+					+ "Empowers the user, giving him strength and speed. Jumping over mountains is an easy fit. "
+					+ "Even blocks and enemies can't resist your punches. "
+					+ "If the target enemy doesn't have an helmet to protect his skull, a critical hit will be their undoing.");
 			list.add("");
 			list.add("Hold Shift for details");
 			return list;
@@ -233,7 +231,7 @@ public class Spell {
 		
 	};
 	
-	private static final Spell CHAIN = new Spell(4, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainiconhud.png"), "Chain", 0){
+	private static final Spell CHAIN = new Spell(4, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainiconhud.png"), "Chain", 0, AOTConfig.COMMON.chain_cost.get()){
 		@Override
 		public void effect(World worldIn, PlayerEntity playerIn) {
 			double offset = 1.0D;
@@ -254,10 +252,9 @@ public class Spell {
 		
 		public List<String> getDescription(){
 			List<String> list = Lists.newArrayList();
-			list.add("Chain provides high utility. Giving the");
-			list.add("user mobility by hooking blocks to thrust");
-			list.add("themselves towards the blocks. Or hook");
-			list.add("an enemy to pull them towards them.");
+			list.add("Chain provides high utility. "
+					+ "Giving the user mobility by hooking blocks to thrust themselves towards the blocks. "
+					+ "Or hook an enemy to pull them towards them.");
 			list.add("");
 			list.add("Hold Shift for details");
 			return list;
@@ -269,6 +266,8 @@ public class Spell {
 			list.add("Damage " + "(" + Double.toString(this.damage + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.damage) + "\u00A7f" + " + " +  "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
 			list.add("");
 			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
+			list.add("");
+			list.add("\u00A73" + "Base " + "\u00A7e" + "Ratio " + "\u00A74" + "Level ");
 			return list;
 		}
 		

@@ -40,11 +40,15 @@ public class ForgeEventBusSubscriber {
 	
 	public static List<UUID> uuids = Lists.newArrayList();
 	
+	public static List<Integer> rage = Lists.newArrayList();
+	
 	@SubscribeEvent
 	public static void onPlayerDeath(PlayerEvent.Clone e) {
+		rage.remove(players.indexOf(e.getOriginal()));
 		players.remove(e.getOriginal());
 		uuids.remove(e.getOriginal().getUniqueID());
 		players.add(e.getPlayer());
+		rage.add(0);
 		uuids.add(e.getPlayer().getUniqueID());
 		String playerName = e.getPlayer().getName().getFormattedText();
 		UUID uuid = e.getPlayer().getUniqueID();
@@ -59,13 +63,17 @@ public class ForgeEventBusSubscriber {
 		for(int i = 1; i < Spell.SPELL_LIST.size(); i++) {
 			String element = "Spell" + "_Level" + i;
 			PacketHandler.INSTANCE.sendTo(new ReadElementPacket(uuid, element, Integer.parseInt(XMLFileJava.readElement(uuid, element))),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
-		}	
+		}
+		
+		AgeOfTitans.LOGGER.info("Packets resent to " + playerName);
+		
 	}
 	
 	// When a player leaves the server all lists clear his data from them
 	
 	@SubscribeEvent
 	public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent e) {
+		rage.remove(players.indexOf(e.getPlayer()));
 		players.remove(e.getPlayer());
 		uuids.remove(e.getPlayer().getUniqueID());
 	}
@@ -74,6 +82,7 @@ public class ForgeEventBusSubscriber {
 
 	@SubscribeEvent
 	public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent e) {
+		rage.add(0);
 		players.add(e.getPlayer());
 		uuids.add(e.getPlayer().getUniqueID());
 		
@@ -97,11 +106,11 @@ public class ForgeEventBusSubscriber {
 			String element = "Spell" + "_Level" + i;
 			PacketHandler.INSTANCE.sendTo(new ReadElementPacket(uuid, element, Integer.parseInt(XMLFileJava.readElement(uuid, element))),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		}
-		PacketHandler.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(1, AOTConfig.COMMON.sword_slash_cooldown.get(), AOTConfig.COMMON.sword_slash_damage_ratio.get(), AOTConfig.COMMON.sword_slash_base_damage.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
-		PacketHandler.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(2, AOTConfig.COMMON.shield_bash_cooldown.get(), AOTConfig.COMMON.shield_bash_damage_ratio.get(), AOTConfig.COMMON.shield_bash_base_damage.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
-		PacketHandler.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(3, AOTConfig.COMMON.berserker_cooldown.get(), AOTConfig.COMMON.berserker_duration_ratio.get(), AOTConfig.COMMON.berserker_punch_damage.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
-		PacketHandler.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(4, AOTConfig.COMMON.chain_cooldown.get(), AOTConfig.COMMON.chain_damage_ratio.get(), AOTConfig.COMMON.chain_base_damage.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
-
+		PacketHandler.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(1, AOTConfig.COMMON.sword_slash_cooldown.get(), AOTConfig.COMMON.sword_slash_cost.get(), AOTConfig.COMMON.sword_slash_damage_ratio.get(), AOTConfig.COMMON.sword_slash_base_damage.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		PacketHandler.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(2, AOTConfig.COMMON.shield_bash_cooldown.get(), AOTConfig.COMMON.shield_bash_cost.get(), AOTConfig.COMMON.shield_bash_damage_ratio.get(), AOTConfig.COMMON.shield_bash_base_damage.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		PacketHandler.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(3, AOTConfig.COMMON.berserker_cooldown.get(), AOTConfig.COMMON.berserker_cost.get(), AOTConfig.COMMON.berserker_duration_ratio.get(), AOTConfig.COMMON.berserker_punch_damage.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		PacketHandler.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(4, AOTConfig.COMMON.chain_cooldown.get(), AOTConfig.COMMON.chain_cost.get(), AOTConfig.COMMON.chain_damage_ratio.get(), AOTConfig.COMMON.chain_base_damage.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		AgeOfTitans.LOGGER.info("Packets sent to " + playerName);
 	}
 	
 	// This event registers the Eden Dimension

@@ -1,4 +1,4 @@
-package com.GenZVirus.AgeOfTitans.Client.GUI.Character;
+package com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -130,7 +130,7 @@ public class ModSkillButton extends Widget {
 	   }
 	
 	public void renderTooltip(List<String> stringList, int xIn, int yIn, FontRenderer font, int color) {
-	      drawHoveringText(stringList, xIn, yIn, Minecraft.getInstance().getMainWindow().getWidth(), Minecraft.getInstance().getMainWindow().getHeight(), -1, font, color);
+	      drawHoveringText(stringList, xIn, yIn, Minecraft.getInstance().getMainWindow().getWidth(), Minecraft.getInstance().getMainWindow().getHeight(), 200, font, color);
 	}
 	
 	public static void drawHoveringText(List<String> textLines, int mouseX, int mouseY, int screenWidth, int screenHeight, int maxTextWidth, FontRenderer font, int color)

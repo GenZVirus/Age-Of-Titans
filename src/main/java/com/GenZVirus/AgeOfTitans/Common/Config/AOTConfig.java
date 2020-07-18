@@ -24,18 +24,22 @@ public abstract class AOTConfig {
 		public final DoubleValue sword_slash_damage_ratio;
 		public final DoubleValue sword_slash_base_damage;
 		public final IntValue sword_slash_cooldown;
+		public final IntValue sword_slash_cost;
 
 		public final DoubleValue shield_bash_damage_ratio;
 		public final DoubleValue shield_bash_base_damage;
 		public final IntValue shield_bash_cooldown;
+		public final IntValue shield_bash_cost;
 
 		public final DoubleValue berserker_duration_ratio;
 		public final DoubleValue berserker_punch_damage;
 		public final IntValue berserker_cooldown;
+		public final IntValue berserker_cost;
 		
 		public final DoubleValue chain_damage_ratio;
 		public final DoubleValue chain_base_damage;
 		public final IntValue chain_cooldown;
+		public final IntValue chain_cost;
 		
 		public final IntValue exp_level_up;
 		public final IntValue exp_per_advancement;
@@ -61,6 +65,11 @@ public abstract class AOTConfig {
 										  .worldRestart()
 										  .defineInRange("sword_slash_cooldown", 10, 0, 3600);
 			
+			sword_slash_cost = builder.comment("This sets the cost of the Sword Slash ability")
+					  				  .translation("sword_slash.configgui.sword_slash_cost")
+					  				  .worldRestart()
+					  				  .defineInRange("sword_slash_cost", 10, 0, 100);
+			
 			builder.pop();
 			
 			builder.comment("This config affects all players and contains the stats of the Shield Bash ability")
@@ -80,6 +89,11 @@ public abstract class AOTConfig {
 					  					  .translation("shield_bash.configgui.shield_bash_cooldown")
 					  					  .worldRestart()
 					  					  .defineInRange("shield_bash_cooldown", 20, 0, 3600);
+			
+			shield_bash_cost = builder.comment("This sets the cost of the Shield Bash ability")
+					  					  .translation("shield_bash.configgui.shield_bash_cost")
+					  					  .worldRestart()
+					  					  .defineInRange("shield_bash_cost", 10, 0, 100);
 			
 			builder.pop();
 			
@@ -101,6 +115,11 @@ public abstract class AOTConfig {
   									    .worldRestart()
   									    .defineInRange("berserker_cooldown", 600, 0, 3600);
 			
+			berserker_cost = builder.comment("This sets the cost of the Berserker ability")
+					    			.translation("berserker.configgui.berserker_cooldown")
+					    			.worldRestart()
+					    			.defineInRange("berserker_cooldown", 100, 0, 100);
+			
 			builder.pop();
 			
 			builder.comment("This config affects all players and contains the stats of the Chain ability")
@@ -120,6 +139,12 @@ public abstract class AOTConfig {
 									.translation("chain.configgui.chain_cooldown")
 									.worldRestart()
 									.defineInRange("chain_cooldown", 10, 0, 3600);
+			
+			chain_cost = builder.comment("This sets the cost of the Chain ability")
+									.translation("chain.configgui.chain_cost")
+									.worldRestart()
+									.defineInRange("chain_cost", 10, 0, 100);
+			
 			builder.pop();
 			
 			builder.comment("This config  affects all players. WARNING! CAHNGING THE VALUES HAS TO CHECK THIS EQUATION FOR NO EXPERIENCE LOSES: exp_level_up / exp_per_advancement * exp_per_advancement == exp_level_up")

@@ -1,4 +1,4 @@
- package com.GenZVirus.AgeOfTitans.Client.GUI.Character;
+ package com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree;
 
 import java.util.ArrayList;
 import java.util.List;

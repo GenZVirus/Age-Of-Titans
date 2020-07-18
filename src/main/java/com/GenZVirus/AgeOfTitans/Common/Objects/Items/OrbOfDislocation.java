@@ -33,7 +33,7 @@ public class OrbOfDislocation extends Item {
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		if (KeyboardHelper.isHoldingShift()) {
-			tooltip.add(new StringTextComponent("Switch the position you position with a random player on the server no matter the dimension!"));
+			tooltip.add(new StringTextComponent("Switch your position with a random player on the server no matter the dimension!"));
 		} else {
 			tooltip.add(new StringTextComponent("Hold" + "\u00A7e" + " Shift " + "\u00A77" + "for more information!"));
 		}

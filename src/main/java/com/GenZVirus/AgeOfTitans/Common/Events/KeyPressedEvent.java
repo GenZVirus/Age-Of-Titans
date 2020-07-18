@@ -1,8 +1,8 @@
 package com.GenZVirus.AgeOfTitans.Common.Events;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
-import com.GenZVirus.AgeOfTitans.Client.GUI.Character.ModHUD;
-import com.GenZVirus.AgeOfTitans.Client.GUI.Character.ModScreen;
+import com.GenZVirus.AgeOfTitans.Client.GUI.HUD.ModHUD;
+import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModScreen;
 import com.GenZVirus.AgeOfTitans.Common.Init.EffectInit;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandler;
 import com.GenZVirus.AgeOfTitans.Common.Network.SpellPacket;

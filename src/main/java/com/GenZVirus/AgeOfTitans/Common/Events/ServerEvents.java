@@ -3,10 +3,12 @@ package com.GenZVirus.AgeOfTitans.Common.Events;
 import java.util.Random;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
+import com.GenZVirus.AgeOfTitans.Common.Init.BiomeInit;
 import com.GenZVirus.AgeOfTitans.Common.Init.EffectInit;
 import com.GenZVirus.AgeOfTitans.Common.Init.ItemInit;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandler;
 import com.GenZVirus.AgeOfTitans.Common.Network.ReadElementPacket;
+import com.GenZVirus.AgeOfTitans.Common.Network.SendPlayerRagePointsPacket;
 import com.GenZVirus.AgeOfTitans.Common.Network.SyncPlayerMotionPacket;
 import com.GenZVirus.AgeOfTitans.SpellSystem.XMLFileJava;
 import com.GenZVirus.AgeOfTitans.Util.ForgeEventBusSubscriber;
@@ -16,16 +18,20 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Items;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -34,6 +40,73 @@ import net.minecraftforge.fml.network.NetworkDirection;
 @Mod.EventBusSubscriber(modid = AgeOfTitans.MOD_ID, bus = Bus.FORGE)
 public class ServerEvents {
 
+	@SubscribeEvent
+	public static void generateRageOnAttacking(LivingHurtEvent event) {
+		if(!(event.getSource().getTrueSource() instanceof PlayerEntity)) return;
+		PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
+		if(!ForgeEventBusSubscriber.players.contains(player)) return;
+		int index = ForgeEventBusSubscriber.players.indexOf(player);
+		int rageAmount = ForgeEventBusSubscriber.rage.get(index);
+		if(rageAmount + 5 > 100 && rageAmount < 100) rageAmount = 100;
+		else rageAmount += 5;
+		ForgeEventBusSubscriber.rage.set(index, rageAmount);
+		PacketHandler.INSTANCE.sendTo(new SendPlayerRagePointsPacket(rageAmount),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+	}
+	
+	@SubscribeEvent
+	public static void generateRageWhenAttacked(LivingHurtEvent event) {
+		if(!(event.getEntity() instanceof PlayerEntity)) return;
+		PlayerEntity player = (PlayerEntity) event.getEntity();
+		if(!ForgeEventBusSubscriber.players.contains(player)) return;
+		int index = ForgeEventBusSubscriber.players.indexOf(player);
+		int rageAmount = ForgeEventBusSubscriber.rage.get(index);
+		if(rageAmount + 5 > 100 && rageAmount < 100) rageAmount = 100;
+		else rageAmount += 5;
+		ForgeEventBusSubscriber.rage.set(index, rageAmount);
+		PacketHandler.INSTANCE.sendTo(new SendPlayerRagePointsPacket(rageAmount),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+	}
+	
+	@SubscribeEvent
+	public static void insideBiome(PlayerEvent event) {
+		PlayerEntity player = event.getPlayer();
+		Biome biome = player.world.getBiome(player.getPosition());
+		
+		// Active effects
+		
+		if (player.getHealth() < player.getMaxHealth() && player.isPotionActive(EffectInit.HOLY_PLAINS.get())) {
+			player.heal(1.0F);
+		}
+		
+		// Add effects
+		
+		if(biome.equals(BiomeInit.HOLY_GROUND_PLAINS.get()) && !player.isPotionActive(EffectInit.HOLY_PLAINS.get())) {
+			removeAllBiomeEffects(player);
+			player.addPotionEffect(new EffectInstance(EffectInit.HOLY_PLAINS.get(), 100));
+		}
+		
+		if(biome.equals(BiomeInit.HOLY_GROUND_HILLS.get()) && !player.isPotionActive(EffectInit.HOLY_HILLS.get())) {
+			removeAllBiomeEffects(player);
+			player.addPotionEffect(new EffectInstance(EffectInit.HOLY_HILLS.get(), 100));
+		}
+		
+		if(biome.equals(BiomeInit.HOLY_GROUND_MOUNTAIN.get()) && !player.isPotionActive(EffectInit.HOLY_MOUNTAINS.get())) {
+			removeAllBiomeEffects(player);
+			player.addPotionEffect(new EffectInstance(EffectInit.HOLY_MOUNTAINS.get(), 100));
+		}	
+	}
+	
+	private static void removeAllBiomeEffects(PlayerEntity player) {
+		
+		if(player.isPotionActive(EffectInit.HOLY_PLAINS.get()))
+		player.removePotionEffect(EffectInit.HOLY_PLAINS.get());
+		
+		if(player.isPotionActive(EffectInit.HOLY_HILLS.get()))
+		player.removePotionEffect(EffectInit.HOLY_HILLS.get());
+		
+		if(player.isPotionActive(EffectInit.HOLY_MOUNTAINS.get()))
+		player.removePotionEffect(EffectInit.HOLY_MOUNTAINS.get());
+	}
+	
 	@SubscribeEvent
 	public static void eatingApples(LivingEntityUseItemEvent.Finish event) {
 		if(event.getEntityLiving().world.isRemote) return;
@@ -59,7 +132,31 @@ public class ServerEvents {
 	         f += 0.1F * (float)(2 + 1);
 
 	         Vec3d vec3d = event.getEntityLiving().getMotion();
-	         event.getEntityLiving().setMotion(vec3d.x, (double)f, vec3d.z);
+	         event.getEntityLiving().setMotion(vec3d.x, (double)f + vec3d.y, vec3d.z);
+	      	if (event.getEntityLiving().isSprinting()) {
+	      		float f1 = event.getEntityLiving().rotationYaw * ((float)Math.PI / 180F);
+	         	event.getEntityLiving().setMotion(event.getEntityLiving().getMotion().add((double)(-MathHelper.sin(f1) * 0.2F), 0.0D, (double)(MathHelper.cos(f1) * 0.2F)));
+	      	}
+	      }
+	  
+	      if (event.getEntityLiving().isPotionActive(EffectInit.HOLY_MOUNTAINS.get())) {
+	    	  float f = 1.0F;
+	         f += 0.1F * (float)(2 + 1);
+
+	         Vec3d vec3d = event.getEntityLiving().getMotion();
+	         event.getEntityLiving().setMotion(vec3d.x, (double)f + vec3d.y, vec3d.z);
+	      	if (event.getEntityLiving().isSprinting()) {
+	      		float f1 = event.getEntityLiving().rotationYaw * ((float)Math.PI / 180F);
+	         	event.getEntityLiving().setMotion(event.getEntityLiving().getMotion().add((double)(-MathHelper.sin(f1) * 0.2F), 0.0D, (double)(MathHelper.cos(f1) * 0.2F)));
+	      	}
+	      }
+	      
+	      if (event.getEntityLiving().isPotionActive(EffectInit.HOLY_HILLS.get())) {
+	    	  float f = 0.2F;
+	         f += 0.1F * (float)(2 + 1);
+
+	         Vec3d vec3d = event.getEntityLiving().getMotion();
+	         event.getEntityLiving().setMotion(vec3d.x, (double)f + vec3d.y, vec3d.z);
 	      	if (event.getEntityLiving().isSprinting()) {
 	      		float f1 = event.getEntityLiving().rotationYaw * ((float)Math.PI / 180F);
 	         	event.getEntityLiving().setMotion(event.getEntityLiving().getMotion().add((double)(-MathHelper.sin(f1) * 0.2F), 0.0D, (double)(MathHelper.cos(f1) * 0.2F)));
@@ -96,10 +193,13 @@ public class ServerEvents {
 	}
 	
 	@SubscribeEvent
-	public static void berserkerJump(LivingFallEvent event) {
-		if(event.getEntityLiving().isPotionActive(EffectInit.BERSERKER.get())) {
+	public static void fallDamageImmunity(LivingFallEvent event) {
+		if(event.getEntityLiving().isPotionActive(EffectInit.BERSERKER.get()) 
+				|| event.getEntityLiving().isPotionActive(EffectInit.HOLY_HILLS.get()) 
+				|| event.getEntityLiving().isPotionActive(EffectInit.HOLY_MOUNTAINS.get())) {
 			event.setDamageMultiplier(0);
 		}
+
 	}
 		
 	@SubscribeEvent
