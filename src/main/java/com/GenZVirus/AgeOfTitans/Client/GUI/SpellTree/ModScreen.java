@@ -239,8 +239,6 @@ public class ModScreen extends Screen {
 	@Override
 	public void render(int mouseX, int mouseY, float partialTicks) {
 		
-		RenderSystem.disableRescaleNormal();
-		RenderSystem.disableDepthTest();
 		this.renderBackground();
 		
 	// Decides if it renders the human background or the reaper background
@@ -255,7 +253,6 @@ public class ModScreen extends Screen {
 			this.minecraft.getTextureManager().bindTexture(BACKGROUND_TEXTURE_HUMAN);
 		}
 		
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		int x = (this.width - this.xSize) / 2;
 		int y = (this.height - this.ySize) / 2;
 		
@@ -286,8 +283,6 @@ public class ModScreen extends Screen {
         if (!textLines.isEmpty())
         {
             
-            RenderSystem.disableRescaleNormal();
-            RenderSystem.disableDepthTest();
             int tooltipTextWidth = 0;
 
             for (String textLine : textLines)
@@ -397,8 +392,6 @@ public class ModScreen extends Screen {
 
             renderType.finish();
 
-            RenderSystem.enableDepthTest();
-            RenderSystem.enableRescaleNormal();
         }
     }
 	

@@ -3,6 +3,7 @@ package com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
@@ -106,7 +107,12 @@ public class ModSkillButton extends Widget {
 	      minecraft.getTextureManager().bindTexture(BUTTONS_LOCATION);
 
 	      AbstractGui.blit(this.x, this.y, 0, 0, 0, this.width, this.height, this.height, this.width);
-	      	      
+	      
+	      GL11.glScalef(0.5F, 0.5f, 0.5f);
+	      drawGradientRect(300, this.x*2, this.y*2, this.x*2 + minecraft.fontRenderer.getStringWidth("Lv." + spell.level) + 2, this.y*2 + 10, 0xFF000000, 0xFF000000);	      
+	      minecraft.fontRenderer.drawString("Lv." + spell.level, this.x*2 + 1, this.y*2 + 1, 16777215);
+          GL11.glScalef(2.0F, 2.0f, 2.0f);
+          
 	      if(this.isHovered) {
 	    	  List<String> stringList;
 	    	  int color;
@@ -117,7 +123,7 @@ public class ModSkillButton extends Widget {
 	    		  color = 6553700;
 	    		  stringList = spell.getDescription();
 	    	  }
-	    	  this.renderTooltip(stringList, (int)Minecraft.getInstance().mouseHelper.getMouseX() / 2 - 100, this.y + 36, Minecraft.getInstance().fontRenderer, color);
+	    	  this.renderTooltip(stringList, this.x - 100, this.y + 36, Minecraft.getInstance().fontRenderer, color);
 	      }
 	      
 	      if(renderAS) {
@@ -138,8 +144,6 @@ public class ModSkillButton extends Widget {
         if (!textLines.isEmpty())
         {
             
-            RenderSystem.disableRescaleNormal();
-            RenderSystem.disableDepthTest();
             int tooltipTextWidth = 0;
 
             for (String textLine : textLines)
@@ -249,8 +253,6 @@ public class ModSkillButton extends Widget {
 
             renderType.finish();
 
-            RenderSystem.enableDepthTest();
-            RenderSystem.enableRescaleNormal();
         }
     }
 	
@@ -270,7 +272,7 @@ public class ModSkillButton extends Widget {
 	        RenderSystem.disableAlphaTest();
 	        RenderSystem.defaultBlendFunc();
 	        RenderSystem.shadeModel(GL11.GL_SMOOTH);
-
+	        
 	        Tessellator tessellator = Tessellator.getInstance();
 	        BufferBuilder buffer = tessellator.getBuffer();
 	        buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
@@ -279,11 +281,12 @@ public class ModSkillButton extends Widget {
 	        buffer.pos( left, bottom, zLevel).color(  endRed,   endGreen,   endBlue,   endAlpha).endVertex();
 	        buffer.pos(right, bottom, zLevel).color(  endRed,   endGreen,   endBlue,   endAlpha).endVertex();
 	        tessellator.draw();
-
+	        
 	        RenderSystem.shadeModel(GL11.GL_FLAT);
 	        RenderSystem.disableBlend();
 	        RenderSystem.enableAlphaTest();
 	        RenderSystem.enableTexture();
+
 	    }
 	 
 	public void onPress() {
