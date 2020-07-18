@@ -24,8 +24,10 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
@@ -40,6 +42,13 @@ import net.minecraftforge.fml.network.NetworkDirection;
 @Mod.EventBusSubscriber(modid = AgeOfTitans.MOD_ID, bus = Bus.FORGE)
 public class ServerEvents {
 
+	@SubscribeEvent
+	public static void serverChat(ServerChatEvent event) {
+		if(Integer.parseInt(XMLFileJava.readElement(event.getPlayer().getUniqueID(), "ApplesEaten")) > 0)
+		event.setComponent(new StringTextComponent( "\u00A7f" +"[" + "\u00A74" + XMLFileJava.readElement(event.getPlayer().getUniqueID(), "PlayerLevel") + "\u00A7r" + "\u00A7f" + "] " + "\u00A7b" + "\u00A7l" + event.getUsername() + "\u00A7f" + "\u00A7l" + ": " + "\u00A7r" + "\u00A7e" + "\u00A7o" + event.getMessage()));
+		else event.setComponent(new StringTextComponent( "\u00A7f" +"[" + XMLFileJava.readElement(event.getPlayer().getUniqueID(), "PlayerLevel") + "] " + event.getUsername() + "\u00A7l" + ": " + "\u00A7r" + event.getMessage()));
+	}
+	
 	@SubscribeEvent
 	public static void generateRageOnAttacking(LivingHurtEvent event) {
 		if(!(event.getSource().getTrueSource() instanceof PlayerEntity)) return;
