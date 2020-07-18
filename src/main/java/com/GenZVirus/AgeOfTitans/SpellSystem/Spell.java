@@ -129,6 +129,8 @@ public class Spell {
 			list.add("");
 			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
 			list.add("");
+			list.add("Cost: " + this.cost + " rage points");
+			list.add("");
 			list.add("\u00A73" + "Base " + "\u00A7e" + "Ratio " + "\u00A74" + "Level ");
 			return list;
 		}
@@ -193,6 +195,8 @@ public class Spell {
 			list.add("");
 			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
 			list.add("");
+			list.add("Cost: " + this.cost + " rage points");
+			list.add("");
 			list.add("\u00A73" + "Base " + "\u00A7e" + "Ratio " + "\u00A74" + "Level ");
 			return list;
 		}
@@ -224,6 +228,8 @@ public class Spell {
 			list.add("Duration " + "(" + Double.toString(20.0D + this.ratio * this.level) + "): " + "\u00A73" + "20" + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level) + "\u00A7f"  + " seconds");
 			list.add("");
 			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
+			list.add("");
+			list.add("Cost: " + this.cost + " rage points");
 			list.add("");
 			list.add("\u00A73" + "Base " + "\u00A7e" + "Ratio " + "\u00A74" + "Level ");
 			return list;
@@ -266,6 +272,8 @@ public class Spell {
 			list.add("Damage " + "(" + Double.toString(this.damage + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.damage) + "\u00A7f" + " + " +  "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
 			list.add("");
 			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
+			list.add("");
+			list.add("Cost: " + this.cost + " rage points");
 			list.add("");
 			list.add("\u00A73" + "Base " + "\u00A7e" + "Ratio " + "\u00A74" + "Level ");
 			return list;
