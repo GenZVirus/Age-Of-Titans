@@ -91,6 +91,7 @@ public class ExampleChestTileEntity extends LockableLootTileEntity{
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private void playSound(SoundEvent sound) {
 		double dx = (double) this.pos.getX() + 0.5D;
 		double dy = (double) this.pos.getY() + 0.5D;

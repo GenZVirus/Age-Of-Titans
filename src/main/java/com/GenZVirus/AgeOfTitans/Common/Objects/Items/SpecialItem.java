@@ -2,7 +2,6 @@ package com.GenZVirus.AgeOfTitans.Common.Objects.Items;
 
 import java.util.List;
 
-import com.GenZVirus.AgeOfTitans.Common.Entities.SwordSlashEntity;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
 import com.GenZVirus.AgeOfTitans.Util.Helpers.KeyboardHelper;
 
@@ -12,7 +11,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;

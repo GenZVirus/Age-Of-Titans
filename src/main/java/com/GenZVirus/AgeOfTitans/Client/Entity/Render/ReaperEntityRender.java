@@ -7,8 +7,6 @@ import com.GenZVirus.AgeOfTitans.Common.Entities.ReaperEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ReaperEntityRender extends MobRenderer<ReaperEntity, ReaperEntityModel>{
 

@@ -3,7 +3,6 @@ package com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;

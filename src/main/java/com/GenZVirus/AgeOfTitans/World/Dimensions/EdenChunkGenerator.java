@@ -8,7 +8,6 @@ import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.village.VillageSiege;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
@@ -41,7 +40,6 @@ public class EdenChunkGenerator extends NoiseChunkGenerator<EdenGenSettings> {
 	private final PhantomSpawner phantomSpawner = new PhantomSpawner();
 	private final PatrolSpawner patrolSpawner = new PatrolSpawner();
 	private final CatSpawner catSpawner = new CatSpawner();
-	private final VillageSiege villageSiege = new VillageSiege();
 
 	public EdenChunkGenerator(IWorld worldIn, BiomeProvider provider, EdenGenSettings settingsIn) {
 		super(worldIn, provider, 4, 8, 256, settingsIn, true);
