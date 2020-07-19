@@ -78,6 +78,7 @@ public class ServerEvents {
 	@SubscribeEvent
 	public static void insideBiome(PlayerEvent event) {
 		PlayerEntity player = event.getPlayer();
+		if(player == null) return;
 		Biome biome = player.world.getBiome(player.getPosition());
 		
 		// Active effects
