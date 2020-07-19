@@ -1,9 +1,0 @@
-{
-	"replace": false,
-	"values": [
-		"minecraft:anvil",
-		"minecraft:chipped_anvil",
-		"minecraft:damaged_anvil",
-		"ageoftitans:eden_wood_log"
-	]
-}

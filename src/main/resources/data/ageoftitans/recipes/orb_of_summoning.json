@@ -3,27 +3,27 @@
     
     "pattern":
     [
-        "T  ",
-        "S  ",
-        "S  "
+        " A ",
+        "ASA",
+        " A "
     ],
     
     "key":
     {
-        "T":
+        "A":
         {
-            "item": "ageoftitans:titanium_ingot"
+            "item": "minecraft:soul_sand"
         },
          "S":
         {
-            "item": "minecraft:stick"
+            "item": "minecraft:nether_star"
         }
     },
     
     
     "result":
     {
-        "item": "ageoftitans:titanium_shovel",
+        "item": "ageoftitans:orb_of_summoning",
         "count": 1
     }
 }

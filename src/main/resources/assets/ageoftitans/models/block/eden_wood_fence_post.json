@@ -1,0 +1,6 @@
+{
+    "parent": "block/fence_post",
+    "textures": {
+        "texture": "ageoftitans:blocks/eden_wood_planks"
+    }
+}

@@ -3,27 +3,27 @@
     
     "pattern":
     [
-        "  T",
-        "  S",
-        "  S"
+        " M ",
+        "MSM",
+        " M "
     ],
     
     "key":
     {
-        "T":
+        "M":
         {
-            "item": "ageoftitans:titanium_ingot"
+            "item": "minecraft:magma_cream"
         },
          "S":
         {
-            "item": "minecraft:stick"
+            "item": "minecraft:nether_star"
         }
     },
     
     
     "result":
     {
-        "item": "ageoftitans:titanium_shovel",
+        "item": "ageoftitans:orb_of_nether",
         "count": 1
     }
 }

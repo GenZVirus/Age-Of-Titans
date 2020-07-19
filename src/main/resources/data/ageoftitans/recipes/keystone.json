@@ -3,27 +3,27 @@
     
     "pattern":
     [
-        " TT",
-        " S ",
-        " S "
+        " B ",
+        "BFB",
+        " B "
     ],
     
     "key":
     {
-        "T":
+        "B":
         {
-            "item": "ageoftitans:titanium_ingot"
+            "item": "minecraft:blaze_powder"
         },
-         "S":
+         "F":
         {
-            "item": "minecraft:stick"
+            "item": "minecraft:flint"
         }
     },
     
     
     "result":
     {
-        "item": "ageoftitans:titanium_hoe",
+        "item": "ageoftitans:keystone",
         "count": 1
     }
 }

@@ -1,0 +1,6 @@
+{
+    "parent": "block/button_pressed",
+    "textures": {
+        "texture": "ageoftitans:blocks/eden_wood_planks"
+    }
+}

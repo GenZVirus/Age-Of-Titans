@@ -40,8 +40,12 @@
 	
 	"block.ageoftitans.titanium_block": "Titanium Block",
 	"block.ageoftitans.titanium_ore": "Titanium Ore",
-	"block.ageoftitans.eden_wood_log": "Eden Wood Log",
-	"block.ageoftitans.eden_wood_planks": "Eden Wood Planks",
+	"block.ageoftitans.eden_wood_log": "Eden Wooden Log",
+	"block.ageoftitans.eden_wood_planks": "Eden Wooden Planks",
+	"block.ageoftitans.eden_wood_fence": "Eden Wooden Fence",
+	"block.ageoftitans.eden_wood_stairs": "Eden Wooden Stairs",
+	"block.ageoftitans.eden_wood_button": "Eden Wooden Button",
+	"block.ageoftitans.eden_wood_pressure_plate": "Eden Wooden Pressure Plate",
 	"block.ageoftitans.eden_leaves": "Eden Leaves",
 	"block.ageoftitans.eden_sapling": "Eden Sapling",
 	

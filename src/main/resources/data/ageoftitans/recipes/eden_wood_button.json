@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shapeless",
+ 	"group": "wooden_button",
+    "ingredients":
+    [
+ 
+    {
+      "item": "ageoftitans:eden_wood_planks"
+    }
+   
+    ],
+ 
+    "result":
+    {
+        "item": "ageoftitans:eden_wood_button",
+        "count": 1
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "type": "minecraft:crafting_shaped",
+ 	"group": "wooden_stairs",
+    "pattern":
+    [
+        "W  ",
+        "WW ",
+        "WWW"
+    ],
+    
+    "key":
+    {
+        "W":
+        {
+            "item": "ageoftitans:eden_wood_planks"
+        }
+    },
+ 
+    "result":
+    {
+        "item": "ageoftitans:eden_wood_stairs",
+        "count": 4
+    }
+}

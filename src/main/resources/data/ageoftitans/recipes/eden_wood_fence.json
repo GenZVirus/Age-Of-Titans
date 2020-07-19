@@ -1,0 +1,29 @@
+{
+    "type": "minecraft:crafting_shaped",
+ 	"group": "wooden_fence",
+    "pattern":
+    [
+        "WSW",
+        "WSW",
+        "   "
+    ],
+    
+    "key":
+    {
+    	"S":
+        {
+            "item": "minecraft:stick"
+        },
+    
+        "W":
+        {
+            "item": "ageoftitans:eden_wood_planks"
+        }
+    },
+ 
+    "result":
+    {
+        "item": "ageoftitans:eden_wood_fence",
+        "count": 3
+    }
+}
