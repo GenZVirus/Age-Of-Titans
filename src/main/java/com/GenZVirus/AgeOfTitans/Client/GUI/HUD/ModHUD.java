@@ -163,7 +163,7 @@ public class ModHUD {
 		posY = mc.getMainWindow().getScaledHeight() - 56;
 		posX = mc.getMainWindow().getScaledWidth() / 2 - 91 ;
 		AbstractGui.blit(posX, posY, 0, 0, 0, 182, 16, 16 * 2, 182);
-		int percentage = 182 * Spell.ragePoints / 100; 
+		int percentage = 182 * Spell.ragePoints / 1000; 
 		AbstractGui.blit(posX, posY, 0, 0, 16, percentage, 16, 16 * 2, 182);
 		
 	}

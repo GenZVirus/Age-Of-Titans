@@ -43,6 +43,20 @@ import net.minecraftforge.fml.network.NetworkDirection;
 public class ServerEvents {
 
 	@SubscribeEvent
+	public static void generateRageWhileSprinting(PlayerEvent event) {
+		if(event.getPlayer().isSprinting() && !event.getPlayer().world.isRemote) {
+			PlayerEntity player = event.getPlayer();
+			if(!ForgeEventBusSubscriber.players.contains(player)) return;
+			int index = ForgeEventBusSubscriber.players.indexOf(player);
+			int rageAmount = ForgeEventBusSubscriber.rage.get(index);
+			if(rageAmount + 1 > 1000 && rageAmount <= 1000) rageAmount = 1000;
+			else rageAmount += 1;
+			ForgeEventBusSubscriber.rage.set(index, rageAmount);
+			PacketHandler.INSTANCE.sendTo(new SendPlayerRagePointsPacket(rageAmount),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		}
+	}
+	
+	@SubscribeEvent
 	public static void serverChat(ServerChatEvent event) {
 		if(Integer.parseInt(XMLFileJava.readElement(event.getPlayer().getUniqueID(), "ApplesEaten")) > 0)
 		event.setComponent(new StringTextComponent( "\u00A7f" +"[" + "\u00A74" + XMLFileJava.readElement(event.getPlayer().getUniqueID(), "PlayerLevel") + "\u00A7r" + "\u00A7f" + "] " + "\u00A7b" + "\u00A7l" + event.getUsername() + "\u00A7f" + "\u00A7l" + ": " + "\u00A7r" + "\u00A7e" + "\u00A7o" + event.getMessage()));
@@ -56,8 +70,8 @@ public class ServerEvents {
 		if(!ForgeEventBusSubscriber.players.contains(player)) return;
 		int index = ForgeEventBusSubscriber.players.indexOf(player);
 		int rageAmount = ForgeEventBusSubscriber.rage.get(index);
-		if(rageAmount + 5 > 100 && rageAmount < 100) rageAmount = 100;
-		else rageAmount += 5;
+		if(rageAmount + 50 > 1000 && rageAmount <= 1000) rageAmount = 1000;
+		else rageAmount += 50;
 		ForgeEventBusSubscriber.rage.set(index, rageAmount);
 		PacketHandler.INSTANCE.sendTo(new SendPlayerRagePointsPacket(rageAmount),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 	}
@@ -69,8 +83,8 @@ public class ServerEvents {
 		if(!ForgeEventBusSubscriber.players.contains(player)) return;
 		int index = ForgeEventBusSubscriber.players.indexOf(player);
 		int rageAmount = ForgeEventBusSubscriber.rage.get(index);
-		if(rageAmount + 5 > 100 && rageAmount < 100) rageAmount = 100;
-		else rageAmount += 5;
+		if(rageAmount + 50 > 1000 && rageAmount <= 1000) rageAmount = 1000;
+		else rageAmount += 50;
 		ForgeEventBusSubscriber.rage.set(index, rageAmount);
 		PacketHandler.INSTANCE.sendTo(new SendPlayerRagePointsPacket(rageAmount),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 	}

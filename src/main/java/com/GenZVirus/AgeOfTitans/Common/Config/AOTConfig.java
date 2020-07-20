@@ -68,7 +68,7 @@ public abstract class AOTConfig {
 			sword_slash_cost = builder.comment("This sets the cost of the Sword Slash ability")
 					  				  .translation("sword_slash.configgui.sword_slash_cost")
 					  				  .worldRestart()
-					  				  .defineInRange("sword_slash_cost", 10, 0, 100);
+					  				  .defineInRange("sword_slash_cost", 10, 0, 1000);
 			
 			builder.pop();
 			
@@ -93,7 +93,7 @@ public abstract class AOTConfig {
 			shield_bash_cost = builder.comment("This sets the cost of the Shield Bash ability")
 					  					  .translation("shield_bash.configgui.shield_bash_cost")
 					  					  .worldRestart()
-					  					  .defineInRange("shield_bash_cost", 10, 0, 100);
+					  					  .defineInRange("shield_bash_cost", 10, 0, 1000);
 			
 			builder.pop();
 			
@@ -118,7 +118,7 @@ public abstract class AOTConfig {
 			berserker_cost = builder.comment("This sets the cost of the Berserker ability")
 					    			.translation("berserker.configgui.berserker_cooldown")
 					    			.worldRestart()
-					    			.defineInRange("berserker_cooldown", 100, 0, 100);
+					    			.defineInRange("berserker_cooldown", 1000, 0, 1000);
 			
 			builder.pop();
 			
@@ -143,7 +143,7 @@ public abstract class AOTConfig {
 			chain_cost = builder.comment("This sets the cost of the Chain ability")
 									.translation("chain.configgui.chain_cost")
 									.worldRestart()
-									.defineInRange("chain_cost", 10, 0, 100);
+									.defineInRange("chain_cost", 10, 0, 1000);
 			
 			builder.pop();
 			
