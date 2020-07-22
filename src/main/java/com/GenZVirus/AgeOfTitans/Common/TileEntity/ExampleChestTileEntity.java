@@ -43,9 +43,9 @@ public class ExampleChestTileEntity extends LockableLootTileEntity{
 		super(typeIn);
 	}
 	
-	public ExampleChestTileEntity() {
-		this(ModTileEntityTypes.EXAMPLE_CHEST.get());
-	}
+//	public ExampleChestTileEntity() {
+//		this(ModTileEntityTypes.EXAMPLE_CHEST.get());
+//	}
 
 	@Override
 	public int getSizeInventory() {

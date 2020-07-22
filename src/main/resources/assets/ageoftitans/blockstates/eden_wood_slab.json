@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "type=bottom": { "model": "ageoftitans:block/eden_wood_slab" },
+        "type=top": { "model": "ageoftitans:block/eden_wood_slab_top" },
+        "type=double": { "model": "ageoftitans:block/eden_wood_planks" }
+    }
+}

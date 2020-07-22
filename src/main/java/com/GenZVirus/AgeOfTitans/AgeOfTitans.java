@@ -99,13 +99,13 @@ public class AgeOfTitans
     	
     	ItemInit.ITEMS.register(modEventBus);
     	
+    	// Registering custom blocks
+    	
+    	BlockInit.BLOCKS.register(modEventBus);
+    	
     // Register custom effects
     	
     	EffectInit.MOD_EFFECTS.register(modEventBus);
-    	
-    // Registering custom blocks
-    	
-    	BlockInit.BLOCKS.register(modEventBus);
     	
     // Registering custom tile entity types
     	

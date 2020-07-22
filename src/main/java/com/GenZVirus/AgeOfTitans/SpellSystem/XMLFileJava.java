@@ -58,7 +58,7 @@ public class XMLFileJava {
 	             
 	             // player name element
 	             Element playerPoints = document.createElement("PlayerPoints");
-	             playerPoints.appendChild(document.createTextNode(Integer.toString(99999)));
+	             playerPoints.appendChild(document.createTextNode(Integer.toString(0)));
 	             playername.appendChild(playerPoints);
 	             
 	             // player experience element

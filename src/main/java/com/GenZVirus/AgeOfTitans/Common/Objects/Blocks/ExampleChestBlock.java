@@ -28,10 +28,10 @@ public class ExampleChestBlock extends Block{
 		return true;
 	}
 	
-	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return ModTileEntityTypes.EXAMPLE_CHEST.get().create();
-	}
+//	@Override
+//	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+//		return ModTileEntityTypes.EXAMPLE_CHEST.get().create();
+//	}
 	
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,

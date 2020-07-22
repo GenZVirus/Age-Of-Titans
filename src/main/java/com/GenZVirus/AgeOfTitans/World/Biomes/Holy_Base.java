@@ -2,8 +2,6 @@ package com.GenZVirus.AgeOfTitans.World.Biomes;
 
 import com.GenZVirus.AgeOfTitans.Common.Init.BlockInit;
 
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.DefaultBiomeFeatures;
 import net.minecraft.world.gen.GenerationStage;
@@ -22,7 +20,7 @@ public class Holy_Base extends Biome {
 		DefaultBiomeFeatures.addStoneVariants(this);
 		addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE
 				.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, BlockInit.TITANIUM_ORE.get().getDefaultState(), 8))
-				.withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(20, 0, 5, 16))));
+				.withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(10, 0, 5, 16))));
 	}
 
 }

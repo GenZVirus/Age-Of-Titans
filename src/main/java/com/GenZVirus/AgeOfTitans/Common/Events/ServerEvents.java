@@ -27,8 +27,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.biome.Biome;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -44,9 +42,9 @@ import net.minecraftforge.fml.network.NetworkDirection;
 @Mod.EventBusSubscriber(modid = AgeOfTitans.MOD_ID, bus = Bus.FORGE)
 public class ServerEvents {
 
-	@OnlyIn(Dist.DEDICATED_SERVER)
 	@SubscribeEvent
 	public static void generateRageWhileSprinting(PlayerEvent event) {
+		if(event.getPlayer() == null) return;
 		if(event.getPlayer().world.isRemote) return;
 		if(event.getPlayer().isSprinting()) {
 			PlayerEntity player = event.getPlayer();
@@ -58,6 +56,22 @@ public class ServerEvents {
 			ForgeEventBusSubscriber.rage.set(index, rageAmount);
 			PacketHandler.INSTANCE.sendTo(new SendPlayerRagePointsPacket(rageAmount),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		}
+	}
+	@SubscribeEvent
+	public static void outOfCombat(PlayerEvent event) {
+		if(event.getPlayer() == null) return;
+		if(event.getPlayer().world.isRemote) return;
+			PlayerEntity player = event.getPlayer();
+			Random rand = new Random();
+			if(player.getCombatTracker().getCombatDuration() == 0 && rand.nextInt(100) % 3 == 0) {
+				if(!ForgeEventBusSubscriber.players.contains(player)) return;
+				int index = ForgeEventBusSubscriber.players.indexOf(player);
+				int rageAmount = ForgeEventBusSubscriber.rage.get(index);
+				if(rageAmount - 1 < 0) return;
+				else rageAmount -= 1;
+				ForgeEventBusSubscriber.rage.set(index, rageAmount);
+				PacketHandler.INSTANCE.sendTo(new SendPlayerRagePointsPacket(rageAmount),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+			}
 	}
 	
 	@SubscribeEvent

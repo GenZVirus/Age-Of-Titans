@@ -41,8 +41,8 @@ public class ModScreen extends Screen {
 	
 	// The texture for human skill tree
 	
-	public ResourceLocation BACKGROUND_TEXTURE_HUMAN = new ResourceLocation(AgeOfTitans.MOD_ID,
-			"textures/gui/character_background_human.png");
+	public ResourceLocation BACKGROUND_TEXTURE_TITAN = new ResourceLocation(AgeOfTitans.MOD_ID,
+			"textures/gui/character_background_titan.png");
 	
 	// The texture for reaper skill tree
 	
@@ -56,7 +56,7 @@ public class ModScreen extends Screen {
 	
 	// The buttons for changing the skill tree
 	
-	public ModButton Human;
+	public ModButton Titan;
 	public ModButton Reaper;
 	
 	// The button for learning spells
@@ -93,7 +93,7 @@ public class ModScreen extends Screen {
 		
 		// If you press on the human button the background changes to the Human one
 		
-		this.Human = new ModButton((this.width - this.xSize) / 2 + 4, (this.height - this.ySize) / 2 + 4, 156, 20, I18n.format("gui.human")) {
+		this.Titan = new ModButton((this.width - this.xSize) / 2 + 4, (this.height - this.ySize) / 2 + 4, 156, 20, I18n.format("gui.titan")) {
 			@Override
 			public void onPress() {
 				this.isPressed = true;
@@ -111,8 +111,8 @@ public class ModScreen extends Screen {
 		
 		// By default human background is selected
 		
-		Human.isPressed = true;
-		Human.active = false;
+		Titan.isPressed = true;
+		Titan.active = false;
 		
 		// If you press on the human button the background changes to the Human one
 		
@@ -184,7 +184,7 @@ public class ModScreen extends Screen {
 		buttons.add(slot4);
 		
 		
-		buttons.add(Human);
+		buttons.add(Titan);
 		buttons.add(Reaper);
 		
 		buttons.add(LearnSpells);
@@ -192,7 +192,7 @@ public class ModScreen extends Screen {
 	
 	public void loadSpells() {
 		
-		if(this.Human.isPressed) {
+		if(this.Titan.isPressed) {
 			buttons.add(ShieldBash);
 			buttons.add(SwordSlash);
 			buttons.add(Berserker);
@@ -243,14 +243,14 @@ public class ModScreen extends Screen {
 		
 	// Decides if it renders the human background or the reaper background
 		
-		if (this.Human.isPressed) {
-			this.minecraft.getTextureManager().bindTexture(BACKGROUND_TEXTURE_HUMAN);
+		if (this.Titan.isPressed) {
+			this.minecraft.getTextureManager().bindTexture(BACKGROUND_TEXTURE_TITAN);
 			this.addButtons();
 		} else if (this.Reaper.isPressed) {
 			this.minecraft.getTextureManager().bindTexture(BACKGROUND_TEXTURE_REAPER);
 			this.addButtons();
 		} else {
-			this.minecraft.getTextureManager().bindTexture(BACKGROUND_TEXTURE_HUMAN);
+			this.minecraft.getTextureManager().bindTexture(BACKGROUND_TEXTURE_TITAN);
 		}
 		
 		int x = (this.width - this.xSize) / 2;
