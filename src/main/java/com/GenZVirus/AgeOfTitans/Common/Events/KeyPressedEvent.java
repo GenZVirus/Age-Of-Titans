@@ -92,6 +92,7 @@ public class KeyPressedEvent {
 		// Spin the HUD counterclockwise
 		
 		if(timer == 0 && KeyboardHelper.isLockHUDKeyDown()) {
+			timer = 15;
 			if(!ModHUD.locked)
 			ModHUD.locked = true;
 			else ModHUD.locked = false;

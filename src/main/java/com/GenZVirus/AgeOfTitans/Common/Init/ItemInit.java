@@ -43,7 +43,7 @@ public class ItemInit {
 	/*
      * Here are the instances of custom items added to the game
     */
-	public static final RegistryObject<Item> FRUIT_OF_THE_GODS = ITEMS.register("fruit_of_the_gods", () -> new Item(new Item.Properties().group(AgeOfTitansItemGroup.instance).food(new Food.Builder().hunger(10).saturation(3.0f).setAlwaysEdible().effect(new EffectInstance(Effects.ABSORPTION, 6000, 5), 1.0f).build())));
+	public static final RegistryObject<Item> FRUIT_OF_THE_GODS = ITEMS.register("fruit_of_the_gods", () -> new Item(new Item.Properties().group(AgeOfTitansItemGroup.instance).food(new Food.Builder().hunger(10).saturation(3.0f).setAlwaysEdible().effect(new EffectInstance(Effects.ABSORPTION, 6000, 4), 1.0f).effect(new EffectInstance(Effects.INSTANT_HEALTH, 1, 100), 1.0f).build())));
 	public static final RegistryObject<Item> ORB_OF_EDEN = ITEMS.register("orb_of_eden", () -> new OrbOfEden(new Item.Properties().group(AgeOfTitansItemGroup.instance).maxStackSize(1)));
 	public static final RegistryObject<Item> ORB_OF_NETHER = ITEMS.register("orb_of_nether", () -> new OrbOfNether(new Item.Properties().group(AgeOfTitansItemGroup.instance).maxStackSize(1)));
 	public static final RegistryObject<Item> ORB_OF_SUMMONING = ITEMS.register("orb_of_summoning", () -> new OrbOfSummoning(new Item.Properties().group(AgeOfTitansItemGroup.instance).maxStackSize(1)));
