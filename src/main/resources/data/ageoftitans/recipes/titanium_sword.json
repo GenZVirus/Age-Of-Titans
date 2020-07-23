@@ -3,9 +3,9 @@
     
     "pattern":
     [
-        "  T",
-        "GT ",
-        "SG "
+        " T ",
+        " T ",
+        " S "
     ],
     
     "key":
@@ -13,10 +13,6 @@
         "T":
         {
             "item": "ageoftitans:titanium_ingot"
-        },
-         "G":
-        {
-            "item": "minecraft:gold_ingot"
         },
          "S":
         {

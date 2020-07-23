@@ -57,7 +57,7 @@ public class ItemInit {
 	public static final RegistryObject<Item> TEST_ITEM = ITEMS.register("test_item", () -> new SpecialItem(new Item.Properties().group(AgeOfTitansItemGroup.instance).maxStackSize(1)));
 	
 	//Tools
-	public static final RegistryObject<Item> TITANIUM_SWORD = ITEMS.register("titanium_sword", () -> new SwordItem(ModItemTier.MATERIAL_TITANIUM, 7, 6.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	public static final RegistryObject<Item> TITANIUM_SWORD = ITEMS.register("titanium_sword", () -> new SwordItem(ModItemTier.MATERIAL_TITANIUM, 12, 6.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
 	public static final RegistryObject<Item> TITANIUM_PICKAXE = ITEMS.register("titanium_pickaxe", () -> new PickaxeItem(ModItemTier.MATERIAL_TITANIUM, 4, 5.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
 	public static final RegistryObject<Item> TITANIUM_SHOVEL = ITEMS.register("titanium_shovel", () -> new ShovelItem(ModItemTier.MATERIAL_TITANIUM, 2, 5.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
 	public static final RegistryObject<Item> TITANIUM_AXE = ITEMS.register("titanium_axe", () -> new AxeItem(ModItemTier.MATERIAL_TITANIUM, 8, 5.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
@@ -123,7 +123,7 @@ public class ItemInit {
 	}
 	
 	public enum ModArmorMaterial implements IArmorMaterial{
-		ARMOR_MATERIAL_TITANIUM(AgeOfTitans.MOD_ID + ":titanium", 5, new int[] {7, 9, 11, 8}, 420, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 6.9F, () -> {
+		ARMOR_MATERIAL_TITANIUM(AgeOfTitans.MOD_ID + ":titanium", 50, new int[] {7, 9, 11, 8}, 420, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 6.9F, () -> {
 			return Ingredient.fromItems(ItemInit.TITANIUM_INGOT.get());
 		});
 		
