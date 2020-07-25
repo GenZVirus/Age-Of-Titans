@@ -1,7 +1,7 @@
 package com.GenZVirus.AgeOfTitans.Client.GUI;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
-import com.GenZVirus.AgeOfTitans.Client.Container.ExampleChestContainer;
+import com.GenZVirus.AgeOfTitans.Client.Container.ContainerBasic;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -12,11 +12,11 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ExampleChestScreen extends ContainerScreen<ExampleChestContainer> {
+public class ExampleChestScreen extends ContainerScreen<ContainerBasic> {
 
 	private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(AgeOfTitans.MOD_ID,"textures/gui/example_chest.png");
 	
-	public ExampleChestScreen(ExampleChestContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+	public ExampleChestScreen(ContainerBasic screenContainer, PlayerInventory inv, ITextComponent titleIn) {
 		super(screenContainer, inv, titleIn);
 		this.guiLeft = 0;
 		this.guiTop = 0;

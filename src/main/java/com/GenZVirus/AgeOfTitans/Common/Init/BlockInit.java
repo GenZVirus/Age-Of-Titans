@@ -1,6 +1,7 @@
 package com.GenZVirus.AgeOfTitans.Common.Init;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Blocks.BlackHole;
 import com.GenZVirus.AgeOfTitans.Common.Objects.Blocks.ModPressurePlateBlock;
 import com.GenZVirus.AgeOfTitans.Common.Objects.Blocks.ModSaplingBlock;
 import com.GenZVirus.AgeOfTitans.Common.Objects.Blocks.ModWoodButtonBlock;
@@ -50,7 +51,7 @@ public class BlockInit {
 	public static final RegistryObject<Block> EDEN_WOOD_FENCE = BLOCKS.register("eden_wood_fence", () -> new FenceBlock(Block.Properties.create(Material.WOOD, MaterialColor.WOOD).hardnessAndResistance(1.0F, 1.0F).sound(SoundType.WOOD)));
 	public static final RegistryObject<Block> EDEN_WOOD_BUTTON = BLOCKS.register("eden_wood_button", () -> new ModWoodButtonBlock(Block.Properties.create(Material.WOOD, MaterialColor.WOOD).hardnessAndResistance(1.0F, 1.0F).sound(SoundType.WOOD)));
 
-//	public static final RegistryObject<Block> EXAMPLE_CHEST = BLOCKS.register("example_chest", () -> new ExampleChestBlock(Block.Properties.from(BlockInit.TITANIUM_BLOCK.get())));
+	public static final RegistryObject<Block> BLACK_HOLE = BLOCKS.register("black_hole", () -> new BlackHole(Block.Properties.from(BlockInit.TITANIUM_BLOCK.get())));
 
 
 }

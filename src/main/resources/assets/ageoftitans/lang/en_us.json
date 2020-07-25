@@ -20,8 +20,10 @@
 	
 	"item.ageoftitans.orb_of_eden": "Orb of Eden",
 	"item.ageoftitans.orb_of_nether": "Orb of Nether",
+	"item.ageoftitans.orb_of_end": "Orb of End",
 	"item.ageoftitans.orb_of_summoning": "Orb of Summoning",
 	"item.ageoftitans.orb_of_dislocation": "Orb of Dislocation",
+	"item.ageoftitans.orb_of_storage": "Orb of Storage",
 	
 	"item.ageoftitans.keystone": "Keystone",
 	
@@ -51,6 +53,6 @@
 	"block.ageoftitans.eden_leaves": "Eden Leaves",
 	"block.ageoftitans.eden_sapling": "Eden Sapling",
 	
-	"block.ageoftitans.example_chest": "Example Chest",
+	"block.ageoftitans.black_hole": "Black Hole",
 	"container.example_chest": "Example Chest"
 }

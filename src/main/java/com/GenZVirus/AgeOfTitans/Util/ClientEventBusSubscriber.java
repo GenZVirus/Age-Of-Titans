@@ -1,11 +1,11 @@
 package com.GenZVirus.AgeOfTitans.Util;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
+import com.GenZVirus.AgeOfTitans.Client.Container.ContainerScreenBasic;
 import com.GenZVirus.AgeOfTitans.Client.Entity.Render.ChainRender;
 import com.GenZVirus.AgeOfTitans.Client.Entity.Render.ReaperEntityRender;
 import com.GenZVirus.AgeOfTitans.Client.Entity.Render.ShockwaveRender;
 import com.GenZVirus.AgeOfTitans.Client.Entity.Render.SwordSlashRender;
-import com.GenZVirus.AgeOfTitans.Client.GUI.ExampleChestScreen;
 import com.GenZVirus.AgeOfTitans.Common.Init.BlockInit;
 import com.GenZVirus.AgeOfTitans.Common.Init.ModContainerTypes;
 import com.GenZVirus.AgeOfTitans.Common.Init.ModEntityTypes;
@@ -28,7 +28,7 @@ public class ClientEventBusSubscriber {
 	
 	@SubscribeEvent
 	public static void clientSetup(FMLClientSetupEvent event) {
-		ScreenManager.registerFactory(ModContainerTypes.EXAMPLE_CHEST.get(), ExampleChestScreen::new);
+		ScreenManager.registerFactory(ModContainerTypes.BLACK_HOLE.get(), ContainerScreenBasic::new);
 		RenderTypeLookup.setRenderLayer(BlockInit.EDEN_SAPLING.get(), RenderType.getCutout());
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.REAPER.get(), ReaperEntityRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SWORD_SLASH.get(), SwordSlashRender::new);

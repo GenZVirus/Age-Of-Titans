@@ -3,6 +3,7 @@ package com.GenZVirus.AgeOfTitans.Common.Events;
 import java.util.List;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
+import com.GenZVirus.AgeOfTitans.Client.Container.ContainerScreenBasic;
 import com.GenZVirus.AgeOfTitans.Client.GUI.HUD.ModHUD;
 import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModButton;
 import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModScreen;
@@ -36,6 +37,19 @@ public class ModScreenEvents {
 	private static int cooldown_Berserker = 0;
 	private static int cooldown_Chain = 0;
 
+	@SubscribeEvent
+	public static void PlayerClosedContainer(ClientTickEvent event) {
+		if(event.phase == Phase.START) {
+			return;
+		}
+		
+		Minecraft mc = Minecraft.getInstance();
+		if (mc.currentScreen instanceof ContainerScreenBasic && mc.world != null) {
+//			System.out.println("YES");
+		}
+		
+	}
+	
 	@SuppressWarnings("resource")
 	@SubscribeEvent
 	public static void PlayerSpellUseEvent(ClientTickEvent event) {

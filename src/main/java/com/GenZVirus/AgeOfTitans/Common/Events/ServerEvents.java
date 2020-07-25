@@ -41,7 +41,7 @@ import net.minecraftforge.fml.network.NetworkDirection;
 
 @Mod.EventBusSubscriber(modid = AgeOfTitans.MOD_ID, bus = Bus.FORGE)
 public class ServerEvents {
-
+	
 	@SubscribeEvent
 	public static void generateRageWhileSprinting(PlayerEvent event) {
 		if(event.getPlayer() == null) return;
