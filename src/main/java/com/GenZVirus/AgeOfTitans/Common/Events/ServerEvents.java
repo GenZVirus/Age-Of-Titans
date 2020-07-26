@@ -57,6 +57,7 @@ public class ServerEvents {
 			PacketHandler.INSTANCE.sendTo(new SendPlayerRagePointsPacket(rageAmount),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		}
 	}
+	
 	@SubscribeEvent
 	public static void outOfCombat(PlayerEvent event) {
 		if(event.getPlayer() == null) return;

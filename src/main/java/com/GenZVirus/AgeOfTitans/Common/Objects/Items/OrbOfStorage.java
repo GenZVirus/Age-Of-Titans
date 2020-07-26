@@ -1,5 +1,8 @@
 package com.GenZVirus.AgeOfTitans.Common.Objects.Items;
 
+import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandler;
+import com.GenZVirus.AgeOfTitans.Common.Network.sendTileEntityPosPacket;
+
 import net.minecraft.block.ContainerBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -15,6 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
+import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class OrbOfStorage extends Item{
@@ -42,6 +46,7 @@ public class OrbOfStorage extends Item{
 		return super.onItemUse(context);
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		ItemStack stack = playerIn.getHeldItem(handIn);
@@ -56,6 +61,7 @@ public class OrbOfStorage extends Item{
 		      ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity)playerIn;
 		      NetworkHooks.openGui(serverPlayerEntity, namedContainerProvider, (packetBuffer)->{});
 		            // (packetBuffer)->{} is just a do-nothing because we have no extra data to send
+		      PacketHandler.INSTANCE.sendTo(new sendTileEntityPosPacket(pos.getX(), pos.getY(), pos.getZ(), nbt.getInt("dimensionID"), 0),  ((ServerPlayerEntity)playerIn).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		    } else {
 		    	nbt.putInt("posX", 0);
 		    	nbt.putInt("posY", 0);

@@ -63,5 +63,11 @@ public class PacketHandler {
    				.decoder(SendPlayerRagePointsPacket::decode)
    				.consumer(SendPlayerRagePointsPacket::handle)
    				.add();
+		
+		INSTANCE.messageBuilder(sendTileEntityPosPacket.class, id++)
+				.encoder(sendTileEntityPosPacket::encode)
+				.decoder(sendTileEntityPosPacket::decode)
+				.consumer(sendTileEntityPosPacket::handle)
+				.add();
 	}
 }
