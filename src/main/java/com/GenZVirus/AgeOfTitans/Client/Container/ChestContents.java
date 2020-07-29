@@ -6,7 +6,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraftforge.items.ItemStackHandler;
 
 /**
  * Created by TGG on 4/04/2020.
@@ -67,10 +66,12 @@ public class ChestContents implements IInventory {
    * Writes the chest contents to a CompoundNBT tag (used to save the contents to disk)
    * @return the tag containing the contents
    */
-  public CompoundNBT serializeNBT()  {
+  public CompoundNBT serializeNBT()  {	  
     return chestContents.serializeNBT();
   }
 
+  
+  
   /**
    * Fills the chest contents from the nbt; resizes automatically to fit.  (used to load the contents from disk)
    * @param nbt
@@ -206,11 +207,11 @@ public class ChestContents implements IInventory {
   // ---------
 
   private ChestContents(int size) {
-    this.chestContents = new ItemStackHandler(size);
+    this.chestContents = new BHItemStackHandler(size);
   }
 
   private ChestContents(int size, Predicate<PlayerEntity> canPlayerAccessInventoryLambda, Notify markDirtyNotificationLambda) {
-    this.chestContents = new ItemStackHandler(size);
+    this.chestContents = new BHItemStackHandler(size);
     this.canPlayerAccessInventoryLambda = canPlayerAccessInventoryLambda;
     this.markDirtyNotificationLambda = markDirtyNotificationLambda;
   }
@@ -235,5 +236,5 @@ public class ChestContents implements IInventory {
   // default is "do nothing"
   private Notify closeInventoryNotificationLambda = ()->{};
 
-  private final ItemStackHandler chestContents;
+  private final BHItemStackHandler chestContents;
 }

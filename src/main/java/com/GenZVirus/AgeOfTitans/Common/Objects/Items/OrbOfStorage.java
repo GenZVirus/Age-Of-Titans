@@ -1,7 +1,7 @@
 package com.GenZVirus.AgeOfTitans.Common.Objects.Items;
 
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandler;
-import com.GenZVirus.AgeOfTitans.Common.Network.sendTileEntityPosPacket;
+import com.GenZVirus.AgeOfTitans.Common.Network.sendTileEntityDataPacket;
 
 import net.minecraft.block.ContainerBlock;
 import net.minecraft.entity.player.PlayerEntity;
@@ -61,7 +61,7 @@ public class OrbOfStorage extends Item{
 		      ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity)playerIn;
 		      NetworkHooks.openGui(serverPlayerEntity, namedContainerProvider, (packetBuffer)->{});
 		            // (packetBuffer)->{} is just a do-nothing because we have no extra data to send
-		      PacketHandler.INSTANCE.sendTo(new sendTileEntityPosPacket(pos.getX(), pos.getY(), pos.getZ(), nbt.getInt("dimensionID"), 0),  ((ServerPlayerEntity)playerIn).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		      PacketHandler.INSTANCE.sendTo(new sendTileEntityDataPacket(pos.getX(), pos.getY(), pos.getZ(), nbt.getInt("dimensionID"), 0, ""),  ((ServerPlayerEntity)playerIn).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		    } else {
 		    	nbt.putInt("posX", 0);
 		    	nbt.putInt("posY", 0);

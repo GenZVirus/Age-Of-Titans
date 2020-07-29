@@ -64,10 +64,10 @@ public class PacketHandler {
    				.consumer(SendPlayerRagePointsPacket::handle)
    				.add();
 		
-		INSTANCE.messageBuilder(sendTileEntityPosPacket.class, id++)
-				.encoder(sendTileEntityPosPacket::encode)
-				.decoder(sendTileEntityPosPacket::decode)
-				.consumer(sendTileEntityPosPacket::handle)
+		INSTANCE.messageBuilder(sendTileEntityDataPacket.class, id++)
+				.encoder(sendTileEntityDataPacket::encode)
+				.decoder(sendTileEntityDataPacket::decode)
+				.consumer(sendTileEntityDataPacket::handle)
 				.add();
 	}
 }

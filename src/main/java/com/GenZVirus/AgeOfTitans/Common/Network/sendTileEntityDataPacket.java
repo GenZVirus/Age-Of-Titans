@@ -13,33 +13,36 @@ import net.minecraft.util.registry.Registry;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-public class sendTileEntityPosPacket {
+public class sendTileEntityDataPacket {
 	
 	public int posX, posY, posZ, ID;
 	public float scroll;
+	public String search;
 	
-	public sendTileEntityPosPacket(int posX, int posY, int posZ, int id, float scroll) {
+	public sendTileEntityDataPacket(int posX, int posY, int posZ, int id, float scroll, String search) {
 		this.posX = posX;
 		this.posY = posY;
 		this.posZ = posZ;
 		this.scroll = scroll;
 		this.ID = id;
+		this.search = search;
 	}
 	
-	public static void encode(sendTileEntityPosPacket pkt, PacketBuffer buf) {
+	public static void encode(sendTileEntityDataPacket pkt, PacketBuffer buf) {
 		buf.writeInt(pkt.posX);
 		buf.writeInt(pkt.posY);
 		buf.writeInt(pkt.posZ);
 		buf.writeInt(pkt.ID);
 		buf.writeFloat(pkt.scroll);
+		buf.writeString(pkt.search);
 	}
 	
-	public static sendTileEntityPosPacket decode(PacketBuffer buf) {
-		return new sendTileEntityPosPacket(buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readFloat());
+	public static sendTileEntityDataPacket decode(PacketBuffer buf) {
+		return new sendTileEntityDataPacket(buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readFloat(), buf.readString());
 	}
 	
 	@SuppressWarnings("deprecation")
-	public static void handle(sendTileEntityPosPacket pkt, Supplier<NetworkEvent.Context> ctx) {
+	public static void handle(sendTileEntityDataPacket pkt, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
 			if(ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
 				ContainerScreenBasic.POS = new BlockPos(pkt.posX, pkt.posY, pkt.posZ);
@@ -49,6 +52,7 @@ public class sendTileEntityPosPacket {
 				BlockPos pos = new BlockPos(pkt.posX, pkt.posY, pkt.posZ);
 				TileEntityInventoryBasic tile = (TileEntityInventoryBasic) ForgeEventBusSubscriber.players.get(0).world.getServer().getWorld(Registry.DIMENSION_TYPE.getByValue(pkt.ID)).getTileEntity(pos);
 				((ContainerBasic)tile.container).scrollTo(pkt.scroll);
+				((ContainerBasic)tile.container).search = pkt.search;
 			}
 		});
 		ctx.get().setPacketHandled(true);
