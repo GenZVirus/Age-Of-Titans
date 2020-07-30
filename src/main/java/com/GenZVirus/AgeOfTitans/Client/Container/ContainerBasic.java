@@ -495,13 +495,18 @@ public class ContainerBasic extends Container {
 	
 	public void sort() {
 		for(int i = 0; i < chestContents.getSizeInventory() - 1; i++) {
-						
+			
+			ItemStack stack = chestContents.getStackInSlot(i);
+			
 			//Check for the first item that's not AIR
 			
-			if(chestContents.getStackInSlot(i).getItem().equals(Items.AIR)) {			
+			if(stack.getItem().equals(Items.AIR)) {			
 				for(int j = i + 1; j < chestContents.getSizeInventory(); j++) {
+					
+					ItemStack stack2 = chestContents.getStackInSlot(j);
+					
 					if(!chestContents.getStackInSlot(j).getItem().equals(Items.AIR)) {
-						chestContents.setInventorySlotContents(i, chestContents.getStackInSlot(j));
+						chestContents.setInventorySlotContents(i, stack2);
 						chestContents.setInventorySlotContents(j, new ItemStack(Items.AIR));
 						break;
 					}
@@ -511,8 +516,11 @@ public class ContainerBasic extends Container {
 			//Sorting
 			
 			for(int j = chestContents.getSizeInventory() - 1; j > i; j--) {
-				if(chestContents.getStackInSlot(i).getItem().equals(chestContents.getStackInSlot(j).getItem()) && !(chestContents.getStackInSlot(j).getItem().equals(Items.AIR))) {
-					chestContents.getStackInSlot(i).setCount(chestContents.getStackInSlot(i).getCount() + chestContents.getStackInSlot(j).getCount());
+				
+				ItemStack stack2 = chestContents.getStackInSlot(j);
+				
+				if(stack.getItem().equals(stack2.getItem()) && !(stack2.getItem().equals(Items.AIR)) && stack.getTag().equals(stack2.getTag())) {
+					stack.setCount(stack.getCount() + stack2.getCount());
 					chestContents.setInventorySlotContents(j, new ItemStack(Items.AIR));
 				}
 			}

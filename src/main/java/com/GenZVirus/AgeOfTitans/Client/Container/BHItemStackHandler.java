@@ -1,5 +1,6 @@
 package com.GenZVirus.AgeOfTitans.Client.Container;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import net.minecraft.item.ItemStack;
@@ -70,7 +71,34 @@ public class BHItemStackHandler extends ItemStackHandler {
 
             if (slot >= 0 && slot < stacks.size())
             {
-                stacks.set(slot, new ItemStack(Registry.ITEM.getOrDefault(new ResourceLocation(itemTags.getString("id"))), itemTags.getInt("Count")));
+            	ItemStack stack = new ItemStack(Registry.ITEM.getOrDefault(new ResourceLocation(itemTags.getString("id"))), itemTags.getInt("Count"));
+//            	stack.capNBT = itemTags.contains("ForgeCaps") ? itemTags.getCompound("ForgeCaps") : null;
+            	try {
+            	Field field = ObfuscationReflectionHelper.findField(stack.getClass(), "capNBT");
+            	field.set(stack, itemTags.contains("ForgeCaps") ? itemTags.getCompound("ForgeCaps") : null);
+            	} catch(Exception e) {
+            		e.printStackTrace();
+            	}
+            	
+            	if(itemTags.contains("tag", 10)) {
+            		stack.tag = itemTags.getCompound("tag");
+            		stack.getItem().updateItemStackNBT(itemTags);
+            	}
+            	if (stack.getItem().isDamageable()) {
+            		stack.setDamage(stack.getDamage());
+                 }
+
+            	stack.updateEmptyState();
+
+            	try {
+            		Method method = ObfuscationReflectionHelper.findMethod(stack.getClass(), "forgeInit");
+            		method.invoke(stack);
+                	} catch(Exception e) {
+                		e.printStackTrace();
+                	}
+            	
+//            	stack.forgeInit();
+                stacks.set(slot, stack);
             }
         }
         onLoad();
