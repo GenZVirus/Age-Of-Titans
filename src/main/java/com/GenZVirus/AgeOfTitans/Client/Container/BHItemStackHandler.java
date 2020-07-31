@@ -18,11 +18,16 @@ public class BHItemStackHandler extends ItemStackHandler {
 	public BHItemStackHandler(int size) {
 		super(size);
 	}
+	
+	public void addStack(ItemStack stack) {
+		this.stacks.add(stack);
+	}
 
 	public NonNullList<ItemStack> getStacks() {
 		return this.stacks;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public CompoundNBT serializeNBT() {
 		ListNBT nbtTagList = new ListNBT();
@@ -55,10 +60,10 @@ public class BHItemStackHandler extends ItemStackHandler {
 		CompoundNBT nbt = new CompoundNBT();
 		nbt.put("Items", nbtTagList);
 		nbt.putInt("Size", stacks.size());
-		System.out.println(nbt.getInt("Count"));
 		return nbt;
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
     public void deserializeNBT(CompoundNBT nbt)
     {
@@ -72,7 +77,6 @@ public class BHItemStackHandler extends ItemStackHandler {
             if (slot >= 0 && slot < stacks.size())
             {
             	ItemStack stack = new ItemStack(Registry.ITEM.getOrDefault(new ResourceLocation(itemTags.getString("id"))), itemTags.getInt("Count"));
-//            	stack.capNBT = itemTags.contains("ForgeCaps") ? itemTags.getCompound("ForgeCaps") : null;
             	try {
             	Field field = ObfuscationReflectionHelper.findField(stack.getClass(), "capNBT");
             	field.set(stack, itemTags.contains("ForgeCaps") ? itemTags.getCompound("ForgeCaps") : null);

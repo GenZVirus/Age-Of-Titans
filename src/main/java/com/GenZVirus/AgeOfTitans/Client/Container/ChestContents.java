@@ -196,6 +196,10 @@ public class ChestContents implements IInventory {
   public void setInventorySlotContents(int index, ItemStack stack) {
     chestContents.setStackInSlot(index, stack);
   }
+  
+  public void addStack(ItemStack stack) {
+	  chestContents.addStack(stack);
+  }
 
   @Override
   public void clear() {

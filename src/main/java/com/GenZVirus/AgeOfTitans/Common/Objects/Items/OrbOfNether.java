@@ -3,8 +3,6 @@ package com.GenZVirus.AgeOfTitans.Common.Objects.Items;
 import java.util.List;
 import java.util.function.Function;
 
-import com.GenZVirus.AgeOfTitans.Util.Helpers.KeyboardHelper;
-
 import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -34,11 +32,8 @@ public class OrbOfNether extends Item {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		if (KeyboardHelper.isHoldingShift()) {
-			tooltip.add(new StringTextComponent("Teleports player between Nether and Overworld"));
-		} else {
-			tooltip.add(new StringTextComponent("Hold" + "\u00A7e" + " Shift " + "\u00A77" + "for more information!"));
-		}
+		tooltip.add(new StringTextComponent(""));
+		tooltip.add(new StringTextComponent("\u00A75Teleports the user between Nether and Overworld"));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 
@@ -58,22 +53,28 @@ public class OrbOfNether extends Item {
 	public int getBurnTime(ItemStack itemStack) {
 		return super.getBurnTime(itemStack);
 	}
+
 	private void teleportToDimension(PlayerEntity player, DimensionType dimension, BlockPos pos) {
-	    player.changeDimension(dimension, new ITeleporter() {
-	        @Override
-	        public Entity placeEntity(Entity entity, ServerWorld currentWorld, ServerWorld destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
-	            entity = repositionEntity.apply(false);
-	            int i = 0;
-	            while(!entity.world.getBlockState(new BlockPos(pos.getX(), pos.getY() + i, pos.getZ())).getBlock().equals(Blocks.AIR) && !entity.world.getBlockState(new BlockPos(pos.getX(), pos.getY() + i + 1, pos.getZ())).getBlock().equals(Blocks.AIR)) {
-	            	i++;
-	            }
-	            while(entity.world.getBlockState(new BlockPos(pos.getX(), pos.getY() + i - 1, pos.getZ())).getBlock().equals(Blocks.AIR)) {
-	            	i--;
-	            }
-	            entity.setPositionAndUpdate(pos.getX(), pos.getY() + i + 1, pos.getZ());
-	            
-	            return entity;
-	        }
-	    });
+		player.changeDimension(dimension, new ITeleporter() {
+			@Override
+			public Entity placeEntity(Entity entity, ServerWorld currentWorld, ServerWorld destWorld, float yaw,
+					Function<Boolean, Entity> repositionEntity) {
+				entity = repositionEntity.apply(false);
+				int i = 0;
+				while (!entity.world.getBlockState(new BlockPos(pos.getX(), pos.getY() + i, pos.getZ())).getBlock()
+						.equals(Blocks.AIR)
+						&& !entity.world.getBlockState(new BlockPos(pos.getX(), pos.getY() + i + 1, pos.getZ()))
+								.getBlock().equals(Blocks.AIR)) {
+					i++;
+				}
+				while (entity.world.getBlockState(new BlockPos(pos.getX(), pos.getY() + i - 1, pos.getZ())).getBlock()
+						.equals(Blocks.AIR)) {
+					i--;
+				}
+				entity.setPositionAndUpdate(pos.getX(), pos.getY() + i + 1, pos.getZ());
+
+				return entity;
+			}
+		});
 	}
 }

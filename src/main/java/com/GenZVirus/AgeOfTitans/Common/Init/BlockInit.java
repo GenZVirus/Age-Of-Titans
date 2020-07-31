@@ -1,7 +1,7 @@
 package com.GenZVirus.AgeOfTitans.Common.Init;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
-import com.GenZVirus.AgeOfTitans.Common.Objects.Blocks.BlackHole;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Blocks.TitanLocker;
 import com.GenZVirus.AgeOfTitans.Common.Objects.Blocks.ModPressurePlateBlock;
 import com.GenZVirus.AgeOfTitans.Common.Objects.Blocks.ModSaplingBlock;
 import com.GenZVirus.AgeOfTitans.Common.Objects.Blocks.ModWoodButtonBlock;
@@ -31,14 +31,13 @@ public class BlockInit {
 	
 	public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, AgeOfTitans.MOD_ID);
 	
-//	public static final RegistryObject<Block> TEST_BLOCK = BLOCKS.register("test_block", () -> new SpecialBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(1.0F, 1.0F).sound(SoundType.METAL).harvestLevel(3)));
-
 	/*
 	 * Here are the instances of custom blocks added to the game
 	 */
 	
 	public static final RegistryObject<Block> TITANIUM_BLOCK = BLOCKS.register("titanium_block", () -> new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(10.0F, 1000.0F).sound(SoundType.METAL).harvestLevel(3)));
 	public static final RegistryObject<Block> TITANIUM_ORE = BLOCKS.register("titanium_ore", () -> new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3)));
+	public static final RegistryObject<Block> TITAN_LOCKER = BLOCKS.register("titan_locker", () -> new TitanLocker(Block.Properties.create(Material.IRON).hardnessAndResistance(-1.0F, 3600000.0F).sound(SoundType.METAL).harvestLevel(3)));
 	
 	public static final RegistryObject<Block> EDEN_LEAVES = BLOCKS.register("eden_leaves", () -> new LeavesBlock(Block.Properties.from(Blocks.OAK_LEAVES)));
 	public static final RegistryObject<Block> EDEN_SAPLING = BLOCKS.register("eden_sapling", () -> new ModSaplingBlock(() -> new EdenTree(), Block.Properties.from(Blocks.OAK_SAPLING)));
@@ -51,7 +50,6 @@ public class BlockInit {
 	public static final RegistryObject<Block> EDEN_WOOD_FENCE = BLOCKS.register("eden_wood_fence", () -> new FenceBlock(Block.Properties.create(Material.WOOD, MaterialColor.WOOD).hardnessAndResistance(1.0F, 1.0F).sound(SoundType.WOOD)));
 	public static final RegistryObject<Block> EDEN_WOOD_BUTTON = BLOCKS.register("eden_wood_button", () -> new ModWoodButtonBlock(Block.Properties.create(Material.WOOD, MaterialColor.WOOD).hardnessAndResistance(1.0F, 1.0F).sound(SoundType.WOOD)));
 
-	public static final RegistryObject<Block> BLACK_HOLE = BLOCKS.register("black_hole", () -> new BlackHole(Block.Properties.from(BlockInit.TITANIUM_BLOCK.get())));
 
 
 }

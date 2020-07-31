@@ -1,0 +1,9 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+    	"top":"ageoftitans:blocks/titan_locker_top",
+        "front": "ageoftitans:blocks/titan_locker",
+        "side":"ageoftitans:blocks/titan_locker_side"
+    }
+}
+ 

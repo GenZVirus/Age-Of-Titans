@@ -16,32 +16,33 @@
 
 	"itemGroup.ageoftitans": "Age of Titans",
 	
-	"item.ageoftitans.fruit_of_the_gods": "Fruit of the Gods",
+	"item.ageoftitans.fruit_of_the_gods": "\u00A7a\u00A7l\u00A7oFruit of the Gods",
 	
-	"item.ageoftitans.orb_of_eden": "Orb of Eden",
-	"item.ageoftitans.orb_of_nether": "Orb of Nether",
-	"item.ageoftitans.orb_of_end": "Orb of End",
-	"item.ageoftitans.orb_of_summoning": "Orb of Summoning",
-	"item.ageoftitans.orb_of_dislocation": "Orb of Dislocation",
-	"item.ageoftitans.orb_of_storage": "Orb of Storage",
+	"item.ageoftitans.orb_of_eden": "\u00A7b\u00A7lOrb of Eden",
+	"item.ageoftitans.orb_of_nether": "\u00A7c\u00A7lOrb of Nether",
+	"item.ageoftitans.orb_of_end": "\u00A7a\u00A7lOrb of End",
+	"item.ageoftitans.orb_of_summoning": "\u00A71\u00A7lOrb of Summoning",
+	"item.ageoftitans.orb_of_dislocation": "\u00A74\u00A7lOrb of Dislocation",
+	"item.ageoftitans.orb_of_storage": "\u00A76\u00A7lOrb of Storage",
 	
-	"item.ageoftitans.keystone": "Keystone",
+	"item.ageoftitans.keystone": "\u00A74\u00A7lKeystone",
 	
-	"item.ageoftitans.titanium_ingot": "Titanium Ingot",
+	"item.ageoftitans.titanium_ingot": "\u00A7eTitanium Ingot",
 	
-	"item.ageoftitans.titanium_sword": "Titanium Sword",
-	"item.ageoftitans.titanium_pickaxe": "Titanium Pickaxe",
-	"item.ageoftitans.titanium_axe": "Titanium Axe",
-	"item.ageoftitans.titanium_shovel": "Titanium Shovel",
-	"item.ageoftitans.titanium_hoe": "Titanium Hoe",
+	"item.ageoftitans.titanium_sword": "\u00A7e\u00A7nTitanium Sword",
+	"item.ageoftitans.titanium_pickaxe": "\u00A7e\u00A7nTitanium Pickaxe",
+	"item.ageoftitans.titanium_axe": "\u00A7e\u00A7nTitanium Axe",
+	"item.ageoftitans.titanium_shovel": "\u00A7e\u00A7nTitanium Shovel",
+	"item.ageoftitans.titanium_hoe": "\u00A7e\u00A7nTitanium Hoe",
 	
-	"item.ageoftitans.titanium_helmet": "Titanium Helmet",
-	"item.ageoftitans.titanium_chestplate": "Titanium Chestplate",
-	"item.ageoftitans.titanium_leggings": "Titanium Leggings",
-	"item.ageoftitans.titanium_boots": "Titanium Boots",
+	"item.ageoftitans.titanium_helmet": "\u00A7e\u00A7nTitanium Helmet",
+	"item.ageoftitans.titanium_chestplate": "\u00A7e\u00A7nTitanium Chestplate",
+	"item.ageoftitans.titanium_leggings": "\u00A7e\u00A7nTitanium Leggings",
+	"item.ageoftitans.titanium_boots": "\u00A7e\u00A7nTitanium Boots",
 	
-	"block.ageoftitans.titanium_block": "Titanium Block",
-	"block.ageoftitans.titanium_ore": "Titanium Ore",
+	"block.ageoftitans.titanium_block": "\u00A7eTitanium Block",
+	"block.ageoftitans.titanium_ore": "\u00A7eTitanium Ore",
+	"block.ageoftitans.titan_locker": "\u00A76\u00A7lTitan's Locker",
 	"block.ageoftitans.eden_wood": "Eden Wood",
 	"block.ageoftitans.eden_wood_log": "Eden Wooden Log",
 	"block.ageoftitans.eden_wood_planks": "Eden Wooden Planks",
@@ -51,8 +52,6 @@
 	"block.ageoftitans.eden_wood_fence": "Eden Wooden Fence",
 	"block.ageoftitans.eden_wood_button": "Eden Wooden Button",
 	"block.ageoftitans.eden_leaves": "Eden Leaves",
-	"block.ageoftitans.eden_sapling": "Eden Sapling",
+	"block.ageoftitans.eden_sapling": "Eden Sapling"
 	
-	"block.ageoftitans.black_hole": "Black Hole",
-	"container.example_chest": "Example Chest"
 }

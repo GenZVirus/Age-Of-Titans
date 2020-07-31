@@ -21,16 +21,14 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 /**
- * User: brandon3055 & TGG Date: 06/01/2015
- *
- * This is a simple tile entity that can store 9 ItemStacks
+ * This is a simple tile entity that can store 45 ItemStacks
  */
 public class TileEntityInventoryBasic extends TileEntity implements INamedContainerProvider {
 	public static final int NUMBER_OF_SLOTS = 45;
 	public Container container;
 
 	public TileEntityInventoryBasic() {
-		super(ModTileEntityTypes.BLACK_HOLE.get());
+		super(ModTileEntityTypes.TITAN_LOCKER.get());
 		chestContents = ChestContents.createForTileEntity(NUMBER_OF_SLOTS, this::canPlayerAccessInventory,
 				this::markDirty);
 	}
@@ -42,12 +40,7 @@ public class TileEntityInventoryBasic extends TileEntity implements INamedContai
 	public boolean canPlayerAccessInventory(PlayerEntity player) {
 		if (this.world.getTileEntity(this.pos) != this)
 			return false;
-		final double X_CENTRE_OFFSET = 0.5;
-		final double Y_CENTRE_OFFSET = 0.5;
-		final double Z_CENTRE_OFFSET = 0.5;
-		final double MAXIMUM_DISTANCE_SQ = 8.0 * 8.0;
-		return player.getDistanceSq(pos.getX() + X_CENTRE_OFFSET, pos.getY() + Y_CENTRE_OFFSET,
-				pos.getZ() + Z_CENTRE_OFFSET) < MAXIMUM_DISTANCE_SQ;
+		return true;
 	}
 
 	private static final String CHESTCONTENTS_INVENTORY_TAG = "contents";
@@ -70,8 +63,8 @@ public class TileEntityInventoryBasic extends TileEntity implements INamedContai
 		super.read(parentNBTTagCompound); // The super call is required to save and load the tiles location
 		CompoundNBT inventoryNBT = parentNBTTagCompound.getCompound(CHESTCONTENTS_INVENTORY_TAG);
 		chestContents.deserializeNBT(inventoryNBT);
-		if (chestContents.getSizeInventory() != NUMBER_OF_SLOTS)
-			throw new IllegalArgumentException("Corrupted NBT: Number of inventory slots did not match expected.");
+//		if (chestContents.getSizeInventory() != NUMBER_OF_SLOTS)
+//			throw new IllegalArgumentException("Corrupted NBT: Number of inventory slots did not match expected.");
 	}
 
 	// When the world loads from disk, the server needs to send the TileEntity

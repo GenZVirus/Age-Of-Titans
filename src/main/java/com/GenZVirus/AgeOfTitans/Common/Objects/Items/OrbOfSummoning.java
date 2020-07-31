@@ -3,8 +3,6 @@ package com.GenZVirus.AgeOfTitans.Common.Objects.Items;
 import java.util.List;
 import java.util.Random;
 
-import com.GenZVirus.AgeOfTitans.Util.Helpers.KeyboardHelper;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -28,11 +26,8 @@ public class OrbOfSummoning extends Item {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		if (KeyboardHelper.isHoldingShift()) {
-			tooltip.add(new StringTextComponent("Summons a random player to your location"));
-		} else {
-			tooltip.add(new StringTextComponent("Hold" + "\u00A7e" + " Shift " + "\u00A77" + "for more information!"));
-		}
+		tooltip.add(new StringTextComponent(""));
+		tooltip.add(new StringTextComponent("\n\u00A75Summons a random player to the user's location"));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 

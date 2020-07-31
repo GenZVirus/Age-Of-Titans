@@ -3,8 +3,6 @@ package com.GenZVirus.AgeOfTitans.Common.Objects.Items;
 import java.util.List;
 import java.util.Random;
 
-import com.GenZVirus.AgeOfTitans.Util.Helpers.KeyboardHelper;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
@@ -32,11 +30,9 @@ public class OrbOfDislocation extends Item {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		if (KeyboardHelper.isHoldingShift()) {
-			tooltip.add(new StringTextComponent("Switch your position with a random player on the server no matter the dimension!"));
-		} else {
-			tooltip.add(new StringTextComponent("Hold" + "\u00A7e" + " Shift " + "\u00A77" + "for more information!"));
-		}
+		tooltip.add(new StringTextComponent(""));
+		tooltip.add(new StringTextComponent(
+				"\u00A75Switches the user's position with a random player on the server no matter the dimension!"));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 
@@ -45,12 +41,12 @@ public class OrbOfDislocation extends Item {
 		if (worldIn.isRemote) {
 			return super.onItemRightClick(worldIn, playerIn, handIn);
 		}
-		if(worldIn.getPlayers().size() == 1) {
+		if (worldIn.getPlayers().size() == 1) {
 			System.out.println("One player on the server");
 			return super.onItemRightClick(worldIn, playerIn, handIn);
 		}
 		PlayerEntity targetPlayer = worldIn.getPlayers().get(new Random().nextInt(worldIn.getPlayers().size()));
-		while(targetPlayer == playerIn) {
+		while (targetPlayer == playerIn) {
 			targetPlayer = worldIn.getPlayers().get(new Random().nextInt(worldIn.getPlayers().size()));
 		}
 		PlayerEntity conjurer = playerIn;
@@ -60,24 +56,18 @@ public class OrbOfDislocation extends Item {
 		DimensionType conjurerDimension = conjurer.dimension;
 		Commands manager = playerIn.getServer().getCommandManager();
 		CommandSource source = worldIn.getServer().getCommandSource();
-		if(targetPlayer.dimension == playerIn.dimension) {
+		if (targetPlayer.dimension == playerIn.dimension) {
 			targetPlayer.setPositionAndUpdate(conjurerPos.getX(), conjurerPos.getY(), conjurerPos.getZ());
 			conjurer.setPositionAndUpdate(targetPlayerPos.getX(), targetPlayerPos.getY(), targetPlayerPos.getZ());
 		} else {
 			manager.handleCommand(source,
-						"/forge setdimension " 
-								+ targetPlayer.getName().getFormattedText()
-								+ " " + conjurerDimension.getRegistryName().toString()
-								+ " " + conjurerPos.getX()
-								+ " " + conjurerPos.getY()
-								+ " " + conjurerPos.getZ());
+					"/forge setdimension " + targetPlayer.getName().getFormattedText() + " "
+							+ conjurerDimension.getRegistryName().toString() + " " + conjurerPos.getX() + " "
+							+ conjurerPos.getY() + " " + conjurerPos.getZ());
 			manager.handleCommand(source,
-					"/forge setdimension " 
-							+ conjurer.getName().getFormattedText()
-							+ " " + targetPlayerDimension.getRegistryName().toString()
-							+ " " + targetPlayerPos.getX()
-							+ " " + targetPlayerPos.getY()
-							+ " " + targetPlayerPos.getZ());
+					"/forge setdimension " + conjurer.getName().getFormattedText() + " "
+							+ targetPlayerDimension.getRegistryName().toString() + " " + targetPlayerPos.getX() + " "
+							+ targetPlayerPos.getY() + " " + targetPlayerPos.getZ());
 		}
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}

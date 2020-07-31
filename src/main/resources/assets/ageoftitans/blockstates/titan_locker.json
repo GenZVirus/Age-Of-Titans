@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "ageoftitans:block/titan_locker" },
+        "facing=south": { "model": "ageoftitans:block/titan_locker", "y": 180 },
+        "facing=west":  { "model": "ageoftitans:block/titan_locker", "y": 270 },
+        "facing=east":  { "model": "ageoftitans:block/titan_locker", "y": 90 }
+    }
+}

@@ -37,11 +37,8 @@ public class OrbOfEden extends Item {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		if (KeyboardHelper.isHoldingShift()) {
-			tooltip.add(new StringTextComponent("Teleports player between Eden and Overworld"));
-		} else {
-			tooltip.add(new StringTextComponent("Hold" + "\u00A7e" + " Shift " + "\u00A77" + "for more information!"));
-		}
+		if (KeyboardHelper.isHoldingShift()) 
+			tooltip.add(new StringTextComponent("\n\u00A75Teleports the user between Eden and Overworld"));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 

@@ -13,7 +13,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.PlayerInvWrapper;
 
@@ -35,7 +34,6 @@ import net.minecraftforge.items.wrapper.PlayerInvWrapper;
  * available.
  */
 public class ContainerBasic extends Container {
-	public String search = "";
 	public static ContainerBasic createContainerServerSide(int windowID, PlayerInventory playerInventory,
 			ChestContents chestContents) {
 		return new ContainerBasic(windowID, playerInventory, chestContents);
@@ -105,7 +103,7 @@ public class ContainerBasic extends Container {
 
 		final int SLOT_X_SPACING = 18;
 		final int SLOT_Y_SPACING = 18;
-		final int HOTBAR_XPOS = 10;
+		final int HOTBAR_XPOS = 9;
 		final int HOTBAR_YPOS = 180;
 		// Add the players hotbar to the gui - the [xpos, ypos] location of each item
 		for (int x = 0; x < HOTBAR_SLOT_COUNT; x++) {
@@ -125,10 +123,10 @@ public class ContainerBasic extends Container {
 			}
 		}
 
-		if (TE_INVENTORY_SLOT_COUNT != chestContents.getSizeInventory()) {
-			LOGGER.warn("Mismatched slot count in ContainerBasic(" + TE_INVENTORY_SLOT_COUNT + ") and TileInventory ("
-					+ chestContents.getSizeInventory() + ")");
-		}
+//		if (TE_INVENTORY_SLOT_COUNT != chestContents.getSizeInventory()) {
+//			LOGGER.warn("Mismatched slot count in ContainerBasic(" + TE_INVENTORY_SLOT_COUNT + ") and TileInventory ("
+//					+ chestContents.getSizeInventory() + ")");
+//		}
 		final int TILE_INVENTORY_XPOS = 9;
 		int TILE_INVENTORY_YPOS_OFFSET = 0;
 		int tile_inventory_xpos_offset = 0;
@@ -251,7 +249,6 @@ public class ContainerBasic extends Container {
 	            if (!this.dragSlots.isEmpty()) {
 	               ItemStack itemstack9 = playerinventory.getItemStack().copy();
 	               int k1 = playerinventory.getItemStack().getCount();
-
 	               for(Slot slot8 : this.dragSlots) {
 	                  ItemStack itemstack13 = playerinventory.getItemStack();
 	                  if (slot8 != null && canAddItemToSlot(slot8, itemstack13, true) && slot8.isItemValid(itemstack13) && (this.dragMode == 2 || itemstack13.getCount() >= this.dragSlots.size()) && this.canDragIntoSlot(slot8)) {
@@ -459,7 +456,7 @@ public class ContainerBasic extends Container {
 	@Override
 	public void putStackInSlot(int slotID, ItemStack stack) {
 		super.putStackInSlot(slotID, stack);
-		this.sort();
+//		this.sort();
 	}
 	
 	// pass the close container message to the parent inventory (not strictly needed
@@ -469,28 +466,6 @@ public class ContainerBasic extends Container {
 	@Override
 	public void onContainerClosed(PlayerEntity playerIn) {
 		super.onContainerClosed(playerIn);
-	}
-
-	public boolean canScroll() {
-		return true;
-	}
-	
-	@Override
-	public NonNullList<ItemStack> getInventory() {
-		NonNullList<ItemStack> nonnulllist = NonNullList.create();
-
-	      for(int i = 0; i < this.inventorySlots.size(); ++i) {
-	    	  if(this.inventorySlots.get(i).getStack().getItem().equals(Items.GRASS_BLOCK))
-	         nonnulllist.add(this.inventorySlots.get(i).getStack());
-	      }
-
-	      return nonnulllist;
-	}
-
-	public void scrollTo(float pos) {
-		
-		this.sort();
-		
 	}
 	
 	public void sort() {
@@ -513,20 +488,42 @@ public class ContainerBasic extends Container {
 				}	
 			}
 			
-			//Sorting
+			//Grouping
 			
 			for(int j = chestContents.getSizeInventory() - 1; j > i; j--) {
 				
 				ItemStack stack2 = chestContents.getStackInSlot(j);
-				
-				if(stack.getItem().equals(stack2.getItem()) && !(stack2.getItem().equals(Items.AIR)) && stack.getTag().equals(stack2.getTag())) {
-					stack.setCount(stack.getCount() + stack2.getCount());
-					chestContents.setInventorySlotContents(j, new ItemStack(Items.AIR));
+				if(!(stack2.getItem().equals(Items.AIR)))
+				if(stack.getTag() == null) {
+					if(stack.getItem().equals(stack2.getItem())) {
+						stack.setCount(stack.getCount() + stack2.getCount());
+						chestContents.setInventorySlotContents(j, new ItemStack(Items.AIR));
+					}
+				} else {
+					if(stack.getItem().equals(stack2.getItem()) && stack.getTag().equals(stack2.getTag())) {
+						stack.setCount(stack.getCount() + stack2.getCount());
+						chestContents.setInventorySlotContents(j, new ItemStack(Items.AIR));
+					}
 				}
 			}
 		}
+		
+		for(int i = 0; i < chestContents.getSizeInventory() - 1; i++) {
+			ItemStack stack = chestContents.getStackInSlot(i);
+			if(!(stack.getItem().equals(Items.AIR)))
+				for(int j = i + 1; j < chestContents.getSizeInventory(); j++) {
+					ItemStack stack2 = chestContents.getStackInSlot(j);
+					if(!(stack2.getItem().equals(Items.AIR)))
+					if(stack.getDisplayName().getFormattedText().compareTo(stack2.getDisplayName().getFormattedText()) > 0) {
+						ItemStack stack3 = stack2.copy();
+						chestContents.setInventorySlotContents(j, stack);
+						chestContents.setInventorySlotContents(i, stack3);
+						System.out.println("Changed");
+					}
+				}
+		}
 	}
 
-	private ChestContents chestContents, showContents;
+	private ChestContents chestContents;
 	private static final Logger LOGGER = LogManager.getLogger();
 }

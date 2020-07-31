@@ -1,5 +1,7 @@
 package com.GenZVirus.AgeOfTitans.Common.Objects.Blocks;
 
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 import com.GenZVirus.AgeOfTitans.Common.TileEntity.TileEntityInventoryBasic;
@@ -8,21 +10,32 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ContainerBlock;
+import net.minecraft.block.DirectionalBlock;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 /**
- * User: brandon3055 Date: 06/01/2015
- *
  * BlockInventoryBasic is a simple inventory capable of storing 9 item stacks.
  * The block itself doesn't do much more then any regular block except create a
  * tile entity when placed, open a gui when right clicked and drop tne
@@ -30,11 +43,29 @@ import net.minecraft.world.World;
  * tile entity.
  */
 
-public class BlackHole extends ContainerBlock {
-	public BlackHole(Properties properties) {
+public class TitanLocker extends ContainerBlock {
+	
+	public static final DirectionProperty FACING = DirectionalBlock.FACING;
+	
+	public TitanLocker(Properties properties) {
 		super(properties);
 	}
+	
+	@Override
+		public boolean canEntitySpawn(BlockState state, IBlockReader worldIn, BlockPos pos, EntityType<?> type) {
+			return false;
+		}
+	
+	@Override
+	public void addInformation(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+			tooltip.add(new StringTextComponent(""));
+			tooltip.add(new StringTextComponent("\u00A75Without it's key, the Orb of Storage, the contents of this container cannot be seen."));
+			tooltip.add(new StringTextComponent(""));
+			tooltip.add(new StringTextComponent("\u00A74\u00A7l!!!WARNING ONCE PLACE CAN NEVER BE DESTROYED!!!"));
 
+		super.addInformation(stack, worldIn, tooltip, flagIn);
+	}
+	
 	/**
 	 * Create the Tile Entity for this block. Forge has a default but I've included
 	 * it anyway for clarity
@@ -45,7 +76,12 @@ public class BlackHole extends ContainerBlock {
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
 		return createNewTileEntity(world);
 	}
-
+	
+	@Override
+	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+		builder.add(BlockStateProperties.FACING);
+	}
+	
 	@Nullable
 	@Override
 	public TileEntity createNewTileEntity(IBlockReader worldIn) {
@@ -59,7 +95,21 @@ public class BlackHole extends ContainerBlock {
 	public boolean hasTileEntity(BlockState state) {
 		return true;
 	}
+	
+	public BlockState getStateForPlacement(BlockItemUseContext context) {
+	      return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
+	}
+	
+	 @Override
+	    public BlockState rotate(BlockState state, IWorld world, BlockPos pos, Rotation direction) {
+	        return state.with(FACING, direction.rotate(state.get(FACING)));
+	    }
 
+	    @Override
+	    public BlockState mirror(BlockState state, Mirror mirrorIn) {
+	        return state.rotate(mirrorIn.toRotation(state.get(FACING)));
+	    }
+	
 	// Called when the block is right clicked
 	// We use it to open the block gui when right clicked by a player
 	// Copied from ChestBlock
@@ -78,9 +128,7 @@ public class BlackHole extends ContainerBlock {
 	}
 
 	// ---------------------------------------------------------
-
-	// render using a BakedModel (mbe30_inventory_basic.json -->
-	// mbe30_inventory_basic_model.json)
+	
 	// required because the default (super method) is INVISIBLE for BlockContainers.
 	@Override
 	public BlockRenderType getRenderType(BlockState iBlockState) {
@@ -96,13 +144,7 @@ public class BlackHole extends ContainerBlock {
 	// https://greyminecraftcoder.blogspot.com/2020/02/block-shapes-voxelshapes-1144.html
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return CHEST_SHAPE;
+//		return CHEST_SHAPE;
+		return VoxelShapes.fullCube();
 	}
-
-	private static final Vec3d CHEST_MIN_CORNER = new Vec3d(1.0, 0.0, 1.0);
-	private static final Vec3d CHEST_MAX_CORNER = new Vec3d(15.0, 8.0, 15.0);
-	private static final VoxelShape CHEST_SHAPE = Block.makeCuboidShape(CHEST_MIN_CORNER.getX(),
-			CHEST_MIN_CORNER.getY(), CHEST_MIN_CORNER.getZ(), CHEST_MAX_CORNER.getX(), CHEST_MAX_CORNER.getY(),
-			CHEST_MAX_CORNER.getZ());
-
 }
