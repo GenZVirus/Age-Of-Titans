@@ -2,7 +2,7 @@ package com.GenZVirus.AgeOfTitans.Common.Objects.Items;
 
 import java.util.List;
 
-import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandler;
+import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.sendTileEntityDataPacket;
 
 import net.minecraft.block.ContainerBlock;
@@ -69,7 +69,7 @@ public class OrbOfStorage extends Item {
 				NetworkHooks.openGui(serverPlayerEntity, namedContainerProvider, (packetBuffer) -> {
 				});
 				// (packetBuffer)->{} is just a do-nothing because we have no extra data to send
-				PacketHandler.INSTANCE.sendTo(
+				PacketHandlerCommon.INSTANCE.sendTo(
 						new sendTileEntityDataPacket(pos.getX(), pos.getY(), pos.getZ(), nbt.getInt("dimensionID")),
 						((ServerPlayerEntity) context.getPlayer()).connection.netManager,
 						NetworkDirection.PLAY_TO_CLIENT);
@@ -98,7 +98,7 @@ public class OrbOfStorage extends Item {
 				NetworkHooks.openGui(serverPlayerEntity, namedContainerProvider, (packetBuffer) -> {
 				});
 				// (packetBuffer)->{} is just a do-nothing because we have no extra data to send
-				PacketHandler.INSTANCE.sendTo(
+				PacketHandlerCommon.INSTANCE.sendTo(
 						new sendTileEntityDataPacket(pos.getX(), pos.getY(), pos.getZ(), nbt.getInt("dimensionID")),
 						((ServerPlayerEntity) playerIn).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 			} else {

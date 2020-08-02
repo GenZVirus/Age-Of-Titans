@@ -82,7 +82,7 @@ public class SpellPacket {
 							String playerName = player.getName().getFormattedText();
 							UUID uuid = player.getUniqueID();
 							XMLFileJava.checkFileAndMake(uuid, playerName);
-							PacketHandler.INSTANCE.sendTo(new SpellPacket(Integer.parseInt(XMLFileJava.readElement(uuid, "Slot1_Spell_ID")), 
+							PacketHandlerCommon.INSTANCE.sendTo(new SpellPacket(Integer.parseInt(XMLFileJava.readElement(uuid, "Slot1_Spell_ID")), 
 																			Integer.parseInt(XMLFileJava.readElement(uuid, "Slot2_Spell_ID")), 
 																			Integer.parseInt(XMLFileJava.readElement(uuid, "Slot3_Spell_ID")), 
 																			Integer.parseInt(XMLFileJava.readElement(uuid, "Slot4_Spell_ID")), 
@@ -101,7 +101,7 @@ public class SpellPacket {
 							String playerName = player.getName().getFormattedText();
 							UUID uuid = player.getUniqueID();
 							XMLFileJava.checkFileAndMake(uuid, playerName);
-							PacketHandler.INSTANCE.sendTo(new SpellPacket(Integer.parseInt(XMLFileJava.readElement(uuid, "Slot1_Spell_ID")), 
+							PacketHandlerCommon.INSTANCE.sendTo(new SpellPacket(Integer.parseInt(XMLFileJava.readElement(uuid, "Slot1_Spell_ID")), 
 																			Integer.parseInt(XMLFileJava.readElement(uuid, "Slot2_Spell_ID")), 
 																			Integer.parseInt(XMLFileJava.readElement(uuid, "Slot3_Spell_ID")), 
 																			Integer.parseInt(XMLFileJava.readElement(uuid, "Slot4_Spell_ID")), 

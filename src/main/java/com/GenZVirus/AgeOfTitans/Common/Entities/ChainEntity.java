@@ -3,7 +3,7 @@ package com.GenZVirus.AgeOfTitans.Common.Entities;
 import java.util.List;
 
 import com.GenZVirus.AgeOfTitans.Common.Init.ModEntityTypes;
-import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandler;
+import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.SyncPlayerMotionPacket;
 
 import net.minecraft.block.Blocks;
@@ -262,7 +262,7 @@ public class ChainEntity extends ThrowableEntity{
 	        	 BlockPos pos = ((BlockRayTraceResult)result).getPos();
 	        	 Vec3d vec = new Vec3d((double)pos.getX() - shooter.getPosX(), (double)pos.getY() - shooter.getPosY(), (double)pos.getZ() - shooter.getPosZ());
 	        	 shooter.setMotion(vec.getX() / vec.length() * 3, vec.getY() / vec.length() * 3 + 0.5D, vec.getZ() / vec.length() * 3);
-					PacketHandler.INSTANCE.sendTo(new SyncPlayerMotionPacket(this.shooter.getUniqueID(), vec.getX() / vec.length() * 3, vec.getY() / vec.length() * 3 + 0.5D, vec.getZ() / vec.length() * 3), ((ServerPlayerEntity)this.shooter).connection.getNetworkManager(),	NetworkDirection.PLAY_TO_CLIENT);
+					PacketHandlerCommon.INSTANCE.sendTo(new SyncPlayerMotionPacket(this.shooter.getUniqueID(), vec.getX() / vec.length() * 3, vec.getY() / vec.length() * 3 + 0.5D, vec.getZ() / vec.length() * 3), ((ServerPlayerEntity)this.shooter).connection.getNetworkManager(),	NetworkDirection.PLAY_TO_CLIENT);
 	         }
 	         this.remove();
 	      }

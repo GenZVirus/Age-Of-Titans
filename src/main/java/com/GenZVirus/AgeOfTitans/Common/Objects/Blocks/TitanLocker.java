@@ -60,8 +60,6 @@ public class TitanLocker extends ContainerBlock {
 	public void addInformation(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 			tooltip.add(new StringTextComponent(""));
 			tooltip.add(new StringTextComponent("\u00A75Without it's key, the Orb of Storage, the contents of this container cannot be seen."));
-			tooltip.add(new StringTextComponent(""));
-			tooltip.add(new StringTextComponent("\u00A74\u00A7l!!!WARNING ONCE PLACE CAN NEVER BE DESTROYED!!!"));
 
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
@@ -119,13 +117,20 @@ public class TitanLocker extends ContainerBlock {
 		return ActionResultType.FAIL;
 	}
 
-	// This is where you can do something when the block is broken. In this case
-	// drop the inventory's contents
-	// Code is copied directly from vanilla eg ChestBlock, CampfireBlock
-	@SuppressWarnings("deprecation")
+	  // This is where you can do something when the block is broken. In this case drop the inventory's contents
+	  // Code is copied directly from vanilla eg ChestBlock, CampfireBlock
+	  @SuppressWarnings("deprecation")
 	public void onReplaced(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
-		super.onReplaced(state, world, blockPos, newState, isMoving); // call it last, because it removes the TileEntity
-	}
+	    if (state.getBlock() != newState.getBlock()) {
+	      TileEntity tileentity = world.getTileEntity(blockPos);
+	      if (tileentity instanceof TileEntityInventoryBasic) {
+	        TileEntityInventoryBasic tileEntityInventoryBasic = (TileEntityInventoryBasic)tileentity;
+	        tileEntityInventoryBasic.dropAllContents(world, blockPos);
+	      }
+//	      worldIn.updateComparatorOutputLevel(pos, this);  if the inventory is used to set redstone power for comparators
+	      super.onReplaced(state, world, blockPos, newState, isMoving);  // call it last, because it removes the TileEntity
+	    }
+		}
 
 	// ---------------------------------------------------------
 	

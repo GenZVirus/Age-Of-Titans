@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Common.Network.EditElementPacket;
-import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandler;
+import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.ReadElementPacket;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
 import com.GenZVirus.AgeOfTitans.Util.Helpers.KeyboardHelper;
@@ -59,10 +59,10 @@ public class ModSkillButton extends Widget {
 			public void onPress() {
 				PlayerEntity player = Minecraft.getInstance().player;
 				String element = "Spell" + "_Level" + spell.getId();
-				PacketHandler.INSTANCE.sendToServer(new ReadElementPacket(player.getUniqueID(), "PlayerPoints", 1));
+				PacketHandlerCommon.INSTANCE.sendToServer(new ReadElementPacket(player.getUniqueID(), "PlayerPoints", 1));
 				if(Spell.points > 0) {
-					PacketHandler.INSTANCE.sendToServer(new EditElementPacket(player.getUniqueID(), element, 1));
-					PacketHandler.INSTANCE.sendToServer(new EditElementPacket(player.getUniqueID(), "PlayerPoints", -1));
+					PacketHandlerCommon.INSTANCE.sendToServer(new EditElementPacket(player.getUniqueID(), element, 1));
+					PacketHandlerCommon.INSTANCE.sendToServer(new EditElementPacket(player.getUniqueID(), "PlayerPoints", -1));
 				}
 				super.onPress();
 			}
@@ -81,12 +81,12 @@ public class ModSkillButton extends Widget {
 			@Override
 			public void onPress() {
 				PlayerEntity player = Minecraft.getInstance().player;
-				PacketHandler.INSTANCE.sendToServer(new ReadElementPacket(player.getUniqueID(), "PlayerPoints", 1));
+				PacketHandlerCommon.INSTANCE.sendToServer(new ReadElementPacket(player.getUniqueID(), "PlayerPoints", 1));
 				String element = "Spell" + "_Level" + spell.getId();
-				PacketHandler.INSTANCE.sendToServer(new ReadElementPacket(player.getUniqueID(), element, 1));
+				PacketHandlerCommon.INSTANCE.sendToServer(new ReadElementPacket(player.getUniqueID(), element, 1));
 				if(spell.level > 0) {
-					PacketHandler.INSTANCE.sendToServer(new EditElementPacket(player.getUniqueID(), element, -1));
-					PacketHandler.INSTANCE.sendToServer(new EditElementPacket(player.getUniqueID(), "PlayerPoints", 1));
+					PacketHandlerCommon.INSTANCE.sendToServer(new EditElementPacket(player.getUniqueID(), element, -1));
+					PacketHandlerCommon.INSTANCE.sendToServer(new EditElementPacket(player.getUniqueID(), "PlayerPoints", 1));
 				}
 				
 				super.onPress();

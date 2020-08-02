@@ -8,7 +8,7 @@ import com.GenZVirus.AgeOfTitans.Common.Entities.ChainEntity;
 import com.GenZVirus.AgeOfTitans.Common.Entities.SwordSlashEntity;
 import com.GenZVirus.AgeOfTitans.Common.Init.EffectInit;
 import com.GenZVirus.AgeOfTitans.Common.Init.SoundInit;
-import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandler;
+import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.SyncPlayerMotionPacket;
 import com.GenZVirus.AgeOfTitans.Util.Helpers.ConeShape;
 import com.google.common.collect.Lists;
@@ -170,7 +170,7 @@ public class Spell {
 					entity.setMotion(vec.x / 2, vec.y / 2, vec.z / 2);
 					entity.attackEntityFrom(DamageSource.MAGIC, (float) (AOTConfig.COMMON.shield_bash_base_damage.get() + AOTConfig.COMMON.shield_bash_damage_ratio.get() * this.level));
 					if(entity instanceof PlayerEntity) {
-						PacketHandler.INSTANCE.sendTo(new SyncPlayerMotionPacket(entity.getUniqueID(), vec.getX() / 2 , vec.getY() / 2, vec.getZ() / 2), ((ServerPlayerEntity)entity).connection.getNetworkManager(),	NetworkDirection.PLAY_TO_CLIENT);
+						PacketHandlerCommon.INSTANCE.sendTo(new SyncPlayerMotionPacket(entity.getUniqueID(), vec.getX() / 2 , vec.getY() / 2, vec.getZ() / 2), ((ServerPlayerEntity)entity).connection.getNetworkManager(),	NetworkDirection.PLAY_TO_CLIENT);
 					}
 				}
 			}

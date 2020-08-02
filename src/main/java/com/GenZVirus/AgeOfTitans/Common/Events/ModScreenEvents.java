@@ -9,7 +9,7 @@ import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModButton;
 import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModScreen;
 import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModSkillButton;
 import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModSkillSlot;
-import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandler;
+import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.PlayerUseSpellPacket;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
 
@@ -78,26 +78,26 @@ public class ModScreenEvents {
 		if(ModHUD.selectedSpell.getId() == 1 && player.getHeldItemMainhand().getItem() instanceof SwordItem && cooldown_SwordSlash == 0 && Spell.ragePoints >= Spell.SPELL_LIST.get(1).cost) {
 			if(mc.mouseHelper.isLeftDown()) {
 				cooldown_SwordSlash = 20;
-				PacketHandler.INSTANCE.sendToServer(new PlayerUseSpellPacket(1, player.getUniqueID())); 
+				PacketHandlerCommon.INSTANCE.sendToServer(new PlayerUseSpellPacket(1, player.getUniqueID())); 
 			}
 		}
 		
 		if(ModHUD.selectedSpell.getId() == 2 && cooldown_ShieldBash == 0 && Spell.ragePoints >= Spell.SPELL_LIST.get(2).cost) {
 			if(player.getActiveHand() == Hand.OFF_HAND && player.getActiveItemStack().getItem() instanceof ShieldItem) {
 				cooldown_ShieldBash = 20;
-				PacketHandler.INSTANCE.sendToServer(new PlayerUseSpellPacket(2, player.getUniqueID()));
+				PacketHandlerCommon.INSTANCE.sendToServer(new PlayerUseSpellPacket(2, player.getUniqueID()));
 			}
 		}
 		if(ModHUD.selectedSpell.getId() == 3 && cooldown_Berserker == 0 && Spell.ragePoints >= Spell.SPELL_LIST.get(3).cost) {
 			if(mc.mouseHelper.isRightDown()) {
 				cooldown_Berserker = 20;
-				PacketHandler.INSTANCE.sendToServer(new PlayerUseSpellPacket(3, player.getUniqueID()));
+				PacketHandlerCommon.INSTANCE.sendToServer(new PlayerUseSpellPacket(3, player.getUniqueID()));
 			}
 		}
 		if(ModHUD.selectedSpell.getId() == 4 && cooldown_Chain == 0 && Spell.ragePoints >= Spell.SPELL_LIST.get(4).cost) {
 			if(mc.mouseHelper.isRightDown()) {
 				cooldown_Chain = 20;
-				PacketHandler.INSTANCE.sendToServer(new PlayerUseSpellPacket(4, player.getUniqueID()));
+				PacketHandlerCommon.INSTANCE.sendToServer(new PlayerUseSpellPacket(4, player.getUniqueID()));
 			}
 		}
 	}

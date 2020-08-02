@@ -44,7 +44,7 @@ public class EditElementPacket {
 						UUID uuid = player.getUniqueID();
 						XMLFileJava.checkFileAndMake(uuid, playerName);
 						XMLFileJava.editElement(player.getUniqueID(), pkt.element, Integer.toString((Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), pkt.element)) + pkt.value)));
-						PacketHandler.INSTANCE.sendTo(new ReadElementPacket(pkt.uuid, pkt.element, Integer.parseInt(XMLFileJava.readElement(pkt.uuid, pkt.element))), ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+						PacketHandlerCommon.INSTANCE.sendTo(new ReadElementPacket(pkt.uuid, pkt.element, Integer.parseInt(XMLFileJava.readElement(pkt.uuid, pkt.element))), ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 					}
 				}
 			}

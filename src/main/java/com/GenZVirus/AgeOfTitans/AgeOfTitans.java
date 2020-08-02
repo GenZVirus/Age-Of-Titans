@@ -17,7 +17,7 @@ import com.GenZVirus.AgeOfTitans.Common.Init.ModEntityTypes;
 import com.GenZVirus.AgeOfTitans.Common.Init.ModTileEntityTypes;
 import com.GenZVirus.AgeOfTitans.Common.Init.ParticleInit;
 import com.GenZVirus.AgeOfTitans.Common.Init.SoundInit;
-import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandler;
+import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
 
 import net.minecraft.item.BlockItem;
@@ -171,7 +171,7 @@ public class AgeOfTitans
 
     // Initializing the PacketHandler
     	
-    	PacketHandler.init();
+    	PacketHandlerCommon.init();
     	
     }
 

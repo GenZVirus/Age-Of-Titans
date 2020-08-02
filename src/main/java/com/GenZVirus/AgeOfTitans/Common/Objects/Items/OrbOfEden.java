@@ -5,7 +5,6 @@ import java.util.function.Function;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Common.Init.DimensionInit;
-import com.GenZVirus.AgeOfTitans.Util.Helpers.KeyboardHelper;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
@@ -37,8 +36,8 @@ public class OrbOfEden extends Item {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		if (KeyboardHelper.isHoldingShift()) 
-			tooltip.add(new StringTextComponent("\n\u00A75Teleports the user between Eden and Overworld"));
+		tooltip.add(new StringTextComponent(""));
+		tooltip.add(new StringTextComponent("\u00A75Teleports the user between Eden and Overworld"));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 

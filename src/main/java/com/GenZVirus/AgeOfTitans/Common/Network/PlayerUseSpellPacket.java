@@ -42,7 +42,7 @@ public class PlayerUseSpellPacket {
 							Spell.SPELL_LIST.get(pkt.spellID).effect(player.world, player);
 							rageAmount -= Spell.SPELL_LIST.get(pkt.spellID).cost;
 							ForgeEventBusSubscriber.rage.set(ForgeEventBusSubscriber.players.indexOf(player), rageAmount);
-							PacketHandler.INSTANCE.sendTo(new SendPlayerRagePointsPacket(rageAmount),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+							PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerRagePointsPacket(rageAmount),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 						}
 					}
 				}

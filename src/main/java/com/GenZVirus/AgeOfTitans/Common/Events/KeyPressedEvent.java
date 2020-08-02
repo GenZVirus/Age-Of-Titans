@@ -4,7 +4,7 @@ import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Client.GUI.HUD.ModHUD;
 import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModScreen;
 import com.GenZVirus.AgeOfTitans.Common.Init.EffectInit;
-import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandler;
+import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.SpellPacket;
 import com.GenZVirus.AgeOfTitans.Common.Network.berserkerBlockBreakerPacket;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
@@ -60,7 +60,7 @@ public class KeyPressedEvent {
 					// send a packet to the server and tells it to send data to the player requesting it
 				
 					wasPRESSED = true;
-					PacketHandler.INSTANCE.sendToServer(new SpellPacket(0, 0, 0, 0, mc.player.getUniqueID(), true)); 
+					PacketHandlerCommon.INSTANCE.sendToServer(new SpellPacket(0, 0, 0, 0, mc.player.getUniqueID(), true)); 
 			
 				} else {
 				
@@ -112,7 +112,7 @@ public class KeyPressedEvent {
 		if(oldMinecraftHeight != newMinecraftHeight || oldMinecraftWidth != newMinecraftWidth) {
 			oldMinecraftHeight = newMinecraftHeight;
 			oldMinecraftWidth = newMinecraftWidth;
-			PacketHandler.INSTANCE.sendToServer(new SpellPacket(0, 0, 0, 0, mc.player.getUniqueID(), true)); 
+			PacketHandlerCommon.INSTANCE.sendToServer(new SpellPacket(0, 0, 0, 0, mc.player.getUniqueID(), true)); 
 		}
 	}
 	
@@ -137,7 +137,7 @@ public class KeyPressedEvent {
 			}
 			
 			if(player.isPotionActive(EffectInit.BERSERKER.get())){
-				PacketHandler.INSTANCE.sendToServer(new berserkerBlockBreakerPacket(player.getUniqueID()));
+				PacketHandlerCommon.INSTANCE.sendToServer(new berserkerBlockBreakerPacket(player.getUniqueID()));
 			}	
 		} else if(clickTimer > 0) clickTimer --;
 	}

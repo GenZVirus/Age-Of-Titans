@@ -24,7 +24,7 @@ import net.minecraft.world.World;
  * This is a simple tile entity that can store 45 ItemStacks
  */
 public class TileEntityInventoryBasic extends TileEntity implements INamedContainerProvider {
-	public static final int NUMBER_OF_SLOTS = 45;
+	public static final int NUMBER_OF_SLOTS = 486;
 	public Container container;
 
 	public TileEntityInventoryBasic() {

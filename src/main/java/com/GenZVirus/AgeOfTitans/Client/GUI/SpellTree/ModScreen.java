@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Common.Events.KeyPressedEvent;
-import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandler;
+import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.SpellPacket;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
 import com.google.common.collect.Lists;
@@ -437,7 +437,7 @@ public class ModScreen extends Screen {
 	
 	@SuppressWarnings("resource")
 	public void sendPacket(int slot1, int slot2, int slot3, int slot4) {		
-		PacketHandler.INSTANCE.sendToServer(new SpellPacket(slot1, slot2, slot3, slot4, Minecraft.getInstance().player.getUniqueID(), false));
+		PacketHandlerCommon.INSTANCE.sendToServer(new SpellPacket(slot1, slot2, slot3, slot4, Minecraft.getInstance().player.getUniqueID(), false));
 	}
 	
 	

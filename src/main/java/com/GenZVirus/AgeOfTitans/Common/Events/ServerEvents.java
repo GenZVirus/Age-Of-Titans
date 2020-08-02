@@ -6,7 +6,7 @@ import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Common.Init.BiomeInit;
 import com.GenZVirus.AgeOfTitans.Common.Init.EffectInit;
 import com.GenZVirus.AgeOfTitans.Common.Init.ItemInit;
-import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandler;
+import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.ReadElementPacket;
 import com.GenZVirus.AgeOfTitans.Common.Network.SendPlayerRagePointsPacket;
 import com.GenZVirus.AgeOfTitans.Common.Network.SyncPlayerMotionPacket;
@@ -54,7 +54,7 @@ public class ServerEvents {
 			if(rageAmount + 1 > 1000 && rageAmount <= 1000) rageAmount = 1000;
 			else rageAmount += 1;
 			ForgeEventBusSubscriber.rage.set(index, rageAmount);
-			PacketHandler.INSTANCE.sendTo(new SendPlayerRagePointsPacket(rageAmount),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+			PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerRagePointsPacket(rageAmount),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		}
 	}
 	
@@ -71,7 +71,7 @@ public class ServerEvents {
 				if(rageAmount - 1 < 0) return;
 				else rageAmount -= 1;
 				ForgeEventBusSubscriber.rage.set(index, rageAmount);
-				PacketHandler.INSTANCE.sendTo(new SendPlayerRagePointsPacket(rageAmount),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+				PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerRagePointsPacket(rageAmount),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 			}
 	}
 	
@@ -92,7 +92,7 @@ public class ServerEvents {
 		if(rageAmount + 50 > 1000 && rageAmount <= 1000) rageAmount = 1000;
 		else rageAmount += 50;
 		ForgeEventBusSubscriber.rage.set(index, rageAmount);
-		PacketHandler.INSTANCE.sendTo(new SendPlayerRagePointsPacket(rageAmount),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerRagePointsPacket(rageAmount),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 	}
 	
 	@SubscribeEvent
@@ -105,7 +105,7 @@ public class ServerEvents {
 		if(rageAmount + 50 > 1000 && rageAmount <= 1000) rageAmount = 1000;
 		else rageAmount += 50;
 		ForgeEventBusSubscriber.rage.set(index, rageAmount);
-		PacketHandler.INSTANCE.sendTo(new SendPlayerRagePointsPacket(rageAmount),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerRagePointsPacket(rageAmount),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 	}
 	
 	@SubscribeEvent
@@ -160,11 +160,11 @@ public class ServerEvents {
 				playerMSG.sendMessage(new TranslationTextComponent(player.getName().getFormattedText() + " has eaten the Fruit of the Gods"));
 			}
 		XMLFileJava.editElement(player.getUniqueID(), "ApplesEaten", Integer.toString((Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "ApplesEaten")) + 1)));
-		PacketHandler.INSTANCE.sendTo(new ReadElementPacket(player.getUniqueID(), "ApplesEaten", Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "ApplesEaten"))), ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		PacketHandlerCommon.INSTANCE.sendTo(new ReadElementPacket(player.getUniqueID(), "ApplesEaten", Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "ApplesEaten"))), ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		XMLFileJava.editElement(player.getUniqueID(), "PlayerLevel", Integer.toString((Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "PlayerLevel")) + 1)));	
-		PacketHandler.INSTANCE.sendTo(new ReadElementPacket(player.getUniqueID(), "PlayerLevels", Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "PlayerLevel"))), ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		PacketHandlerCommon.INSTANCE.sendTo(new ReadElementPacket(player.getUniqueID(), "PlayerLevels", Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "PlayerLevel"))), ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		XMLFileJava.editElement(player.getUniqueID(), "PlayerPoints", Integer.toString((Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "PlayerPoints")) + 1)));	
-		PacketHandler.INSTANCE.sendTo(new ReadElementPacket(player.getUniqueID(), "PlayerPoints", Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "PlayerPoints"))), ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		PacketHandlerCommon.INSTANCE.sendTo(new ReadElementPacket(player.getUniqueID(), "PlayerPoints", Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "PlayerPoints"))), ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		}
 	}
 	
@@ -265,7 +265,7 @@ public class ServerEvents {
 				Vec3d vec = new Vec3d(newPosX, newPosY, newPosZ);
 				target.setMotion(vec);
 				if(target instanceof PlayerEntity)
-				PacketHandler.INSTANCE.sendTo(new SyncPlayerMotionPacket(target.getUniqueID(), vec.getX(), vec.getY(), vec.getZ()), ((ServerPlayerEntity)target).connection.getNetworkManager(),	NetworkDirection.PLAY_TO_CLIENT);
+				PacketHandlerCommon.INSTANCE.sendTo(new SyncPlayerMotionPacket(target.getUniqueID(), vec.getX(), vec.getY(), vec.getZ()), ((ServerPlayerEntity)target).connection.getNetworkManager(),	NetworkDirection.PLAY_TO_CLIENT);
 			}
 		}	
 	}

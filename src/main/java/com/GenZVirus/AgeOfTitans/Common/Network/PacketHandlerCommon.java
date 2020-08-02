@@ -6,7 +6,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
-public class PacketHandler {
+public class PacketHandlerCommon {
 
 	private static final String PROTOCOL_VERSION = "1";
 	public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
@@ -69,5 +69,6 @@ public class PacketHandler {
 				.decoder(sendTileEntityDataPacket::decode)
 				.consumer(sendTileEntityDataPacket::handle)
 				.add();
+		
 	}
 }

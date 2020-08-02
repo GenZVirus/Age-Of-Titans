@@ -6,6 +6,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraftforge.items.ItemStackHandler;
 
 /**
  * Created by TGG on 4/04/2020.
@@ -196,10 +197,6 @@ public class ChestContents implements IInventory {
   public void setInventorySlotContents(int index, ItemStack stack) {
     chestContents.setStackInSlot(index, stack);
   }
-  
-  public void addStack(ItemStack stack) {
-	  chestContents.addStack(stack);
-  }
 
   @Override
   public void clear() {
@@ -211,11 +208,11 @@ public class ChestContents implements IInventory {
   // ---------
 
   private ChestContents(int size) {
-    this.chestContents = new BHItemStackHandler(size);
+    this.chestContents = new ItemStackHandler(size);
   }
 
   private ChestContents(int size, Predicate<PlayerEntity> canPlayerAccessInventoryLambda, Notify markDirtyNotificationLambda) {
-    this.chestContents = new BHItemStackHandler(size);
+    this.chestContents = new ItemStackHandler(size);
     this.canPlayerAccessInventoryLambda = canPlayerAccessInventoryLambda;
     this.markDirtyNotificationLambda = markDirtyNotificationLambda;
   }
@@ -240,5 +237,5 @@ public class ChestContents implements IInventory {
   // default is "do nothing"
   private Notify closeInventoryNotificationLambda = ()->{};
 
-  private final BHItemStackHandler chestContents;
+  private final ItemStackHandler chestContents;
 }

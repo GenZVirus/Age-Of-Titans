@@ -37,7 +37,7 @@ public class BlockInit {
 	
 	public static final RegistryObject<Block> TITANIUM_BLOCK = BLOCKS.register("titanium_block", () -> new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(10.0F, 1000.0F).sound(SoundType.METAL).harvestLevel(3)));
 	public static final RegistryObject<Block> TITANIUM_ORE = BLOCKS.register("titanium_ore", () -> new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(10.0F, 1000.0F).sound(SoundType.STONE).harvestLevel(3)));
-	public static final RegistryObject<Block> TITAN_LOCKER = BLOCKS.register("titan_locker", () -> new TitanLocker(Block.Properties.create(Material.IRON).hardnessAndResistance(-1.0F, 3600000.0F).sound(SoundType.METAL).harvestLevel(3)));
+	public static final RegistryObject<Block> TITAN_LOCKER = BLOCKS.register("titan_locker", () -> new TitanLocker(Block.Properties.create(Material.IRON).hardnessAndResistance(10.0F, 3000.0F).sound(SoundType.METAL).harvestLevel(3)));
 	
 	public static final RegistryObject<Block> EDEN_LEAVES = BLOCKS.register("eden_leaves", () -> new LeavesBlock(Block.Properties.from(Blocks.OAK_LEAVES)));
 	public static final RegistryObject<Block> EDEN_SAPLING = BLOCKS.register("eden_sapling", () -> new ModSaplingBlock(() -> new EdenTree(), Block.Properties.from(Blocks.OAK_SAPLING)));
