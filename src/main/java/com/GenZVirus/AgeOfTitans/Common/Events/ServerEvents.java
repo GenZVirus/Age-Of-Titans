@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Common.Init.BiomeInit;
+import com.GenZVirus.AgeOfTitans.Common.Init.BlockInit;
 import com.GenZVirus.AgeOfTitans.Common.Init.EffectInit;
 import com.GenZVirus.AgeOfTitans.Common.Init.ItemInit;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
@@ -28,6 +29,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.ServerChatEvent;
+import net.minecraftforge.event.entity.item.ItemEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
@@ -41,6 +43,71 @@ import net.minecraftforge.fml.network.NetworkDirection;
 
 @Mod.EventBusSubscriber(modid = AgeOfTitans.MOD_ID, bus = Bus.FORGE)
 public class ServerEvents {
+	
+	@SubscribeEvent
+	public static void lavaImmunity(ItemEvent event) {
+		if(event.getEntityItem().getItem().getItem().equals(ItemInit.FRUIT_OF_THE_GODS.get())) {
+			event.getEntityItem().setInvulnerable(true);
+			event.getEntityItem().lifespan = 72000;
+		} else if(event.getEntityItem().getItem().getItem().equals(ItemInit.ORB_OF_DISLOCATION.get())) {
+			event.getEntityItem().setInvulnerable(true);
+			event.getEntityItem().lifespan = 72000;
+		} else if(event.getEntityItem().getItem().getItem().equals(ItemInit.ORB_OF_EDEN.get())) {
+			event.getEntityItem().setInvulnerable(true);
+			event.getEntityItem().lifespan = 72000;
+		} else if(event.getEntityItem().getItem().getItem().equals(ItemInit.ORB_OF_END.get())) {
+			event.getEntityItem().setInvulnerable(true);
+			event.getEntityItem().lifespan = 72000;
+		} else if(event.getEntityItem().getItem().getItem().equals(ItemInit.ORB_OF_NETHER.get())) {
+			event.getEntityItem().setInvulnerable(true);
+			event.getEntityItem().lifespan = 72000;
+		} else if(event.getEntityItem().getItem().getItem().equals(ItemInit.ORB_OF_STORAGE.get())) {
+			event.getEntityItem().setInvulnerable(true);
+			event.getEntityItem().lifespan = 72000;
+		} else if(event.getEntityItem().getItem().getItem().equals(ItemInit.ORB_OF_SUMMONING.get())) {
+			event.getEntityItem().setInvulnerable(true);
+			event.getEntityItem().lifespan = 72000;
+		} else if(event.getEntityItem().getItem().getItem().equals(ItemInit.TITANIUM_AXE.get())) {
+			event.getEntityItem().setInvulnerable(true);
+			event.getEntityItem().lifespan = 72000;
+		} else if(event.getEntityItem().getItem().getItem().equals(ItemInit.TITANIUM_PICKAXE.get())) {
+			event.getEntityItem().setInvulnerable(true);
+			event.getEntityItem().lifespan = 72000;
+		} else if(event.getEntityItem().getItem().getItem().equals(ItemInit.TITANIUM_HOE.get())) {
+			event.getEntityItem().setInvulnerable(true);
+			event.getEntityItem().lifespan = 72000;
+		} else if(event.getEntityItem().getItem().getItem().equals(ItemInit.TITANIUM_SHOVEL.get())) {
+			event.getEntityItem().setInvulnerable(true);
+			event.getEntityItem().lifespan = 72000;
+		} else if(event.getEntityItem().getItem().getItem().equals(ItemInit.TITANIUM_SWORD.get())) {
+			event.getEntityItem().setInvulnerable(true);
+			event.getEntityItem().lifespan = 72000;
+		} else if(event.getEntityItem().getItem().getItem().equals(ItemInit.TITANIUM_HELMET.get())) {
+			event.getEntityItem().setInvulnerable(true);
+			event.getEntityItem().lifespan = 72000;
+		} else if(event.getEntityItem().getItem().getItem().equals(ItemInit.TITANIUM_CHESTPLATE.get())) {
+			event.getEntityItem().setInvulnerable(true);
+			event.getEntityItem().lifespan = 72000;
+		} else if(event.getEntityItem().getItem().getItem().equals(ItemInit.TITANIUM_LEGGINGS.get())) {
+			event.getEntityItem().setInvulnerable(true);
+			event.getEntityItem().lifespan = 72000;
+		} else if(event.getEntityItem().getItem().getItem().equals(ItemInit.TITANIUM_BOOTS.get())) {
+			event.getEntityItem().setInvulnerable(true);
+			event.getEntityItem().lifespan = 72000;
+		} else if(event.getEntityItem().getItem().getItem().equals(ItemInit.TITANIUM_INGOT.get())) {
+			event.getEntityItem().setInvulnerable(true);
+			event.getEntityItem().lifespan = 72000;
+		} else if(event.getEntityItem().getItem().getItem().equals(BlockInit.TITANIUM_ORE.get().asItem())) {
+			event.getEntityItem().setInvulnerable(true);
+			event.getEntityItem().lifespan = 72000;
+		} else if(event.getEntityItem().getItem().getItem().equals(BlockInit.TITANIUM_BLOCK.get().asItem())) {
+			event.getEntityItem().setInvulnerable(true);
+			event.getEntityItem().lifespan = 72000;
+		} else if(event.getEntityItem().getItem().getItem().equals(BlockInit.TITAN_LOCKER.get().asItem())) {
+			event.getEntityItem().setInvulnerable(true);
+			event.getEntityItem().lifespan = 72000;
+		}
+	}
 	
 	@SubscribeEvent
 	public static void generateRageWhileSprinting(PlayerEvent event) {

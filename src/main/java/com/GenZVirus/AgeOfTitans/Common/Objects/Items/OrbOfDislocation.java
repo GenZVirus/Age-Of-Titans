@@ -3,6 +3,8 @@ package com.GenZVirus.AgeOfTitans.Common.Objects.Items;
 import java.util.List;
 import java.util.Random;
 
+import com.GenZVirus.AgeOfTitans.AgeOfTitans;
+
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
@@ -42,7 +44,7 @@ public class OrbOfDislocation extends Item {
 			return super.onItemRightClick(worldIn, playerIn, handIn);
 		}
 		if (worldIn.getPlayers().size() == 1) {
-			System.out.println("One player on the server");
+			AgeOfTitans.LOGGER.info("One player on the server!");
 			return super.onItemRightClick(worldIn, playerIn, handIn);
 		}
 		PlayerEntity targetPlayer = worldIn.getPlayers().get(new Random().nextInt(worldIn.getPlayers().size()));

@@ -2,6 +2,7 @@ package com.GenZVirus.AgeOfTitans.Common.Objects.Items;
 
 import java.util.List;
 
+import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.sendTileEntityDataPacket;
 
@@ -68,6 +69,7 @@ public class OrbOfStorage extends Item {
 				ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) context.getPlayer();
 				NetworkHooks.openGui(serverPlayerEntity, namedContainerProvider, (packetBuffer) -> {
 				});
+				AgeOfTitans.LOGGER.info("Titan's Locker opened!");
 				// (packetBuffer)->{} is just a do-nothing because we have no extra data to send
 				PacketHandlerCommon.INSTANCE.sendTo(
 						new sendTileEntityDataPacket(pos.getX(), pos.getY(), pos.getZ(), nbt.getInt("dimensionID")),
@@ -97,6 +99,7 @@ public class OrbOfStorage extends Item {
 				ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) playerIn;
 				NetworkHooks.openGui(serverPlayerEntity, namedContainerProvider, (packetBuffer) -> {
 				});
+				AgeOfTitans.LOGGER.info("Titan's Locker opened!");
 				// (packetBuffer)->{} is just a do-nothing because we have no extra data to send
 				PacketHandlerCommon.INSTANCE.sendTo(
 						new sendTileEntityDataPacket(pos.getX(), pos.getY(), pos.getZ(), nbt.getInt("dimensionID")),

@@ -3,6 +3,7 @@ package com.GenZVirus.AgeOfTitans.Client.Container;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Common.Init.ModContainerTypes;
 import com.GenZVirus.AgeOfTitans.Common.TileEntity.TileEntityInventoryBasic;
 
@@ -200,7 +201,7 @@ public class ContainerBasic extends Container {
 				return ItemStack.EMPTY;
 			}
 		} else {
-			LOGGER.warn("Invalid slotIndex:" + sourceSlotIndex);
+			AgeOfTitans.LOGGER.warn("Invalid slotIndex:" + sourceSlotIndex);
 			return ItemStack.EMPTY;
 		}
 
@@ -215,7 +216,6 @@ public class ContainerBasic extends Container {
 		return copyOfSourceStack;
 	}
 	
-	
 	// pass the close container message to the parent inventory (not strictly needed
 	// for this example)
 	// see ContainerChest and TileEntityChest - used to animate the lid when no
@@ -227,5 +227,4 @@ public class ContainerBasic extends Container {
 
 	@SuppressWarnings("unused")
 	private ChestContents chestContents;
-	private static final Logger LOGGER = LogManager.getLogger();
 }

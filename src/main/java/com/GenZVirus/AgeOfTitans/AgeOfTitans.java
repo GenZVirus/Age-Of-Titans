@@ -75,10 +75,12 @@ public class AgeOfTitans
     		try {
     			folder.mkdir();
     		} catch (Exception e) {
-    			System.out.println("Failed to create directory");
+    			LOGGER.debug("Failed to create config directory");
     		}
     	}
     	ModLoadingContext.get().registerConfig(Type.COMMON, AOTConfig.COMMON_SPEC, "AgeOfTitans/AgeOfTitansConfigs.toml");
+    	
+    	LOGGER.info("Configs loaded successfully");
     	
     // Creating an event bus for all registries
     	
@@ -90,46 +92,56 @@ public class AgeOfTitans
     // Registering custom sounds
     	
     	SoundInit.SOUNDS.register(modEventBus);
-    	
+    	LOGGER.info("Sounds loaded successfully");
     // Registering custom particles
     	
     	ParticleInit.PARTICLES.register(modEventBus);
+    	LOGGER.info("Particles loaded successfully");
     	
     // Registering custom items
     	
     	ItemInit.ITEMS.register(modEventBus);
+    	LOGGER.info("Items loaded successfully");
     	
     	// Registering custom blocks
     	
     	BlockInit.BLOCKS.register(modEventBus);
+    	LOGGER.info("Blocks loaded successfully");
     	
     // Register custom effects
     	
     	EffectInit.MOD_EFFECTS.register(modEventBus);
+    	LOGGER.info("Effects loaded successfully");
     	
     // Registering custom tile entity types
     	
     	ModTileEntityTypes.TILE_ENTITY_TYPES.register(modEventBus);
+    	LOGGER.info("Tile Entity Types loaded successfully");
     	
     // Registering custom container types
     	
     	ModContainerTypes.CONTAINER_TYPES.register(modEventBus);
+    	LOGGER.info("Container Types loaded successfully");
     	
     // Registering custom entity types
     	
     	ModEntityTypes.ENTITY_TYPES.register(modEventBus);
+    	LOGGER.info("Entity Types loaded successfully");
     	
     // Registering custom biomes
     	
     	BiomeInit.BIOMES.register(modEventBus);
+    	LOGGER.info("Biomes loaded successfully");
     	
     // Register custom Dimensions
     	
     	DimensionInit.MOD_DIMENSIONS.register(modEventBus);
+    	LOGGER.info("Dimensions loaded successfully");
     	
     // Register Spell
     	
     	Spell.registerSpells();
+    	LOGGER.info("Spells loaded successfully");
     	
     	instance = this;
         
@@ -150,8 +162,6 @@ public class AgeOfTitans
 			blockItem.setRegistryName(block.getRegistryName());
 			registry.register(blockItem);
 		});
-
-		LOGGER.debug("Registered BlockItems!");
 	}
 
     @SubscribeEvent
@@ -172,6 +182,7 @@ public class AgeOfTitans
     // Initializing the PacketHandler
     	
     	PacketHandlerCommon.init();
+    	LOGGER.info("Packets loaded successfully");
     	
     }
 
@@ -184,6 +195,7 @@ public class AgeOfTitans
     // Registering the custom Keybinds
     	
     	ModKeybind.register();
+    	LOGGER.info("Keybinds loaded successfully");
     }
 
     /*
@@ -218,6 +230,7 @@ public class AgeOfTitans
         */
     	private AgeOfTitansItemGroup(int index, String label) {
     		super(index, label);
+    		LOGGER.info("Item Group created successfully");
     	}
     	
         /*

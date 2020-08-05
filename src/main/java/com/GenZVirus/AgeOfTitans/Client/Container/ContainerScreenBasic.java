@@ -79,6 +79,12 @@ public class ContainerScreenBasic extends ContainerScreen<ContainerBasic> {
 		AbstractGui.blit(edgeSpacingX, edgeSpacingY, 0, 0, 0, this.xSize, this.ySize, this.ySize, this.xSize);
 	}
 	
+	@Override
+	public void onClose() {
+		super.onClose();
+		AgeOfTitans.LOGGER.info("Titan's Locker closed!");
+	}
+	
 	// This is the resource location for the background image for the GUI
 	private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(AgeOfTitans.MOD_ID,
 			"textures/gui/orb_of_storage.png");
