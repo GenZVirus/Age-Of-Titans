@@ -19,8 +19,8 @@ import net.minecraft.world.World;
 
 public class TimeBombEntity extends ThrowableEntity{
 
-	private double damage = 5.0D;
-	private int level;
+	private double bonusDamage = 0;
+	private int duration;
 	public static List<Entity> affectedEntities = Lists.newArrayList();
 	public static List<BlockPos> affectedEntitiesPos = Lists.newArrayList();
 	
@@ -42,19 +42,23 @@ public class TimeBombEntity extends ThrowableEntity{
 		
 		for(Entity entity : list) {
 			if(entity instanceof LivingEntity) {
-				((LivingEntity)entity).addPotionEffect(new EffectInstance(EffectInit.TIME_STOP.get(), 100));
+				((LivingEntity)entity).addPotionEffect(new EffectInstance(EffectInit.TIME_STOP.get(), duration));
 				affectedEntities.add(entity);
 				affectedEntitiesPos.add(entity.getPosition());
 			}
 		}
 		
 	}
-	   public void setDamage(double damage) {
-		   this.damage = damage;
+	   public void setBonusDamage(double damage) {
+		   this.bonusDamage = damage;
 	   }
 	   
-	   public double getDamage() {
-		   return this.damage;
+	   public double getBonusDamage() {
+		   return this.bonusDamage;
+	   }
+	   
+	   public void setDuration(int duration) {
+		   this.duration = duration;
 	   }
 
 	@Override

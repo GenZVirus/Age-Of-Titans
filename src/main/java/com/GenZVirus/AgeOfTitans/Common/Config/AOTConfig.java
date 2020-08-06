@@ -41,6 +41,11 @@ public abstract class AOTConfig {
 		public final IntValue chain_cooldown;
 		public final IntValue chain_cost;
 		
+		public final DoubleValue time_bomb_ratio;
+		public final DoubleValue time_bomb_bonus_damage;
+		public final IntValue time_bomb_cooldown;
+		public final IntValue time_bomb_cost;
+		
 		public final IntValue exp_level_up;
 		public final IntValue exp_per_advancement;
 		
@@ -55,7 +60,7 @@ public abstract class AOTConfig {
 											  .worldRestart()
 											  .defineInRange("sword_slash_damage_ratio", 0.5D, 0.0D, 1.0D);
 			
-			sword_slash_base_damage = builder.comment("This sets the damage multiplier of the Sword Slash ability")
+			sword_slash_base_damage = builder.comment("This sets the base damage of the Sword Slash ability")
 											  .translation("sword_slash.configgui.sword_slash_base_damage")
 											  .worldRestart()
 											  .defineInRange("sword_slash_base_damage", 7.0D, 0.0D, 1000000.0D);
@@ -80,7 +85,7 @@ public abstract class AOTConfig {
 					  						  .worldRestart()
 					  						  .defineInRange("shield_bash_damage_ratio", 0.2D, 0.0D, 1.0D);
 			
-			shield_bash_base_damage = builder.comment("This sets the damage multiplier of the Shield Bash ability")
+			shield_bash_base_damage = builder.comment("This sets the base damage of the Shield Bash ability")
 					    					  .translation("shield_bash.configgui.shield_bash_base_damage")
 					    					  .worldRestart()
 					    					  .defineInRange("shield_bash_base_damage", 1.0D, 0.0D, 1000000.0D);
@@ -105,7 +110,7 @@ public abstract class AOTConfig {
 											  .worldRestart()
 											  .defineInRange("berserker_duration_ratio", 0.5D, 0.0D, 1.0D);
 			
-			berserker_punch_damage = builder.comment("This sets the duration multiplier of the Berserker ability")
+			berserker_punch_damage = builder.comment("This sets the bonus damage of the Berserker ability")
 											.translation("berserker.configgui.berserker_punch_damage")
 											.worldRestart()
 											.defineInRange("berserker_punch_damage", 10.0D, 0.0D, 1000000.0D);
@@ -130,7 +135,7 @@ public abstract class AOTConfig {
   					    				.worldRestart()
   					    				.defineInRange("chain_damage_ratio", 0.5D, 0.0D, 1.0D);
 			
-			chain_base_damage = builder.comment("This sets the damage multiplier of the Chain ability")
+			chain_base_damage = builder.comment("This sets the base damage of the Chain ability")
 	    								.translation("chain.configgui.chain_base_damage")
 	    								.worldRestart()
 	    								.defineInRange("chain_base_damage", 5.0D, 0.0D, 1000000.0D);
@@ -146,6 +151,31 @@ public abstract class AOTConfig {
 									.defineInRange("chain_cost", 10, 0, 1000);
 			
 			builder.pop();
+			
+			builder.comment("This config affects all players and contains the stats of the Time Bomb ability")
+		   	   .push("time_bomb");
+	
+			time_bomb_ratio = builder.comment("This sets the damage multiplier of the Time Bomb ability")
+					    				.translation("time_bomb.configgui.time_bomb_ratio")
+					    				.worldRestart()
+					    				.defineInRange("time_bomb_ratio", 0.5D, 0.0D, 1.0D);
+			
+			time_bomb_bonus_damage = builder.comment("This sets the % base bonus damage of the Time Bomb ability")
+	 								   .translation("time_bomb.configgui.time_bomb_bonus_damage")
+	 								   .worldRestart()
+	 								   .defineInRange("time_bomb_bonus_damage", 0.5D, 0.0D, 1000.0D);
+			
+			time_bomb_cooldown = builder.comment("This sets the cooldown in seconds of the Time Bomb ability")
+									.translation("time_bomb.configgui.time_bomb_cooldown")
+									.worldRestart()
+									.defineInRange("time_bomb_cooldown", 10, 0, 3600);
+			
+			time_bomb_cost = builder.comment("This sets the cost of the Time Bomb ability")
+								.translation("time_bomb.configgui.time_bomb_cost")
+								.worldRestart()
+								.defineInRange("time_bomb_cost", 10, 0, 1000);
+		
+		builder.pop();
 			
 			builder.comment("This config  affects all players. WARNING! CAHNGING THE VALUES HAS TO CHECK THIS EQUATION FOR NO EXPERIENCE LOSES: exp_level_up / exp_per_advancement * exp_per_advancement == exp_level_up")
 		   	   	   .push("leveling");

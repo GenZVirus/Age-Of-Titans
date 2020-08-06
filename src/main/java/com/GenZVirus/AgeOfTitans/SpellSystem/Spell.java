@@ -291,15 +291,15 @@ public class Spell {
 			TimeBombEntity flashBangEntity = new TimeBombEntity(ModEntityTypes.FLASH_BANG.get(), playerIn.world);
 			flashBangEntity.shoot(playerIn, (float)pitch, (float)yaw, 0.0F, 1.5F, 0.0F);
 			flashBangEntity.setRawPosition(playerIn.getPosX(), 1.0D + playerIn.getPosY(), playerIn.getPosZ());
-			flashBangEntity.setDamage(AOTConfig.COMMON.chain_base_damage.get()+ AOTConfig.COMMON.chain_damage_ratio.get() * this.level);
+			flashBangEntity.setBonusDamage(AOTConfig.COMMON.time_bomb_bonus_damage.get());
+			flashBangEntity.setDuration((int) (90 + 30 * AOTConfig.COMMON.time_bomb_ratio.get() * this.level));
 			playerIn.world.addEntity(flashBangEntity);
 		}
 		
 		public List<String> getDescription(){
 			List<String> list = Lists.newArrayList();
-			list.add("Chain provides high utility. "
-					+ "Giving the user mobility by hooking blocks to thrust themselves towards the blocks. "
-					+ "Or hook an enemy to pull them towards them.");
+			list.add("Time Bomb provides high utility. "
+					+ "On impact freezes all entities, including the caster, in time increasing the damage taken.");
 			list.add("");
 			list.add("Hold Shift for details");
 			return list;
@@ -308,7 +308,9 @@ public class Spell {
 		@Override
 		public List<String> getDetails() {
 			List<String> list = Lists.newArrayList();
-			list.add("Damage " + "(" + Double.toString(this.damage + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.damage) + "\u00A7f" + " + " +  "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
+			list.add("Bonus Damage: " + "\u00A73" + Double.toString(this.damage));
+			list.add("");
+			list.add("Duration " + "(" + Double.toString(3.0D + this.ratio * this.level) + "): " + "\u00A73" + "3" + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level) + "\u00A7f"  + " seconds");
 			list.add("");
 			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
 			list.add("");

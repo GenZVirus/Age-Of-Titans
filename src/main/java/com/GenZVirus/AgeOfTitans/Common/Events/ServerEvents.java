@@ -3,6 +3,7 @@ package com.GenZVirus.AgeOfTitans.Common.Events;
 import java.util.Random;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
+import com.GenZVirus.AgeOfTitans.Common.Config.AOTConfig;
 import com.GenZVirus.AgeOfTitans.Common.Entities.TimeBombEntity;
 import com.GenZVirus.AgeOfTitans.Common.Init.BiomeInit;
 import com.GenZVirus.AgeOfTitans.Common.Init.BlockInit;
@@ -46,6 +47,14 @@ import net.minecraftforge.fml.network.NetworkDirection;
 
 @Mod.EventBusSubscriber(modid = AgeOfTitans.MOD_ID, bus = Bus.FORGE)
 public class ServerEvents {
+	
+	@SubscribeEvent
+	public static void entityHurt(LivingHurtEvent event) {
+		if(event.getEntity().world.isRemote) return;
+		if(event.getEntityLiving().isPotionActive(EffectInit.TIME_STOP.get())) {
+			event.setAmount((float) (event.getAmount() + event.getAmount() * AOTConfig.COMMON.time_bomb_bonus_damage.get()));
+		}
+	}
 	
 	@SubscribeEvent
 	public static void removeEffect(LivingEvent event) {
