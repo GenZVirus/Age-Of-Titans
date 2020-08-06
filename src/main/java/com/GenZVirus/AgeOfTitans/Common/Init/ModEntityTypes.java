@@ -2,6 +2,7 @@ package com.GenZVirus.AgeOfTitans.Common.Init;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Common.Entities.ChainEntity;
+import com.GenZVirus.AgeOfTitans.Common.Entities.TimeBombEntity;
 import com.GenZVirus.AgeOfTitans.Common.Entities.ReaperEntity;
 import com.GenZVirus.AgeOfTitans.Common.Entities.ShockwaveEntity;
 import com.GenZVirus.AgeOfTitans.Common.Entities.SwordSlashEntity;
@@ -37,5 +38,10 @@ public class ModEntityTypes {
 			() -> EntityType.Builder.<ChainEntity>create(ChainEntity::new, EntityClassification.CREATURE)
 					.size(1.0F, 1.0F)
 					.build(new ResourceLocation(AgeOfTitans.MOD_ID, "chain").toString()));
+	
+	public static final RegistryObject<EntityType<TimeBombEntity>> FLASH_BANG = ENTITY_TYPES.register("flash_bang",
+			() -> EntityType.Builder.<TimeBombEntity>create(TimeBombEntity::new, EntityClassification.CREATURE)
+					.size(1.0F, 1.0F)
+					.build(new ResourceLocation(AgeOfTitans.MOD_ID, "flash_bang").toString()));
 	
 }

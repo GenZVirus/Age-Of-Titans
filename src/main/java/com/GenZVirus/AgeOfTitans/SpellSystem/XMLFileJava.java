@@ -105,6 +105,11 @@ public class XMLFileJava {
 	             Element Spell4 = document.createElement("Spell_Level4");
 	             Spell4.appendChild(document.createTextNode(Integer.toString(0)));
 	             playername.appendChild(Spell4);
+	             
+	             // spell4 element
+	             Element Spell5 = document.createElement("Spell_Level5");
+	             Spell5.appendChild(document.createTextNode(Integer.toString(0)));
+	             playername.appendChild(Spell5);
 	  
 	             // create the xml file
 	             //transform the DOM Object to an XML File

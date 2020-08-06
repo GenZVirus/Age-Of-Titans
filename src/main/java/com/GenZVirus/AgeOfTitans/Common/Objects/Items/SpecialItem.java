@@ -38,7 +38,7 @@ public class SpecialItem extends Item {
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		Spell.SPELL_LIST.get(4).effect(worldIn, playerIn);
+		Spell.SPELL_LIST.get(5).effect(worldIn, playerIn);
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
 

@@ -5,8 +5,10 @@ import java.util.List;
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Common.Config.AOTConfig;
 import com.GenZVirus.AgeOfTitans.Common.Entities.ChainEntity;
+import com.GenZVirus.AgeOfTitans.Common.Entities.TimeBombEntity;
 import com.GenZVirus.AgeOfTitans.Common.Entities.SwordSlashEntity;
 import com.GenZVirus.AgeOfTitans.Common.Init.EffectInit;
+import com.GenZVirus.AgeOfTitans.Common.Init.ModEntityTypes;
 import com.GenZVirus.AgeOfTitans.Common.Init.SoundInit;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.SyncPlayerMotionPacket;
@@ -280,12 +282,50 @@ public class Spell {
 		}
 		
 	};
+	
+	private static final Spell TIME_BOMB = new Spell(5, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainiconhud.png"), "Time Bomb", 0, AOTConfig.COMMON.chain_cost.get()){
+		@Override
+		public void effect(World worldIn, PlayerEntity playerIn) {
+			double pitch = playerIn.getPitchYaw().x;
+			double yaw   = playerIn.getPitchYaw().y;
+			TimeBombEntity flashBangEntity = new TimeBombEntity(ModEntityTypes.FLASH_BANG.get(), playerIn.world);
+			flashBangEntity.shoot(playerIn, (float)pitch, (float)yaw, 0.0F, 1.5F, 0.0F);
+			flashBangEntity.setRawPosition(playerIn.getPosX(), 1.0D + playerIn.getPosY(), playerIn.getPosZ());
+			flashBangEntity.setDamage(AOTConfig.COMMON.chain_base_damage.get()+ AOTConfig.COMMON.chain_damage_ratio.get() * this.level);
+			playerIn.world.addEntity(flashBangEntity);
+		}
+		
+		public List<String> getDescription(){
+			List<String> list = Lists.newArrayList();
+			list.add("Chain provides high utility. "
+					+ "Giving the user mobility by hooking blocks to thrust themselves towards the blocks. "
+					+ "Or hook an enemy to pull them towards them.");
+			list.add("");
+			list.add("Hold Shift for details");
+			return list;
+		}
+		
+		@Override
+		public List<String> getDetails() {
+			List<String> list = Lists.newArrayList();
+			list.add("Damage " + "(" + Double.toString(this.damage + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.damage) + "\u00A7f" + " + " +  "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
+			list.add("");
+			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
+			list.add("");
+			list.add("Cost: " + this.cost + " rage points");
+			list.add("");
+			list.add("\u00A73" + "Base " + "\u00A7e" + "Ratio " + "\u00A74" + "Level ");
+			return list;
+		}
+		
+	};
 	public static void registerSpells() {
 		SPELL_LIST.add(NO_SPELL.getId(), NO_SPELL);
 		SPELL_LIST.add(SWORD_SLASH.getId(), SWORD_SLASH);
 		SPELL_LIST.add(SHIELD_BASH.getId(), SHIELD_BASH);
 		SPELL_LIST.add(BERSERKER.getId(), BERSERKER);
 		SPELL_LIST.add(CHAIN.getId(), CHAIN);
+		SPELL_LIST.add(TIME_BOMB.getId(), TIME_BOMB);
 	}
 
 	

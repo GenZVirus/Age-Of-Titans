@@ -3,6 +3,7 @@ package com.GenZVirus.AgeOfTitans.Common.Events;
 import java.util.Random;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
+import com.GenZVirus.AgeOfTitans.Common.Entities.TimeBombEntity;
 import com.GenZVirus.AgeOfTitans.Common.Init.BiomeInit;
 import com.GenZVirus.AgeOfTitans.Common.Init.BlockInit;
 import com.GenZVirus.AgeOfTitans.Common.Init.EffectInit;
@@ -22,6 +23,7 @@ import net.minecraft.item.Items;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
@@ -32,6 +34,7 @@ import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.item.ItemEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -43,6 +46,28 @@ import net.minecraftforge.fml.network.NetworkDirection;
 
 @Mod.EventBusSubscriber(modid = AgeOfTitans.MOD_ID, bus = Bus.FORGE)
 public class ServerEvents {
+	
+	@SubscribeEvent
+	public static void removeEffect(LivingEvent event) {
+		if(TimeBombEntity.affectedEntities.contains(event.getEntity()) && !event.getEntityLiving().isPotionActive(EffectInit.TIME_STOP.get())) {
+			TimeBombEntity.affectedEntitiesPos.remove(TimeBombEntity.affectedEntities.indexOf(event.getEntity()));
+			TimeBombEntity.affectedEntities.remove(event.getEntity());
+		}
+	}
+	
+	@SubscribeEvent
+	public static void freezeEntities(LivingEvent event) {
+		LivingEntity entity = event.getEntityLiving();
+		if(entity.isPotionActive(EffectInit.TIME_STOP.get())) {
+			entity.setMotion(0, 0, 0);
+			entity.setVelocity(0, 0, 0);
+			entity.setJumping(false);
+			if(TimeBombEntity.affectedEntities.contains(entity)) {
+				BlockPos pos = TimeBombEntity.affectedEntitiesPos.get(TimeBombEntity.affectedEntities.indexOf(entity));
+				entity.setPositionAndUpdate(pos.getX(), pos.getY(), pos.getZ());
+			}
+		}
+	}
 	
 	@SubscribeEvent
 	public static void lavaImmunity(ItemEvent event) {
@@ -237,15 +262,17 @@ public class ServerEvents {
 	
 	@SubscribeEvent
 	public static void jumpEvent(LivingJumpEvent event) {
-	      if (event.getEntityLiving().isPotionActive(EffectInit.BERSERKER.get())) {
+		
+		LivingEntity entity = event.getEntityLiving();
+	      if (entity.isPotionActive(EffectInit.BERSERKER.get())) {
 	    	  float f = 1.0F;
 	         f += 0.1F * (float)(2 + 1);
 
-	         Vec3d vec3d = event.getEntityLiving().getMotion();
-	         event.getEntityLiving().setMotion(vec3d.x, (double)f + vec3d.y, vec3d.z);
-	      	if (event.getEntityLiving().isSprinting()) {
-	      		float f1 = event.getEntityLiving().rotationYaw * ((float)Math.PI / 180F);
-	         	event.getEntityLiving().setMotion(event.getEntityLiving().getMotion().add((double)(-MathHelper.sin(f1) * 0.2F), 0.0D, (double)(MathHelper.cos(f1) * 0.2F)));
+	         Vec3d vec3d = entity.getMotion();
+	         entity.setMotion(vec3d.x, (double)f + vec3d.y, vec3d.z);
+	      	if (entity.isSprinting()) {
+	      		float f1 = entity.rotationYaw * ((float)Math.PI / 180F);
+	      		entity.setMotion(event.getEntityLiving().getMotion().add((double)(-MathHelper.sin(f1) * 0.2F), 0.0D, (double)(MathHelper.cos(f1) * 0.2F)));
 	      	}
 	      }
 	  
@@ -253,25 +280,26 @@ public class ServerEvents {
 	    	  float f = 1.0F;
 	         f += 0.1F * (float)(2 + 1);
 
-	         Vec3d vec3d = event.getEntityLiving().getMotion();
-	         event.getEntityLiving().setMotion(vec3d.x, (double)f + vec3d.y, vec3d.z);
-	      	if (event.getEntityLiving().isSprinting()) {
-	      		float f1 = event.getEntityLiving().rotationYaw * ((float)Math.PI / 180F);
-	         	event.getEntityLiving().setMotion(event.getEntityLiving().getMotion().add((double)(-MathHelper.sin(f1) * 0.2F), 0.0D, (double)(MathHelper.cos(f1) * 0.2F)));
+	         Vec3d vec3d = entity.getMotion();
+	         entity.setMotion(vec3d.x, (double)f + vec3d.y, vec3d.z);
+	      	if (entity.isSprinting()) {
+	      		float f1 = entity.rotationYaw * ((float)Math.PI / 180F);
+	      		entity.setMotion(entity.getMotion().add((double)(-MathHelper.sin(f1) * 0.2F), 0.0D, (double)(MathHelper.cos(f1) * 0.2F)));
 	      	}
 	      }
 	      
-	      if (event.getEntityLiving().isPotionActive(EffectInit.HOLY_HILLS.get())) {
+	      if (entity.isPotionActive(EffectInit.HOLY_HILLS.get())) {
 	    	  float f = 0.2F;
 	         f += 0.1F * (float)(2 + 1);
 
-	         Vec3d vec3d = event.getEntityLiving().getMotion();
-	         event.getEntityLiving().setMotion(vec3d.x, (double)f + vec3d.y, vec3d.z);
-	      	if (event.getEntityLiving().isSprinting()) {
-	      		float f1 = event.getEntityLiving().rotationYaw * ((float)Math.PI / 180F);
-	         	event.getEntityLiving().setMotion(event.getEntityLiving().getMotion().add((double)(-MathHelper.sin(f1) * 0.2F), 0.0D, (double)(MathHelper.cos(f1) * 0.2F)));
+	         Vec3d vec3d = entity.getMotion();
+	         entity.setMotion(vec3d.x, (double)f + vec3d.y, vec3d.z);
+	      	if (entity.isSprinting()) {
+	      		float f1 = entity.rotationYaw * ((float)Math.PI / 180F);
+	      		entity.setMotion(entity.getMotion().add((double)(-MathHelper.sin(f1) * 0.2F), 0.0D, (double)(MathHelper.cos(f1) * 0.2F)));
 	      	}
 	      }
+	      
 	}
 	
 	@SubscribeEvent
