@@ -6,6 +6,7 @@ import com.GenZVirus.AgeOfTitans.Client.Entity.Render.ChainRender;
 import com.GenZVirus.AgeOfTitans.Client.Entity.Render.ReaperEntityRender;
 import com.GenZVirus.AgeOfTitans.Client.Entity.Render.ShockwaveRender;
 import com.GenZVirus.AgeOfTitans.Client.Entity.Render.SwordSlashRender;
+import com.GenZVirus.AgeOfTitans.Client.Entity.Render.TimeBombRender;
 import com.GenZVirus.AgeOfTitans.Common.Init.BlockInit;
 import com.GenZVirus.AgeOfTitans.Common.Init.ModContainerTypes;
 import com.GenZVirus.AgeOfTitans.Common.Init.ModEntityTypes;
@@ -34,6 +35,7 @@ public class ClientEventBusSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SWORD_SLASH.get(), SwordSlashRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SHOCKWAVE.get(), ShockwaveRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CHAIN.get(), ChainRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.TIME_BOMB.get(), TimeBombRender::new);
 	}
 	
 	@SubscribeEvent

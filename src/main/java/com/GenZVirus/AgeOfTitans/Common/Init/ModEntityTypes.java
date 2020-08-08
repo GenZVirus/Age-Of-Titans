@@ -39,9 +39,9 @@ public class ModEntityTypes {
 					.size(1.0F, 1.0F)
 					.build(new ResourceLocation(AgeOfTitans.MOD_ID, "chain").toString()));
 	
-	public static final RegistryObject<EntityType<TimeBombEntity>> FLASH_BANG = ENTITY_TYPES.register("flash_bang",
+	public static final RegistryObject<EntityType<TimeBombEntity>> TIME_BOMB = ENTITY_TYPES.register("time_bomb",
 			() -> EntityType.Builder.<TimeBombEntity>create(TimeBombEntity::new, EntityClassification.CREATURE)
 					.size(1.0F, 1.0F)
-					.build(new ResourceLocation(AgeOfTitans.MOD_ID, "flash_bang").toString()));
+					.build(new ResourceLocation(AgeOfTitans.MOD_ID, "time_bomb").toString()));
 	
 }

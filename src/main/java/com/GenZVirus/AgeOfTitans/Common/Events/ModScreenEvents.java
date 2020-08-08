@@ -36,6 +36,7 @@ public class ModScreenEvents {
 	private static int cooldown_ShieldBash = 0;
 	private static int cooldown_Berserker = 0;
 	private static int cooldown_Chain = 0;
+	private static int cooldown_TimeBomb = 0;
 
 	@SubscribeEvent
 	public static void PlayerClosedContainer(ClientTickEvent event) {
@@ -73,33 +74,44 @@ public class ModScreenEvents {
 		if(cooldown_Chain > 0) {
 			cooldown_Chain--;
 		}
+		if(cooldown_TimeBomb > 0) {
+			cooldown_TimeBomb--;
+		}
 		PlayerEntity player = Minecraft.getInstance().player;
 		if(player == null) return;
 		if(ModHUD.selectedSpell.getId() == 1 && player.getHeldItemMainhand().getItem() instanceof SwordItem && cooldown_SwordSlash == 0 && Spell.ragePoints >= Spell.SPELL_LIST.get(1).cost) {
 			if(mc.mouseHelper.isLeftDown()) {
-				cooldown_SwordSlash = 20;
+				cooldown_SwordSlash = Spell.SPELL_LIST.get(1).cooldown;
 				PacketHandlerCommon.INSTANCE.sendToServer(new PlayerUseSpellPacket(1, player.getUniqueID())); 
 			}
 		}
 		
 		if(ModHUD.selectedSpell.getId() == 2 && cooldown_ShieldBash == 0 && Spell.ragePoints >= Spell.SPELL_LIST.get(2).cost) {
 			if(player.getActiveHand() == Hand.OFF_HAND && player.getActiveItemStack().getItem() instanceof ShieldItem) {
-				cooldown_ShieldBash = 20;
+				cooldown_ShieldBash = Spell.SPELL_LIST.get(2).cooldown;
 				PacketHandlerCommon.INSTANCE.sendToServer(new PlayerUseSpellPacket(2, player.getUniqueID()));
 			}
 		}
 		if(ModHUD.selectedSpell.getId() == 3 && cooldown_Berserker == 0 && Spell.ragePoints >= Spell.SPELL_LIST.get(3).cost) {
 			if(mc.mouseHelper.isRightDown()) {
-				cooldown_Berserker = 20;
+				cooldown_Berserker = Spell.SPELL_LIST.get(3).cooldown;
 				PacketHandlerCommon.INSTANCE.sendToServer(new PlayerUseSpellPacket(3, player.getUniqueID()));
 			}
 		}
 		if(ModHUD.selectedSpell.getId() == 4 && cooldown_Chain == 0 && Spell.ragePoints >= Spell.SPELL_LIST.get(4).cost) {
 			if(mc.mouseHelper.isRightDown()) {
-				cooldown_Chain = 20;
+				cooldown_Chain = Spell.SPELL_LIST.get(4).cooldown;
 				PacketHandlerCommon.INSTANCE.sendToServer(new PlayerUseSpellPacket(4, player.getUniqueID()));
 			}
 		}
+		
+		if(ModHUD.selectedSpell.getId() == 5 && cooldown_TimeBomb == 0 && Spell.ragePoints >= Spell.SPELL_LIST.get(5).cost) {
+			if(mc.mouseHelper.isRightDown()) {
+				cooldown_TimeBomb = Spell.SPELL_LIST.get(5).cooldown;
+				PacketHandlerCommon.INSTANCE.sendToServer(new PlayerUseSpellPacket(5, player.getUniqueID()));
+			}
+		}
+		
 	}
 	
 	

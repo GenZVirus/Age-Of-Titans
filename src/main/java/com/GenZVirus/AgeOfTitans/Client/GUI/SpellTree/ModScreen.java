@@ -65,7 +65,7 @@ public class ModScreen extends Screen {
 	
 	// The button for spells in the skill tree
 	
-	public ModSkillButton SwordSlash, ShieldBash, Berserker, Chain;
+	public ModSkillButton SwordSlash, ShieldBash, Berserker, Chain, TimeBomb;
 	
 	// The skill slots in the skill tree
 	
@@ -145,6 +145,7 @@ public class ModScreen extends Screen {
 		this.ShieldBash = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 106, (this.height - this.ySize) / 2 + 4 + 30, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(2));
 		this.Berserker = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 186, (this.height - this.ySize) / 2 + 4 + 30, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(3));
 		this.Chain = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 266, (this.height - this.ySize) / 2 + 4 + 30, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(4));
+		this.TimeBomb = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 56, (this.height - this.ySize) / 2 + 4 + 60, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(5));
 		
 		this.LearnSpells = new ModButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + this.ySize - 4 - 20, 156, 20, I18n.format("gui.learn_spells")) {
 			@Override
@@ -197,6 +198,7 @@ public class ModScreen extends Screen {
 			buttons.add(SwordSlash);
 			buttons.add(Berserker);
 			buttons.add(Chain);
+			buttons.add(TimeBomb);
 		}
 	}
 	

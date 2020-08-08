@@ -29,7 +29,6 @@ public class ChainRender extends EntityRenderer<ChainEntity>{
 		// TODO Auto-generated constructor stub
 	}
 
-	@SuppressWarnings("resource")
 	@Override
 	public void render(ChainEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
 			IRenderTypeBuffer bufferIn, int packedLightIn) {

@@ -288,7 +288,7 @@ public class Spell {
 		public void effect(World worldIn, PlayerEntity playerIn) {
 			double pitch = playerIn.getPitchYaw().x;
 			double yaw   = playerIn.getPitchYaw().y;
-			TimeBombEntity flashBangEntity = new TimeBombEntity(ModEntityTypes.FLASH_BANG.get(), playerIn.world);
+			TimeBombEntity flashBangEntity = new TimeBombEntity(ModEntityTypes.TIME_BOMB.get(), playerIn.world);
 			flashBangEntity.shoot(playerIn, (float)pitch, (float)yaw, 0.0F, 1.5F, 0.0F);
 			flashBangEntity.setRawPosition(playerIn.getPosX(), 1.0D + playerIn.getPosY(), playerIn.getPosZ());
 			flashBangEntity.setBonusDamage(AOTConfig.COMMON.time_bomb_bonus_damage.get());

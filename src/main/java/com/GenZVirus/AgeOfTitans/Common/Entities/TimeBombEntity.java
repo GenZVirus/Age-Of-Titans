@@ -23,6 +23,7 @@ public class TimeBombEntity extends ThrowableEntity{
 	private int duration;
 	public static List<Entity> affectedEntities = Lists.newArrayList();
 	public static List<BlockPos> affectedEntitiesPos = Lists.newArrayList();
+	public static List<Vec3d> affectedEntitiesMotion = Lists.newArrayList();
 	
 	public TimeBombEntity(EntityType<? extends ThrowableEntity> type, World worldIn) {
 	      super(type, worldIn);

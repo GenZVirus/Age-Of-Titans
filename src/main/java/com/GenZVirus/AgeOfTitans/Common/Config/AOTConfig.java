@@ -177,7 +177,7 @@ public abstract class AOTConfig {
 		
 		builder.pop();
 			
-			builder.comment("This config  affects all players. WARNING! CAHNGING THE VALUES HAS TO CHECK THIS EQUATION FOR NO EXPERIENCE LOSES: exp_level_up / exp_per_advancement * exp_per_advancement == exp_level_up")
+			builder.comment("This config  affects all players. WARNING! CHANGING THE VALUES HAS TO CHECK THIS EQUATION FOR NO EXPERIENCE LOSES: exp_level_up / exp_per_advancement * exp_per_advancement == exp_level_up")
 		   	   	   .push("leveling");
 	
 			exp_level_up = builder.comment("This sets the amount of experience required to level up")
