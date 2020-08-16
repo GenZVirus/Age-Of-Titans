@@ -37,7 +37,7 @@ public class ModHUD {
 
 	public static void renderHUD() {
 
-		if(locked || Spell.applesEaten == 0) {
+		if(locked || Spell.APPLES_EATEN == 0) {
 			selectedSpell = Spell.SPELL_LIST.get(0);
 			return;
 		}
@@ -163,7 +163,7 @@ public class ModHUD {
 		posY = mc.getMainWindow().getScaledHeight() - 80;
 		posX = mc.getMainWindow().getScaledWidth() / 2 - 91 ;
 		AbstractGui.blit(posX, posY, 0, 0, 0, 182, 16, 16 * 2, 182);
-		int percentage = 182 * Spell.ragePoints / 1000; 
+		int percentage = 182 * Spell.RAGE_POINTS / 1000; 
 		AbstractGui.blit(posX, posY, 0, 0, 16, percentage, 16, 16 * 2, 182);
 		
 	}

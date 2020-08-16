@@ -10,6 +10,7 @@ import com.GenZVirus.AgeOfTitans.Common.Network.EditElementPacket;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.ReadElementPacket;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
+import com.GenZVirus.AgeOfTitans.SpellSystem.Spell.Requirement;
 import com.GenZVirus.AgeOfTitans.Util.Helpers.KeyboardHelper;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -47,7 +48,7 @@ public class ModSkillButton extends Widget {
 		add = new ModASButton(this.x + 21, this.y - 1, 10, 10, I18n.format("")) {
 			@Override
 			public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
-					if(Spell.points > 0) {
+					if(Spell.POINTS > 0) {
 						BUTTONS_LOCATION = new ResourceLocation(AgeOfTitans.MOD_ID,"textures/gui/arrowup.png");
 					} else {
 						BUTTONS_LOCATION = new ResourceLocation(AgeOfTitans.MOD_ID,"textures/gui/arrowupoff.png");
@@ -60,7 +61,7 @@ public class ModSkillButton extends Widget {
 				PlayerEntity player = Minecraft.getInstance().player;
 				String element = "Spell" + "_Level" + spell.getId();
 				PacketHandlerCommon.INSTANCE.sendToServer(new ReadElementPacket(player.getUniqueID(), "PlayerPoints", 1));
-				if(Spell.points > 0) {
+				if(Spell.POINTS > 0) {
 					PacketHandlerCommon.INSTANCE.sendToServer(new EditElementPacket(player.getUniqueID(), element, 1));
 					PacketHandlerCommon.INSTANCE.sendToServer(new EditElementPacket(player.getUniqueID(), "PlayerPoints", -1));
 				}
@@ -122,10 +123,20 @@ public class ModSkillButton extends Widget {
 	    		  color = 6553700;
 	    		  stringList = spell.getDescription();
 	    	  }
+	    	  
+	    	  if(!spell.meetsRequirements()) {
+	    		  stringList.add("");
+	    		  for(Requirement requirement : spell.requirements) {
+	    			  if(!requirement.meetsRequirement()) {
+	    				  stringList.add(requirement.getDescription());
+	    			  }
+	    		  }
+	    	  }
+	    	  
 	    	  this.renderTooltip(stringList, this.x - 100, this.y + 36, Minecraft.getInstance().fontRenderer, color);
 	      }
 	      
-	      if(renderAS) {
+	      if(this.renderAS && this.spell.meetsRequirements()) {
 		      ModScreen.SCREEN.getButtons().add(add);
 		      ModScreen.SCREEN.getButtons().add(subtract);
 	      } else if(ModScreen.SCREEN.getButtons().contains(add) && ModScreen.SCREEN.getButtons().contains(subtract)) {
@@ -295,7 +306,7 @@ public class ModSkillButton extends Widget {
 				((ModSkillButton) button).isSelected = false;
 			}
 		}
-		if(this.spell.level > 0) {
+		if(this.spell.level > 0 && this.spell.meetsRequirements()) {
 			this.isSelected = true;
 		}
 	}

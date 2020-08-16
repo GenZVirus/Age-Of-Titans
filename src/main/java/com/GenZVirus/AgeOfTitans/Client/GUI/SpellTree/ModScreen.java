@@ -193,13 +193,13 @@ public class ModScreen extends Screen {
 	public void addButtons() {
 		buttons.clear();
 
-		this.loadSpells();
 		
 		buttons.add(slot1);
 		buttons.add(slot2);
 		buttons.add(slot3);
 		buttons.add(slot4);
 		
+		this.loadSpells();
 		
 		buttons.add(Titan);
 		buttons.add(Reaper);
@@ -298,7 +298,8 @@ public class ModScreen extends Screen {
 		this.minecraft.getTextureManager().bindTexture(CURRENT_LEVEL);
 		int level = Spell.PLAYER_LEVEL;
 		if(level > 100) level = 100;
-		AbstractGui.blit(((int)((windowXPos + 20) * 1.25)), ((int)((windowYPos + 40) * 1.25)), 0, 0, 0, 26, 202 * level / 100, 202, 26);
+		level += 10;
+		AbstractGui.blit(((int)((windowXPos + 20) * 1.25)), ((int)((windowYPos + 40) * 1.25)), 0, 0, 0, 26, 202 * level / 110, 202, 26);
 		
 		final int zLevel = 300;
 		IRenderTypeBuffer.Impl renderType = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
@@ -321,7 +322,7 @@ public class ModScreen extends Screen {
 		
 		
 		List<String> list = Lists.newArrayList();
-		list.add("Points: " + Spell.points);
+		list.add("Points: " + Spell.POINTS);
 		
 		drawHoveringText(list, windowXPos + this.xSize - 4 - 60, windowYPos + this.ySize - 4 - 20, this.width, this.height, -1, font);
 				

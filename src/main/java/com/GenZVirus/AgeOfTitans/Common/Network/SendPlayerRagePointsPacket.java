@@ -27,7 +27,7 @@ public class SendPlayerRagePointsPacket {
 	public static void handle(SendPlayerRagePointsPacket pkt, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() ->{
 			if (ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
-				Spell.ragePoints = pkt.ragePoints;
+				Spell.RAGE_POINTS = pkt.ragePoints;
 			}
 		});
 		ctx.get().setPacketHandled(true);

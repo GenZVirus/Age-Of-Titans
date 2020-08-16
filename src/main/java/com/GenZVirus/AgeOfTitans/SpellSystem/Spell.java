@@ -32,20 +32,22 @@ import net.minecraftforge.fml.network.NetworkDirection;
 
 public class Spell {
 	
+	public static int POINTS = 0;
+	public static int APPLES_EATEN = 0;
+	public static int PLAYER_LEVEL = 0;
+	public static int RAGE_POINTS = 0;
+
 	private int id;
 	private String name;
 	private ResourceLocation icon;
 	private ResourceLocation iconOff;
 	private ResourceLocation iconHUD;
 	public int level = 0;
-	public static int points = 0;
-	public static int applesEaten = 0;
-	public static int ragePoints = 0;
 	public double ratio = 0;
 	public int cooldown = 0;
 	public double damage = 0;
 	public int cost = 0;
-	public static int PLAYER_LEVEL = 0;
+	public List<Requirement> requirements = Lists.newArrayList();
 	
 	public Spell(int id, ResourceLocation icon, ResourceLocation iconOff, ResourceLocation iconHUD, String name, int level, int cost) {
 		this.id = id;
@@ -55,17 +57,30 @@ public class Spell {
 		this.level = level;
 		this.iconOff = iconOff;
 		this.cost = cost;
+		this.initRequirements();
+	}
+	
+	public void initRequirements() {
+	}
+	
+	public boolean meetsRequirements() {
+		for(Requirement requirement : requirements) {
+			if(!requirement.meetsRequirement()) return false;
+		}
+		return true;
+	}
+
+	public void effect(World worldIn, PlayerEntity playerIn) {
 	}
 
 	public int getId() {
 		return this.id;
 	}
 	
-	public List<String> getDescription(){
-		List<String> list = Lists.newArrayList();
-		return list;
+	public String getName() {
+		return this.name;
 	}
-	
+
 	public ResourceLocation getIcon() {
 		return this.icon;
 	}
@@ -78,11 +93,9 @@ public class Spell {
 		return this.iconHUD;
 	}
 	
-	public String getName() {
-		return this.name;
-	}
-	
-	public void effect(World worldIn, PlayerEntity playerIn) {
+	public List<String> getDescription(){
+		List<String> list = Lists.newArrayList();
+		return list;
 	}
 	
 	public List<String> getDetails() {
@@ -93,6 +106,23 @@ public class Spell {
 	public static final List<Spell> SPELL_LIST = Lists.newArrayList();
 	private static final Spell NO_SPELL = new Spell(0, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/nospell.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/nospell.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/nospell.png"), "", 0, 0);
 	private static final Spell SWORD_SLASH = new Spell(1, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashiconhud.png"), "Sword Slash", 0, AOTConfig.COMMON.sword_slash_cost.get()){
+		
+		@Override
+		public void initRequirements() {
+			this.requirements.add(new Requirement("FRUIT OF THE GODS", "\u00A74Requires the user to have eaten atleast 1 FRUIT OF THE GODS!") {
+				public boolean meetsRequirement() {
+					if(Spell.APPLES_EATEN == 0) return false;
+					return true;
+				};
+			});
+			this.requirements.add(new Requirement("Level", "\u00A74Requires the user to have level 0 or above!") {
+				public boolean meetsRequirement() {
+					if(Spell.PLAYER_LEVEL < 0) return false;
+					return true;
+				};
+			});
+		}
+		
 		@Override
 		public void effect(World worldIn, PlayerEntity playerIn) {
 			double offset = 1.0D;
@@ -140,6 +170,23 @@ public class Spell {
 		
 	};	
 	private static final Spell SHIELD_BASH = new Spell(2, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashiconhud.png"), "Shield Bash", 0, AOTConfig.COMMON.shield_bash_cost.get()) {
+		
+		@Override
+		public void initRequirements() {
+			this.requirements.add(new Requirement("FRUIT OF THE GODS", "\u00A74Requires the user to have eaten atleast 1 FRUIT OF THE GODS!") {
+				public boolean meetsRequirement() {
+					if(Spell.APPLES_EATEN == 0) return false;
+					return true;
+				};
+			});
+			this.requirements.add(new Requirement("Level", "\u00A74Requires the user to have level 20 or above!") {
+				public boolean meetsRequirement() {
+					if(Spell.PLAYER_LEVEL < 20) return false;
+					return true;
+				};
+			});
+		}
+		
 		@SuppressWarnings("deprecation")
 		@Override
 		public void effect(World worldIn, PlayerEntity playerIn) {
@@ -207,6 +254,23 @@ public class Spell {
 	};
 	
 	private static final Spell BERSERKER = new Spell(3, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonhud.png"), "Berserker", 0, AOTConfig.COMMON.berserker_cost.get()) {
+		
+		@Override
+		public void initRequirements() {
+			this.requirements.add(new Requirement("FRUIT OF THE GODS", "\u00A74Requires the user to have eaten atleast 1 FRUIT OF THE GODS!") {
+				public boolean meetsRequirement() {
+					if(Spell.APPLES_EATEN == 0) return false;
+					return true;
+				};
+			});
+			this.requirements.add(new Requirement("Level", "\u00A74Requires the user to have level 40 or above!") {
+				public boolean meetsRequirement() {
+					if(Spell.PLAYER_LEVEL < 40) return false;
+					return true;
+				};
+			});
+		}
+		
 		@Override
 		public void effect(World worldIn, PlayerEntity playerIn) {
 			playerIn.addPotionEffect(new EffectInstance(EffectInit.BERSERKER.get(), (int) (400 + 20 * AOTConfig.COMMON.berserker_duration_ratio.get() * this.level)));
@@ -241,6 +305,23 @@ public class Spell {
 	};
 	
 	private static final Spell CHAIN = new Spell(4, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainiconhud.png"), "Chain", 0, AOTConfig.COMMON.chain_cost.get()){
+		
+		@Override
+		public void initRequirements() {
+			this.requirements.add(new Requirement("FRUIT OF THE GODS", "\u00A74Requires the user to have eaten atleast 1 FRUIT OF THE GODS!") {
+				public boolean meetsRequirement() {
+					if(Spell.APPLES_EATEN == 0) return false;
+					return true;
+				};
+			});
+			this.requirements.add(new Requirement("Level", "\u00A74Requires the user to have level 20 or above!") {
+				public boolean meetsRequirement() {
+					if(Spell.PLAYER_LEVEL < 20) return false;
+					return true;
+				};
+			});
+		}
+		
 		@Override
 		public void effect(World worldIn, PlayerEntity playerIn) {
 			double offset = 1.0D;
@@ -285,6 +366,23 @@ public class Spell {
 	};
 	
 	private static final Spell GRAVITY_BOMB = new Spell(5, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/gravitybombicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/gravitybombiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/gravitybombiconhud.png"), "Gravity Bomb", 0, AOTConfig.COMMON.gravity_bomb_cost.get()){
+		
+		@Override
+		public void initRequirements() {
+			this.requirements.add(new Requirement("FRUIT OF THE GODS", "\u00A74Requires the user to have eaten atleast 1 FRUIT OF THE GODS!") {
+				public boolean meetsRequirement() {
+					if(Spell.APPLES_EATEN == 0) return false;
+					return true;
+				};
+			});
+			this.requirements.add(new Requirement("Level", "\u00A74Requires the user to have level 20 or above!") {
+				public boolean meetsRequirement() {
+					if(Spell.PLAYER_LEVEL < 20) return false;
+					return true;
+				};
+			});
+		}
+		
 		@Override
 		public void effect(World worldIn, PlayerEntity playerIn) {
 			double pitch = playerIn.getPitchYaw().x;
@@ -322,6 +420,7 @@ public class Spell {
 		}
 		
 	};
+	
 	public static void registerSpells() {
 		SPELL_LIST.add(NO_SPELL.getId(), NO_SPELL);
 		SPELL_LIST.add(SWORD_SLASH.getId(), SWORD_SLASH);
@@ -331,6 +430,28 @@ public class Spell {
 		SPELL_LIST.add(GRAVITY_BOMB.getId(), GRAVITY_BOMB);
 	}
 
-	
+	public class Requirement {
+		
+		private String name;
+		private String description;
+		
+		public Requirement(String name, String description) {
+			this.name = name;
+			this.description = description;
+		}
+		
+		public boolean meetsRequirement() {
+			return false;
+		}
+		
+		public String getDescription() {
+			return description;
+		}
+		
+		public String getName() {
+			return name;
+		}
+		
+	}
 	
 }

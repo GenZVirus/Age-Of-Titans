@@ -56,12 +56,12 @@ public class ReadElementPacket {
 				}
 				
 				if(pkt.element.contains("PlayerPoints")) {
-					Spell.points = pkt.value;
+					Spell.POINTS = pkt.value;
 				}
 				
 				if(pkt.element.contains("ApplesEaten"))
 				{
-					Spell.applesEaten = pkt.value;
+					Spell.APPLES_EATEN = pkt.value;
 				}
 				
 				if(pkt.element.contains("PlayerLevel"))

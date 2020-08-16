@@ -21,6 +21,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -43,6 +44,13 @@ public class ClientEventBusSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CHAIN.get(), ChainRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.GRAVITY_BOMB.get(), GravityBombRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.GRAVITY_ZONE.get(), GravityZoneRender::new);
+	}
+	
+	@SubscribeEvent(receiveCanceled = true)
+	public static void onHealthBar(RenderGameOverlayEvent.Pre event) {
+		event.setCanceled(true);
+		if (event.getType() == RenderGameOverlayEvent.ElementType.HEALTH) {
+		}
 	}
 	
 	@SubscribeEvent

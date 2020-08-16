@@ -44,7 +44,7 @@ public class KeyPressedEvent {
 		Minecraft mc = Minecraft.getInstance();
 		if(timer == 0 && KeyboardHelper.isCharacterKeyDown()) {
 			timer = 15;
-			if(Spell.applesEaten > 0) {
+			if(Spell.APPLES_EATEN > 0) {
 				if(!wasPRESSED) {
 				
 					// checks for others screens or chat screen, if there are not hidden, the character screen will not show up
