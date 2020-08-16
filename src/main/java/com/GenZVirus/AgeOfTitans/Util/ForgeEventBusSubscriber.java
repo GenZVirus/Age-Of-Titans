@@ -102,6 +102,7 @@ public class ForgeEventBusSubscriber {
 														e.getPlayer().getUniqueID(), false), ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		PacketHandlerCommon.INSTANCE.sendTo(new ReadElementPacket(uuid, "PlayerPoints", Integer.parseInt(XMLFileJava.readElement(uuid, "PlayerPoints"))),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		PacketHandlerCommon.INSTANCE.sendTo(new ReadElementPacket(uuid, "ApplesEaten", Integer.parseInt(XMLFileJava.readElement(uuid, "ApplesEaten"))),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		PacketHandlerCommon.INSTANCE.sendTo(new ReadElementPacket(uuid, "PlayerLevel", Integer.parseInt(XMLFileJava.readElement(uuid, "PlayerLevel"))),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		for(int i = 1; i < Spell.SPELL_LIST.size(); i++) {
 			String element = "Spell" + "_Level" + i;
 			PacketHandlerCommon.INSTANCE.sendTo(new ReadElementPacket(uuid, element, Integer.parseInt(XMLFileJava.readElement(uuid, element))),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
@@ -110,7 +111,7 @@ public class ForgeEventBusSubscriber {
 		PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(2, AOTConfig.COMMON.shield_bash_cooldown.get(), AOTConfig.COMMON.shield_bash_cost.get(), AOTConfig.COMMON.shield_bash_damage_ratio.get(), AOTConfig.COMMON.shield_bash_base_damage.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(3, AOTConfig.COMMON.berserker_cooldown.get(), AOTConfig.COMMON.berserker_cost.get(), AOTConfig.COMMON.berserker_duration_ratio.get(), AOTConfig.COMMON.berserker_punch_damage.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(4, AOTConfig.COMMON.chain_cooldown.get(), AOTConfig.COMMON.chain_cost.get(), AOTConfig.COMMON.chain_damage_ratio.get(), AOTConfig.COMMON.chain_base_damage.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
-		PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(5, AOTConfig.COMMON.time_bomb_cooldown.get(), AOTConfig.COMMON.time_bomb_cost.get(), AOTConfig.COMMON.time_bomb_ratio.get(), AOTConfig.COMMON.time_bomb_bonus_damage.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(5, AOTConfig.COMMON.gravity_bomb_cooldown.get(), AOTConfig.COMMON.gravity_bomb_cost.get(), AOTConfig.COMMON.gravity_bomb_ratio.get(), AOTConfig.COMMON.gravity_bomb_bonus_damage.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		AgeOfTitans.LOGGER.info("Packets sent to " + playerName);
 	}
 	

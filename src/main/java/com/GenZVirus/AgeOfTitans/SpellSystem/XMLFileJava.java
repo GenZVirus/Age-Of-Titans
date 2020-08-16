@@ -8,6 +8,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -106,7 +107,7 @@ public class XMLFileJava {
 	             Spell4.appendChild(document.createTextNode(Integer.toString(0)));
 	             playername.appendChild(Spell4);
 	             
-	             // spell4 element
+	             // spell5 element
 	             Element Spell5 = document.createElement("Spell_Level5");
 	             Spell5.appendChild(document.createTextNode(Integer.toString(0)));
 	             playername.appendChild(Spell5);
@@ -143,6 +144,7 @@ public class XMLFileJava {
 	         
 	         // Get root element
 	         
+	         checkFileElement(document, xmlFilePath, elementTag);
 	         Node element = document.getElementsByTagName(elementTag).item(0);
 	         element.setTextContent(elementTextContent);
 	      // write the content into xml file
@@ -169,7 +171,7 @@ public class XMLFileJava {
 	    	 DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
 	         DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
 	         Document document = documentBuilder.parse(xmlFilePath);
-	         
+	         checkFileElement(document, xmlFilePath, elementTag);
 	         Node element = document.getElementsByTagName(elementTag).item(0);
 	         return element.getTextContent();
 	    	} catch (ParserConfigurationException pce) {
@@ -180,6 +182,27 @@ public class XMLFileJava {
 	 		sae.printStackTrace();
 	 	   }
 	    	return "0";
+	    }
+	    
+	    public static void checkFileElement(Document document, String xmlFilePath, String elementTag) {
+	    	Node element = document.getElementsByTagName(elementTag).item(0);
+	    	if(element == null) {
+	        	 try {
+	        	 element = document.createElement(elementTag);
+	        	 element.appendChild(document.createTextNode(Integer.toString(0)));
+	        	 Node playername = document.getElementsByTagName("PlayerName").item(0);
+	        	 playername.appendChild(element);
+	        	 TransformerFactory transformerFactory = TransformerFactory.newInstance();
+					Transformer transformer = transformerFactory.newTransformer();
+	             DOMSource domSource = new DOMSource(document);
+	             StreamResult streamResult = new StreamResult(new File(xmlFilePath));
+	             transformer.transform(domSource, streamResult);
+	             } catch (TransformerConfigurationException e) {
+	            	 e.printStackTrace();
+	             } catch (TransformerException e) {
+					e.printStackTrace();
+				}
+	         }
 	    }
 	    
 	    public static void checkFileAndMake(UUID UniquePlayerName, String playerName) {

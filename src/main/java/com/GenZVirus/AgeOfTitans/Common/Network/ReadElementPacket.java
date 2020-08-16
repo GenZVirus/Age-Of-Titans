@@ -63,6 +63,11 @@ public class ReadElementPacket {
 				{
 					Spell.applesEaten = pkt.value;
 				}
+				
+				if(pkt.element.contains("PlayerLevel"))
+				{
+					Spell.PLAYER_LEVEL = pkt.value;
+				}
 			}
 		});
 		

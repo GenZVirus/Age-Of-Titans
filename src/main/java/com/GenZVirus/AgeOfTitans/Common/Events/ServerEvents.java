@@ -4,7 +4,6 @@ import java.util.Random;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Common.Config.AOTConfig;
-import com.GenZVirus.AgeOfTitans.Common.Entities.TimeBombEntity;
 import com.GenZVirus.AgeOfTitans.Common.Init.BiomeInit;
 import com.GenZVirus.AgeOfTitans.Common.Init.BlockInit;
 import com.GenZVirus.AgeOfTitans.Common.Init.EffectInit;
@@ -24,7 +23,6 @@ import net.minecraft.item.Items;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
@@ -35,7 +33,6 @@ import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.item.ItemEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -51,30 +48,8 @@ public class ServerEvents {
 	@SubscribeEvent
 	public static void entityHurt(LivingHurtEvent event) {
 		if(event.getEntity().world.isRemote) return;
-		if(event.getEntityLiving().isPotionActive(EffectInit.TIME_STOP.get())) {
-			event.setAmount((float) (event.getAmount() + event.getAmount() * AOTConfig.COMMON.time_bomb_bonus_damage.get()));
-		}
-	}
-	
-	@SubscribeEvent
-	public static void removeEffect(LivingEvent event) {
-		if(TimeBombEntity.affectedEntities.contains(event.getEntity()) && !event.getEntityLiving().isPotionActive(EffectInit.TIME_STOP.get())) {
-			TimeBombEntity.affectedEntitiesPos.remove(TimeBombEntity.affectedEntities.indexOf(event.getEntity()));
-			TimeBombEntity.affectedEntities.remove(event.getEntity());
-		}
-	}
-	
-	@SubscribeEvent
-	public static void freezeEntities(LivingEvent event) {
-		LivingEntity entity = event.getEntityLiving();
-		if(entity.isPotionActive(EffectInit.TIME_STOP.get())) {
-			entity.setMotion(0, 0, 0);
-			entity.setVelocity(0, 0, 0);
-			entity.setJumping(false);
-			if(TimeBombEntity.affectedEntities.contains(entity)) {
-				BlockPos pos = TimeBombEntity.affectedEntitiesPos.get(TimeBombEntity.affectedEntities.indexOf(entity));
-				entity.setPositionAndUpdate(pos.getX(), pos.getY(), pos.getZ());
-			}
+		if(event.getEntityLiving().isPotionActive(EffectInit.GRAVITY_FIELD.get())) {
+			event.setAmount((float) (event.getAmount() + event.getAmount() * AOTConfig.COMMON.gravity_bomb_bonus_damage.get() * event.getEntityLiving().getActivePotionEffect(EffectInit.GRAVITY_FIELD.get()).getAmplifier()));
 		}
 	}
 	

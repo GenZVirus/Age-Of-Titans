@@ -41,10 +41,10 @@ public abstract class AOTConfig {
 		public final IntValue chain_cooldown;
 		public final IntValue chain_cost;
 		
-		public final DoubleValue time_bomb_ratio;
-		public final DoubleValue time_bomb_bonus_damage;
-		public final IntValue time_bomb_cooldown;
-		public final IntValue time_bomb_cost;
+		public final DoubleValue gravity_bomb_ratio;
+		public final DoubleValue gravity_bomb_bonus_damage;
+		public final IntValue gravity_bomb_cooldown;
+		public final IntValue gravity_bomb_cost;
 		
 		public final IntValue exp_level_up;
 		public final IntValue exp_per_advancement;
@@ -152,28 +152,28 @@ public abstract class AOTConfig {
 			
 			builder.pop();
 			
-			builder.comment("This config affects all players and contains the stats of the Time Bomb ability")
-		   	   .push("time_bomb");
+			builder.comment("This config affects all players and contains the stats of the Gravity Bomb ability")
+		   	   .push("gravity_bomb");
 	
-			time_bomb_ratio = builder.comment("This sets the damage multiplier of the Time Bomb ability")
-					    				.translation("time_bomb.configgui.time_bomb_ratio")
+			gravity_bomb_ratio = builder.comment("This sets the damage multiplier of the Gravity Bomb ability")
+					    				.translation("gravity_bomb.configgui.gravity_bomb_ratio")
 					    				.worldRestart()
-					    				.defineInRange("time_bomb_ratio", 0.5D, 0.0D, 1.0D);
+					    				.defineInRange("gravity_bomb_ratio", 0.5D, 0.0D, 1.0D);
 			
-			time_bomb_bonus_damage = builder.comment("This sets the % base bonus damage of the Time Bomb ability")
-	 								   .translation("time_bomb.configgui.time_bomb_bonus_damage")
+			gravity_bomb_bonus_damage = builder.comment("This sets the % base bonus damage of the Gravity Bomb ability")
+	 								   .translation("gravity_bomb.configgui.gravity_bomb_bonus_damage")
 	 								   .worldRestart()
-	 								   .defineInRange("time_bomb_bonus_damage", 0.5D, 0.0D, 1000.0D);
+	 								   .defineInRange("gravity_bomb_bonus_damage", 0.5D, 0.0D, 1000.0D);
 			
-			time_bomb_cooldown = builder.comment("This sets the cooldown in seconds of the Time Bomb ability")
-									.translation("time_bomb.configgui.time_bomb_cooldown")
+			gravity_bomb_cooldown = builder.comment("This sets the cooldown in seconds of the Gravity Bomb ability")
+									.translation("gravity_bomb.configgui.gravity_bomb_cooldown")
 									.worldRestart()
-									.defineInRange("time_bomb_cooldown", 10, 0, 3600);
+									.defineInRange("gravity_bomb_cooldown", 10, 0, 3600);
 			
-			time_bomb_cost = builder.comment("This sets the cost of the Time Bomb ability")
-								.translation("time_bomb.configgui.time_bomb_cost")
+			gravity_bomb_cost = builder.comment("This sets the cost of the Gravity Bomb ability")
+								.translation("gravity_bomb.configgui.gravity_bomb_cost")
 								.worldRestart()
-								.defineInRange("time_bomb_cost", 10, 0, 1000);
+								.defineInRange("gravity_bomb_cost", 10, 0, 1000);
 		
 		builder.pop();
 			

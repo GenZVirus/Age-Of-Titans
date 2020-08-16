@@ -2,7 +2,8 @@ package com.GenZVirus.AgeOfTitans.Common.Init;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Common.Entities.ChainEntity;
-import com.GenZVirus.AgeOfTitans.Common.Entities.TimeBombEntity;
+import com.GenZVirus.AgeOfTitans.Common.Entities.GravityBombEntity;
+import com.GenZVirus.AgeOfTitans.Common.Entities.GravityZoneEnity;
 import com.GenZVirus.AgeOfTitans.Common.Entities.ReaperEntity;
 import com.GenZVirus.AgeOfTitans.Common.Entities.ShockwaveEntity;
 import com.GenZVirus.AgeOfTitans.Common.Entities.SwordSlashEntity;
@@ -39,9 +40,14 @@ public class ModEntityTypes {
 					.size(1.0F, 1.0F)
 					.build(new ResourceLocation(AgeOfTitans.MOD_ID, "chain").toString()));
 	
-	public static final RegistryObject<EntityType<TimeBombEntity>> TIME_BOMB = ENTITY_TYPES.register("time_bomb",
-			() -> EntityType.Builder.<TimeBombEntity>create(TimeBombEntity::new, EntityClassification.CREATURE)
+	public static final RegistryObject<EntityType<GravityBombEntity>> GRAVITY_BOMB = ENTITY_TYPES.register("gravity_bomb",
+			() -> EntityType.Builder.<GravityBombEntity>create(GravityBombEntity::new, EntityClassification.CREATURE)
 					.size(1.0F, 1.0F)
-					.build(new ResourceLocation(AgeOfTitans.MOD_ID, "time_bomb").toString()));
+					.build(new ResourceLocation(AgeOfTitans.MOD_ID, "gravity_bomb").toString()));
+	
+	public static final RegistryObject<EntityType<GravityZoneEnity>> GRAVITY_ZONE = ENTITY_TYPES.register("gravity_zone",
+			() -> EntityType.Builder.<GravityZoneEnity>create(GravityZoneEnity::new, EntityClassification.CREATURE)
+					.size(1.0F, 1.0F)
+					.build(new ResourceLocation(AgeOfTitans.MOD_ID, "gravity_zone").toString()));
 	
 }

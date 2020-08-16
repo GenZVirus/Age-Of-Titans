@@ -218,7 +218,7 @@ public class ModSkillButton extends Widget {
             else if (tooltipY + tooltipHeight + 4 > screenHeight)
                 tooltipY = screenHeight - tooltipHeight - 4;
 
-            final int zLevel = 300;
+            final int zLevel = 400;
             int backgroundColor = 0xF0100010;
             int borderColorStart = 0x505000FF;
             int borderColorEnd = (borderColorStart & 0xFEFEFE) >> 1 | borderColorStart & 0xFF000000;

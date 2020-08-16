@@ -3,7 +3,6 @@ package com.GenZVirus.AgeOfTitans.Common.Entities;
 import java.util.List;
 
 import com.GenZVirus.AgeOfTitans.Common.Init.ModEntityTypes;
-import com.GenZVirus.AgeOfTitans.Common.Particles.SwordSlashParticle;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

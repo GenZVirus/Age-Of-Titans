@@ -49,10 +49,19 @@ public class ModScreen extends Screen {
 	public ResourceLocation BACKGROUND_TEXTURE_REAPER = new ResourceLocation(AgeOfTitans.MOD_ID,
 			"textures/gui/character_background_reaper.png");
 	
+	public ResourceLocation LEVEL_REQUIREMENT = new ResourceLocation(AgeOfTitans.MOD_ID,
+			"textures/gui/level_requirement.png");
+	
+	public ResourceLocation CURRENT_LEVEL = new ResourceLocation(AgeOfTitans.MOD_ID,
+			"textures/gui/current_level.png");
+	
 	// The size of the GUI
 	
 	public int xSize = 320;
 	public int ySize = 256;
+	
+	public int windowXPos = (this.width - this.xSize) / 2;
+	public int windowYPos = (this.height - this.ySize) / 2;
 	
 	// The buttons for changing the skill tree
 	
@@ -90,10 +99,12 @@ public class ModScreen extends Screen {
 	@Override
 	public void init() {
 		super.init();
+		windowXPos = (this.width - this.xSize) / 2;
+		windowYPos = (this.height - this.ySize) / 2;
 		
 		// If you press on the human button the background changes to the Human one
 		
-		this.Titan = new ModButton((this.width - this.xSize) / 2 + 4, (this.height - this.ySize) / 2 + 4, 156, 20, I18n.format("gui.titan")) {
+		this.Titan = new ModButton(windowXPos + 4, windowYPos + 4, 156, 20, I18n.format("gui.titan")) {
 			@Override
 			public void onPress() {
 				this.isPressed = true;
@@ -116,7 +127,7 @@ public class ModScreen extends Screen {
 		
 		// If you press on the human button the background changes to the Human one
 		
-		this.Reaper = new ModButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + 4, 156, 20, I18n.format("gui.reaper")) {
+		this.Reaper = new ModButton(windowXPos + 4 + 156, windowYPos + 4, 156, 20, I18n.format("gui.reaper")) {
 			@Override
 			public void onPress() {
 				this.isPressed = true;
@@ -134,20 +145,25 @@ public class ModScreen extends Screen {
 		
 		// The four spell slots
 		
-		this.slot1 = new ModSkillSlot((this.width - this.xSize) / 2 + 4, (this.height - this.ySize) / 2 + this.ySize - 4 - 25, 25, 25, I18n.format(""), 1);		
-		this.slot2 = new ModSkillSlot((this.width - this.xSize) / 2 + 4 + 25, (this.height - this.ySize) / 2 + this.ySize - 4 - 25, 25, 25, I18n.format(""), 2);		
-		this.slot3 = new ModSkillSlot((this.width - this.xSize) / 2 + 4 + 50, (this.height - this.ySize) / 2 + this.ySize - 4 - 25, 25, 25, I18n.format(""), 3);		
-		this.slot4 = new ModSkillSlot((this.width - this.xSize) / 2 + 4 + 75, (this.height - this.ySize) / 2 + this.ySize - 4 - 25, 25, 25, I18n.format(""), 4);
+		this.slot1 = new ModSkillSlot(windowXPos + 4, windowYPos + this.ySize - 4 - 25, 25, 25, I18n.format(""), 1);		
+		this.slot2 = new ModSkillSlot(windowXPos + 4 + 25, windowYPos + this.ySize - 4 - 25, 25, 25, I18n.format(""), 2);		
+		this.slot3 = new ModSkillSlot(windowXPos + 4 + 50, windowYPos + this.ySize - 4 - 25, 25, 25, I18n.format(""), 3);		
+		this.slot4 = new ModSkillSlot(windowXPos + 4 + 75, windowYPos + this.ySize - 4 - 25, 25, 25, I18n.format(""), 4);
 		
 		// The spell buttons
 		
-		this.SwordSlash = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 26, (this.height - this.ySize) / 2 + 4 + 30, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(1));		
-		this.ShieldBash = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 106, (this.height - this.ySize) / 2 + 4 + 30, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(2));
-		this.Berserker = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 186, (this.height - this.ySize) / 2 + 4 + 30, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(3));
-		this.Chain = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 266, (this.height - this.ySize) / 2 + 4 + 30, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(4));
-		this.TimeBomb = new ModSkillButton((this.width - this.xSize) / 2 + 4 + 56, (this.height - this.ySize) / 2 + 4 + 60, 20, 20, I18n.format(""), Spell.SPELL_LIST.get(5));
+		List<Integer> four_elements_row = Lists.newArrayList(40, 100, 160, 220);
+		List<Integer> three_elements_row = Lists.newArrayList(70, 136, 202);
+		List<Integer> rows = Lists.newArrayList(35, 60, 90, 120, 150, 180);
 		
-		this.LearnSpells = new ModButton((this.width - this.xSize) / 2 + 4 + 156, (this.height - this.ySize) / 2 + this.ySize - 4 - 20, 156, 20, I18n.format("gui.learn_spells")) {
+		
+		this.SwordSlash = new ModSkillButton(windowXPos + 4 + four_elements_row.get(0), windowYPos + 4 + rows.get(0), 20, 20, I18n.format(""), Spell.SPELL_LIST.get(1));		
+		this.ShieldBash = new ModSkillButton(windowXPos + 4 + three_elements_row.get(0), windowYPos + 4 + rows.get(1), 20, 20, I18n.format(""), Spell.SPELL_LIST.get(2));
+		this.Berserker = new ModSkillButton(windowXPos + 4 + four_elements_row.get(0), windowYPos + 4 + rows.get(2), 20, 20, I18n.format(""), Spell.SPELL_LIST.get(3));
+		this.Chain = new ModSkillButton(windowXPos + 4 + three_elements_row.get(1), windowYPos + 4 + rows.get(1), 20, 20, I18n.format(""), Spell.SPELL_LIST.get(4));
+		this.TimeBomb = new ModSkillButton(windowXPos + 4 + three_elements_row.get(2), windowYPos + 4 + rows.get(1), 20, 20, I18n.format(""), Spell.SPELL_LIST.get(5));
+		
+		this.LearnSpells = new ModButton(windowXPos + 4 + 156, windowYPos + this.ySize - 4 - 20, 156, 20, I18n.format("gui.learn_spells")) {
 			@Override
 			public void onPress() {
 				if(!isPressed) {
@@ -194,11 +210,11 @@ public class ModScreen extends Screen {
 	public void loadSpells() {
 		
 		if(this.Titan.isPressed) {
-			buttons.add(ShieldBash);
-			buttons.add(SwordSlash);
 			buttons.add(Berserker);
+			buttons.add(ShieldBash);
 			buttons.add(Chain);
 			buttons.add(TimeBomb);
+			buttons.add(SwordSlash);
 		}
 	}
 	
@@ -240,7 +256,8 @@ public class ModScreen extends Screen {
 	
 	@Override
 	public void render(int mouseX, int mouseY, float partialTicks) {
-		
+		windowXPos = (this.width - this.xSize) / 2;
+		windowYPos = (this.height - this.ySize) / 2;
 		this.renderBackground();
 		
 	// Decides if it renders the human background or the reaper background
@@ -255,9 +272,6 @@ public class ModScreen extends Screen {
 			this.minecraft.getTextureManager().bindTexture(BACKGROUND_TEXTURE_TITAN);
 		}
 		
-		int x = (this.width - this.xSize) / 2;
-		int y = (this.height - this.ySize) / 2;
-		
 		/*
 	       *  First param is the X position
 	       *  Second param is the y position
@@ -270,14 +284,47 @@ public class ModScreen extends Screen {
 	       *  Ninth param is the Width of the texture image
 	       */
 		
-		AbstractGui.blit(x, y, 0, 0, 0, this.xSize, this.ySize, this.ySize, this.xSize);
+		// Add background
+		
+		AbstractGui.blit(windowXPos, windowYPos, 0, 0, 0, this.xSize, this.ySize, this.ySize, this.xSize);
+		
+		// Add level bar
+		
+		GL11.glScalef(0.8F, 0.8F, 0.8F);
+		
+		this.minecraft.getTextureManager().bindTexture(LEVEL_REQUIREMENT);
+		AbstractGui.blit(((int)((windowXPos + 20) * 1.25)), ((int)((windowYPos + 40) * 1.25)), 0, 0, 0, 26, 202, 202, 26);
+		
+		this.minecraft.getTextureManager().bindTexture(CURRENT_LEVEL);
+		int level = Spell.PLAYER_LEVEL;
+		if(level > 100) level = 100;
+		AbstractGui.blit(((int)((windowXPos + 20) * 1.25)), ((int)((windowYPos + 40) * 1.25)), 0, 0, 0, 26, 202 * level / 100, 202, 26);
+		
+		final int zLevel = 300;
+		IRenderTypeBuffer.Impl renderType = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
+		MatrixStack textStack = new MatrixStack();
+		textStack.translate(0.0D, 0.0D, (double)zLevel);
+		Matrix4f textLocation = textStack.getLast().getMatrix();
+		font.renderString("0", ((windowXPos + 28) * 1.25F), ((windowYPos + 44) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
+		font.renderString("20", ((windowXPos + 26) * 1.25F), ((windowYPos + 73) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
+		font.renderString("40", ((windowXPos + 26) * 1.25F), ((windowYPos + 102) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
+		font.renderString("60", ((windowXPos + 26) * 1.25F), ((windowYPos + 131) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
+		font.renderString("80", ((windowXPos + 26) * 1.25F), ((windowYPos + 160) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
+		font.renderString("100", ((windowXPos + 24) * 1.25F), ((windowYPos + 189) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
+		renderType.finish();
+		
+		GL11.glScalef(1.25F, 1.25F, 1.25F);
+		
+		// Add buttons
+		
+		super.render(mouseX, mouseY, partialTicks);
+		
 		
 		List<String> list = Lists.newArrayList();
 		list.add("Points: " + Spell.points);
 		
-		drawHoveringText(list, (this.width - this.xSize) / 2 + this.xSize - 4 - 60, (this.height - this.ySize) / 2 + this.ySize - 4 - 20, this.width, this.height, -1, font);
+		drawHoveringText(list, windowXPos + this.xSize - 4 - 60, windowYPos + this.ySize - 4 - 20, this.width, this.height, -1, font);
 				
-		super.render(mouseX, mouseY, partialTicks);
 	}
 	
 	public static void drawHoveringText(List<String> textLines, int mouseX, int mouseY, int screenWidth, int screenHeight, int maxTextWidth, FontRenderer font)
