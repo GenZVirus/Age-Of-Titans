@@ -29,9 +29,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.biome.Biome;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.item.ItemEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -47,14 +44,6 @@ import net.minecraftforge.fml.network.NetworkDirection;
 
 @Mod.EventBusSubscriber(modid = AgeOfTitans.MOD_ID, bus = Bus.FORGE)
 public class ForgeEvents {
-	
-	@OnlyIn(Dist.CLIENT)
-	@SubscribeEvent(receiveCanceled = true)
-	public static void onHealthBar(RenderGameOverlayEvent.Pre event) {
-		if (event.getType() == RenderGameOverlayEvent.ElementType.HEALTH) {
-			event.setCanceled(true);
-		}
-	}
 	
 	@SubscribeEvent
 	public static void entityHurt(LivingHurtEvent event) {
@@ -82,7 +71,7 @@ public class ForgeEvents {
 			event.getEntityItem().setInvulnerable(true);
 			event.getEntityItem().lifespan = 72000;
 		} else if(event.getEntityItem().getItem().getItem().equals(ItemInit.ORB_OF_STORAGE.get())) {
-			event.getEntityItem().setInvulnerable(true);
+			event.getEntityItem().setInvulnerable(true); 
 			event.getEntityItem().lifespan = 72000;
 		} else if(event.getEntityItem().getItem().getItem().equals(ItemInit.ORB_OF_SUMMONING.get())) {
 			event.getEntityItem().setInvulnerable(true);

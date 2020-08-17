@@ -1,22 +1,35 @@
 package com.GenZVirus.AgeOfTitans.Client.GUI.HUD;
 
+import java.util.Random;
+
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Common.Config.AOTConfig;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.Matrix4f;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.ChatVisibility;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.FoodStats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.gui.ForgeIngameGui;
 
 @OnlyIn(Dist.CLIENT)
 public class ModHUD {
 
 	public static ResourceLocation SPELL_HUD_TEXTURE = new ResourceLocation(AgeOfTitans.MOD_ID,"textures/gui/hud.png");
-	public static ResourceLocation RAGE_BAR = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/rage_bar.png");
+	public static ResourceLocation BAR = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/bar.png");
+	public static ResourceLocation RAGE_BAR_FILL = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/rage_bar_fill.png");
+	public static ResourceLocation HEALTH_BAR_FILL = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/health_bar_fill.png");
 	public static Spell SPELL1 = Spell.SPELL_LIST.get(0);
 	public static Spell SPELL2 = Spell.SPELL_LIST.get(0);
 	public static Spell SPELL3 = Spell.SPELL_LIST.get(0);
@@ -34,19 +47,13 @@ public class ModHUD {
 	public static boolean previous = false;
 	public static int nr = 0;
 	public static boolean locked = true;
+	public static int offset = 0;
 
 	public static void renderHUD() {
-
-		if(locked || Spell.APPLES_EATEN == 0) {
-			selectedSpell = Spell.SPELL_LIST.get(0);
+		if (mc.world == null) {
 			return;
 		}
 		
-		Minecraft mc = Minecraft.getInstance();
-		if ((mc.currentScreen != null && mc.gameSettings.chatVisibility != ChatVisibility.HIDDEN) || mc.world == null) {
-			return;
-		}
-
 		assert mc.player != null;
 
 		if (!Minecraft.isGuiEnabled()) {
@@ -54,6 +61,18 @@ public class ModHUD {
 		}
 
 		if (mc.gameSettings.showDebugInfo) {
+			return;
+		}
+		System.out.println(mc.getFrameTimer());
+		if(offset >= 178) offset = 0;
+		offset++;
+		
+		if(mc.currentScreen != null && mc.gameSettings.chatVisibility != ChatVisibility.HIDDEN) {
+			return;
+		}
+		
+		if(locked || Spell.APPLES_EATEN == 0) {
+			selectedSpell = Spell.SPELL_LIST.get(0);
 			return;
 		}
 
@@ -159,12 +178,13 @@ public class ModHUD {
 			j = 3;
 		}
 		
-		mc.getTextureManager().bindTexture(RAGE_BAR);
 		posY = mc.getMainWindow().getScaledHeight() - 80;
 		posX = mc.getMainWindow().getScaledWidth() / 2 - 91 ;
-		AbstractGui.blit(posX, posY, 0, 0, 0, 182, 16, 16 * 2, 182);
-		int percentage = 182 * Spell.RAGE_POINTS / 1000; 
-		AbstractGui.blit(posX, posY, 0, 0, 16, percentage, 16, 16 * 2, 182);
+		mc.getTextureManager().bindTexture(BAR);
+		AbstractGui.blit(posX, posY, 0, 0, 0, 182, 16, 16, 182);
+		int percentage = (int) (178 * mc.player.getHealth() / mc.player.getMaxHealth());
+		mc.getTextureManager().bindTexture(RAGE_BAR_FILL);
+		AbstractGui.blit(posX + 2, posY + 2, 0, offset, 0, percentage, 12, 12, 178);
 		
 	}
 	
@@ -204,4 +224,112 @@ public class ModHUD {
 		}
 	}
 	
+	public static void renderHealth() {
+		mc.getProfiler().startSection("AOThealth");
+		RenderSystem.scalef(1.0F, 1.0F, 1.0F);
+		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+		
+		int posX;
+		int posY;
+		
+		// Health Bar
+		
+		posY = mc.getMainWindow().getScaledHeight() - ForgeIngameGui.left_height;
+		posX = mc.getMainWindow().getScaledWidth() / 2 - 91 ;
+		mc.getTextureManager().bindTexture(BAR);
+		AbstractGui.blit(posX, posY, 0, 0, 0, 182, 16, 16, 182);
+		int percentage = (int) (178 * mc.player.getHealth() / mc.player.getMaxHealth());
+		mc.getTextureManager().bindTexture(HEALTH_BAR_FILL);
+		AbstractGui.blit(posX + 2, posY + 2, 0, offset, 0, percentage, 12, 12, 178);
+		
+		// Health Text
+		
+		final int zLevel = 300;
+		IRenderTypeBuffer.Impl renderType = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
+		MatrixStack textStack = new MatrixStack();
+		textStack.translate(0.0D, 0.0D, (double)zLevel);
+		Matrix4f textLocation = textStack.getLast().getMatrix();
+		String health = Integer.toString((int)mc.player.getHealth()) + " / " + Integer.toString((int)mc.player.getMaxHealth());
+		int stringWidth = mc.fontRenderer.getStringWidth(health);
+		mc.fontRenderer.renderString(health, posX + 91 - stringWidth / 2, posY + 5, 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
+		renderType.finish();
+		
+		mc.getProfiler().endSection();
+	}
+	
+	 public static void renderFood()
+	    {
+	        mc.getProfiler().startSection("AOTfood");
+	        mc.getTextureManager().bindTexture(Screen.GUI_ICONS_LOCATION);
+	        Random rand = new Random();
+	        PlayerEntity player = (PlayerEntity) mc.getRenderViewEntity();
+	        RenderSystem.enableBlend();
+	        int left = mc.getMainWindow().getScaledWidth() / 2 + 91;
+	        int top = mc.getMainWindow().getScaledHeight() - ForgeIngameGui.right_height - 10;
+	        boolean unused = false;// Unused flag in vanilla, seems to be part of a 'fade out' mechanic
+
+	        FoodStats stats = mc.player.getFoodStats();
+	        int level = stats.getFoodLevel();
+
+	        for (int i = 0; i < 10; ++i)
+	        {
+	            int idx = i * 2 + 1;
+	            int x = left - i * 8 - 9;
+	            int y = top;
+	            int icon = 16;
+	            byte background = 0;
+
+	            if (mc.player.isPotionActive(Effects.HUNGER))
+	            {
+	                icon += 36;
+	                background = 13;
+	            }
+	            if (unused) background = 1; //Probably should be a += 1 but vanilla never uses this
+
+	            if (player.getFoodStats().getSaturationLevel() <= 0.0F && mc.ingameGUI.getTicks() % (level * 3 + 1) == 0)
+	            {
+	                y = top + (rand.nextInt(3) - 1);
+	            }
+
+	            AbstractGui.blit(x, y, 16 + background * 9, 27, 9, 9, 256, 256);
+
+	            if (idx < level)
+	            	AbstractGui.blit(x, y, icon + 36, 27, 9, 9, 256, 256);
+	            else if (idx == level)
+	            	AbstractGui.blit(x, y, icon + 45, 27, 9, 9, 256, 256);
+	        }
+	        RenderSystem.disableBlend();
+	        mc.getProfiler().endSection();
+	    }
+	
+	 public static void renderArmor()
+	    {
+	        mc.getProfiler().startSection("AOTarmor");
+	        mc.getTextureManager().bindTexture(Screen.GUI_ICONS_LOCATION);
+	        RenderSystem.enableBlend();
+	        int left = mc.getMainWindow().getScaledWidth() / 2 - 91;
+	        int top = mc.getMainWindow().getScaledHeight() - ForgeIngameGui.left_height - 10;
+
+	        int level = mc.player.getTotalArmorValue();
+	        for (int i = 1; level > 0 && i < 20; i += 2)
+	        {
+	            if (i < level)
+	            {
+	            	AbstractGui.blit(left, top, 34, 9, 9, 9, 256, 256);
+	            }
+	            else if (i == level)
+	            {
+	            	AbstractGui.blit(left, top, 25, 9, 9, 9, 256, 256);
+	            }
+	            else if (i > level)
+	            {
+	            	AbstractGui.blit(left, top, 16, 9, 9, 9, 256, 256);
+	            }
+	            left += 8;
+	        }
+
+	        RenderSystem.disableBlend();
+	        mc.getProfiler().endSection();
+	    }
+	 
 }

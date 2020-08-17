@@ -3,7 +3,6 @@ package com.GenZVirus.AgeOfTitans.Common.Events;
 import java.util.List;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
-import com.GenZVirus.AgeOfTitans.Client.Container.ContainerScreenBasic;
 import com.GenZVirus.AgeOfTitans.Client.GUI.HUD.ModHUD;
 import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModButton;
 import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModScreen;
@@ -22,6 +21,7 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.util.Hand;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.GuiScreenEvent.MouseClickedEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.event.TickEvent.Phase;
@@ -37,18 +37,28 @@ public class ModScreenEvents {
 	private static int cooldown_Berserker = 0;
 	private static int cooldown_Chain = 0;
 	private static int cooldown_TimeBomb = 0;
+	
+	@SubscribeEvent(receiveCanceled = true)
+	public static void onHealthBar(RenderGameOverlayEvent.Pre event) {
+		if (event.getType() == RenderGameOverlayEvent.ElementType.HEALTH) {
+			event.setCanceled(true);
+			ModHUD.renderHealth();
+		}
+		
+		if (event.getType() == RenderGameOverlayEvent.ElementType.FOOD) {
+			event.setCanceled(true);
+			ModHUD.renderFood();
+		}
+		
+		if (event.getType() == RenderGameOverlayEvent.ElementType.ARMOR) {
+			event.setCanceled(true);
+			ModHUD.renderArmor();
+		}
+		
+		if (event.getType() == RenderGameOverlayEvent.ElementType.EXPERIENCE) {
+			event.setCanceled(true);
+		}
 
-	@SubscribeEvent
-	public static void PlayerClosedContainer(ClientTickEvent event) {
-		if(event.phase == Phase.START) {
-			return;
-		}
-		
-		Minecraft mc = Minecraft.getInstance();
-		if (mc.currentScreen instanceof ContainerScreenBasic && mc.world != null) {
-//			System.out.println("YES");
-		}
-		
 	}
 	
 	@SuppressWarnings("resource")

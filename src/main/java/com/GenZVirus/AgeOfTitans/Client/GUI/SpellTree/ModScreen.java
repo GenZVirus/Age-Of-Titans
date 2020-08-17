@@ -309,9 +309,9 @@ public class ModScreen extends Screen {
 		font.renderString("0", ((windowXPos + 28) * 1.25F), ((windowYPos + 44) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
 		font.renderString("20", ((windowXPos + 26) * 1.25F), ((windowYPos + 73) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
 		font.renderString("40", ((windowXPos + 26) * 1.25F), ((windowYPos + 102) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
-		font.renderString("60", ((windowXPos + 26) * 1.25F), ((windowYPos + 131) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
-		font.renderString("80", ((windowXPos + 26) * 1.25F), ((windowYPos + 160) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
-		font.renderString("100", ((windowXPos + 24) * 1.25F), ((windowYPos + 189) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
+		font.renderString("60", ((windowXPos + 26) * 1.25F), ((windowYPos + 130) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
+		font.renderString("80", ((windowXPos + 26) * 1.25F), ((windowYPos + 159) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
+		font.renderString("100", ((windowXPos + 23) * 1.25F), ((windowYPos + 188) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
 		renderType.finish();
 		
 		GL11.glScalef(1.25F, 1.25F, 1.25F);
