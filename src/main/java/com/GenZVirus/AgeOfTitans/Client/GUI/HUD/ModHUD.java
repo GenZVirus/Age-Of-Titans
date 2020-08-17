@@ -48,6 +48,7 @@ public class ModHUD {
 	public static int nr = 0;
 	public static boolean locked = true;
 	public static int offset = 0;
+	public static int delay = 0;
 
 	public static void renderHUD() {
 		if (mc.world == null) {
@@ -60,12 +61,15 @@ public class ModHUD {
 			return;
 		}
 
+		if(offset >= 178) offset = 0;
+		if(mc.debugFPS / 10 <= delay) {
+			offset++;
+			delay = 0;
+		}
+			delay++;
 		if (mc.gameSettings.showDebugInfo) {
 			return;
 		}
-		System.out.println(mc.getFrameTimer());
-		if(offset >= 178) offset = 0;
-		offset++;
 		
 		if(mc.currentScreen != null && mc.gameSettings.chatVisibility != ChatVisibility.HIDDEN) {
 			return;
