@@ -22,6 +22,7 @@ public class ModEffect extends Effect {
 	}
 	
 	public enum AOTType{
+		TITAN,
 		BIOME,
 		SPELL
 	}

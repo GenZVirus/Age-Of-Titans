@@ -57,6 +57,10 @@ public class ModScreenEvents {
 		
 		if (event.getType() == RenderGameOverlayEvent.ElementType.EXPERIENCE) {
 			event.setCanceled(true);
+			ModHUD.renderExpBar();
+			if(!ModHUD.locked) {
+				ModHUD.renderRage();
+			}
 		}
 
 	}
