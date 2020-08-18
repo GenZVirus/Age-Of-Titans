@@ -47,6 +47,30 @@ import net.minecraftforge.fml.network.NetworkDirection;
 public class ForgeEvents {
 
 	@SubscribeEvent
+	public static void AOTRevitalise(PlayerEvent event) {
+		if (event.getPlayer() == null)
+			return;
+		if (event.getPlayer().world.isRemote)
+			return;
+		PlayerEntity player = event.getPlayer();
+		if (!player.isPotionActive(EffectInit.REVITALISE.get()) || !(player.getHealth() < player.getMaxHealth()))
+			return;
+		if(player.getHealth() < player.getMaxHealth()) {
+			player.addPotionEffect(new EffectInstance(EffectInit.REVITALISE.get(), 100));
+		}
+		if (!ForgeEventBusSubscriber.players.contains(player))
+			return;
+		int index = ForgeEventBusSubscriber.players.indexOf(player);
+		int rageAmount = ForgeEventBusSubscriber.rage.get(index);
+		if (rageAmount - 1 > 0) {
+			rageAmount -= 1;
+			ForgeEventBusSubscriber.rage.set(index, rageAmount);
+			PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerRagePointsPacket(rageAmount), ((ServerPlayerEntity) player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+			player.heal(1.0F);
+		}
+	}
+
+	@SubscribeEvent
 	public static void AOTTitanBuff(PlayerEvent event) {
 		if (event.getPlayer() == null)
 			return;

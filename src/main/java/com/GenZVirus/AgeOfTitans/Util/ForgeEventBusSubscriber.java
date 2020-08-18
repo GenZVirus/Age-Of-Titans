@@ -113,9 +113,6 @@ public class ForgeEventBusSubscriber {
 		PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(4, AOTConfig.COMMON.chain_cooldown.get(), AOTConfig.COMMON.chain_cost.get(), AOTConfig.COMMON.chain_damage_ratio.get(), AOTConfig.COMMON.chain_base_damage.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(5, AOTConfig.COMMON.gravity_bomb_cooldown.get(), AOTConfig.COMMON.gravity_bomb_cost.get(), AOTConfig.COMMON.gravity_bomb_ratio.get(), AOTConfig.COMMON.gravity_bomb_bonus_damage.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		AgeOfTitans.LOGGER.info("Packets sent to " + playerName);
-		
-		e.getPlayer().setHealth(e.getPlayer().getMaxHealth() + 10);
-		
 	}
 	
 	// This event registers the Eden Dimension

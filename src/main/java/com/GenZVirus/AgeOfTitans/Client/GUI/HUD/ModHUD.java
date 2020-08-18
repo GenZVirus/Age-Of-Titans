@@ -267,6 +267,7 @@ public class ModHUD {
 		mc.getTextureManager().bindTexture(BAR);
 		AbstractGui.blit(posX, posY, 0, 0, 0, 182, 16, 16, 182);
 		int percentage = (int) (178 * mc.player.getHealth() / mc.player.getMaxHealth());
+		if(percentage > 178) percentage = 178;
 		mc.getTextureManager().bindTexture(HEALTH_BAR_FILL);
 		AbstractGui.blit(posX + 2, posY + 2, 0, offset, 0, percentage, 12, 12, 178);
 		if(mc.player.getAbsorptionAmount() > 0) {

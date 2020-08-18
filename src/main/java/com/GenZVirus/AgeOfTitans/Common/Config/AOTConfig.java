@@ -46,6 +46,11 @@ public abstract class AOTConfig {
 		public final IntValue gravity_bomb_cooldown;
 		public final IntValue gravity_bomb_cost;
 		
+		public final DoubleValue revitalise_healing_ratio;
+		public final DoubleValue revitalise_base_amount;
+		public final IntValue revitalise_cooldown;
+		public final IntValue revitalise_cost;
+		
 		public final IntValue exp_level_up;
 		public final IntValue exp_per_advancement;
 		
@@ -175,7 +180,32 @@ public abstract class AOTConfig {
 								.worldRestart()
 								.defineInRange("gravity_bomb_cost", 10, 0, 1000);
 		
-		builder.pop();
+			builder.pop();
+			
+			builder.comment("This config affects all players and contains the stats of the Revitalise ability")
+		   	   .push("revitalise");
+	
+			revitalise_healing_ratio = builder.comment("This sets the healing multiplier of the Revitalise ability")
+					    				.translation("revitalise.configgui.revitalise_healing_ratio")
+					    				.worldRestart()
+					    				.defineInRange("revitalise_healing_ratio", 0.5D, 0.0D, 1.0D);
+			
+			revitalise_base_amount = builder.comment("This sets the base amount of the Revitalise ability")
+	 								   .translation("revitalise.configgui.revitalise_base_amount")
+	 								   .worldRestart()
+	 								   .defineInRange("revitalise_base_amount", 1.0D, 0.0D, 1024.0D);
+			
+			revitalise_cooldown = builder.comment("This sets the cooldown in seconds of the Revitalise ability")
+									.translation("revitalise.configgui.revitalise_cooldown")
+									.worldRestart()
+									.defineInRange("revitalise_cooldown", 10, 0, 3600);
+			
+			revitalise_cost = builder.comment("This sets the cost of the Revitalise ability")
+								.translation("revitalise.configgui.revitalise_cost")
+								.worldRestart()
+								.defineInRange("revitalise_cost", 10, 0, 1000);
+		
+			builder.pop();
 			
 			builder.comment("This config  affects all players. WARNING! CHANGING THE VALUES HAS TO CHECK THIS EQUATION FOR NO EXPERIENCE LOSES: exp_level_up / exp_per_advancement * exp_per_advancement == exp_level_up")
 		   	   	   .push("leveling");
