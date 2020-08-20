@@ -43,7 +43,7 @@ public class SendPlayerSpellDetailsPacket {
 				Spell.SPELL_LIST.get(pkt.ID).cooldown = pkt.cooldown;
 				Spell.SPELL_LIST.get(pkt.ID).cost = pkt.cost;
 				Spell.SPELL_LIST.get(pkt.ID).ratio = pkt.ratio;
-				Spell.SPELL_LIST.get(pkt.ID).damage = pkt.damage;
+				Spell.SPELL_LIST.get(pkt.ID).base_amount = pkt.damage;
 			}
 		});
 		

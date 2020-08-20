@@ -11,6 +11,7 @@ import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModSkillSlot;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.PlayerUseSpellPacket;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
+import com.GenZVirus.AgeOfTitans.Util.Helpers.KeyboardHelper;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.Widget;
@@ -37,6 +38,7 @@ public class ModScreenEvents {
 	private static int cooldown_Berserker = 0;
 	private static int cooldown_Chain = 0;
 	private static int cooldown_TimeBomb = 0;
+	private static int cooldown_Revitalise = 0;
 	
 	@SubscribeEvent(receiveCanceled = true)
 	public static void onHealthBar(RenderGameOverlayEvent.Pre event) {
@@ -91,6 +93,9 @@ public class ModScreenEvents {
 		if(cooldown_TimeBomb > 0) {
 			cooldown_TimeBomb--;
 		}
+		if(cooldown_Revitalise > 0) {
+			cooldown_Revitalise--;
+		}
 		PlayerEntity player = Minecraft.getInstance().player;
 		if(player == null) return;
 		if(ModHUD.selectedSpell.getId() == 1 && player.getHeldItemMainhand().getItem() instanceof SwordItem && cooldown_SwordSlash == 0 && Spell.RAGE_POINTS >= Spell.SPELL_LIST.get(1).cost) {
@@ -107,22 +112,29 @@ public class ModScreenEvents {
 			}
 		}
 		if(ModHUD.selectedSpell.getId() == 3 && cooldown_Berserker == 0 && Spell.RAGE_POINTS >= Spell.SPELL_LIST.get(3).cost) {
-			if(mc.mouseHelper.isRightDown()) {
+			if(KeyboardHelper.isFireAbilityKeyDown()) {
 				cooldown_Berserker = Spell.SPELL_LIST.get(3).cooldown;
 				PacketHandlerCommon.INSTANCE.sendToServer(new PlayerUseSpellPacket(3, player.getUniqueID()));
 			}
 		}
 		if(ModHUD.selectedSpell.getId() == 4 && cooldown_Chain == 0 && Spell.RAGE_POINTS >= Spell.SPELL_LIST.get(4).cost) {
-			if(mc.mouseHelper.isRightDown()) {
+			if(KeyboardHelper.isFireAbilityKeyDown()) {
 				cooldown_Chain = Spell.SPELL_LIST.get(4).cooldown;
 				PacketHandlerCommon.INSTANCE.sendToServer(new PlayerUseSpellPacket(4, player.getUniqueID()));
 			}
 		}
 		
 		if(ModHUD.selectedSpell.getId() == 5 && cooldown_TimeBomb == 0 && Spell.RAGE_POINTS >= Spell.SPELL_LIST.get(5).cost) {
-			if(mc.mouseHelper.isRightDown()) {
+			if(KeyboardHelper.isFireAbilityKeyDown()) {
 				cooldown_TimeBomb = Spell.SPELL_LIST.get(5).cooldown;
 				PacketHandlerCommon.INSTANCE.sendToServer(new PlayerUseSpellPacket(5, player.getUniqueID()));
+			}
+		}
+		
+		if(ModHUD.selectedSpell.getId() == 6 && cooldown_TimeBomb == 0 && Spell.RAGE_POINTS >= Spell.SPELL_LIST.get(6).cost) {
+			if(KeyboardHelper.isFireAbilityKeyDown()) {
+				cooldown_TimeBomb = Spell.SPELL_LIST.get(6).cooldown;
+				PacketHandlerCommon.INSTANCE.sendToServer(new PlayerUseSpellPacket(6, player.getUniqueID()));
 			}
 		}
 		

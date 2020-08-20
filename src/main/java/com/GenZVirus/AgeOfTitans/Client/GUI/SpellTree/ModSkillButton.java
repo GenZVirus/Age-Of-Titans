@@ -5,10 +5,6 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import com.GenZVirus.AgeOfTitans.AgeOfTitans;
-import com.GenZVirus.AgeOfTitans.Common.Network.EditElementPacket;
-import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
-import com.GenZVirus.AgeOfTitans.Common.Network.ReadElementPacket;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Spell.Requirement;
 import com.GenZVirus.AgeOfTitans.Util.Helpers.KeyboardHelper;
@@ -24,8 +20,6 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Matrix4f;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -34,8 +28,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ModSkillButton extends Widget {
 
 	private ResourceLocation BUTTONS_LOCATION;
-	private ResourceLocation arrow_up = new ResourceLocation(AgeOfTitans.MOD_ID,"textures/gui/arrowup.png");
-	private ResourceLocation arrow_down = new ResourceLocation(AgeOfTitans.MOD_ID,"textures/gui/arrowdown.png");
 	public boolean isSelected = false;
 	public Spell spell;
 	public boolean renderAS = false;
@@ -45,56 +37,8 @@ public class ModSkillButton extends Widget {
 		super(xIn, yIn, widthIn, heightIn, msg);
 		this.BUTTONS_LOCATION = spell.getIcon();
 		this.spell = spell;
-		add = new ModASButton(this.x + 21, this.y - 1, 10, 10, I18n.format("")) {
-			@Override
-			public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
-					if(Spell.POINTS > 0) {
-						BUTTONS_LOCATION = new ResourceLocation(AgeOfTitans.MOD_ID,"textures/gui/arrowup.png");
-					} else {
-						BUTTONS_LOCATION = new ResourceLocation(AgeOfTitans.MOD_ID,"textures/gui/arrowupoff.png");
-					}
-				super.renderButton(p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
-			}
-			@SuppressWarnings("resource")
-			@Override
-			public void onPress() {
-				PlayerEntity player = Minecraft.getInstance().player;
-				String element = "Spell" + "_Level" + spell.getId();
-				PacketHandlerCommon.INSTANCE.sendToServer(new ReadElementPacket(player.getUniqueID(), "PlayerPoints", 1));
-				if(Spell.POINTS > 0) {
-					PacketHandlerCommon.INSTANCE.sendToServer(new EditElementPacket(player.getUniqueID(), element, 1));
-					PacketHandlerCommon.INSTANCE.sendToServer(new EditElementPacket(player.getUniqueID(), "PlayerPoints", -1));
-				}
-				super.onPress();
-			}
-		};
-		subtract = new ModASButton(this.x + 21, this.y + 11, 10, 10, I18n.format("")) {
-			@Override
-			public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
-					if(spell.level > 0) {
-						BUTTONS_LOCATION = new ResourceLocation(AgeOfTitans.MOD_ID,"textures/gui/arrowdown.png");
-					} else {
-						BUTTONS_LOCATION = new ResourceLocation(AgeOfTitans.MOD_ID,"textures/gui/arrowdownoff.png");
-					}
-				super.renderButton(p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
-			}			
-			@SuppressWarnings("resource")
-			@Override
-			public void onPress() {
-				PlayerEntity player = Minecraft.getInstance().player;
-				PacketHandlerCommon.INSTANCE.sendToServer(new ReadElementPacket(player.getUniqueID(), "PlayerPoints", 1));
-				String element = "Spell" + "_Level" + spell.getId();
-				PacketHandlerCommon.INSTANCE.sendToServer(new ReadElementPacket(player.getUniqueID(), element, 1));
-				if(spell.level > 0) {
-					PacketHandlerCommon.INSTANCE.sendToServer(new EditElementPacket(player.getUniqueID(), element, -1));
-					PacketHandlerCommon.INSTANCE.sendToServer(new EditElementPacket(player.getUniqueID(), "PlayerPoints", 1));
-				}
-				
-				super.onPress();
-			}
-		};
-		add.BUTTONS_LOCATION = arrow_up;
-		subtract.BUTTONS_LOCATION = arrow_down;
+		add = new ModADDButton(this.x, this.y, this.spell);
+		subtract = new ModSubtractButton(this.x , this.y, this.spell);
 	}
 	@SuppressWarnings("resource")
 	public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
@@ -108,11 +52,15 @@ public class ModSkillButton extends Widget {
 
 	      AbstractGui.blit(this.x, this.y, 0, 0, 0, this.width, this.height, this.height, this.width);
 	      
+	      if(this.spell == Spell.SPELL_LIST.get(0)) {
+	    	  return;
+	      }
+	      
 	      GL11.glScalef(0.5F, 0.5f, 0.5f);
 	      drawGradientRect(300, this.x*2, this.y*2, this.x*2 + minecraft.fontRenderer.getStringWidth("Lv." + spell.level) + 2, this.y*2 + 10, 0xFF000000, 0xFF000000);	      
 	      minecraft.fontRenderer.drawString("Lv." + spell.level, this.x*2 + 1, this.y*2 + 1, 16777215);
-          GL11.glScalef(2.0F, 2.0f, 2.0f);
-          
+	      GL11.glScalef(2.0F, 2.0f, 2.0f);
+	      
 	      if(this.isHovered) {
 	    	  List<String> stringList;
 	    	  int color;
@@ -134,14 +82,6 @@ public class ModSkillButton extends Widget {
 	    	  }
 	    	  
 	    	  this.renderTooltip(stringList, this.x - 100, this.y + 36, Minecraft.getInstance().fontRenderer, color);
-	      }
-	      
-	      if(this.renderAS && this.spell.meetsRequirements()) {
-		      ModScreen.SCREEN.getButtons().add(add);
-		      ModScreen.SCREEN.getButtons().add(subtract);
-	      } else if(ModScreen.SCREEN.getButtons().contains(add) && ModScreen.SCREEN.getButtons().contains(subtract)) {
-		      ModScreen.SCREEN.getButtons().remove(add);
-		      ModScreen.SCREEN.getButtons().remove(subtract);
 	      }
 	   }
 	

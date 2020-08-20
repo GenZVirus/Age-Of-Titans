@@ -56,4 +56,9 @@ public class KeyboardHelper {
 	public static boolean isLockHUDKeyDown() {
 		return InputMappings.isKeyDown(WINDOW, ModKeybind.LOCKSHUD.getKey().getKeyCode());
 	}
+	
+	@OnlyIn(Dist.CLIENT)
+	public static boolean isFireAbilityKeyDown() {
+		return InputMappings.isKeyDown(WINDOW, ModKeybind.FIRE_ABILITY.getKey().getKeyCode());
+	}
 }

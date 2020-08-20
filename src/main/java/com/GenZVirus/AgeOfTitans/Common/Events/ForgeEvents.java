@@ -33,6 +33,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.item.ItemEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
@@ -62,8 +63,8 @@ public class ForgeEvents {
 			return;
 		int index = ForgeEventBusSubscriber.players.indexOf(player);
 		int rageAmount = ForgeEventBusSubscriber.rage.get(index);
-		if (rageAmount - 1 > 0) {
-			rageAmount -= 1;
+		if (rageAmount - AOTConfig.COMMON.revitalise_cost.get() > 0) {
+			rageAmount -= AOTConfig.COMMON.revitalise_cost.get();
 			ForgeEventBusSubscriber.rage.set(index, rageAmount);
 			PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerRagePointsPacket(rageAmount), ((ServerPlayerEntity) player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 			player.heal(1.0F);
@@ -84,7 +85,7 @@ public class ForgeEvents {
 	}
 
 	@SubscribeEvent
-	public static void AOTGravityBombDamageMultiplier(LivingHurtEvent event) {
+	public static void AOTGravityBombDamageMultiplier(LivingDamageEvent event) {
 		if (event.getEntity().world.isRemote)
 			return;
 		if (event.getEntityLiving().isPotionActive(EffectInit.GRAVITY_FIELD.get())) {
@@ -165,7 +166,7 @@ public class ForgeEvents {
 			return;
 		PlayerEntity player = event.getPlayer();
 		Random rand = new Random();
-		if (player.getCombatTracker().getCombatDuration() == 0 && rand.nextInt(100) % 3 == 0) {
+		if (player.getCombatTracker().getCombatDuration() == 0 && rand.nextInt(3) == 1) {
 			if (!ForgeEventBusSubscriber.players.contains(player))
 				return;
 			int index = ForgeEventBusSubscriber.players.indexOf(player);

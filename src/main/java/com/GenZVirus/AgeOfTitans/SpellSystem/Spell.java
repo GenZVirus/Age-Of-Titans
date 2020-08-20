@@ -46,7 +46,7 @@ public class Spell {
 	public int level = 0;
 	public double ratio = 0;
 	public int cooldown = 0;
-	public double damage = 0;
+	public double base_amount = 0;
 	public int cost = 0;
 	public List<Requirement> requirements = Lists.newArrayList();
 
@@ -106,7 +106,7 @@ public class Spell {
 	}
 
 	public static final List<Spell> SPELL_LIST = Lists.newArrayList();
-	private static final Spell NO_SPELL = new Spell(0, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/nospell.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/nospell.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/nospell.png"), "", 0, 0);
+	private static final Spell NO_SPELL = new Spell(0, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/noicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/noicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/noiconhud.png"), "", 0, 0);
 	private static final Spell SWORD_SLASH = new Spell(1, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashiconhud.png"), "Sword Slash", 0, AOTConfig.COMMON.sword_slash_cost.get()) {
 
 		@Override
@@ -161,7 +161,7 @@ public class Spell {
 		@Override
 		public List<String> getDetails() {
 			List<String> list = Lists.newArrayList();
-			list.add("Damage " + "(" + Double.toString(this.damage + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.damage) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
+			list.add("Damage " + "(" + Double.toString(this.base_amount + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.base_amount) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
 			list.add("");
 			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
 			list.add("");
@@ -244,7 +244,7 @@ public class Spell {
 		@Override
 		public List<String> getDetails() {
 			List<String> list = Lists.newArrayList();
-			list.add("Damage " + "(" + Double.toString(this.damage + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.damage) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
+			list.add("Damage " + "(" + Double.toString(this.base_amount + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.base_amount) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
 			list.add("");
 			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
 			list.add("");
@@ -292,7 +292,7 @@ public class Spell {
 		@Override
 		public List<String> getDetails() {
 			List<String> list = Lists.newArrayList();
-			list.add("Bonus damage: " + "\u00A73" + Double.toString(this.damage));
+			list.add("Bonus damage: " + "\u00A73" + Double.toString(this.base_amount));
 			list.add("");
 			list.add("Duration " + "(" + Double.toString(20.0D + this.ratio * this.level) + "): " + "\u00A73" + "20" + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level) + "\u00A7f" + " seconds");
 			list.add("");
@@ -355,7 +355,7 @@ public class Spell {
 		@Override
 		public List<String> getDetails() {
 			List<String> list = Lists.newArrayList();
-			list.add("Damage " + "(" + Double.toString(this.damage + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.damage) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
+			list.add("Damage " + "(" + Double.toString(this.base_amount + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.base_amount) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
 			list.add("");
 			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
 			list.add("");
@@ -410,7 +410,7 @@ public class Spell {
 		@Override
 		public List<String> getDetails() {
 			List<String> list = Lists.newArrayList();
-			list.add("Bonus Damage " + "(x" + Double.toString(this.damage + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.damage) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
+			list.add("Bonus Damage " + "(x" + Double.toString(this.base_amount + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.base_amount) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
 			list.add("");
 			list.add("Duration: " + "\u00A73" + "3" + "\u00A7f" + " seconds");
 			list.add("");
@@ -424,7 +424,7 @@ public class Spell {
 
 	};
 
-	private static final Spell REVITALISE = new Spell(6, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonhud.png"), "Berserker", 0, AOTConfig.COMMON.berserker_cost.get()) {
+	private static final Spell REVITALISE = new Spell(6, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/revitaliseicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/revitaliseiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/revitaliseiconhud.png"), "Revitalise", 0, AOTConfig.COMMON.revitalise_cost.get()) {
 
 		@Override
 		public void initRequirements() {
@@ -452,7 +452,7 @@ public class Spell {
 
 		public List<String> getDescription() {
 			List<String> list = Lists.newArrayList();
-			list.add("Berserker is all or nothing. " + "Empowers the user, giving him strength and speed. Jumping over mountains is an easy fit. " + "Even blocks and enemies can't resist your punches. " + "If the target enemy doesn't have an helmet to protect his skull, a critical hit will be their undoing.");
+			list.add("Revitalise heals the user overtime. While the health of the user is below the maximum he has, Revitalise will replenish what is missing as long as the user has rage points.");
 			list.add("");
 			list.add("Hold Shift for details");
 			return list;
@@ -461,9 +461,7 @@ public class Spell {
 		@Override
 		public List<String> getDetails() {
 			List<String> list = Lists.newArrayList();
-			list.add("Bonus damage: " + "\u00A73" + Double.toString(this.damage));
-			list.add("");
-			list.add("Duration " + "(" + Double.toString(20.0D + this.ratio * this.level) + "): " + "\u00A73" + "20" + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level) + "\u00A7f" + " seconds");
+			list.add("Healing amount per tick " + "(" + Double.toString(this.base_amount + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(base_amount) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level) + "\u00A7f" + " hps");
 			list.add("");
 			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
 			list.add("");

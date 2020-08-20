@@ -13,6 +13,8 @@ public class ModKeybind {
 	 public static final KeyBinding CHARACTER = new KeyBinding("key.character", GLFW.GLFW_KEY_C, "key.categories.ageoftitans");
 	 public static final KeyBinding SCROLL_UP = new KeyBinding("key.scroll_up", GLFW.GLFW_KEY_X, "key.categories.ageoftitans");
 	 public static final KeyBinding SCROLL_DOWN = new KeyBinding("key.scroll_down", GLFW.GLFW_KEY_Z, "key.categories.ageoftitans");
+	 public static final KeyBinding FIRE_ABILITY = new KeyBinding("key.fire_ability", GLFW.GLFW_KEY_F, "key.categories.ageoftitans");
+	 
 	 
 	 // Registering keybings
 	 
@@ -22,6 +24,7 @@ public class ModKeybind {
 	        ClientRegistry.registerKeyBinding(CHARACTER);
 	        ClientRegistry.registerKeyBinding(SCROLL_UP);
 	        ClientRegistry.registerKeyBinding(SCROLL_DOWN);
+	        ClientRegistry.registerKeyBinding(FIRE_ABILITY);
 	    }
 	
 }

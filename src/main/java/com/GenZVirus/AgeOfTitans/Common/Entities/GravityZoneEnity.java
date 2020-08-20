@@ -65,7 +65,7 @@ public class GravityZoneEnity extends Entity {
 		List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this, aabb);
 		
 		for(Entity entity : list) {
-			if(entity instanceof LivingEntity) {
+			if(entity instanceof LivingEntity && entity.isNonBoss()) {
 				((LivingEntity)entity).addPotionEffect(new EffectInstance(EffectInit.GRAVITY_FIELD.get(), this.duration, this.level));
 			}
 			Vec3d vec = new Vec3d(this.permanentPos.getX() - entity.getPosX(), this.permanentPos.getY() - entity.getPosY(), this.permanentPos.getZ() - entity.getPosZ());

@@ -68,7 +68,6 @@ public class SwordSlashRender extends EntityRenderer<SwordSlashEntity> {
 			nr += 0.1D;
 
 		}
-		System.out.println("Rendering");
 
 		for (int i = 0; i < 10; i++) {
 			pitchTop = pitchRadian - 1.5D + 0.1D * i;
