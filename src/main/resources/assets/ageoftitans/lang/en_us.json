@@ -55,6 +55,10 @@
 	"block.ageoftitans.eden_wood_fence": "Eden Wooden Fence",
 	"block.ageoftitans.eden_wood_button": "Eden Wooden Button",
 	"block.ageoftitans.eden_leaves": "Eden Leaves",
-	"block.ageoftitans.eden_sapling": "Eden Sapling"
+	"block.ageoftitans.eden_sapling": "Eden Sapling",
+	
+	"commands.addlevels": "%d's levels were added to %s!",
+	"commands.resetlevel": "%s's abilities have been reset!",
+	"commands.setlevel": "%s's level was set to %d!"
 	
 }

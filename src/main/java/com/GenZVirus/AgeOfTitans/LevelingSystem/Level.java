@@ -20,6 +20,7 @@ public class Level {
 	@SubscribeEvent
 	public static void levelUp(AdvancementEvent event) {
 		PlayerEntity player = event.getPlayer();
+		if(!AOTConfig.COMMON.leveling_from_advancements.get()) return;
 		XMLFileJava.checkFileAndMake(player.getUniqueID(), player.getName().getFormattedText());
 		if(Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "PlayerExp")) == AOTConfig.COMMON.exp_level_up.get()) {
 		XMLFileJava.editElement(player.getUniqueID(), "PlayerLevel", Integer.toString((Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "PlayerLevel")) + 1)));

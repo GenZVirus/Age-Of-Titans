@@ -5,6 +5,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -51,6 +52,7 @@ public abstract class AOTConfig {
 		public final IntValue revitalise_cooldown;
 		public final IntValue revitalise_cost;
 		
+		public final BooleanValue leveling_from_advancements;
 		public final IntValue exp_level_up;
 		public final IntValue exp_per_advancement;
 		
@@ -219,6 +221,11 @@ public abstract class AOTConfig {
 									.translation("leveling.configgui.exp_per_advancement")
 									.worldRestart()
 									.defineInRange("exp_per_advancement", 10, 1, 1000000);
+			
+			leveling_from_advancements = builder.comment("Enable or disable leveling from advancements. Default is enabled or true")
+												.translation("leveling.configgui.leveling_from_advancements")
+												.worldRestart()
+												.define("leveling_from_advancements", true);
 			builder.pop();
 			
 			builder.comment("This config affects one players. HUD animation adjustments")
