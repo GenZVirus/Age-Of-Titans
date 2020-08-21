@@ -1,10 +1,10 @@
 {
-	"gui.titan": "Titan",
-	"gui.reaper": "Reaper",
+	"gui.active": "Active",
+	"gui.passive": "Passive",
 	"gui.learn_spells": "Learn",	
 	
 	"key.categories.ageoftitans": "Age of Titans",
-	"key.character": "Skill Tree",
+	"key.ability_tree": "Ability Tree",
 	"key.lockhud": "Lock/Unlock HUD",
 	"key.scroll_up": "Next Spell",
 	"key.scroll_down": "Previous Spell",

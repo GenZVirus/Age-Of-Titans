@@ -78,10 +78,21 @@ public class ForgeEvents {
 		if (event.getPlayer().world.isRemote)
 			return;
 		PlayerEntity player = event.getPlayer();
+		if(player instanceof ServerPlayerEntity) {
+			if(((ServerPlayerEntity)player).connection == null) return;
+		}
+		if(!ForgeEventBusSubscriber.players.contains(player)) return;
+//		XMLFileJava.checkFileAndMake(player.getUniqueID(), player.getName().getFormattedText());
 		if (Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "ApplesEaten")) <= 0)
 			return;
 		int playerLevel = Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "PlayerLevel"));
-		player.addPotionEffect(new EffectInstance(EffectInit.TITAN.get(), 200, playerLevel / 10));
+		if(player.isPotionActive(EffectInit.TITAN.get())) {
+			if(player.getActivePotionEffect(EffectInit.TITAN.get()).getDuration() <= 100 || player.getActivePotionEffect(EffectInit.TITAN.get()).getAmplifier() < (int) (playerLevel / 10)) {
+				player.addPotionEffect(new EffectInstance(EffectInit.TITAN.get(), 200, playerLevel / 10));
+			}
+		} else {
+			player.addPotionEffect(new EffectInstance(EffectInit.TITAN.get(), 200, playerLevel / 10));
+		}
 	}
 
 	@SubscribeEvent

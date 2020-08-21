@@ -15,5 +15,4 @@ public class SoundInit {
 	public static final RegistryObject<SoundEvent> CHAIN = SOUNDS.register("entity.chain.ambient", () -> new SoundEvent(new ResourceLocation(AgeOfTitans.MOD_ID, "entity.chain.ambient")));
 	public static final RegistryObject<SoundEvent> SWORD_SLASH_LAUNCH = SOUNDS.register("entity.sword_slash.launch", () -> new SoundEvent(new ResourceLocation(AgeOfTitans.MOD_ID, "entity.sword_slash.launch")));
 	public static final RegistryObject<SoundEvent> SHIELD_BASH_LAUNCH = SOUNDS.register("entity.shield_bash.launch", () -> new SoundEvent(new ResourceLocation(AgeOfTitans.MOD_ID, "entity.shield_bash.launch")));
-
 }

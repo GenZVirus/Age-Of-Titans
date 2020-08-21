@@ -33,7 +33,7 @@ public class KeyboardHelper {
 	
 	@OnlyIn(Dist.CLIENT)
 	public static boolean isCharacterKeyDown() {
-		return InputMappings.isKeyDown(WINDOW, ModKeybind.CHARACTER.getKey().getKeyCode());
+		return InputMappings.isKeyDown(WINDOW, ModKeybind.ABILITY_TREE.getKey().getKeyCode());
 	}
 
 	// Checks if the SCROLL_UP is being held down, which is a key that changes what skill is selected from the HUD

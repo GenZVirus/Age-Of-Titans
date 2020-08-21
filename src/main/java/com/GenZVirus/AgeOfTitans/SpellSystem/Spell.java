@@ -22,6 +22,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -401,7 +402,7 @@ public class Spell {
 
 		public List<String> getDescription() {
 			List<String> list = Lists.newArrayList();
-			list.add("Gravity Bomb provides high utility. " + "On impact pulls all entities, including the caster, into the center of the gravitational field increasing the damage taken.");
+			list.add("Gravity Bomb provides high utility. " + "On impact pulls all entities, including the caster, into the center of the gravitational field increasing the damage taken. Boss Entities do not take increase damage.");
 			list.add("");
 			list.add("Hold Shift for details");
 			return list;
@@ -447,7 +448,7 @@ public class Spell {
 		@Override
 		public void effect(World worldIn, PlayerEntity playerIn) {
 			playerIn.addPotionEffect(new EffectInstance(EffectInit.REVITALISE.get(), 100));
-			System.out.println(playerIn.getMaxHealth());
+			playerIn.world.playSound(null, playerIn.getPosition(), SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.AMBIENT, 1.0F, 1.0F);
 		}
 
 		public List<String> getDescription() {

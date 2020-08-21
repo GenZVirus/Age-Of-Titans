@@ -41,11 +41,7 @@ public class ModScreen extends Screen {
 
 	// The texture for human skill tree
 
-	public ResourceLocation BACKGROUND_TEXTURE_TITAN = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/character_background_titan.png");
-
-	// The texture for reaper skill tree
-
-	public ResourceLocation BACKGROUND_TEXTURE_REAPER = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/character_background_reaper.png");
+	public ResourceLocation BACKGROUND_TEXTURE_TITAN = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/titan_ability_tree.png");
 
 	public ResourceLocation LEVEL_REQUIREMENT = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/level_requirement.png");
 
@@ -60,9 +56,10 @@ public class ModScreen extends Screen {
 	public int windowYPos = (this.height - this.ySize) / 2;
 
 	// The buttons for changing the skill tree
-
-	public ModButton Titan;
-	public ModButton Reaper;
+	
+	public ModButton activePage;
+	public ModButton Active;
+	public ModButton Passive;
 
 	// The button for learning spells
 
@@ -71,7 +68,7 @@ public class ModScreen extends Screen {
 	// The button for spells in the skill tree
 
 	public ModSkillButton SwordSlash, ShieldBash, Berserker, Chain, TimeBomb, Revitalize;
-	public ModSkillButton NoSpell1, NoSpell2, NoSpell3, NoSpell4, NoSpell5, NoSpell6, NoSpell7, NoSpell8, NoSpell9, NoSpell10, NoSpell11, NoSpell12, NoSpell13, NoSpell14, NoSpell15;
+	public ModSkillButton NoSpell1, NoSpell2, NoSpell3, NoSpell4, NoSpell5, NoSpell6, NoSpell7, NoSpell8, NoSpell9, NoSpell10, NoSpell11, NoSpell12, NoSpell13, NoSpell14, NoSpell15, NoSpell16, NoSpell17, NoSpell18, NoSpell19, NoSpell20, NoSpell21;
 
 	// The skill slots in the skill tree
 
@@ -94,12 +91,12 @@ public class ModScreen extends Screen {
 	@Override
 	public void init() {
 		super.init();
-		windowXPos = (this.width - this.xSize) / 2;
-		windowYPos = (this.height - this.ySize) / 2;
+		this.windowXPos = (this.width - this.xSize) / 2;
+		this.windowYPos = (this.height - this.ySize) / 2;
 
 		// If you press on the human button the background changes to the Human one
 
-		this.Titan = new ModButton(windowXPos + 4, windowYPos + 4, 156, 20, I18n.format("gui.titan")) {
+		this.Active = new ModButton(windowXPos + 4, windowYPos + 4, 156, 20, I18n.format("gui.active")) {
 			@Override
 			public void onPress() {
 				this.isPressed = true;
@@ -110,19 +107,30 @@ public class ModScreen extends Screen {
 							((ModButton) button).isPressed = false;
 						}
 					}
-				}
+					
+					if (button instanceof ModADDButton) {
+						((ModADDButton) button).isActive = false;
+					}
+
+					if (button instanceof ModSubtractButton) {
+						((ModSubtractButton) button).isActive = false;
+					}
+					
+				}							
 				super.onPress();
 			}
 		};
 
 		// By default human background is selected
 
-		Titan.isPressed = true;
-		Titan.active = false;
+		this.Active.isPressed = true;
+		this.Active.active = false;
+		
+		this.activePage = this.Active;
 
 		// If you press on the human button the background changes to the Human one
 
-		this.Reaper = new ModButton(windowXPos + 4 + 156, windowYPos + 4, 156, 20, I18n.format("gui.reaper")) {
+		this.Passive = new ModButton(windowXPos + 4 + 156, windowYPos + 4, 156, 20, I18n.format("gui.passive")) {
 			@Override
 			public void onPress() {
 				this.isPressed = true;
@@ -133,7 +141,16 @@ public class ModScreen extends Screen {
 							((ModButton) button).isPressed = false;
 						}
 					}
-				}
+					
+					if (button instanceof ModADDButton) {
+						((ModADDButton) button).isActive = false;
+					}
+
+					if (button instanceof ModSubtractButton) {
+						((ModSubtractButton) button).isActive = false;
+					}
+					
+				}				
 				super.onPress();
 			}
 		};
@@ -151,22 +168,28 @@ public class ModScreen extends Screen {
 		List<Integer> three_elements_row = Lists.newArrayList(70, 136, 202);
 		List<Integer> rows = Lists.newArrayList(35, 60, 90, 120, 150, 180);
 
-		this.NoSpell1 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(2), windowYPos + 4 + rows.get(0), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell2 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(3), windowYPos + 4 + rows.get(0), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell3 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(1), windowYPos + 4 + rows.get(2), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell4 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(2), windowYPos + 4 + rows.get(2), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell5 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(3), windowYPos + 4 + rows.get(2), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell6 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(0), windowYPos + 4 + rows.get(3), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell7 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(1), windowYPos + 4 + rows.get(3), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell8 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(2), windowYPos + 4 + rows.get(3), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell9 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(0), windowYPos + 4 + rows.get(4), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell10 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(1), windowYPos + 4 + rows.get(4), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell11 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(2), windowYPos + 4 + rows.get(4), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell12 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(3), windowYPos + 4 + rows.get(4), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell13 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(0), windowYPos + 4 + rows.get(5), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell14 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(1), windowYPos + 4 + rows.get(5), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell15 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(2), windowYPos + 4 + rows.get(5), 20, 20, "", Spell.SPELL_LIST.get(0));
-		
+		this.NoSpell1 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(0), windowYPos + 4 + rows.get(0), 20, 20, "", Spell.SPELL_LIST.get(0));
+		this.NoSpell2 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(1), windowYPos + 4 + rows.get(0), 20, 20, "", Spell.SPELL_LIST.get(0));
+		this.NoSpell3 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(2), windowYPos + 4 + rows.get(0), 20, 20, "", Spell.SPELL_LIST.get(0));
+		this.NoSpell4 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(3), windowYPos + 4 + rows.get(0), 20, 20, "", Spell.SPELL_LIST.get(0));
+		this.NoSpell5 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(0), windowYPos + 4 + rows.get(1), 20, 20, "", Spell.SPELL_LIST.get(0));
+		this.NoSpell6 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(1), windowYPos + 4 + rows.get(1), 20, 20, "", Spell.SPELL_LIST.get(0));
+		this.NoSpell7 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(2), windowYPos + 4 + rows.get(1), 20, 20, "", Spell.SPELL_LIST.get(0));
+		this.NoSpell8 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(0), windowYPos + 4 + rows.get(2), 20, 20, "", Spell.SPELL_LIST.get(0));
+		this.NoSpell9 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(1), windowYPos + 4 + rows.get(2), 20, 20, "", Spell.SPELL_LIST.get(0));
+		this.NoSpell10 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(2), windowYPos + 4 + rows.get(2), 20, 20, "", Spell.SPELL_LIST.get(0));
+		this.NoSpell11 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(3), windowYPos + 4 + rows.get(2), 20, 20, "", Spell.SPELL_LIST.get(0));
+		this.NoSpell12 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(0), windowYPos + 4 + rows.get(3), 20, 20, "", Spell.SPELL_LIST.get(0));
+		this.NoSpell13 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(1), windowYPos + 4 + rows.get(3), 20, 20, "", Spell.SPELL_LIST.get(0));
+		this.NoSpell14 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(2), windowYPos + 4 + rows.get(3), 20, 20, "", Spell.SPELL_LIST.get(0));
+		this.NoSpell15 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(0), windowYPos + 4 + rows.get(4), 20, 20, "", Spell.SPELL_LIST.get(0));
+		this.NoSpell16 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(1), windowYPos + 4 + rows.get(4), 20, 20, "", Spell.SPELL_LIST.get(0));
+		this.NoSpell17 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(2), windowYPos + 4 + rows.get(4), 20, 20, "", Spell.SPELL_LIST.get(0));
+		this.NoSpell18 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(3), windowYPos + 4 + rows.get(4), 20, 20, "", Spell.SPELL_LIST.get(0));
+		this.NoSpell19 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(0), windowYPos + 4 + rows.get(5), 20, 20, "", Spell.SPELL_LIST.get(0));
+		this.NoSpell20 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(1), windowYPos + 4 + rows.get(5), 20, 20, "", Spell.SPELL_LIST.get(0));
+		this.NoSpell21 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(2), windowYPos + 4 + rows.get(5), 20, 20, "", Spell.SPELL_LIST.get(0));
+
 		this.SwordSlash = new ModSkillButton(windowXPos + 4 + four_elements_row.get(0), windowYPos + 4 + rows.get(0), 20, 20, "", Spell.SPELL_LIST.get(1));
 		this.ShieldBash = new ModSkillButton(windowXPos + 4 + three_elements_row.get(0), windowYPos + 4 + rows.get(1), 20, 20, "", Spell.SPELL_LIST.get(2));
 		this.Berserker = new ModSkillButton(windowXPos + 4 + four_elements_row.get(0), windowYPos + 4 + rows.get(2), 20, 20, "", Spell.SPELL_LIST.get(3));
@@ -185,7 +208,7 @@ public class ModScreen extends Screen {
 								((ModADDButton) button).isActive = true;
 							}
 						}
-						
+
 						if (button instanceof ModSubtractButton) {
 							if (((ModSubtractButton) button).spell.meetsRequirements()) {
 								((ModSubtractButton) button).isActive = true;
@@ -214,59 +237,82 @@ public class ModScreen extends Screen {
 	}
 
 	public void addButtons() {
-		buttons.clear();
+		this.buttons.clear();
 
-		buttons.add(slot1);
-		buttons.add(slot2);
-		buttons.add(slot3);
-		buttons.add(slot4);
+		this.buttons.add(slot1);
+		this.buttons.add(slot2);
+		this.buttons.add(slot3);
+		this.buttons.add(slot4);
 
 		this.loadSpells();
 
-		buttons.add(Titan);
-		buttons.add(Reaper);
+		this.buttons.add(Active);
+		this.buttons.add(Passive);
 
-		buttons.add(LearnSpells);
+		this.buttons.add(LearnSpells);
 	}
 
 	public void loadSpells() {
 
-		if (this.Titan.isPressed) {
-			buttons.add(Berserker.add);
-			buttons.add(Berserker.subtract);
-			buttons.add(ShieldBash.add);
-			buttons.add(ShieldBash.subtract);
-			buttons.add(Chain.add);
-			buttons.add(Chain.subtract);
-			buttons.add(TimeBomb.add);
-			buttons.add(TimeBomb.subtract);
-			buttons.add(Revitalize.add);
-			buttons.add(Revitalize.subtract);
-			buttons.add(SwordSlash.add);
-			buttons.add(SwordSlash.subtract);
-			
-			buttons.add(NoSpell1);
-			buttons.add(NoSpell2);
-			buttons.add(NoSpell3);
-			buttons.add(NoSpell4);
-			buttons.add(NoSpell5);
-			buttons.add(NoSpell6);
-			buttons.add(NoSpell7);
-			buttons.add(NoSpell8);
-			buttons.add(NoSpell9);
-			buttons.add(NoSpell10);
-			buttons.add(NoSpell11);
-			buttons.add(NoSpell12);
-			buttons.add(NoSpell13);
-			buttons.add(NoSpell14);
-			buttons.add(NoSpell15);
-			
-			buttons.add(Berserker);
-			buttons.add(ShieldBash);
-			buttons.add(Chain);
-			buttons.add(TimeBomb);
-			buttons.add(Revitalize);
-			buttons.add(SwordSlash);
+		if (this.Active.isPressed) {
+			this.buttons.add(Berserker.add);
+			this.buttons.add(Berserker.subtract);
+			this.buttons.add(ShieldBash.add);
+			this.buttons.add(ShieldBash.subtract);
+			this.buttons.add(Chain.add);
+			this.buttons.add(Chain.subtract);
+			this.buttons.add(TimeBomb.add);
+			this.buttons.add(TimeBomb.subtract);
+			this.buttons.add(Revitalize.add);
+			this.buttons.add(Revitalize.subtract);
+			this.buttons.add(SwordSlash.add);
+			this.buttons.add(SwordSlash.subtract);
+
+			this.buttons.add(NoSpell3);
+			this.buttons.add(NoSpell4);
+			this.buttons.add(NoSpell9);
+			this.buttons.add(NoSpell10);
+			this.buttons.add(NoSpell11);
+			this.buttons.add(NoSpell12);
+			this.buttons.add(NoSpell13);
+			this.buttons.add(NoSpell14);
+			this.buttons.add(NoSpell15);
+			this.buttons.add(NoSpell16);
+			this.buttons.add(NoSpell17);
+			this.buttons.add(NoSpell18);
+			this.buttons.add(NoSpell19);
+			this.buttons.add(NoSpell20);
+			this.buttons.add(NoSpell21);
+
+			this.buttons.add(Berserker);
+			this.buttons.add(ShieldBash);
+			this.buttons.add(Chain);
+			this.buttons.add(TimeBomb);
+			this.buttons.add(Revitalize);
+			this.buttons.add(SwordSlash);
+		} else {
+
+			this.buttons.add(NoSpell1);
+			this.buttons.add(NoSpell2);
+			this.buttons.add(NoSpell3);
+			this.buttons.add(NoSpell4);
+			this.buttons.add(NoSpell5);
+			this.buttons.add(NoSpell6);
+			this.buttons.add(NoSpell7);
+			this.buttons.add(NoSpell8);
+			this.buttons.add(NoSpell9);
+			this.buttons.add(NoSpell10);
+			this.buttons.add(NoSpell11);
+			this.buttons.add(NoSpell12);
+			this.buttons.add(NoSpell13);
+			this.buttons.add(NoSpell14);
+			this.buttons.add(NoSpell15);
+			this.buttons.add(NoSpell16);
+			this.buttons.add(NoSpell17);
+			this.buttons.add(NoSpell18);
+			this.buttons.add(NoSpell19);
+			this.buttons.add(NoSpell20);
+			this.buttons.add(NoSpell21);
 		}
 	}
 
@@ -288,6 +334,18 @@ public class ModScreen extends Screen {
 				}
 			}
 		}
+		
+		if(activePage == Passive && Active.isPressed) {
+			activePage = Active;
+			addButtons();
+		}
+		
+		if(activePage == Active && Passive.isPressed) {
+			activePage = Passive;
+			addButtons();
+		}
+		
+		
 		super.tick();
 	}
 
@@ -309,21 +367,11 @@ public class ModScreen extends Screen {
 
 	@Override
 	public void render(int mouseX, int mouseY, float partialTicks) {
-		windowXPos = (this.width - this.xSize) / 2;
-		windowYPos = (this.height - this.ySize) / 2;
+		this.windowXPos = (this.width - this.xSize) / 2;
+		this.windowYPos = (this.height - this.ySize) / 2;
 		this.renderBackground();
 
-		// Decides if it renders the human background or the reaper background
-
-		if (this.Titan.isPressed) {
-			this.minecraft.getTextureManager().bindTexture(BACKGROUND_TEXTURE_TITAN);
-			this.addButtons();
-		} else if (this.Reaper.isPressed) {
-			this.minecraft.getTextureManager().bindTexture(BACKGROUND_TEXTURE_REAPER);
-			this.addButtons();
-		} else {
-			this.minecraft.getTextureManager().bindTexture(BACKGROUND_TEXTURE_TITAN);
-		}
+		this.minecraft.getTextureManager().bindTexture(this.BACKGROUND_TEXTURE_TITAN);
 
 		/*
 		 * First param is the X position Second param is the y position Third param is
@@ -337,33 +385,33 @@ public class ModScreen extends Screen {
 
 		// Add background
 
-		AbstractGui.blit(windowXPos, windowYPos, 0, 0, 0, this.xSize, this.ySize, this.ySize, this.xSize);
+		AbstractGui.blit(this.windowXPos, this.windowYPos, 0, 0, 0, this.xSize, this.ySize, this.ySize, this.xSize);
 
 		// Add level bar
 
 		GL11.glScalef(0.8F, 0.8F, 0.8F);
 
-		this.minecraft.getTextureManager().bindTexture(LEVEL_REQUIREMENT);
-		AbstractGui.blit(((int) ((windowXPos + 20) * 1.25)), ((int) ((windowYPos + 40) * 1.25)), 0, 0, 0, 26, 202, 202, 26);
+		this.minecraft.getTextureManager().bindTexture(this.LEVEL_REQUIREMENT);
+		AbstractGui.blit(((int) ((this.windowXPos + 20) * 1.25)), ((int) ((this.windowYPos + 40) * 1.25)), 0, 0, 0, 26, 202, 202, 26);
 
-		this.minecraft.getTextureManager().bindTexture(CURRENT_LEVEL);
+		this.minecraft.getTextureManager().bindTexture(this.CURRENT_LEVEL);
 		int level = Spell.PLAYER_LEVEL;
 		if (level > 100)
 			level = 100;
 		level += 10;
-		AbstractGui.blit(((int) ((windowXPos + 20) * 1.25)), ((int) ((windowYPos + 40) * 1.25)), 0, 0, 0, 26, 202 * level / 110, 202, 26);
+		AbstractGui.blit(((int) ((this.windowXPos + 20) * 1.25)), ((int) ((this.windowYPos + 40) * 1.25)), 0, 0, 0, 26, 202 * level / 110, 202, 26);
 
 		final int zLevel = 300;
 		IRenderTypeBuffer.Impl renderType = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
 		MatrixStack textStack = new MatrixStack();
 		textStack.translate(0.0D, 0.0D, (double) zLevel);
 		Matrix4f textLocation = textStack.getLast().getMatrix();
-		font.renderString("0", ((windowXPos + 28) * 1.25F), ((windowYPos + 44) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
-		font.renderString("20", ((windowXPos + 26) * 1.25F), ((windowYPos + 73) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
-		font.renderString("40", ((windowXPos + 26) * 1.25F), ((windowYPos + 102) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
-		font.renderString("60", ((windowXPos + 26) * 1.25F), ((windowYPos + 130) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
-		font.renderString("80", ((windowXPos + 26) * 1.25F), ((windowYPos + 159) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
-		font.renderString("100", ((windowXPos + 23) * 1.25F), ((windowYPos + 188) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
+		font.renderString("0", ((this.windowXPos + 28) * 1.25F), ((this.windowYPos + 44) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
+		font.renderString("20", ((this.windowXPos + 26) * 1.25F), ((this.windowYPos + 73) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
+		font.renderString("40", ((this.windowXPos + 26) * 1.25F), ((this.windowYPos + 102) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
+		font.renderString("60", ((this.windowXPos + 26) * 1.25F), ((this.windowYPos + 130) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
+		font.renderString("80", ((this.windowXPos + 26) * 1.25F), ((this.windowYPos + 159) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
+		font.renderString("100", ((this.windowXPos + 23) * 1.25F), ((this.windowYPos + 188) * 1.25F), 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
 		renderType.finish();
 
 		GL11.glScalef(1.25F, 1.25F, 1.25F);
@@ -375,7 +423,7 @@ public class ModScreen extends Screen {
 		List<String> list = Lists.newArrayList();
 		list.add("Points: " + Spell.POINTS);
 
-		drawHoveringText(list, windowXPos + this.xSize - 4 - 60, windowYPos + this.ySize - 4 - 20, this.width, this.height, -1, font);
+		drawHoveringText(list, this.windowXPos + this.xSize - 4 - 60, this.windowYPos + this.ySize - 4 - 20, this.width, this.height, -1, font);
 
 	}
 
