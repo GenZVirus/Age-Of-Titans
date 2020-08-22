@@ -11,6 +11,12 @@
 	"key.fire_ability": "Fire Ability",
 
 	"effect.ageoftitans.titan": "Titan",
+	"effect.ageoftitans.monster_easy": "Monster",
+	"effect.ageoftitans.monster_normal": "Monster",
+	"effect.ageoftitans.monster_hard": "Monster",
+	"effect.ageoftitans.tamable_easy": "Pet",
+	"effect.ageoftitans.tamable_normal": "Pet",
+	"effect.ageoftitans.tamable_hard": "Pet",
 	"effect.ageoftitans.berserker": "Berserker",
 	"effect.ageoftitans.gravity_field": "Gravity Field",
 	"effect.ageoftitans.holy_plains": "Holy Plains",

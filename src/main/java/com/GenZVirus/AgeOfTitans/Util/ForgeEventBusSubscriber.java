@@ -32,6 +32,8 @@ public class ForgeEventBusSubscriber {
 	
 	// This class deals with forge events
 	
+	public static int AvarageLevel = 0;
+	
 	// Creating a player list for use outside the class
 	
 	public static List<PlayerEntity> players = Lists.newArrayList();
@@ -66,7 +68,7 @@ public class ForgeEventBusSubscriber {
 		}
 		
 		AgeOfTitans.LOGGER.info("Packets resent to " + playerName);
-		
+		calculateAverageLevel();
 	}
 	
 	// When a player leaves the server all lists clear his data from them
@@ -76,6 +78,7 @@ public class ForgeEventBusSubscriber {
 		rage.remove(players.indexOf(e.getPlayer()));
 		players.remove(e.getPlayer());
 		uuids.remove(e.getPlayer().getUniqueID());
+		calculateAverageLevel();
 	}
 	
 	// When a player joins the server all lists add his data to them
@@ -113,6 +116,7 @@ public class ForgeEventBusSubscriber {
 		PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(4, AOTConfig.COMMON.chain_cooldown.get(), AOTConfig.COMMON.chain_cost.get(), AOTConfig.COMMON.chain_damage_ratio.get(), AOTConfig.COMMON.chain_base_damage.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(5, AOTConfig.COMMON.gravity_bomb_cooldown.get(), AOTConfig.COMMON.gravity_bomb_cost.get(), AOTConfig.COMMON.gravity_bomb_ratio.get(), AOTConfig.COMMON.gravity_bomb_bonus_damage.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		AgeOfTitans.LOGGER.info("Packets sent to " + playerName);
+		calculateAverageLevel();
 	}
 	
 	// This event registers the Eden Dimension
@@ -125,5 +129,14 @@ public class ForgeEventBusSubscriber {
 		AgeOfTitans.LOGGER.info("Dimensions Registered!");
 	}
 
+	private static void calculateAverageLevel() {
+		int sum = 0;
+		for(UUID uuid : uuids) {
+			sum += Integer.parseInt(XMLFileJava.readElement(uuid, "PlayerLevel"));
+		}
+		
+		AvarageLevel = sum / (uuids.size() > 0 ? 1 : uuids.size());
+		
+	}
 	
 }

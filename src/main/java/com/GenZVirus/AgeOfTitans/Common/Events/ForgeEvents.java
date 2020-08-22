@@ -17,10 +17,12 @@ import com.GenZVirus.AgeOfTitans.SpellSystem.XMLFileJava;
 import com.GenZVirus.AgeOfTitans.Util.ForgeEventBusSubscriber;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Items;
+import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
@@ -32,12 +34,14 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.item.ItemEvent;
+import net.minecraftforge.event.entity.living.AnimalTameEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent.SpecialSpawn;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -56,7 +60,7 @@ public class ForgeEvents {
 		PlayerEntity player = event.getPlayer();
 		if (!player.isPotionActive(EffectInit.REVITALISE.get()) || !(player.getHealth() < player.getMaxHealth()))
 			return;
-		if(player.getHealth() < player.getMaxHealth()) {
+		if (player.getHealth() < player.getMaxHealth()) {
 			player.addPotionEffect(new EffectInstance(EffectInit.REVITALISE.get(), 100));
 		}
 		if (!ForgeEventBusSubscriber.players.contains(player))
@@ -67,8 +71,100 @@ public class ForgeEvents {
 			rageAmount -= AOTConfig.COMMON.revitalise_cost.get();
 			ForgeEventBusSubscriber.rage.set(index, rageAmount);
 			PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerRagePointsPacket(rageAmount), ((ServerPlayerEntity) player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
-			player.heal(1.0F);
+			double amount = AOTConfig.COMMON.revitalise_base_amount.get() + AOTConfig.COMMON.revitalise_base_amount.get() * AOTConfig.COMMON.revitalise_healing_ratio.get() * Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "Spell_Level6"));
+			if (player.getHealth() + amount > player.getMaxHealth())
+				amount = player.getMaxHealth() - player.getHealth();
+			player.heal((float) amount);
 		}
+	}
+
+	@SubscribeEvent
+	public static void AOTAnimalTamedBuff(AnimalTameEvent event) {
+		LivingEntity entity = event.getEntityLiving();
+		int level = ForgeEventBusSubscriber.AvarageLevel / 10;
+		Effect effect;
+		int difficulty = entity.world.getDifficulty().getId();
+		level = Integer.parseInt(XMLFileJava.readElement(event.getTamer().getUniqueID(), "PlayerLevel")) / 10;
+		if (difficulty == 0 || difficulty == 1) {
+			effect = EffectInit.TAMEABLE_EASY.get();
+		} else if (difficulty == 2) {
+			effect = EffectInit.TAMEABLE_NORMAL.get();
+		} else {
+			effect = EffectInit.TAMEABLE_HARD.get();
+		}
+		entity.addPotionEffect(new EffectInstance(effect, Integer.MAX_VALUE - 1, level));
+		entity.setHealth(entity.getMaxHealth());
+		System.out.println(entity.getName().getFormattedText() + ": " + entity.getHealth());
+	}
+	
+	@SubscribeEvent
+	public static void AOTMonsterBuff(SpecialSpawn event) {
+		LivingEntity entity = event.getEntityLiving();
+		if (entity == null)
+			return;
+		if (entity.world.isRemote)
+			return;
+		if (entity instanceof PlayerEntity)
+			return;
+		if (ForgeEventBusSubscriber.players.isEmpty())
+			return;
+		if (entity instanceof TameableEntity) {
+			if (((TameableEntity) entity).getOwnerId() != null)
+				return;
+		}
+		int level = ForgeEventBusSubscriber.AvarageLevel / 10;
+		Effect effect;
+		int difficulty = entity.world.getDifficulty().getId();
+		if (difficulty == 0 || difficulty == 1) {
+			effect = EffectInit.MONSTER_EASY.get();
+		} else if (difficulty == 2) {
+			effect = EffectInit.MONSTER_NORMAL.get();
+		} else {
+			effect = EffectInit.MONSTER_HARD.get();
+		}
+			entity.addPotionEffect(new EffectInstance(effect, Integer.MAX_VALUE - 1, level));
+			entity.setHealth(entity.getMaxHealth());
+			System.out.println(entity.getName().getFormattedText() + ": " + entity.getHealth());
+	}
+
+	@SubscribeEvent
+	public static void AOTPetBuff(SpecialSpawn event) {
+		LivingEntity entity = event.getEntityLiving();
+		if (entity == null)
+			return;
+		if (entity.world.isRemote)
+			return;
+		if (entity instanceof PlayerEntity)
+			return;
+		if (ForgeEventBusSubscriber.players.isEmpty())
+			return;
+		if (!(entity instanceof TameableEntity))
+			return;
+		int level = ForgeEventBusSubscriber.AvarageLevel / 10;
+		Effect effect;
+		int difficulty = entity.world.getDifficulty().getId();
+
+		if (((TameableEntity) entity).getOwnerId() != null) {
+			level = Integer.parseInt(XMLFileJava.readElement(((TameableEntity) entity).getOwnerId(), "PlayerLevel")) / 10;
+			if (difficulty == 0 || difficulty == 1) {
+				effect = EffectInit.TAMEABLE_EASY.get();
+			} else if (difficulty == 2) {
+				effect = EffectInit.TAMEABLE_NORMAL.get();
+			} else {
+				effect = EffectInit.TAMEABLE_HARD.get();
+			}
+		} else {
+			if (difficulty == 0 || difficulty == 1) {
+				effect = EffectInit.MONSTER_EASY.get();
+			} else if (difficulty == 2) {
+				effect = EffectInit.MONSTER_NORMAL.get();
+			} else {
+				effect = EffectInit.MONSTER_HARD.get();
+			}
+		}
+			entity.addPotionEffect(new EffectInstance(effect, Integer.MAX_VALUE - 1, level));
+			entity.setHealth(entity.getMaxHealth());
+			System.out.println(entity.getName().getFormattedText() + ": " + entity.getHealth());
 	}
 
 	@SubscribeEvent
@@ -78,16 +174,18 @@ public class ForgeEvents {
 		if (event.getPlayer().world.isRemote)
 			return;
 		PlayerEntity player = event.getPlayer();
-		if(player instanceof ServerPlayerEntity) {
-			if(((ServerPlayerEntity)player).connection == null) return;
+		if (player instanceof ServerPlayerEntity) {
+			if (((ServerPlayerEntity) player).connection == null)
+				return;
 		}
-		if(!ForgeEventBusSubscriber.players.contains(player)) return;
+		if (!ForgeEventBusSubscriber.players.contains(player))
+			return;
 //		XMLFileJava.checkFileAndMake(player.getUniqueID(), player.getName().getFormattedText());
 		if (Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "ApplesEaten")) <= 0)
 			return;
 		int playerLevel = Integer.parseInt(XMLFileJava.readElement(player.getUniqueID(), "PlayerLevel"));
-		if(player.isPotionActive(EffectInit.TITAN.get())) {
-			if(player.getActivePotionEffect(EffectInit.TITAN.get()).getDuration() <= 100 || player.getActivePotionEffect(EffectInit.TITAN.get()).getAmplifier() < (int) (playerLevel / 10)) {
+		if (player.isPotionActive(EffectInit.TITAN.get())) {
+			if (player.getActivePotionEffect(EffectInit.TITAN.get()).getDuration() <= 100 || player.getActivePotionEffect(EffectInit.TITAN.get()).getAmplifier() < (int) (playerLevel / 10)) {
 				player.addPotionEffect(new EffectInstance(EffectInit.TITAN.get(), 200, playerLevel / 10));
 			}
 		} else {
@@ -361,9 +459,7 @@ public class ForgeEvents {
 
 	@SubscribeEvent
 	public static void AOTBerserkerSkullCrasher(LivingAttackEvent event) {
-		if (!(event.getSource().getTrueSource() instanceof PlayerEntity)) {
-			return;
-		}
+		if (!(event.getSource().getTrueSource() instanceof PlayerEntity)) { return; }
 		PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
 		LivingEntity target = event.getEntityLiving();
 		if (player.isPotionActive(EffectInit.BERSERKER.get())) {
@@ -397,9 +493,7 @@ public class ForgeEvents {
 
 	@SubscribeEvent
 	public static void AOTBerserkerPunch(LivingAttackEvent event) {
-		if (!(event.getSource().getTrueSource() instanceof PlayerEntity)) {
-			return;
-		}
+		if (!(event.getSource().getTrueSource() instanceof PlayerEntity)) { return; }
 		PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
 		LivingEntity target = event.getEntityLiving();
 		if (player.isPotionActive(EffectInit.BERSERKER.get())) {
