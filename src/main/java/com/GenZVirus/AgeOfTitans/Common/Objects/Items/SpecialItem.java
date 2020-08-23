@@ -2,7 +2,7 @@ package com.GenZVirus.AgeOfTitans.Common.Objects.Items;
 
 import java.util.List;
 
-import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
+import com.GenZVirus.AgeOfTitans.SpellSystem.ActiveAbility;
 import com.GenZVirus.AgeOfTitans.Util.Helpers.KeyboardHelper;
 
 import net.minecraft.client.util.ITooltipFlag;
@@ -38,7 +38,7 @@ public class SpecialItem extends Item {
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		Spell.SPELL_LIST.get(6).effect(worldIn, playerIn);
+		ActiveAbility.getList().get(6).effect(worldIn, playerIn);
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
 

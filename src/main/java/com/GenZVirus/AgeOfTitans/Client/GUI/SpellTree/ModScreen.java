@@ -6,10 +6,12 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
-import com.GenZVirus.AgeOfTitans.Common.Events.KeyPressedEvent;
+import com.GenZVirus.AgeOfTitans.Common.Events.Client.KeyPressedEvent;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.SpellPacket;
-import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
+import com.GenZVirus.AgeOfTitans.SpellSystem.ActiveAbility;
+import com.GenZVirus.AgeOfTitans.SpellSystem.PassiveAbility;
+import com.GenZVirus.AgeOfTitans.SpellSystem.PlayerStats;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -67,9 +69,12 @@ public class ModScreen extends Screen {
 
 	// The button for spells in the skill tree
 
-	public ModSkillButton SwordSlash, ShieldBash, Berserker, Chain, TimeBomb, Revitalize;
-	public ModSkillButton NoSpell1, NoSpell2, NoSpell3, NoSpell4, NoSpell5, NoSpell6, NoSpell7, NoSpell8, NoSpell9, NoSpell10, NoSpell11, NoSpell12, NoSpell13, NoSpell14, NoSpell15, NoSpell16, NoSpell17, NoSpell18, NoSpell19, NoSpell20, NoSpell21;
+	public ModActiveSkillButton SwordSlash, ShieldBash, Berserker, Chain, TimeBomb, Revitalize;
+	public ModActiveSkillButton NoSpell1, NoSpell2, NoSpell3, NoSpell4, NoSpell5, NoSpell6, NoSpell7, NoSpell8, NoSpell9, NoSpell10, NoSpell11, NoSpell12, NoSpell13, NoSpell14, NoSpell15, NoSpell16, NoSpell17, NoSpell18, NoSpell19, NoSpell20, NoSpell21;
 
+	public ModPassiveSkillButton ForceField;
+	public ModPassiveSkillButton NoPassive1, NoPassive2, NoPassive3, NoPassive4, NoPassive5, NoPassive6, NoPassive7, NoPassive8, NoPassive9, NoPassive10, NoPassive11, NoPassive12, NoPassive13, NoPassive14, NoPassive15, NoPassive16, NoPassive17, NoPassive18, NoPassive19, NoPassive20, NoPassive21;
+	
 	// The skill slots in the skill tree
 
 	public ModSkillSlot slot1, slot2, slot3, slot4;
@@ -168,34 +173,58 @@ public class ModScreen extends Screen {
 		List<Integer> three_elements_row = Lists.newArrayList(70, 136, 202);
 		List<Integer> rows = Lists.newArrayList(35, 60, 90, 120, 150, 180);
 
-		this.NoSpell1 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(0), windowYPos + 4 + rows.get(0), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell2 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(1), windowYPos + 4 + rows.get(0), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell3 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(2), windowYPos + 4 + rows.get(0), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell4 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(3), windowYPos + 4 + rows.get(0), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell5 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(0), windowYPos + 4 + rows.get(1), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell6 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(1), windowYPos + 4 + rows.get(1), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell7 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(2), windowYPos + 4 + rows.get(1), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell8 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(0), windowYPos + 4 + rows.get(2), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell9 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(1), windowYPos + 4 + rows.get(2), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell10 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(2), windowYPos + 4 + rows.get(2), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell11 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(3), windowYPos + 4 + rows.get(2), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell12 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(0), windowYPos + 4 + rows.get(3), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell13 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(1), windowYPos + 4 + rows.get(3), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell14 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(2), windowYPos + 4 + rows.get(3), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell15 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(0), windowYPos + 4 + rows.get(4), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell16 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(1), windowYPos + 4 + rows.get(4), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell17 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(2), windowYPos + 4 + rows.get(4), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell18 = new ModSkillButton(windowXPos + 4 + four_elements_row.get(3), windowYPos + 4 + rows.get(4), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell19 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(0), windowYPos + 4 + rows.get(5), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell20 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(1), windowYPos + 4 + rows.get(5), 20, 20, "", Spell.SPELL_LIST.get(0));
-		this.NoSpell21 = new ModSkillButton(windowXPos + 4 + three_elements_row.get(2), windowYPos + 4 + rows.get(5), 20, 20, "", Spell.SPELL_LIST.get(0));
-
-		this.SwordSlash = new ModSkillButton(windowXPos + 4 + four_elements_row.get(0), windowYPos + 4 + rows.get(0), 20, 20, "", Spell.SPELL_LIST.get(1));
-		this.ShieldBash = new ModSkillButton(windowXPos + 4 + three_elements_row.get(0), windowYPos + 4 + rows.get(1), 20, 20, "", Spell.SPELL_LIST.get(2));
-		this.Berserker = new ModSkillButton(windowXPos + 4 + four_elements_row.get(0), windowYPos + 4 + rows.get(2), 20, 20, "", Spell.SPELL_LIST.get(3));
-		this.Chain = new ModSkillButton(windowXPos + 4 + three_elements_row.get(1), windowYPos + 4 + rows.get(1), 20, 20, "", Spell.SPELL_LIST.get(4));
-		this.TimeBomb = new ModSkillButton(windowXPos + 4 + three_elements_row.get(2), windowYPos + 4 + rows.get(1), 20, 20, "", Spell.SPELL_LIST.get(5));
-		this.Revitalize = new ModSkillButton(windowXPos + 4 + four_elements_row.get(1), windowYPos + 4 + rows.get(0), 20, 20, "", Spell.SPELL_LIST.get(6));
+		this.NoSpell1 = new ModActiveSkillButton(windowXPos + 4 + four_elements_row.get(0), windowYPos + 4 + rows.get(0), 20, 20, "", ActiveAbility.getList().get(0));
+		this.NoSpell2 = new ModActiveSkillButton(windowXPos + 4 + four_elements_row.get(1), windowYPos + 4 + rows.get(0), 20, 20, "", ActiveAbility.getList().get(0));
+		this.NoSpell3 = new ModActiveSkillButton(windowXPos + 4 + four_elements_row.get(2), windowYPos + 4 + rows.get(0), 20, 20, "", ActiveAbility.getList().get(0));
+		this.NoSpell4 = new ModActiveSkillButton(windowXPos + 4 + four_elements_row.get(3), windowYPos + 4 + rows.get(0), 20, 20, "", ActiveAbility.getList().get(0));
+		this.NoSpell5 = new ModActiveSkillButton(windowXPos + 4 + three_elements_row.get(0), windowYPos + 4 + rows.get(1), 20, 20, "", ActiveAbility.getList().get(0));
+		this.NoSpell6 = new ModActiveSkillButton(windowXPos + 4 + three_elements_row.get(1), windowYPos + 4 + rows.get(1), 20, 20, "", ActiveAbility.getList().get(0));
+		this.NoSpell7 = new ModActiveSkillButton(windowXPos + 4 + three_elements_row.get(2), windowYPos + 4 + rows.get(1), 20, 20, "", ActiveAbility.getList().get(0));
+		this.NoSpell8 = new ModActiveSkillButton(windowXPos + 4 + four_elements_row.get(0), windowYPos + 4 + rows.get(2), 20, 20, "", ActiveAbility.getList().get(0));
+		this.NoSpell9 = new ModActiveSkillButton(windowXPos + 4 + four_elements_row.get(1), windowYPos + 4 + rows.get(2), 20, 20, "", ActiveAbility.getList().get(0));
+		this.NoSpell10 = new ModActiveSkillButton(windowXPos + 4 + four_elements_row.get(2), windowYPos + 4 + rows.get(2), 20, 20, "", ActiveAbility.getList().get(0));
+		this.NoSpell11 = new ModActiveSkillButton(windowXPos + 4 + four_elements_row.get(3), windowYPos + 4 + rows.get(2), 20, 20, "", ActiveAbility.getList().get(0));
+		this.NoSpell12 = new ModActiveSkillButton(windowXPos + 4 + three_elements_row.get(0), windowYPos + 4 + rows.get(3), 20, 20, "", ActiveAbility.getList().get(0));
+		this.NoSpell13 = new ModActiveSkillButton(windowXPos + 4 + three_elements_row.get(1), windowYPos + 4 + rows.get(3), 20, 20, "", ActiveAbility.getList().get(0));
+		this.NoSpell14 = new ModActiveSkillButton(windowXPos + 4 + three_elements_row.get(2), windowYPos + 4 + rows.get(3), 20, 20, "", ActiveAbility.getList().get(0));
+		this.NoSpell15 = new ModActiveSkillButton(windowXPos + 4 + four_elements_row.get(0), windowYPos + 4 + rows.get(4), 20, 20, "", ActiveAbility.getList().get(0));
+		this.NoSpell16 = new ModActiveSkillButton(windowXPos + 4 + four_elements_row.get(1), windowYPos + 4 + rows.get(4), 20, 20, "", ActiveAbility.getList().get(0));
+		this.NoSpell17 = new ModActiveSkillButton(windowXPos + 4 + four_elements_row.get(2), windowYPos + 4 + rows.get(4), 20, 20, "", ActiveAbility.getList().get(0));
+		this.NoSpell18 = new ModActiveSkillButton(windowXPos + 4 + four_elements_row.get(3), windowYPos + 4 + rows.get(4), 20, 20, "", ActiveAbility.getList().get(0));
+		this.NoSpell19 = new ModActiveSkillButton(windowXPos + 4 + three_elements_row.get(0), windowYPos + 4 + rows.get(5), 20, 20, "", ActiveAbility.getList().get(0));
+		this.NoSpell20 = new ModActiveSkillButton(windowXPos + 4 + three_elements_row.get(1), windowYPos + 4 + rows.get(5), 20, 20, "", ActiveAbility.getList().get(0));
+		this.NoSpell21 = new ModActiveSkillButton(windowXPos + 4 + three_elements_row.get(2), windowYPos + 4 + rows.get(5), 20, 20, "", ActiveAbility.getList().get(0));
+		
+		this.NoPassive1 = new ModPassiveSkillButton(windowXPos + 4 + four_elements_row.get(0), windowYPos + 4 + rows.get(0), 20, 20, "", PassiveAbility.getList().get(0));
+		this.NoPassive2 = new ModPassiveSkillButton(windowXPos + 4 + four_elements_row.get(1), windowYPos + 4 + rows.get(0), 20, 20, "", PassiveAbility.getList().get(0));
+		this.NoPassive3 = new ModPassiveSkillButton(windowXPos + 4 + four_elements_row.get(2), windowYPos + 4 + rows.get(0), 20, 20, "", PassiveAbility.getList().get(0));
+		this.NoPassive4 = new ModPassiveSkillButton(windowXPos + 4 + four_elements_row.get(3), windowYPos + 4 + rows.get(0), 20, 20, "", PassiveAbility.getList().get(0));
+		this.NoPassive5 = new ModPassiveSkillButton(windowXPos + 4 + three_elements_row.get(0), windowYPos + 4 + rows.get(1), 20, 20, "", PassiveAbility.getList().get(0));
+		this.NoPassive6 = new ModPassiveSkillButton(windowXPos + 4 + three_elements_row.get(1), windowYPos + 4 + rows.get(1), 20, 20, "", PassiveAbility.getList().get(0));
+		this.NoPassive7 = new ModPassiveSkillButton(windowXPos + 4 + three_elements_row.get(2), windowYPos + 4 + rows.get(1), 20, 20, "", PassiveAbility.getList().get(0));
+		this.NoPassive8 = new ModPassiveSkillButton(windowXPos + 4 + four_elements_row.get(0), windowYPos + 4 + rows.get(2), 20, 20, "", PassiveAbility.getList().get(0));
+		this.NoPassive9 = new ModPassiveSkillButton(windowXPos + 4 + four_elements_row.get(1), windowYPos + 4 + rows.get(2), 20, 20, "", PassiveAbility.getList().get(0));
+		this.NoPassive10 = new ModPassiveSkillButton(windowXPos + 4 + four_elements_row.get(2), windowYPos + 4 + rows.get(2), 20, 20, "", PassiveAbility.getList().get(0));
+		this.NoPassive11 = new ModPassiveSkillButton(windowXPos + 4 + four_elements_row.get(3), windowYPos + 4 + rows.get(2), 20, 20, "", PassiveAbility.getList().get(0));
+		this.NoPassive12 = new ModPassiveSkillButton(windowXPos + 4 + three_elements_row.get(0), windowYPos + 4 + rows.get(3), 20, 20, "", PassiveAbility.getList().get(0));
+		this.NoPassive13 = new ModPassiveSkillButton(windowXPos + 4 + three_elements_row.get(1), windowYPos + 4 + rows.get(3), 20, 20, "", PassiveAbility.getList().get(0));
+		this.NoPassive14 = new ModPassiveSkillButton(windowXPos + 4 + three_elements_row.get(2), windowYPos + 4 + rows.get(3), 20, 20, "", PassiveAbility.getList().get(0));
+		this.NoPassive15 = new ModPassiveSkillButton(windowXPos + 4 + four_elements_row.get(0), windowYPos + 4 + rows.get(4), 20, 20, "", PassiveAbility.getList().get(0));
+		this.NoPassive16 = new ModPassiveSkillButton(windowXPos + 4 + four_elements_row.get(1), windowYPos + 4 + rows.get(4), 20, 20, "", PassiveAbility.getList().get(0));
+		this.NoPassive17 = new ModPassiveSkillButton(windowXPos + 4 + four_elements_row.get(2), windowYPos + 4 + rows.get(4), 20, 20, "", PassiveAbility.getList().get(0));
+		this.NoPassive18 = new ModPassiveSkillButton(windowXPos + 4 + four_elements_row.get(3), windowYPos + 4 + rows.get(4), 20, 20, "", PassiveAbility.getList().get(0));
+		this.NoPassive19 = new ModPassiveSkillButton(windowXPos + 4 + three_elements_row.get(0), windowYPos + 4 + rows.get(5), 20, 20, "", PassiveAbility.getList().get(0));
+		this.NoPassive20 = new ModPassiveSkillButton(windowXPos + 4 + three_elements_row.get(1), windowYPos + 4 + rows.get(5), 20, 20, "", PassiveAbility.getList().get(0));
+		this.NoPassive21 = new ModPassiveSkillButton(windowXPos + 4 + three_elements_row.get(2), windowYPos + 4 + rows.get(5), 20, 20, "", PassiveAbility.getList().get(0));
+		
+		this.SwordSlash = new ModActiveSkillButton(windowXPos + 4 + four_elements_row.get(0), windowYPos + 4 + rows.get(0), 20, 20, "", ActiveAbility.getList().get(1));
+		this.ShieldBash = new ModActiveSkillButton(windowXPos + 4 + three_elements_row.get(0), windowYPos + 4 + rows.get(1), 20, 20, "", ActiveAbility.getList().get(2));
+		this.Berserker = new ModActiveSkillButton(windowXPos + 4 + four_elements_row.get(0), windowYPos + 4 + rows.get(2), 20, 20, "", ActiveAbility.getList().get(3));
+		this.Chain = new ModActiveSkillButton(windowXPos + 4 + three_elements_row.get(1), windowYPos + 4 + rows.get(1), 20, 20, "", ActiveAbility.getList().get(4));
+		this.TimeBomb = new ModActiveSkillButton(windowXPos + 4 + three_elements_row.get(2), windowYPos + 4 + rows.get(1), 20, 20, "", ActiveAbility.getList().get(5));
+		this.Revitalize = new ModActiveSkillButton(windowXPos + 4 + four_elements_row.get(1), windowYPos + 4 + rows.get(0), 20, 20, "", ActiveAbility.getList().get(6));
+		
+		this.ForceField = new ModPassiveSkillButton(windowXPos + 4 + four_elements_row.get(0), windowYPos + 4 + rows.get(0), 20, 20, "", PassiveAbility.getList().get(1));
 
 		this.LearnSpells = new ModButton(windowXPos + 4 + 156, windowYPos + this.ySize - 4 - 20, 156, 20, I18n.format("gui.learn_spells")) {
 			@Override
@@ -204,13 +233,13 @@ public class ModScreen extends Screen {
 					isPressed = true;
 					for (Widget button : buttons) {
 						if (button instanceof ModADDButton) {
-							if (((ModADDButton) button).spell.meetsRequirements()) {
+							if (((ModADDButton) button).ability.meetsRequirements()) {
 								((ModADDButton) button).isActive = true;
 							}
 						}
 
 						if (button instanceof ModSubtractButton) {
-							if (((ModSubtractButton) button).spell.meetsRequirements()) {
+							if (((ModSubtractButton) button).ability.meetsRequirements()) {
 								((ModSubtractButton) button).isActive = true;
 							}
 						}
@@ -292,45 +321,49 @@ public class ModScreen extends Screen {
 			this.buttons.add(SwordSlash);
 		} else {
 
-			this.buttons.add(NoSpell1);
-			this.buttons.add(NoSpell2);
-			this.buttons.add(NoSpell3);
-			this.buttons.add(NoSpell4);
-			this.buttons.add(NoSpell5);
-			this.buttons.add(NoSpell6);
-			this.buttons.add(NoSpell7);
-			this.buttons.add(NoSpell8);
-			this.buttons.add(NoSpell9);
-			this.buttons.add(NoSpell10);
-			this.buttons.add(NoSpell11);
-			this.buttons.add(NoSpell12);
-			this.buttons.add(NoSpell13);
-			this.buttons.add(NoSpell14);
-			this.buttons.add(NoSpell15);
-			this.buttons.add(NoSpell16);
-			this.buttons.add(NoSpell17);
-			this.buttons.add(NoSpell18);
-			this.buttons.add(NoSpell19);
-			this.buttons.add(NoSpell20);
-			this.buttons.add(NoSpell21);
+			this.buttons.add(ForceField.add);
+			this.buttons.add(ForceField.subtract);
+			
+			this.buttons.add(NoPassive2);
+			this.buttons.add(NoPassive3);
+			this.buttons.add(NoPassive4);
+			this.buttons.add(NoPassive5);
+			this.buttons.add(NoPassive6);
+			this.buttons.add(NoPassive7);
+			this.buttons.add(NoPassive8);
+			this.buttons.add(NoPassive9);
+			this.buttons.add(NoPassive10);
+			this.buttons.add(NoPassive11);
+			this.buttons.add(NoPassive12);
+			this.buttons.add(NoPassive13);
+			this.buttons.add(NoPassive14);
+			this.buttons.add(NoPassive15);
+			this.buttons.add(NoPassive16);
+			this.buttons.add(NoPassive17);
+			this.buttons.add(NoPassive18);
+			this.buttons.add(NoPassive19);
+			this.buttons.add(NoPassive20);
+			this.buttons.add(NoPassive21);
+			
+			this.buttons.add(ForceField);
 		}
 	}
 
 	@Override
 	public void tick() {
-		for (int i = 1; i < Spell.SPELL_LIST.size(); i++) {
-			if (Spell.SPELL_LIST.get(i).level == 0) {
-				if (ModScreen.SCREEN.slot1.spell.getId() == Spell.SPELL_LIST.get(i).getId()) {
-					ModScreen.SCREEN.slot1.spell = Spell.SPELL_LIST.get(0);
+		for (int i = 1; i < ActiveAbility.getList().size(); i++) {
+			if (ActiveAbility.getList().get(i).getLevel() == 0) {
+				if (ModScreen.SCREEN.slot1.ability.getId() == ActiveAbility.getList().get(i).getId()) {
+					ModScreen.SCREEN.slot1.ability = (ActiveAbility) ActiveAbility.getList().get(0);
 				}
-				if (ModScreen.SCREEN.slot2.spell.getId() == Spell.SPELL_LIST.get(i).getId()) {
-					ModScreen.SCREEN.slot2.spell = Spell.SPELL_LIST.get(0);
+				if (ModScreen.SCREEN.slot2.ability.getId() == ActiveAbility.getList().get(i).getId()) {
+					ModScreen.SCREEN.slot2.ability = (ActiveAbility) ActiveAbility.getList().get(0);
 				}
-				if (ModScreen.SCREEN.slot3.spell.getId() == Spell.SPELL_LIST.get(i).getId()) {
-					ModScreen.SCREEN.slot3.spell = Spell.SPELL_LIST.get(0);
+				if (ModScreen.SCREEN.slot3.ability.getId() == ActiveAbility.getList().get(i).getId()) {
+					ModScreen.SCREEN.slot3.ability = (ActiveAbility) ActiveAbility.getList().get(0);
 				}
-				if (ModScreen.SCREEN.slot4.spell.getId() == Spell.SPELL_LIST.get(i).getId()) {
-					ModScreen.SCREEN.slot4.spell = Spell.SPELL_LIST.get(0);
+				if (ModScreen.SCREEN.slot4.ability.getId() == ActiveAbility.getList().get(i).getId()) {
+					ModScreen.SCREEN.slot4.ability = (ActiveAbility) ActiveAbility.getList().get(0);
 				}
 			}
 		}
@@ -359,7 +392,7 @@ public class ModScreen extends Screen {
 
 		// Sends a packet to the server to save to the custom playerdata file
 
-		sendPacket(slot1.spell.getId(), slot2.spell.getId(), slot3.spell.getId(), slot4.spell.getId());
+		sendPacket(slot1.ability.getId(), slot2.ability.getId(), slot3.ability.getId(), slot4.ability.getId());
 		super.onClose();
 	}
 
@@ -395,7 +428,7 @@ public class ModScreen extends Screen {
 		AbstractGui.blit(((int) ((this.windowXPos + 20) * 1.25)), ((int) ((this.windowYPos + 40) * 1.25)), 0, 0, 0, 26, 202, 202, 26);
 
 		this.minecraft.getTextureManager().bindTexture(this.CURRENT_LEVEL);
-		int level = Spell.PLAYER_LEVEL;
+		int level = PlayerStats.PLAYER_LEVEL;
 		if (level > 100)
 			level = 100;
 		level += 10;
@@ -421,7 +454,7 @@ public class ModScreen extends Screen {
 		super.render(mouseX, mouseY, partialTicks);
 
 		List<String> list = Lists.newArrayList();
-		list.add("Points: " + Spell.POINTS);
+		list.add("Points: " + PlayerStats.POINTS);
 
 		drawHoveringText(list, this.windowXPos + this.xSize - 4 - 60, this.windowYPos + this.ySize - 4 - 20, this.width, this.height, -1, font);
 

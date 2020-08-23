@@ -18,7 +18,8 @@ import com.GenZVirus.AgeOfTitans.Common.Init.ModTileEntityTypes;
 import com.GenZVirus.AgeOfTitans.Common.Init.ParticleInit;
 import com.GenZVirus.AgeOfTitans.Common.Init.SoundInit;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
-import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
+import com.GenZVirus.AgeOfTitans.SpellSystem.PassiveAbility;
+import com.GenZVirus.AgeOfTitans.SpellSystem.ActiveAbility;
 
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -138,10 +139,14 @@ public class AgeOfTitans
     	DimensionInit.MOD_DIMENSIONS.register(modEventBus);
     	LOGGER.info("Dimensions loaded successfully");
     	
-    	// Register Spell
+    	// Register Spells
     	
-    	Spell.registerSpells();
+    	ActiveAbility.registerSpells();
     	LOGGER.info("Spells loaded successfully");
+    	
+    	// Register Passives
+    	PassiveAbility.registerPassives();
+    	LOGGER.info("Passives loaded successfully");
     	
     	instance = this;
         

@@ -5,8 +5,8 @@ import java.util.function.Supplier;
 
 import com.GenZVirus.AgeOfTitans.Client.GUI.HUD.ModHUD;
 import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModScreen;
-import com.GenZVirus.AgeOfTitans.Common.Events.KeyPressedEvent;
-import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
+import com.GenZVirus.AgeOfTitans.Common.Events.Client.KeyPressedEvent;
+import com.GenZVirus.AgeOfTitans.SpellSystem.ActiveAbility;
 import com.GenZVirus.AgeOfTitans.SpellSystem.XMLFileJava;
 import com.GenZVirus.AgeOfTitans.Util.ForgeEventBusSubscriber;
 
@@ -116,16 +116,16 @@ public class SpellPacket {
 				
 	// Sending data to the GUI
 				
-				ModHUD.SPELL1 = Spell.SPELL_LIST.get(pkt.slot1);
-				ModHUD.SPELL2 = Spell.SPELL_LIST.get(pkt.slot2);
-				ModHUD.SPELL3 = Spell.SPELL_LIST.get(pkt.slot3);
-				ModHUD.SPELL4 = Spell.SPELL_LIST.get(pkt.slot4);
+				ModHUD.SPELL1 = (ActiveAbility) ActiveAbility.getList().get(pkt.slot1);
+				ModHUD.SPELL2 = (ActiveAbility) ActiveAbility.getList().get(pkt.slot2);
+				ModHUD.SPELL3 = (ActiveAbility) ActiveAbility.getList().get(pkt.slot3);
+				ModHUD.SPELL4 = (ActiveAbility) ActiveAbility.getList().get(pkt.slot4);
 				
 				if(KeyPressedEvent.wasPRESSED) {
-					ModScreen.SCREEN.slot1.spell = Spell.SPELL_LIST.get(pkt.slot1);
-					ModScreen.SCREEN.slot2.spell = Spell.SPELL_LIST.get(pkt.slot2);
-					ModScreen.SCREEN.slot3.spell = Spell.SPELL_LIST.get(pkt.slot3);
-					ModScreen.SCREEN.slot4.spell = Spell.SPELL_LIST.get(pkt.slot4);
+					ModScreen.SCREEN.slot1.ability = (ActiveAbility) ActiveAbility.getList().get(pkt.slot1);
+					ModScreen.SCREEN.slot2.ability = (ActiveAbility) ActiveAbility.getList().get(pkt.slot2);
+					ModScreen.SCREEN.slot3.ability = (ActiveAbility) ActiveAbility.getList().get(pkt.slot3);
+					ModScreen.SCREEN.slot4.ability = (ActiveAbility) ActiveAbility.getList().get(pkt.slot4);
 				}
 			}
 		});

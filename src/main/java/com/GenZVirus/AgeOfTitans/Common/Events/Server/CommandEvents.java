@@ -1,4 +1,4 @@
-package com.GenZVirus.AgeOfTitans.Common.Events;
+package com.GenZVirus.AgeOfTitans.Common.Events.Server;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Common.Commands.AddLevelsCommand;

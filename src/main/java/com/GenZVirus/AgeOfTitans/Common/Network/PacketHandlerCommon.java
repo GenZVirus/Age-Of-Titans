@@ -58,6 +58,12 @@ public class PacketHandlerCommon {
 		   		.consumer(SendPlayerSpellDetailsPacket::handle)
 		   		.add();
 		
+		INSTANCE.messageBuilder(SendPlayerPassiveDetailsPacket.class, id++)
+				.encoder(SendPlayerPassiveDetailsPacket::encode)
+				.decoder(SendPlayerPassiveDetailsPacket::decode)
+				.consumer(SendPlayerPassiveDetailsPacket::handle)
+				.add();
+		
 		INSTANCE.messageBuilder(SendPlayerRagePointsPacket.class, id++)
    				.encoder(SendPlayerRagePointsPacket::encode)
    				.decoder(SendPlayerRagePointsPacket::decode)

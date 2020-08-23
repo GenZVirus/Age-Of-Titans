@@ -22,6 +22,8 @@ public abstract class AOTConfig {
 	
 	public static class Common {
 		
+		// Active Abilities
+		
 		public final DoubleValue sword_slash_damage_ratio;
 		public final DoubleValue sword_slash_base_damage;
 		public final IntValue sword_slash_cooldown;
@@ -52,6 +54,11 @@ public abstract class AOTConfig {
 		public final IntValue revitalise_cooldown;
 		public final IntValue revitalise_cost;
 		
+		// Passive Abilities
+		
+		public final DoubleValue force_field_ratio;
+		public final DoubleValue force_field_base_amount;
+
 		public final BooleanValue leveling_from_advancements;
 		public final IntValue exp_level_up;
 		public final IntValue exp_per_advancement;
@@ -59,6 +66,9 @@ public abstract class AOTConfig {
 		public final IntValue adjust_hud_animation; 
 		
 		public Common(ForgeConfigSpec.Builder builder) {
+			
+			//Active Abilities
+			
 			builder.comment("This config affects all players and contains the stats of the Sword Slash ability")
 				   .push("sword_slash");
 			
@@ -208,6 +218,25 @@ public abstract class AOTConfig {
 								.defineInRange("revitalise_cost", 10, 0, 1000);
 		
 			builder.pop();
+			
+			// Passive Abilities
+			
+			builder.comment("This config affects all players and contains the stats of the Force Field ability")
+		   	   	   .push("force_field");
+	
+			force_field_ratio = builder.comment("This sets the healing multiplier of the Force Field ability")
+					    			   .translation("force_field.configgui.force_field_ratio")
+					    			   .worldRestart()
+					    			   .defineInRange("force_field_ratio", 1.0D, 0.0D, 10.0D);
+			
+			force_field_base_amount = builder.comment("This sets the base amount of the Revitalise ability")
+	 								   		 .translation("force_field.configgui.force_field_base_amount")
+	 								   		 .worldRestart()
+	 								   		 .defineInRange("force_field_base_amount", 2.0D, 0.0D, 1024.0D);
+		
+			builder.pop();
+			
+			// Others
 			
 			builder.comment("This config  affects all players. WARNING! CHANGING THE VALUES HAS TO CHECK THIS EQUATION FOR NO EXPERIENCE LOSES: exp_level_up / exp_per_advancement * exp_per_advancement == exp_level_up")
 		   	   	   .push("leveling");

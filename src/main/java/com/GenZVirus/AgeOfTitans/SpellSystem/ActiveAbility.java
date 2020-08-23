@@ -31,13 +31,7 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkDirection;
 
-public class Spell {
-
-	public static int POINTS = 0;
-	public static int APPLES_EATEN = 0;
-	public static int PLAYER_LEVEL = 0;
-	public static int RAGE_POINTS = 0;
-	public static int MAX_RAGE_POINTS = 1000;
+public class ActiveAbility implements Ability{
 
 	private int id;
 	private String name;
@@ -51,7 +45,7 @@ public class Spell {
 	public int cost = 0;
 	public List<Requirement> requirements = Lists.newArrayList();
 
-	public Spell(int id, ResourceLocation icon, ResourceLocation iconOff, ResourceLocation iconHUD, String name, int level, int cost) {
+	public ActiveAbility(int id, ResourceLocation icon, ResourceLocation iconOff, ResourceLocation iconHUD, String name, int level, int cost) {
 		this.id = id;
 		this.icon = icon;
 		this.iconHUD = iconHUD;
@@ -76,6 +70,47 @@ public class Spell {
 	public void effect(World worldIn, PlayerEntity playerIn) {
 	}
 
+	public double getBaseAmount() {
+		return this.base_amount;
+	}
+	
+	public double getRatio() {
+		return this.ratio;
+	}
+	
+	public int getLevel() {
+		return this.level;
+	}
+	
+	public int getCooldown() {
+		return this.cooldown;
+	}
+	
+	public int getCost() {
+		return this.cost;
+	}
+	
+	public void setBaseAmount(double amount) {
+		this.base_amount = amount;
+	}
+	
+	public void setRatio(double ratio) {
+		this.ratio = ratio;		
+	}
+	
+	public void setCooldown(int cd) {
+		this.cooldown = cd;
+	}
+	
+	public void setCost(int cost) {
+		this.cost = cost;
+	}
+	
+	@Override
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	
 	public int getId() {
 		return this.id;
 	}
@@ -105,23 +140,31 @@ public class Spell {
 		List<String> list = Lists.newArrayList();
 		return list;
 	}
+	
+	public static List<Ability> getList(){
+		return ACTIVE_LIST;
+	}
 
-	public static final List<Spell> SPELL_LIST = Lists.newArrayList();
-	private static final Spell NO_SPELL = new Spell(0, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/noicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/noicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/noiconhud.png"), "", 0, 0);
-	private static final Spell SWORD_SLASH = new Spell(1, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashiconhud.png"), "Sword Slash", 0, AOTConfig.COMMON.sword_slash_cost.get()) {
+	public List<Requirement> getRequirements() {
+		return this.requirements;
+	}
+	
+	private static final List<Ability> ACTIVE_LIST = Lists.newArrayList();
+	private static final ActiveAbility NO_SPELL = new ActiveAbility(0, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/noicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/noicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/noiconhud.png"), "", 0, 0);
+	private static final ActiveAbility SWORD_SLASH = new ActiveAbility(1, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashiconhud.png"), "Sword Slash", 0, AOTConfig.COMMON.sword_slash_cost.get()) {
 
 		@Override
 		public void initRequirements() {
 			this.requirements.add(new Requirement("FRUIT OF THE GODS", "\u00A74Requires the user to have eaten atleast 1 FRUIT OF THE GODS!") {
 				public boolean meetsRequirement() {
-					if (Spell.APPLES_EATEN == 0)
+					if (PlayerStats.APPLES_EATEN == 0)
 						return false;
 					return true;
 				};
 			});
 			this.requirements.add(new Requirement("Level", "\u00A74Requires the user to have level 0 or above!") {
 				public boolean meetsRequirement() {
-					if (Spell.PLAYER_LEVEL < 0)
+					if (PlayerStats.PLAYER_LEVEL < 0)
 						return false;
 					return true;
 				};
@@ -173,20 +216,20 @@ public class Spell {
 		}
 
 	};
-	private static final Spell SHIELD_BASH = new Spell(2, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashiconhud.png"), "Shield Bash", 0, AOTConfig.COMMON.shield_bash_cost.get()) {
+	private static final ActiveAbility SHIELD_BASH = new ActiveAbility(2, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashiconhud.png"), "Shield Bash", 0, AOTConfig.COMMON.shield_bash_cost.get()) {
 
 		@Override
 		public void initRequirements() {
 			this.requirements.add(new Requirement("FRUIT OF THE GODS", "\u00A74Requires the user to have eaten atleast 1 FRUIT OF THE GODS!") {
 				public boolean meetsRequirement() {
-					if (Spell.APPLES_EATEN == 0)
+					if (PlayerStats.APPLES_EATEN == 0)
 						return false;
 					return true;
 				};
 			});
 			this.requirements.add(new Requirement("Level", "\u00A74Requires the user to have level 20 or above!") {
 				public boolean meetsRequirement() {
-					if (Spell.PLAYER_LEVEL < 20)
+					if (PlayerStats.PLAYER_LEVEL < 20)
 						return false;
 					return true;
 				};
@@ -257,20 +300,20 @@ public class Spell {
 
 	};
 
-	private static final Spell BERSERKER = new Spell(3, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonhud.png"), "Berserker", 0, AOTConfig.COMMON.berserker_cost.get()) {
+	private static final ActiveAbility BERSERKER = new ActiveAbility(3, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonhud.png"), "Berserker", 0, AOTConfig.COMMON.berserker_cost.get()) {
 
 		@Override
 		public void initRequirements() {
 			this.requirements.add(new Requirement("FRUIT OF THE GODS", "\u00A74Requires the user to have eaten atleast 1 FRUIT OF THE GODS!") {
 				public boolean meetsRequirement() {
-					if (Spell.APPLES_EATEN == 0)
+					if (PlayerStats.APPLES_EATEN == 0)
 						return false;
 					return true;
 				};
 			});
 			this.requirements.add(new Requirement("Level", "\u00A74Requires the user to have level 40 or above!") {
 				public boolean meetsRequirement() {
-					if (Spell.PLAYER_LEVEL < 40)
+					if (PlayerStats.PLAYER_LEVEL < 40)
 						return false;
 					return true;
 				};
@@ -307,20 +350,20 @@ public class Spell {
 
 	};
 
-	private static final Spell CHAIN = new Spell(4, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainiconhud.png"), "Chain", 0, AOTConfig.COMMON.chain_cost.get()) {
+	private static final ActiveAbility CHAIN = new ActiveAbility(4, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainiconhud.png"), "Chain", 0, AOTConfig.COMMON.chain_cost.get()) {
 
 		@Override
 		public void initRequirements() {
 			this.requirements.add(new Requirement("FRUIT OF THE GODS", "\u00A74Requires the user to have eaten atleast 1 FRUIT OF THE GODS!") {
 				public boolean meetsRequirement() {
-					if (Spell.APPLES_EATEN == 0)
+					if (PlayerStats.APPLES_EATEN == 0)
 						return false;
 					return true;
 				};
 			});
 			this.requirements.add(new Requirement("Level", "\u00A74Requires the user to have level 20 or above!") {
 				public boolean meetsRequirement() {
-					if (Spell.PLAYER_LEVEL < 20)
+					if (PlayerStats.PLAYER_LEVEL < 20)
 						return false;
 					return true;
 				};
@@ -368,20 +411,20 @@ public class Spell {
 
 	};
 
-	private static final Spell GRAVITY_BOMB = new Spell(5, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/gravitybombicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/gravitybombiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/gravitybombiconhud.png"), "Gravity Bomb", 0, AOTConfig.COMMON.gravity_bomb_cost.get()) {
+	private static final ActiveAbility GRAVITY_BOMB = new ActiveAbility(5, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/gravitybombicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/gravitybombiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/gravitybombiconhud.png"), "Gravity Bomb", 0, AOTConfig.COMMON.gravity_bomb_cost.get()) {
 
 		@Override
 		public void initRequirements() {
 			this.requirements.add(new Requirement("FRUIT OF THE GODS", "\u00A74Requires the user to have eaten atleast 1 FRUIT OF THE GODS!") {
 				public boolean meetsRequirement() {
-					if (Spell.APPLES_EATEN == 0)
+					if (PlayerStats.APPLES_EATEN == 0)
 						return false;
 					return true;
 				};
 			});
 			this.requirements.add(new Requirement("Level", "\u00A74Requires the user to have level 20 or above!") {
 				public boolean meetsRequirement() {
-					if (Spell.PLAYER_LEVEL < 20)
+					if (PlayerStats.PLAYER_LEVEL < 20)
 						return false;
 					return true;
 				};
@@ -425,20 +468,20 @@ public class Spell {
 
 	};
 
-	private static final Spell REVITALISE = new Spell(6, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/revitaliseicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/revitaliseiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/revitaliseiconhud.png"), "Revitalise", 0, AOTConfig.COMMON.revitalise_cost.get()) {
+	private static final ActiveAbility REVITALISE = new ActiveAbility(6, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/revitaliseicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/revitaliseiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/revitaliseiconhud.png"), "Revitalise", 0, AOTConfig.COMMON.revitalise_cost.get()) {
 
 		@Override
 		public void initRequirements() {
 			this.requirements.add(new Requirement("FRUIT OF THE GODS", "\u00A74Requires the user to have eaten atleast 1 FRUIT OF THE GODS!") {
 				public boolean meetsRequirement() {
-					if (Spell.APPLES_EATEN == 0)
+					if (PlayerStats.APPLES_EATEN == 0)
 						return false;
 					return true;
 				};
 			});
 			this.requirements.add(new Requirement("Level", "\u00A74Requires the user to have level 0 or above!") {
 				public boolean meetsRequirement() {
-					if (Spell.PLAYER_LEVEL < 0)
+					if (PlayerStats.PLAYER_LEVEL < 0)
 						return false;
 					return true;
 				};
@@ -475,37 +518,12 @@ public class Spell {
 	};
 
 	public static void registerSpells() {
-		SPELL_LIST.add(NO_SPELL.getId(), NO_SPELL);
-		SPELL_LIST.add(SWORD_SLASH.getId(), SWORD_SLASH);
-		SPELL_LIST.add(SHIELD_BASH.getId(), SHIELD_BASH);
-		SPELL_LIST.add(BERSERKER.getId(), BERSERKER);
-		SPELL_LIST.add(CHAIN.getId(), CHAIN);
-		SPELL_LIST.add(GRAVITY_BOMB.getId(), GRAVITY_BOMB);
-		SPELL_LIST.add(REVITALISE.getId(), REVITALISE);
+		ACTIVE_LIST.add(NO_SPELL.getId(), NO_SPELL);
+		ACTIVE_LIST.add(SWORD_SLASH.getId(), SWORD_SLASH);
+		ACTIVE_LIST.add(SHIELD_BASH.getId(), SHIELD_BASH);
+		ACTIVE_LIST.add(BERSERKER.getId(), BERSERKER);
+		ACTIVE_LIST.add(CHAIN.getId(), CHAIN);
+		ACTIVE_LIST.add(GRAVITY_BOMB.getId(), GRAVITY_BOMB);
+		ACTIVE_LIST.add(REVITALISE.getId(), REVITALISE);
 	}
-
-	public class Requirement {
-
-		private String name;
-		private String description;
-
-		public Requirement(String name, String description) {
-			this.name = name;
-			this.description = description;
-		}
-
-		public boolean meetsRequirement() {
-			return false;
-		}
-
-		public String getDescription() {
-			return description;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-	}
-
 }

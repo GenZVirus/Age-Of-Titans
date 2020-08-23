@@ -1,7 +1,7 @@
 package com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
-import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
+import com.GenZVirus.AgeOfTitans.SpellSystem.ActiveAbility;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -26,7 +26,7 @@ public class ModSkillSlot extends Widget {
 	
 	// The spell which is inside the slot
 	
-	public Spell spell;
+	public ActiveAbility ability;
 	
 	// Slot initialization
 	
@@ -36,7 +36,7 @@ public class ModSkillSlot extends Widget {
 		
 		// If the slot is empty the spell get's the NoSpell spell which has an ID of 0
 		
-		this.spell = Spell.SPELL_LIST.get(0);
+		this.ability = (ActiveAbility) ActiveAbility.getList().get(0);
 	}
 	
 	// Slot renderer
@@ -71,8 +71,8 @@ public class ModSkillSlot extends Widget {
 		     
 	      // If the current spell is not NoSpell it will get displayed on the slot
 	      
-	      if(spell.getId() != 0) {
-	    	  minecraft.getTextureManager().bindTexture(spell.getIcon());
+	      if(ability.getId() != 0) {
+	    	  minecraft.getTextureManager().bindTexture(ability.getIcon());
 	    	  AbstractGui.blit(this.x + 2, this.y + 2, 0, 0, 0, 20, 20, 20, 20);
 	      }
 	      
@@ -84,36 +84,36 @@ public class ModSkillSlot extends Widget {
 	@SuppressWarnings("unused")
 	public void onPress() {
 		this.playDownSound(Minecraft.getInstance().getSoundHandler());
-		int slot1 = Spell.SPELL_LIST.get(0).getId();
-		int slot2 = Spell.SPELL_LIST.get(0).getId();
-		int slot3 = Spell.SPELL_LIST.get(0).getId();
-		int slot4 = Spell.SPELL_LIST.get(0).getId();
-		Spell selectedSpell = Spell.SPELL_LIST.get(0);
+		int slot1 = ActiveAbility.getList().get(0).getId();
+		int slot2 = ActiveAbility.getList().get(0).getId();
+		int slot3 = ActiveAbility.getList().get(0).getId();
+		int slot4 = ActiveAbility.getList().get(0).getId();
+		ActiveAbility selectedAbility = (ActiveAbility) ActiveAbility.getList().get(0);
 		
 		// Checks all widgets for buttons and deselectes them
 		
 		for(Widget button : ModScreen.SCREEN.getButtons()) {
 			
-			if(button instanceof ModSkillButton && ((ModSkillButton) button).isSelected) {
-				selectedSpell = ((ModSkillButton) button).spell;
-				((ModSkillButton) button).isSelected = false;						
+			if(button instanceof ModActiveSkillButton && ((ModActiveSkillButton) button).isSelected) {
+				selectedAbility = (ActiveAbility) ((ModActiveSkillButton) button).ability;
+				((ModActiveSkillButton) button).isSelected = false;						
 			}
 			
 		// Searches for all slots that have the same selected spell and sets them NoSpell
 			
-			if(button instanceof ModSkillSlot && ((ModSkillSlot) button).spell.getId() == selectedSpell.getId()) {
+			if(button instanceof ModSkillSlot && ((ModSkillSlot) button).ability.getId() == selectedAbility.getId()) {
 				if(((ModSkillSlot) button).slot == 1) {
-					slot1 = Spell.SPELL_LIST.get(0).getId();
-					((ModSkillSlot) button).spell = Spell.SPELL_LIST.get(0);
+					slot1 = ActiveAbility.getList().get(0).getId();
+					((ModSkillSlot) button).ability = (ActiveAbility) ActiveAbility.getList().get(0);
 				}else if(((ModSkillSlot) button).slot == 2) {
-					slot2 = Spell.SPELL_LIST.get(0).getId();
-					((ModSkillSlot) button).spell = Spell.SPELL_LIST.get(0);
+					slot2 = ActiveAbility.getList().get(0).getId();
+					((ModSkillSlot) button).ability = (ActiveAbility) ActiveAbility.getList().get(0);
 				}else if(((ModSkillSlot) button).slot == 3) {
-					slot3 = Spell.SPELL_LIST.get(0).getId();
-					((ModSkillSlot) button).spell = Spell.SPELL_LIST.get(0);
+					slot3 = ActiveAbility.getList().get(0).getId();
+					((ModSkillSlot) button).ability = (ActiveAbility) ActiveAbility.getList().get(0);
 				}else if(((ModSkillSlot) button).slot == 4) {
-					slot4 = Spell.SPELL_LIST.get(0).getId();
-					((ModSkillSlot) button).spell = Spell.SPELL_LIST.get(0);
+					slot4 = ActiveAbility.getList().get(0).getId();
+					((ModSkillSlot) button).ability = (ActiveAbility) ActiveAbility.getList().get(0);
 				}				
 			}
 		}
@@ -121,17 +121,17 @@ public class ModSkillSlot extends Widget {
 		// Changes the selected slot spell
 		
 		if(this.slot == 1) {
-			slot1 = selectedSpell.getId();
-			this.spell = selectedSpell;
+			slot1 = selectedAbility.getId();
+			this.ability = selectedAbility;
 		} else if(this.slot == 2) {
-			slot2 = selectedSpell.getId();
-			this.spell = selectedSpell;
+			slot2 = selectedAbility.getId();
+			this.ability = selectedAbility;
 		} else if(this.slot == 3) {
-			slot3 = selectedSpell.getId();
-			this.spell = selectedSpell;
+			slot3 = selectedAbility.getId();
+			this.ability = selectedAbility;
 		} else if(this.slot == 4) {
-			slot4 = selectedSpell.getId();
-			this.spell = selectedSpell;
+			slot4 = selectedAbility.getId();
+			this.ability = selectedAbility;
 		}
 		
 

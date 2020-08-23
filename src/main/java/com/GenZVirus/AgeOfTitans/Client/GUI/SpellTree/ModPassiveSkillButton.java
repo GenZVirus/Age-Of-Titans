@@ -5,8 +5,9 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
-import com.GenZVirus.AgeOfTitans.SpellSystem.Spell.Requirement;
+import com.GenZVirus.AgeOfTitans.SpellSystem.Ability;
+import com.GenZVirus.AgeOfTitans.SpellSystem.PassiveAbility;
+import com.GenZVirus.AgeOfTitans.SpellSystem.Requirement;
 import com.GenZVirus.AgeOfTitans.Util.Helpers.KeyboardHelper;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -25,40 +26,40 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ModSkillButton extends Widget {
+public class ModPassiveSkillButton extends Widget {
 
 	private ResourceLocation BUTTONS_LOCATION;
 	public boolean isSelected = false;
-	public Spell spell;
+	public PassiveAbility ability;
 	public boolean renderAS = false;
 	public ModButton add, subtract;
 	
-	public ModSkillButton(int xIn, int yIn, int widthIn, int heightIn, String msg, Spell spell) {
+	public ModPassiveSkillButton(int xIn, int yIn, int widthIn, int heightIn, String msg, Ability ability) {
 		super(xIn, yIn, widthIn, heightIn, msg);
-		this.BUTTONS_LOCATION = spell.getIcon();
-		this.spell = spell;
-		add = new ModADDButton(this.x, this.y, this.spell);
-		subtract = new ModSubtractButton(this.x , this.y, this.spell);
+		this.BUTTONS_LOCATION = ability.getIcon();
+		this.ability = (PassiveAbility) ability;
+		add = new ModADDButton(this.x, this.y, this.ability);
+		subtract = new ModSubtractButton(this.x , this.y, this.ability);
 	}
 	@SuppressWarnings("resource")
 	public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
 	      Minecraft minecraft = Minecraft.getInstance();
-	      if(spell.level > 0) {
-	    	  BUTTONS_LOCATION = spell.getIcon();
+	      if(ability.getLevel() > 0) {
+	    	  BUTTONS_LOCATION = ability.getIcon();
 	      } else {
-	    	  BUTTONS_LOCATION = spell.getIconOff();
+	    	  BUTTONS_LOCATION = ability.getIconOff();
 	      }
 	      minecraft.getTextureManager().bindTexture(BUTTONS_LOCATION);
 
 	      AbstractGui.blit(this.x, this.y, 0, 0, 0, this.width, this.height, this.height, this.width);
 	      
-	      if(this.spell == Spell.SPELL_LIST.get(0)) {
+	      if(this.ability == PassiveAbility.getList().get(0)) {
 	    	  return;
 	      }
 	      
 	      GL11.glScalef(0.5F, 0.5f, 0.5f);
-	      drawGradientRect(300, this.x*2, this.y*2, this.x*2 + minecraft.fontRenderer.getStringWidth("Lv." + spell.level) + 2, this.y*2 + 10, 0xFF000000, 0xFF000000);	      
-	      minecraft.fontRenderer.drawString("Lv." + spell.level, this.x*2 + 1, this.y*2 + 1, 16777215);
+	      drawGradientRect(300, this.x*2, this.y*2, this.x*2 + minecraft.fontRenderer.getStringWidth("Lv." + ability.getLevel()) + 2, this.y*2 + 10, 0xFF000000, 0xFF000000);	      
+	      minecraft.fontRenderer.drawString("Lv." + ability.getLevel(), this.x*2 + 1, this.y*2 + 1, 16777215);
 	      GL11.glScalef(2.0F, 2.0f, 2.0f);
 	      
 	      if(this.isHovered) {
@@ -66,15 +67,15 @@ public class ModSkillButton extends Widget {
 	    	  int color;
 	    	  if(KeyboardHelper.isHoldingShift()) {
 	    		  color = 16777215;
-	    		  stringList  = spell.getDetails();
+	    		  stringList  = ability.getDetails();
 	    	  }else {
 	    		  color = 6553700;
-	    		  stringList = spell.getDescription();
+	    		  stringList = ability.getDescription();
 	    	  }
 	    	  
-	    	  if(!spell.meetsRequirements()) {
+	    	  if(!ability.meetsRequirements()) {
 	    		  stringList.add("");
-	    		  for(Requirement requirement : spell.requirements) {
+	    		  for(Requirement requirement : ability.getRequirements()) {
 	    			  if(!requirement.meetsRequirement()) {
 	    				  stringList.add(requirement.getDescription());
 	    			  }
@@ -238,17 +239,4 @@ public class ModSkillButton extends Widget {
 	        RenderSystem.enableTexture();
 
 	    }
-	 
-	public void onPress() {
-		this.playDownSound(Minecraft.getInstance().getSoundHandler());
-		for(Widget button : ModScreen.SCREEN.getButtons()) {
-			if(button instanceof ModSkillButton) {
-				((ModSkillButton) button).isSelected = false;
-			}
-		}
-		if(this.spell.level > 0 && this.spell.meetsRequirements()) {
-			this.isSelected = true;
-		}
-	}
-
 }

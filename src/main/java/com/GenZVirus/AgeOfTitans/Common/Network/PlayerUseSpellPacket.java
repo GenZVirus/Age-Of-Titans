@@ -3,7 +3,7 @@ package com.GenZVirus.AgeOfTitans.Common.Network;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
+import com.GenZVirus.AgeOfTitans.SpellSystem.ActiveAbility;
 import com.GenZVirus.AgeOfTitans.Util.ForgeEventBusSubscriber;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -38,9 +38,9 @@ public class PlayerUseSpellPacket {
 				for (PlayerEntity player : ForgeEventBusSubscriber.players) {
 					if (player.getUniqueID().toString().contentEquals(pkt.uuid.toString())) {
 						int rageAmount = ForgeEventBusSubscriber.rage.get(ForgeEventBusSubscriber.players.indexOf(player));
-						if(Spell.SPELL_LIST.get(pkt.spellID).cost <= rageAmount) {
-							Spell.SPELL_LIST.get(pkt.spellID).effect(player.world, player);
-							rageAmount -= Spell.SPELL_LIST.get(pkt.spellID).cost;
+						if(ActiveAbility.getList().get(pkt.spellID).getCost() <= rageAmount) {
+							ActiveAbility.getList().get(pkt.spellID).effect(player.world, player);
+							rageAmount -= ActiveAbility.getList().get(pkt.spellID).getCost();
 							ForgeEventBusSubscriber.rage.set(ForgeEventBusSubscriber.players.indexOf(player), rageAmount);
 							PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerRagePointsPacket(rageAmount),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 						}

@@ -2,7 +2,7 @@ package com.GenZVirus.AgeOfTitans.Common.Network;
 
 import java.util.function.Supplier;
 
-import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
+import com.GenZVirus.AgeOfTitans.SpellSystem.PlayerStats;
 
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkDirection;
@@ -27,7 +27,7 @@ public class SendPlayerRagePointsPacket {
 	public static void handle(SendPlayerRagePointsPacket pkt, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() ->{
 			if (ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
-				Spell.RAGE_POINTS = pkt.ragePoints;
+				PlayerStats.RAGE_POINTS = pkt.ragePoints;
 			}
 		});
 		ctx.get().setPacketHandled(true);

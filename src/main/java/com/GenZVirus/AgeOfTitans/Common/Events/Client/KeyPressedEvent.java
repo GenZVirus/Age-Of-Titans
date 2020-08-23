@@ -1,4 +1,4 @@
-package com.GenZVirus.AgeOfTitans.Common.Events;
+package com.GenZVirus.AgeOfTitans.Common.Events.Client;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Client.GUI.HUD.ModHUD;
@@ -7,7 +7,7 @@ import com.GenZVirus.AgeOfTitans.Common.Init.EffectInit;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.SpellPacket;
 import com.GenZVirus.AgeOfTitans.Common.Network.berserkerBlockBreakerPacket;
-import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
+import com.GenZVirus.AgeOfTitans.SpellSystem.PlayerStats;
 import com.GenZVirus.AgeOfTitans.Util.Helpers.KeyboardHelper;
 
 import net.minecraft.client.Minecraft;
@@ -44,7 +44,7 @@ public class KeyPressedEvent {
 		Minecraft mc = Minecraft.getInstance();
 		if(timer == 0 && KeyboardHelper.isCharacterKeyDown()) {
 			timer = 15;
-			if(Spell.APPLES_EATEN > 0) {
+			if(PlayerStats.APPLES_EATEN > 0) {
 				if(!wasPRESSED) {
 				
 					// checks for others screens or chat screen, if there are not hidden, the character screen will not show up

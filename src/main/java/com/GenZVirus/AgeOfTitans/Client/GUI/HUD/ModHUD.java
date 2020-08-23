@@ -4,7 +4,8 @@ import java.util.Random;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Common.Config.AOTConfig;
-import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
+import com.GenZVirus.AgeOfTitans.SpellSystem.ActiveAbility;
+import com.GenZVirus.AgeOfTitans.SpellSystem.PlayerStats;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -31,11 +32,11 @@ public class ModHUD {
 	public static ResourceLocation RAGE_BAR_FILL = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/rage_bar_fill.png");
 	public static ResourceLocation HEALTH_BAR_FILL = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/health_bar_fill.png");
 	public static ResourceLocation SHIELD_BAR = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shield_bar.png");
-	public static Spell SPELL1 = Spell.SPELL_LIST.get(0);
-	public static Spell SPELL2 = Spell.SPELL_LIST.get(0);
-	public static Spell SPELL3 = Spell.SPELL_LIST.get(0);
-	public static Spell SPELL4 = Spell.SPELL_LIST.get(0);
-	public static Spell selectedSpell = SPELL1;
+	public static ActiveAbility SPELL1 = (ActiveAbility) ActiveAbility.getList().get(0);
+	public static ActiveAbility SPELL2 = (ActiveAbility) ActiveAbility.getList().get(0);
+	public static ActiveAbility SPELL3 = (ActiveAbility) ActiveAbility.getList().get(0);
+	public static ActiveAbility SPELL4 = (ActiveAbility) ActiveAbility.getList().get(0);
+	public static ActiveAbility selectedSpell = SPELL1;
 	private static Minecraft mc = Minecraft.getInstance();
 	private static final int ICON_SIZE = 34;
 	private static final int IMAGE_SIZE = 384;
@@ -77,8 +78,8 @@ public class ModHUD {
 			return;
 		}
 		
-		if(locked || Spell.APPLES_EATEN == 0) {
-			selectedSpell = Spell.SPELL_LIST.get(0);
+		if(locked || PlayerStats.APPLES_EATEN == 0) {
+			selectedSpell = (ActiveAbility) ActiveAbility.getList().get(0);
 			return;
 		}
 
@@ -231,7 +232,7 @@ public class ModHUD {
 		int posX = mc.getMainWindow().getScaledWidth() / 2 - 91 ;
 		mc.getTextureManager().bindTexture(BAR);
 		AbstractGui.blit(posX, posY, 0, 0, 0, 182, 16, 16, 182);
-		int percentage = 178 * Spell.RAGE_POINTS / Spell.MAX_RAGE_POINTS; ;
+		int percentage = 178 * PlayerStats.RAGE_POINTS / PlayerStats.MAX_RAGE_POINTS; ;
 		mc.getTextureManager().bindTexture(RAGE_BAR_FILL);
 		AbstractGui.blit(posX + 2, posY + 2, 0, offset, 0, percentage, 12, 12, 178);
 		
@@ -242,8 +243,8 @@ public class ModHUD {
 		MatrixStack textStack = new MatrixStack();
 		textStack.translate(0.0D, 0.0D, (double)zLevel);
 		Matrix4f textLocation = textStack.getLast().getMatrix();
-		String rage = Integer.toString((int)Spell.RAGE_POINTS) + " / " + Integer.toString((int)Spell.MAX_RAGE_POINTS);
-		String swidth = Integer.toString((int)Spell.MAX_RAGE_POINTS) + " / " + Integer.toString((int)Spell.MAX_RAGE_POINTS);
+		String rage = Integer.toString((int)PlayerStats.RAGE_POINTS) + " / " + Integer.toString((int)PlayerStats.MAX_RAGE_POINTS);
+		String swidth = Integer.toString((int)PlayerStats.MAX_RAGE_POINTS) + " / " + Integer.toString((int)PlayerStats.MAX_RAGE_POINTS);
 		int stringWidth = mc.fontRenderer.getStringWidth(swidth);
 		int offset = mc.fontRenderer.getStringWidth(rage);
 		mc.fontRenderer.renderString(rage, posX + 91 - stringWidth / 2 + (stringWidth - offset), posY + 5, 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);

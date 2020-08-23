@@ -8,9 +8,11 @@ import com.GenZVirus.AgeOfTitans.Common.Config.AOTConfig;
 import com.GenZVirus.AgeOfTitans.Common.Init.DimensionInit;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.ReadElementPacket;
+import com.GenZVirus.AgeOfTitans.Common.Network.SendPlayerPassiveDetailsPacket;
 import com.GenZVirus.AgeOfTitans.Common.Network.SendPlayerSpellDetailsPacket;
 import com.GenZVirus.AgeOfTitans.Common.Network.SpellPacket;
-import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
+import com.GenZVirus.AgeOfTitans.SpellSystem.ActiveAbility;
+import com.GenZVirus.AgeOfTitans.SpellSystem.PassiveAbility;
 import com.GenZVirus.AgeOfTitans.SpellSystem.XMLFileJava;
 import com.google.common.collect.Lists;
 
@@ -44,13 +46,17 @@ public class ForgeEventBusSubscriber {
 	
 	public static List<Integer> rage = Lists.newArrayList();
 	
+	public static List<Integer> inCombat = Lists.newArrayList();
+	
 	@SubscribeEvent
 	public static void onPlayerDeath(PlayerEvent.Clone e) {
 		rage.remove(players.indexOf(e.getOriginal()));
+		inCombat.remove(players.indexOf(e.getOriginal()));
 		players.remove(e.getOriginal());
 		uuids.remove(e.getOriginal().getUniqueID());
 		players.add(e.getPlayer());
 		rage.add(0);
+		inCombat.add(0);
 		uuids.add(e.getPlayer().getUniqueID());
 		String playerName = e.getPlayer().getName().getFormattedText();
 		UUID uuid = e.getPlayer().getUniqueID();
@@ -62,8 +68,13 @@ public class ForgeEventBusSubscriber {
 														e.getPlayer().getUniqueID(), false), ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		PacketHandlerCommon.INSTANCE.sendTo(new ReadElementPacket(uuid, "PlayerPoints", Integer.parseInt(XMLFileJava.readElement(uuid, "PlayerPoints"))),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		PacketHandlerCommon.INSTANCE.sendTo(new ReadElementPacket(uuid, "ApplesEaten", Integer.parseInt(XMLFileJava.readElement(uuid, "ApplesEaten"))),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
-		for(int i = 1; i < Spell.SPELL_LIST.size(); i++) {
+		for(int i = 1; i < ActiveAbility.getList().size(); i++) {
 			String element = "Spell" + "_Level" + i;
+			PacketHandlerCommon.INSTANCE.sendTo(new ReadElementPacket(uuid, element, Integer.parseInt(XMLFileJava.readElement(uuid, element))),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		}
+		
+		for(int i = 1; i < PassiveAbility.getList().size(); i++) {
+			String element = "Passive" + "_Level" + i;
 			PacketHandlerCommon.INSTANCE.sendTo(new ReadElementPacket(uuid, element, Integer.parseInt(XMLFileJava.readElement(uuid, element))),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		}
 		
@@ -86,6 +97,7 @@ public class ForgeEventBusSubscriber {
 	@SubscribeEvent
 	public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent e) {		
 		rage.add(0);
+		inCombat.add(0);
 		players.add(e.getPlayer());
 		uuids.add(e.getPlayer().getUniqueID());
 		
@@ -106,15 +118,22 @@ public class ForgeEventBusSubscriber {
 		PacketHandlerCommon.INSTANCE.sendTo(new ReadElementPacket(uuid, "PlayerPoints", Integer.parseInt(XMLFileJava.readElement(uuid, "PlayerPoints"))),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		PacketHandlerCommon.INSTANCE.sendTo(new ReadElementPacket(uuid, "ApplesEaten", Integer.parseInt(XMLFileJava.readElement(uuid, "ApplesEaten"))),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		PacketHandlerCommon.INSTANCE.sendTo(new ReadElementPacket(uuid, "PlayerLevel", Integer.parseInt(XMLFileJava.readElement(uuid, "PlayerLevel"))),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
-		for(int i = 1; i < Spell.SPELL_LIST.size(); i++) {
+		for(int i = 1; i < ActiveAbility.getList().size(); i++) {
 			String element = "Spell" + "_Level" + i;
 			PacketHandlerCommon.INSTANCE.sendTo(new ReadElementPacket(uuid, element, Integer.parseInt(XMLFileJava.readElement(uuid, element))),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		}
+		for(int i = 1; i < PassiveAbility.getList().size(); i++) {
+			String element = "Passive" + "_Level" + i;
+			PacketHandlerCommon.INSTANCE.sendTo(new ReadElementPacket(uuid, element, Integer.parseInt(XMLFileJava.readElement(uuid, element))),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		}		
 		PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(1, AOTConfig.COMMON.sword_slash_cooldown.get(), AOTConfig.COMMON.sword_slash_cost.get(), AOTConfig.COMMON.sword_slash_damage_ratio.get(), AOTConfig.COMMON.sword_slash_base_damage.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(2, AOTConfig.COMMON.shield_bash_cooldown.get(), AOTConfig.COMMON.shield_bash_cost.get(), AOTConfig.COMMON.shield_bash_damage_ratio.get(), AOTConfig.COMMON.shield_bash_base_damage.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(3, AOTConfig.COMMON.berserker_cooldown.get(), AOTConfig.COMMON.berserker_cost.get(), AOTConfig.COMMON.berserker_duration_ratio.get(), AOTConfig.COMMON.berserker_punch_damage.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(4, AOTConfig.COMMON.chain_cooldown.get(), AOTConfig.COMMON.chain_cost.get(), AOTConfig.COMMON.chain_damage_ratio.get(), AOTConfig.COMMON.chain_base_damage.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(5, AOTConfig.COMMON.gravity_bomb_cooldown.get(), AOTConfig.COMMON.gravity_bomb_cost.get(), AOTConfig.COMMON.gravity_bomb_ratio.get(), AOTConfig.COMMON.gravity_bomb_bonus_damage.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(6, AOTConfig.COMMON.revitalise_cooldown.get(), AOTConfig.COMMON.revitalise_cost.get(), AOTConfig.COMMON.revitalise_healing_ratio.get(), AOTConfig.COMMON.revitalise_base_amount.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		
+		PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerPassiveDetailsPacket(1, 0, 0, AOTConfig.COMMON.force_field_ratio.get(), AOTConfig.COMMON.force_field_base_amount.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		AgeOfTitans.LOGGER.info("Packets sent to " + playerName);
 		calculateAverageLevel();
 	}
@@ -135,7 +154,7 @@ public class ForgeEventBusSubscriber {
 			sum += Integer.parseInt(XMLFileJava.readElement(uuid, "PlayerLevel"));
 		}
 		
-		AvarageLevel = sum / (uuids.size() > 0 ? 1 : uuids.size());
+		AvarageLevel = sum / (uuids.size() == 0 ? 1 : uuids.size());
 		
 	}
 	

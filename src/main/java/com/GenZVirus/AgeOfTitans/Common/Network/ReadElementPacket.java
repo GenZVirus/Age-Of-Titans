@@ -3,7 +3,9 @@ package com.GenZVirus.AgeOfTitans.Common.Network;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-import com.GenZVirus.AgeOfTitans.SpellSystem.Spell;
+import com.GenZVirus.AgeOfTitans.SpellSystem.ActiveAbility;
+import com.GenZVirus.AgeOfTitans.SpellSystem.PassiveAbility;
+import com.GenZVirus.AgeOfTitans.SpellSystem.PlayerStats;
 import com.GenZVirus.AgeOfTitans.SpellSystem.XMLFileJava;
 import com.GenZVirus.AgeOfTitans.Util.ForgeEventBusSubscriber;
 
@@ -52,21 +54,26 @@ public class ReadElementPacket {
 			if (ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
 				if(pkt.element.contains("Spell_Level")) {
 					int ID = Integer.parseInt(pkt.element.replaceFirst("Spell_Level", ""));
-					Spell.SPELL_LIST.get(ID).level = pkt.value;
+					ActiveAbility.getList().get(ID).setLevel(pkt.value);
+				}
+				
+				if(pkt.element.contains("Passive_Level")) {
+					int ID = Integer.parseInt(pkt.element.replaceFirst("Passive_Level", ""));
+					PassiveAbility.getList().get(ID).setLevel(pkt.value);
 				}
 				
 				if(pkt.element.contains("PlayerPoints")) {
-					Spell.POINTS = pkt.value;
+					PlayerStats.POINTS = pkt.value;
 				}
 				
 				if(pkt.element.contains("ApplesEaten"))
 				{
-					Spell.APPLES_EATEN = pkt.value;
+					PlayerStats.APPLES_EATEN = pkt.value;
 				}
 				
 				if(pkt.element.contains("PlayerLevel"))
 				{
-					Spell.PLAYER_LEVEL = pkt.value;
+					PlayerStats.PLAYER_LEVEL = pkt.value;
 				}
 			}
 		});
