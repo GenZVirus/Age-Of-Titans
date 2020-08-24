@@ -58,8 +58,8 @@ public class ModActiveSkillButton extends Widget {
 	      }
 	      
 	      GL11.glScalef(0.5F, 0.5f, 0.5f);
-	      drawGradientRect(300, this.x*2, this.y*2, this.x*2 + minecraft.fontRenderer.getStringWidth("Lv." + ability.getLevel()) + 2, this.y*2 + 10, 0xFF000000, 0xFF000000);	      
-	      minecraft.fontRenderer.drawString("Lv." + ability.getLevel(), this.x*2 + 1, this.y*2 + 1, 16777215);
+	      drawGradientRect(300, this.x*2 + 1, this.y*2 + 1, this.x*2 + minecraft.fontRenderer.getStringWidth("Lv." + ability.getLevel()) + 2, this.y*2 + 10, 0xFF000000, 0xFF000000);	      
+	      minecraft.fontRenderer.drawString("Lv." + ability.getLevel(), this.x*2 + 2, this.y*2 + 2, 16777215);
 	      GL11.glScalef(2.0F, 2.0f, 2.0f);
 	      
 	      if(this.isHovered) {

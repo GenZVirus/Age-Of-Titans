@@ -1,7 +1,8 @@
 {
 	"gui.active": "Active",
 	"gui.passive": "Passive",
-	"gui.learn_spells": "Learn",	
+	"gui.spend_points": "Spend Points",	
+	"gui.respec": "Respec",	
 	
 	"key.categories.ageoftitans": "Age of Titans",
 	"key.ability_tree": "Ability Tree",

@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL11;
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Common.Events.Client.KeyPressedEvent;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
+import com.GenZVirus.AgeOfTitans.Common.Network.RespecPacket;
 import com.GenZVirus.AgeOfTitans.Common.Network.SpellPacket;
 import com.GenZVirus.AgeOfTitans.SpellSystem.ActiveAbility;
 import com.GenZVirus.AgeOfTitans.SpellSystem.PassiveAbility;
@@ -65,14 +66,14 @@ public class ModScreen extends Screen {
 
 	// The button for learning spells
 
-	public ModButton LearnSpells;
+	public ModButtonSmall SpendPoints, Respec;
 
 	// The button for spells in the skill tree
 
 	public ModActiveSkillButton SwordSlash, ShieldBash, Berserker, Chain, TimeBomb, Revitalize;
 	public ModActiveSkillButton NoSpell1, NoSpell2, NoSpell3, NoSpell4, NoSpell5, NoSpell6, NoSpell7, NoSpell8, NoSpell9, NoSpell10, NoSpell11, NoSpell12, NoSpell13, NoSpell14, NoSpell15, NoSpell16, NoSpell17, NoSpell18, NoSpell19, NoSpell20, NoSpell21;
 
-	public ModPassiveSkillButton ForceField;
+	public ModPassiveSkillButton ForceField, PresenceOfAGod;
 	public ModPassiveSkillButton NoPassive1, NoPassive2, NoPassive3, NoPassive4, NoPassive5, NoPassive6, NoPassive7, NoPassive8, NoPassive9, NoPassive10, NoPassive11, NoPassive12, NoPassive13, NoPassive14, NoPassive15, NoPassive16, NoPassive17, NoPassive18, NoPassive19, NoPassive20, NoPassive21;
 	
 	// The skill slots in the skill tree
@@ -225,8 +226,9 @@ public class ModScreen extends Screen {
 		this.Revitalize = new ModActiveSkillButton(windowXPos + 4 + four_elements_row.get(1), windowYPos + 4 + rows.get(0), 20, 20, "", ActiveAbility.getList().get(6));
 		
 		this.ForceField = new ModPassiveSkillButton(windowXPos + 4 + four_elements_row.get(0), windowYPos + 4 + rows.get(0), 20, 20, "", PassiveAbility.getList().get(1));
+		this.PresenceOfAGod = new ModPassiveSkillButton(windowXPos + 4 + four_elements_row.get(1), windowYPos + 4 + rows.get(0), 20, 20, "", PassiveAbility.getList().get(2));
 
-		this.LearnSpells = new ModButton(windowXPos + 4 + 156, windowYPos + this.ySize - 4 - 20, 156, 20, I18n.format("gui.learn_spells")) {
+		this.SpendPoints = new ModButtonSmall(windowXPos + 4 + 206, windowYPos + this.ySize - 4 - 25, 106, 25, I18n.format("gui.spend_points")) {
 			@Override
 			public void onPress() {
 				if (!isPressed) {
@@ -260,6 +262,15 @@ public class ModScreen extends Screen {
 				this.playDownSound(Minecraft.getInstance().getSoundHandler());
 			}
 		};
+		
+		this.Respec = new ModButtonSmall(windowXPos + 4 + 100, windowYPos + this.ySize - 4 - 25, 106, 25, I18n.format("gui.respec")) {
+			@SuppressWarnings("resource")
+			@Override
+			public void onPress() {
+				PacketHandlerCommon.INSTANCE.sendToServer(new RespecPacket(Minecraft.getInstance().player.getUniqueID()));
+				this.playDownSound(Minecraft.getInstance().getSoundHandler());
+			}
+		};
 
 		this.addButtons();
 
@@ -278,7 +289,8 @@ public class ModScreen extends Screen {
 		this.buttons.add(Active);
 		this.buttons.add(Passive);
 
-		this.buttons.add(LearnSpells);
+		this.buttons.add(SpendPoints);
+		this.buttons.add(Respec);
 	}
 
 	public void loadSpells() {
@@ -321,10 +333,11 @@ public class ModScreen extends Screen {
 			this.buttons.add(SwordSlash);
 		} else {
 
+			this.buttons.add(PresenceOfAGod.add);
+			this.buttons.add(PresenceOfAGod.subtract);
 			this.buttons.add(ForceField.add);
 			this.buttons.add(ForceField.subtract);
 			
-			this.buttons.add(NoPassive2);
 			this.buttons.add(NoPassive3);
 			this.buttons.add(NoPassive4);
 			this.buttons.add(NoPassive5);
@@ -346,6 +359,7 @@ public class ModScreen extends Screen {
 			this.buttons.add(NoPassive21);
 			
 			this.buttons.add(ForceField);
+			this.buttons.add(PresenceOfAGod);
 		}
 	}
 
@@ -455,8 +469,9 @@ public class ModScreen extends Screen {
 
 		List<String> list = Lists.newArrayList();
 		list.add("Points: " + PlayerStats.POINTS);
+		int stringWidth = font.getStringWidth("Points: " + PlayerStats.POINTS);
 
-		drawHoveringText(list, this.windowXPos + this.xSize - 4 - 60, this.windowYPos + this.ySize - 4 - 20, this.width, this.height, -1, font);
+		drawHoveringText(list, this.windowXPos + this.xSize - 4 - 16 - stringWidth, this.windowYPos + this.ySize - 4 - 25, this.width, this.height, -1, font);
 
 	}
 

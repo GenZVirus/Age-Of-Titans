@@ -196,7 +196,9 @@ public class ActiveAbility implements Ability{
 
 		public List<String> getDescription() {
 			List<String> list = Lists.newArrayList();
-			list.add("Sword Slash is a powerful ability that empowers the users sword with unending burning flames. " + "Upon swinging the sword the flames will fly towards the target creating an fire explosion on hit and damaging all nearby targets.");
+			list.add("\u00A74\u00A7n\u00A7l" + "Sword Slash");
+			list.add("");
+			list.add("Empowers the users sword with unending burning flames. " + "Upon swinging the sword the flames will fly towards the target creating an fire explosion on hit and damaging all nearby targets.");
 			list.add("");
 			list.add("Hold Shift for details");
 			return list;
@@ -205,6 +207,8 @@ public class ActiveAbility implements Ability{
 		@Override
 		public List<String> getDetails() {
 			List<String> list = Lists.newArrayList();
+			list.add("\u00A74\u00A7n\u00A7l" + "Sword Slash");
+			list.add("");
 			list.add("Damage " + "(" + Double.toString(this.base_amount + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.base_amount) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
 			list.add("");
 			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
@@ -274,12 +278,14 @@ public class ActiveAbility implements Ability{
 				}
 			}
 
-			playerIn.world.playSound(null, playerIn.getPosition(), SoundInit.SWORD_SLASH_LAUNCH.get(), SoundCategory.AMBIENT, 1.0F, 1.0F);
+			playerIn.world.playSound(null, playerIn.getPosition(), SoundInit.SHIELD_BASH_LAUNCH.get(), SoundCategory.AMBIENT, 1.0F, 1.0F);
 		}
 
 		public List<String> getDescription() {
 			List<String> list = Lists.newArrayList();
-			list.add("Shield Bash turns a any shield into a deadly weapon. " + "Upon blocking, all targets in front of the shield will be knockbacked. " + "Blocks with weak resistance will colaps when hit by the shockwave.");
+			list.add("\u00A74\u00A7n\u00A7l" + "Shield Bash");
+			list.add("");
+			list.add("Turns any shield into a deadly weapon. " + "Upon blocking, all targets in front of the shield will be knocked back. " + "Blocks with weak resistance will colaps when hit by the shockwave.");
 			list.add("");
 			list.add("Hold Shift for details");
 			return list;
@@ -288,6 +294,8 @@ public class ActiveAbility implements Ability{
 		@Override
 		public List<String> getDetails() {
 			List<String> list = Lists.newArrayList();
+			list.add("\u00A74\u00A7n\u00A7l" + "Shield Bash");
+			list.add("");
 			list.add("Damage " + "(" + Double.toString(this.base_amount + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.base_amount) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
 			list.add("");
 			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
@@ -327,7 +335,9 @@ public class ActiveAbility implements Ability{
 
 		public List<String> getDescription() {
 			List<String> list = Lists.newArrayList();
-			list.add("Berserker is all or nothing. " + "Empowers the user, giving him strength and speed. Jumping over mountains is an easy fit. " + "Even blocks and enemies can't resist your punches. " + "If the target enemy doesn't have an helmet to protect his skull, a critical hit will be their undoing.");
+			list.add("\u00A74\u00A7n\u00A7l" + "Berserker");
+			list.add("");
+			list.add("Empowers the user, giving strength and speed. Jumping over mountains is an easy fit. " + "Even blocks and enemies can't resist your punches. " + "If the target enemy doesn't have an helmet to protect his skull, a critical hit will be their undoing.");
 			list.add("");
 			list.add("Hold Shift for details");
 			return list;
@@ -336,6 +346,8 @@ public class ActiveAbility implements Ability{
 		@Override
 		public List<String> getDetails() {
 			List<String> list = Lists.newArrayList();
+			list.add("\u00A74\u00A7n\u00A7l" + "Berserker");
+			list.add("");
 			list.add("Bonus damage: " + "\u00A73" + Double.toString(this.base_amount));
 			list.add("");
 			list.add("Duration " + "(" + Double.toString(20.0D + this.ratio * this.level) + "): " + "\u00A73" + "20" + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level) + "\u00A7f" + " seconds");
@@ -390,7 +402,9 @@ public class ActiveAbility implements Ability{
 
 		public List<String> getDescription() {
 			List<String> list = Lists.newArrayList();
-			list.add("Chain provides high utility. " + "Giving the user mobility by hooking blocks to thrust themselves towards the blocks. " + "Or hook an enemy to pull them towards them.");
+			list.add("\u00A74\u00A7n\u00A7l" + "Chain");
+			list.add("");
+			list.add("Gives the user mobility by hooking blocks to thrust themselves towards the blocks. " + "Or hook an enemy to pull them towards them.");
 			list.add("");
 			list.add("Hold Shift for details");
 			return list;
@@ -399,6 +413,8 @@ public class ActiveAbility implements Ability{
 		@Override
 		public List<String> getDetails() {
 			List<String> list = Lists.newArrayList();
+			list.add("\u00A74\u00A7n\u00A7l" + "Chain");
+			list.add("");
 			list.add("Damage " + "(" + Double.toString(this.base_amount + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.base_amount) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
 			list.add("");
 			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
@@ -445,7 +461,9 @@ public class ActiveAbility implements Ability{
 
 		public List<String> getDescription() {
 			List<String> list = Lists.newArrayList();
-			list.add("Gravity Bomb provides high utility. " + "On impact pulls all entities, including the caster, into the center of the gravitational field increasing the damage taken. Boss Entities do not take increase damage.");
+			list.add("\u00A74\u00A7n\u00A7l" + "Gravity Bomb");
+			list.add("");
+			list.add("Throw a powerful bomb that on impact pulls all entities, including the caster, into the center of the gravitational field increasing the damage taken. Boss Entities do not take increase damage.");
 			list.add("");
 			list.add("Hold Shift for details");
 			return list;
@@ -454,6 +472,8 @@ public class ActiveAbility implements Ability{
 		@Override
 		public List<String> getDetails() {
 			List<String> list = Lists.newArrayList();
+			list.add("\u00A74\u00A7n\u00A7l" + "Gravity Bomb");
+			list.add("");
 			list.add("Bonus Damage " + "(x" + Double.toString(this.base_amount + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.base_amount) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
 			list.add("");
 			list.add("Duration: " + "\u00A73" + "3" + "\u00A7f" + " seconds");
@@ -496,7 +516,9 @@ public class ActiveAbility implements Ability{
 
 		public List<String> getDescription() {
 			List<String> list = Lists.newArrayList();
-			list.add("Revitalise heals the user overtime. While the health of the user is below the maximum he has, Revitalise will replenish what is missing as long as the user has rage points.");
+			list.add("\u00A74\u00A7n\u00A7l" + "Revitalise");
+			list.add("");
+			list.add("Heals the user overtime. While the health of the user is below the maximum, Revitalise will replenish what is missing as long as the user has rage points.");
 			list.add("");
 			list.add("Hold Shift for details");
 			return list;
@@ -505,6 +527,8 @@ public class ActiveAbility implements Ability{
 		@Override
 		public List<String> getDetails() {
 			List<String> list = Lists.newArrayList();
+			list.add("\u00A74\u00A7n\u00A7l" + "Revitalise");
+			list.add("");
 			list.add("Healing amount per tick " + "(" + Double.toString(this.base_amount + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(base_amount) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level) + "\u00A7f" + " hps");
 			list.add("");
 			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");

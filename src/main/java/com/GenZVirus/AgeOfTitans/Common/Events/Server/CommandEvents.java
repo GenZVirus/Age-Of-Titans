@@ -2,6 +2,8 @@ package com.GenZVirus.AgeOfTitans.Common.Events.Server;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Common.Commands.AddLevelsCommand;
+import com.GenZVirus.AgeOfTitans.Common.Commands.FeedCommand;
+import com.GenZVirus.AgeOfTitans.Common.Commands.HealCommand;
 import com.GenZVirus.AgeOfTitans.Common.Commands.ResetLevelCommand;
 import com.GenZVirus.AgeOfTitans.Common.Commands.SetLevelCommand;
 import com.mojang.brigadier.CommandDispatcher;
@@ -21,7 +23,8 @@ public class CommandEvents {
 		AddLevelsCommand.register(dispatcher);
 		ResetLevelCommand.register(dispatcher);
 		SetLevelCommand.register(dispatcher);
-		
+		HealCommand.register(dispatcher);
+		FeedCommand.register(dispatcher);
 	}
 	
 }

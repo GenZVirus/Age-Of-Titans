@@ -76,5 +76,11 @@ public class PacketHandlerCommon {
 				.consumer(sendTileEntityDataPacket::handle)
 				.add();
 		
+		INSTANCE.messageBuilder(RespecPacket.class, id++)
+				.encoder(RespecPacket::encode)
+				.decoder(RespecPacket::decode)
+				.consumer(RespecPacket::handle)
+				.add();
+		
 	}
 }

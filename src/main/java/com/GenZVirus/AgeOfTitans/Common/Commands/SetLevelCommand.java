@@ -6,6 +6,7 @@ import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.ReadElementPacket;
 import com.GenZVirus.AgeOfTitans.Common.Network.SpellPacket;
 import com.GenZVirus.AgeOfTitans.SpellSystem.ActiveAbility;
+import com.GenZVirus.AgeOfTitans.SpellSystem.PassiveAbility;
 import com.GenZVirus.AgeOfTitans.SpellSystem.XMLFileJava;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -55,6 +56,12 @@ public class SetLevelCommand {
 
 		for(int i = 1; i < ActiveAbility.getList().size(); i++) {
 			String element = "Spell" + "_Level" + i;
+			XMLFileJava.editElement(uuid, element, "0");
+			PacketHandlerCommon.INSTANCE.sendTo(new ReadElementPacket(uuid, element, Integer.parseInt(XMLFileJava.readElement(uuid, element))),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		}
+		
+		for(int i = 1; i < PassiveAbility.getList().size(); i++) {
+			String element = "Passive" + "_Level" + i;
 			XMLFileJava.editElement(uuid, element, "0");
 			PacketHandlerCommon.INSTANCE.sendTo(new ReadElementPacket(uuid, element, Integer.parseInt(XMLFileJava.readElement(uuid, element))),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		}

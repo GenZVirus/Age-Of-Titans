@@ -4,9 +4,10 @@ import java.util.List;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Client.GUI.HUD.ModHUD;
-import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModButton;
-import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModScreen;
 import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModActiveSkillButton;
+import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModButton;
+import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModButtonSmall;
+import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModScreen;
 import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModSkillSlot;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.PlayerUseSpellPacket;
@@ -154,7 +155,9 @@ public class ModScreenEvents {
 				int x = (int) event.getMouseX();
 				int y = (int) event.getMouseY();
 				if (x >= widthIn && x < widthIn + width && y >= heightIn && y < heightIn + height) {
-					if (button instanceof ModButton) {
+					if(button instanceof ModButtonSmall) {
+						((ModButtonSmall) button).onPress();
+					} else if (button instanceof ModButton) {
 						((ModButton) button).onPress();
 					} else if (button instanceof ModActiveSkillButton) {
 						((ModActiveSkillButton) button).onPress();

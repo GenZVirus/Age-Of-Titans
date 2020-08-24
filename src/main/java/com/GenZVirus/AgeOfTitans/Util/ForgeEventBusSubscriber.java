@@ -134,6 +134,7 @@ public class ForgeEventBusSubscriber {
 		PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerSpellDetailsPacket(6, AOTConfig.COMMON.revitalise_cooldown.get(), AOTConfig.COMMON.revitalise_cost.get(), AOTConfig.COMMON.revitalise_healing_ratio.get(), AOTConfig.COMMON.revitalise_base_amount.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		
 		PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerPassiveDetailsPacket(1, 0, 0, AOTConfig.COMMON.force_field_ratio.get(), AOTConfig.COMMON.force_field_base_amount.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		PacketHandlerCommon.INSTANCE.sendTo(new SendPlayerPassiveDetailsPacket(2, 0, 0, AOTConfig.COMMON.pog_ratio.get(), AOTConfig.COMMON.pog_base_amount.get()),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		AgeOfTitans.LOGGER.info("Packets sent to " + playerName);
 		calculateAverageLevel();
 	}

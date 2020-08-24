@@ -58,6 +58,9 @@ public abstract class AOTConfig {
 		
 		public final DoubleValue force_field_ratio;
 		public final DoubleValue force_field_base_amount;
+		
+		public final IntValue pog_ratio;
+		public final IntValue pog_base_amount;
 
 		public final BooleanValue leveling_from_advancements;
 		public final IntValue exp_level_up;
@@ -234,6 +237,21 @@ public abstract class AOTConfig {
 	 								   		 .worldRestart()
 	 								   		 .defineInRange("force_field_base_amount", 2.0D, 0.0D, 1024.0D);
 		
+			builder.pop();
+			
+			builder.comment("This config affects all players and contains the stats of the Force Field ability")
+	   	   	   	   .push("pog");
+
+			pog_ratio = builder.comment("This sets the healing multiplier of the Force Field ability")
+				    		   .translation("pog.configgui.pog_ratio")
+				    		   .worldRestart()
+				    		   .defineInRange("pog_ratio", 1, 0, 10);
+		
+			pog_base_amount = builder.comment("This sets the base amount of the Revitalise ability")
+								   	 .translation("pog.configgui.pog_base_amount")
+								   	 .worldRestart()
+								   	 .defineInRange("pog_base_amount", 1, 0, 1024);
+	
 			builder.pop();
 			
 			// Others
