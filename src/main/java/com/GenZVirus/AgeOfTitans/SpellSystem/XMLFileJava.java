@@ -44,6 +44,11 @@ public class XMLFileJava {
 			Element playername = document.createElement("PlayerName");
 			playername.appendChild(document.createTextNode(Player_Name));
 			document.appendChild(playername);
+			
+			// balance element
+			Element balance = document.createElement("Balance");
+			balance.appendChild(document.createTextNode(Integer.toString(0)));
+			playername.appendChild(balance);
 
 			// player name element
 			Element playerlevel = document.createElement("PlayerLevel");

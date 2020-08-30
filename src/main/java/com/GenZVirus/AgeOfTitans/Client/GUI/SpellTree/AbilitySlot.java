@@ -12,7 +12,7 @@ import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 
-public class ModSkillSlot extends Widget {
+public class AbilitySlot extends Widget {
 
 	// This class provides the slots icons with the spell inside them
 	
@@ -30,7 +30,7 @@ public class ModSkillSlot extends Widget {
 	
 	// Slot initialization
 	
-	public ModSkillSlot(int xIn, int yIn, int widthIn, int heightIn, String msg, int slot) {
+	public AbilitySlot(int xIn, int yIn, int widthIn, int heightIn, String msg, int slot) {
 		super(xIn, yIn, widthIn, heightIn, msg);
 		this.slot = slot;
 		
@@ -92,28 +92,28 @@ public class ModSkillSlot extends Widget {
 		
 		// Checks all widgets for buttons and deselectes them
 		
-		for(Widget button : ModScreen.SCREEN.getButtons()) {
+		for(Widget button : AbilityTreeScreen.SCREEN.getButtons()) {
 			
-			if(button instanceof ModActiveSkillButton && ((ModActiveSkillButton) button).isSelected) {
-				selectedAbility = (ActiveAbility) ((ModActiveSkillButton) button).ability;
-				((ModActiveSkillButton) button).isSelected = false;						
+			if(button instanceof ActiveSkillButton && ((ActiveSkillButton) button).isSelected) {
+				selectedAbility = (ActiveAbility) ((ActiveSkillButton) button).ability;
+				((ActiveSkillButton) button).isSelected = false;						
 			}
 			
 		// Searches for all slots that have the same selected spell and sets them NoSpell
 			
-			if(button instanceof ModSkillSlot && ((ModSkillSlot) button).ability.getId() == selectedAbility.getId()) {
-				if(((ModSkillSlot) button).slot == 1) {
+			if(button instanceof AbilitySlot && ((AbilitySlot) button).ability.getId() == selectedAbility.getId()) {
+				if(((AbilitySlot) button).slot == 1) {
 					slot1 = ActiveAbility.getList().get(0).getId();
-					((ModSkillSlot) button).ability = (ActiveAbility) ActiveAbility.getList().get(0);
-				}else if(((ModSkillSlot) button).slot == 2) {
+					((AbilitySlot) button).ability = (ActiveAbility) ActiveAbility.getList().get(0);
+				}else if(((AbilitySlot) button).slot == 2) {
 					slot2 = ActiveAbility.getList().get(0).getId();
-					((ModSkillSlot) button).ability = (ActiveAbility) ActiveAbility.getList().get(0);
-				}else if(((ModSkillSlot) button).slot == 3) {
+					((AbilitySlot) button).ability = (ActiveAbility) ActiveAbility.getList().get(0);
+				}else if(((AbilitySlot) button).slot == 3) {
 					slot3 = ActiveAbility.getList().get(0).getId();
-					((ModSkillSlot) button).ability = (ActiveAbility) ActiveAbility.getList().get(0);
-				}else if(((ModSkillSlot) button).slot == 4) {
+					((AbilitySlot) button).ability = (ActiveAbility) ActiveAbility.getList().get(0);
+				}else if(((AbilitySlot) button).slot == 4) {
 					slot4 = ActiveAbility.getList().get(0).getId();
-					((ModSkillSlot) button).ability = (ActiveAbility) ActiveAbility.getList().get(0);
+					((AbilitySlot) button).ability = (ActiveAbility) ActiveAbility.getList().get(0);
 				}				
 			}
 		}

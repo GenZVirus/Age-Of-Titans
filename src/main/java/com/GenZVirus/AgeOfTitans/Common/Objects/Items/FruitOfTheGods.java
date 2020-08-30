@@ -3,16 +3,16 @@ package com.GenZVirus.AgeOfTitans.Common.Objects.Items;
 import java.util.List;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 
-public class FruitOfTheGods extends Item {
+public class FruitOfTheGods extends PricedItem {
 
 	public FruitOfTheGods(Properties properties) {
 		super(properties);
+		this.price = 500;
 	}
 
 	@Override

@@ -9,7 +9,6 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -19,10 +18,11 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 
-public class OrbOfDislocation extends Item {
+public class OrbOfDislocation extends PricedItem {
 
 	public OrbOfDislocation(Properties properties) {
 		super(properties);
+		this.price = 2000;
 	}
 
 	@Override
@@ -33,16 +33,13 @@ public class OrbOfDislocation extends Item {
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(new StringTextComponent(""));
-		tooltip.add(new StringTextComponent(
-				"\u00A75Switches the user's position with a random player on the server no matter the dimension!"));
+		tooltip.add(new StringTextComponent("\u00A75Switches the user's position with a random player on the server no matter the dimension!"));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		if (worldIn.isRemote) {
-			return super.onItemRightClick(worldIn, playerIn, handIn);
-		}
+		if (worldIn.isRemote) { return super.onItemRightClick(worldIn, playerIn, handIn); }
 		if (worldIn.getPlayers().size() == 1) {
 			AgeOfTitans.LOGGER.info("One player on the server!");
 			return super.onItemRightClick(worldIn, playerIn, handIn);
@@ -62,14 +59,8 @@ public class OrbOfDislocation extends Item {
 			targetPlayer.setPositionAndUpdate(conjurerPos.getX(), conjurerPos.getY(), conjurerPos.getZ());
 			conjurer.setPositionAndUpdate(targetPlayerPos.getX(), targetPlayerPos.getY(), targetPlayerPos.getZ());
 		} else {
-			manager.handleCommand(source,
-					"/forge setdimension " + targetPlayer.getName().getFormattedText() + " "
-							+ conjurerDimension.getRegistryName().toString() + " " + conjurerPos.getX() + " "
-							+ conjurerPos.getY() + " " + conjurerPos.getZ());
-			manager.handleCommand(source,
-					"/forge setdimension " + conjurer.getName().getFormattedText() + " "
-							+ targetPlayerDimension.getRegistryName().toString() + " " + targetPlayerPos.getX() + " "
-							+ targetPlayerPos.getY() + " " + targetPlayerPos.getZ());
+			manager.handleCommand(source, "/forge setdimension " + targetPlayer.getName().getFormattedText() + " " + conjurerDimension.getRegistryName().toString() + " " + conjurerPos.getX() + " " + conjurerPos.getY() + " " + conjurerPos.getZ());
+			manager.handleCommand(source, "/forge setdimension " + conjurer.getName().getFormattedText() + " " + targetPlayerDimension.getRegistryName().toString() + " " + targetPlayerPos.getX() + " " + targetPlayerPos.getY() + " " + targetPlayerPos.getZ());
 		}
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}

@@ -2,7 +2,55 @@
 	"gui.active": "Active",
 	"gui.passive": "Passive",
 	"gui.spend_points": "Spend Points",	
-	"gui.respec": "Respec",	
+	"gui.respec": "Respec",
+	
+	"gui.requirements.fruit_of_the_gods": "Requires the user to have eaten atleast 1 FRUIT OF THE GODS!",
+	"gui.requirements.level0": "Requires the user to have level 0 or above!",
+	"gui.requirements.level20": "Requires the user to have level 20 or above!",
+	"gui.requirements.level40": "Requires the user to have level 40 or above!",
+	"gui.requirements.level60": "Requires the user to have level 60 or above!",
+	"gui.requirements.level80": "Requires the user to have level 80 or above!",
+	"gui.requirements.level100": "Requires the user to have level 100 or above!",
+	
+	"gui.misc.hold_shift": "Hold Shift for details",
+	"gui.misc.damage": "Damage",
+	"gui.misc.bonus_damage": "Bonus Damage",
+	"gui.misc.cooldown": "Cooldown",
+	"gui.misc.cost": "Cost",
+	"gui.misc.duration": "Duration",
+	"gui.misc.seconds": "seconds",
+	"gui.misc.level": "Level",
+	"gui.misc.ratio": "Ratio",
+	"gui.misc.base": "Base",
+	"gui.misc.rage_points": "Rage Points",
+	"gui.misc.health_per_tick": "Health per tick",
+	
+	"gui.ability.force_field.name": "Force Field",
+	"gui.ability.force_field.description": "While out of combat, regenerate shield points up to ",
+	
+	"gui.ability.presence_of_a_god.name": "Presence of a God",
+	"gui.ability.presence_of_a_god.description": "Every 5 seconds life will grow in a radius of 5 blocks. Number of plants affected: ",
+	
+	"gui.ability.sword_slash.name": "Sword Slash",
+	"gui.ability.sword_slash.description": "Empowers the users sword with unending burning flames. Upon swinging the sword the flames will fly towards the target creating an fire explosion on hit and damaging all nearby targets.",
+	
+	"gui.ability.shield_bash.name": "Shield Bash",
+	"gui.ability.shield_bash.description": "Turns any shield into a deadly weapon. Upon blocking, all targets in front of the shield will be knocked back. Blocks with weak resistance will colaps when hit by the shockwave.",
+	
+	"gui.ability.berseker.name": "Berserker",
+	"gui.ability.berseker.description": "Empowers the user, giving strength and speed. Jumping over mountains is an easy fit. Even blocks and enemies can't resist your punches. If the target enemy doesn't have an helmet to protect his skull, a critical hit will be their undoing.",
+	
+	"gui.ability.chain.name": "Chain",
+	"gui.ability.chain.description": "Gives the user mobility by hooking blocks to thrust themselves towards the blocks. Or hook an enemy to pull them towards them.",
+	
+	"gui.ability.gravity_bomb.name": "Gravity Bomb",
+	"gui.ability.gravity_bomb.description": "Throw a powerful bomb that on impact pulls all entities, including the caster, into the center of the gravitational field increasing the damage taken. Boss Entities do not take increase damage.",
+	
+	"gui.ability.revitalise.name": "Revitalise",
+	"gui.ability.revitalise.description": "Heals the user overtime. While the health of the user is below the maximum, Revitalise will replenish what is missing as long as the user has rage points.",
+	
+	"gui.ability.reaper_of_souls.name": "Reaper of Souls",
+	"gui.ability.reaper_of_souls.description": "Gives a chance to add a soul to your balance. Current chance: ",
 	
 	"key.categories.ageoftitans": "Age of Titans",
 	"key.ability_tree": "Ability Tree",

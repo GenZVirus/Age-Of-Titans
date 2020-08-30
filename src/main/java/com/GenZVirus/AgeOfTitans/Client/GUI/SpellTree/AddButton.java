@@ -13,12 +13,12 @@ import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 
-public class ModADDButton extends ModButton{
+public class AddButton extends ModButton{
 
 	public Ability ability;
 	public boolean isActive = false;
 	
-	public ModADDButton(int widthIn, int heightIn, Ability ability) {
+	public AddButton(int widthIn, int heightIn, Ability ability) {
 		super(widthIn + 21, heightIn - 1, 10, 10, "");
 		this.ability = ability;
 	}

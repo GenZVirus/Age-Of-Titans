@@ -12,12 +12,12 @@ import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 
-public class ModSubtractButton extends ModButton{
+public class SubtractButton extends ModButton{
 
 	public Ability ability;
 	public boolean isActive = false;
 	
-	public ModSubtractButton(int widthIn, int heightIn, Ability ability) {
+	public SubtractButton(int widthIn, int heightIn, Ability ability) {
 		super(widthIn + 21, heightIn + 11, 10, 10, "");
 		this.ability = ability;
 	}

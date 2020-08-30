@@ -22,7 +22,6 @@ public interface Ability {
 	public void setRatio(double ratio);
 	public void effect(World worldIn, PlayerEntity playerIn);
 	public int getId();
-	public String getName();
 	public ResourceLocation getIcon();
 	public ResourceLocation getIconOff();
 	public List<String> getDescription();

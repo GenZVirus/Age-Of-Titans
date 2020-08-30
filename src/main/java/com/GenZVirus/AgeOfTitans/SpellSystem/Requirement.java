@@ -3,11 +3,9 @@ package com.GenZVirus.AgeOfTitans.SpellSystem;
 public class Requirement {
 
 	private String name;
-	private String description;
 
-	public Requirement(String name, String description) {
+	public Requirement(String name) {
 		this.name = name;
-		this.description = description;
 	}
 
 	public boolean meetsRequirement() {
@@ -15,7 +13,7 @@ public class Requirement {
 	}
 
 	public String getDescription() {
-		return description;
+		return null;
 	}
 
 	public String getName() {

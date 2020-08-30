@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Client.GUI.HUD.ModHUD;
-import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModActiveSkillButton;
+import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ActiveSkillButton;
 import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModButton;
 import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModButtonSmall;
-import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModScreen;
-import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModSkillSlot;
+import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.AbilityTreeScreen;
+import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.AbilitySlot;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.PlayerUseSpellPacket;
 import com.GenZVirus.AgeOfTitans.SpellSystem.ActiveAbility;
@@ -33,7 +33,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 @Mod.EventBusSubscriber(modid = AgeOfTitans.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
-public class ModScreenEvents {
+public class AbilityTreeScreenEvents {
 
 	private static int cooldown_SwordSlash = 0;
 	private static int cooldown_ShieldBash = 0;
@@ -145,8 +145,8 @@ public class ModScreenEvents {
 	
 	@SubscribeEvent
 	public static void skillSection(MouseClickedEvent.Post event) {
-		if (event.getGui() instanceof ModScreen) {
-			List<Widget> buttons = ModScreen.SCREEN.getButtons();
+		if (event.getGui() instanceof AbilityTreeScreen) {
+			List<Widget> buttons = AbilityTreeScreen.SCREEN.getButtons();
 			for (Widget button : buttons) {
 				int widthIn = button.x;
 				int heightIn = button.y;
@@ -159,10 +159,10 @@ public class ModScreenEvents {
 						((ModButtonSmall) button).onPress();
 					} else if (button instanceof ModButton) {
 						((ModButton) button).onPress();
-					} else if (button instanceof ModActiveSkillButton) {
-						((ModActiveSkillButton) button).onPress();
-					} else if (button instanceof ModSkillSlot) {
-						((ModSkillSlot) button).onPress();
+					} else if (button instanceof ActiveSkillButton) {
+						((ActiveSkillButton) button).onPress();
+					} else if (button instanceof AbilitySlot) {
+						((AbilitySlot) button).onPress();
 					}
 				}
 			}

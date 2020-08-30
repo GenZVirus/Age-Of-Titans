@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -13,10 +12,11 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 
-public class OrbOfEnd extends Item {
+public class OrbOfEnd extends PricedItem {
 
 	public OrbOfEnd(Properties properties) {
 		super(properties);
+		this.price = 1000;
 	}
 
 	@Override

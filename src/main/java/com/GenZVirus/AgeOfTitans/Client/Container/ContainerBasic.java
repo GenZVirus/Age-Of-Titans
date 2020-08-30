@@ -1,8 +1,5 @@
 package com.GenZVirus.AgeOfTitans.Client.Container;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Common.Init.ModContainerTypes;
 import com.GenZVirus.AgeOfTitans.Common.TileEntity.TileEntityInventoryBasic;

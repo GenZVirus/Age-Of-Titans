@@ -1,0 +1,113 @@
+{
+	"gui.active": "Активированое",
+	"gui.passive": "Деактивированое",
+	"gui.spend_points": "Spend Points",	
+	"gui.respec": "Respec",	
+	
+	"gui.requirements.fruit_of_the_gods": "Requires the user to have eaten atleast 1 FRUIT OF THE GODS!",
+	"gui.requirements.level0": "Requires the user to have level 0 or above!",
+	"gui.requirements.level20": "Requires the user to have level 20 or above!",
+	"gui.requirements.level40": "Requires the user to have level 40 or above!",
+	"gui.requirements.level60": "Requires the user to have level 60 or above!",
+	"gui.requirements.level80": "Requires the user to have level 80 or above!",
+	"gui.requirements.level100": "Requires the user to have level 100 or above!",
+	
+	"gui.misc.hold_shift": "Hold Shift for details",
+	"gui.misc.damage": "Damage",
+	"gui.misc.bonus_damage": "Bonus Damage",
+	"gui.misc.cooldown": "Cooldown",
+	"gui.misc.cost": "Cost",
+	"gui.misc.duration": "Duration",
+	"gui.misc.seconds": "seconds",
+	"gui.misc.level": "Level",
+	"gui.misc.ratio": "Ratio",
+	"gui.misc.base": "Base",
+	"gui.misc.rage_points": "Rage Points",
+	"gui.misc.healing_amount_per_tick": "Healing amount per tick",
+	
+	"gui.ability.force_field.name": "Force Field",
+	"gui.ability.force_field.description": "While out of combat, regenerate shield points up to ",
+	
+	"gui.ability.presence_of_a_god.name": "Presence of a God",
+	"gui.ability.presence_of_a_god.description": "Every 5 seconds life will grow in a radius of 5 blocks. Number of plants affected: ",
+	
+	"gui.ability.sword_slash.name": "Sword Slash",
+	"gui.ability.sword_slash.description": "Empowers the users sword with unending burning flames. Upon swinging the sword the flames will fly towards the target creating an fire explosion on hit and damaging all nearby targets.",
+	
+	"gui.ability.shield_bash.name": "Shield Bash",
+	"gui.ability.shield_bash.description": "Turns any shield into a deadly weapon. Upon blocking, all targets in front of the shield will be knocked back. Blocks with weak resistance will colaps when hit by the shockwave.",
+	
+	"gui.ability.berseker.name": "Berserker",
+	"gui.ability.berseker.description": "Empowers the user, giving strength and speed. Jumping over mountains is an easy fit. Even blocks and enemies can't resist your punches. If the target enemy doesn't have an helmet to protect his skull, a critical hit will be their undoing.",
+	
+	"gui.ability.chain.name": "Chain",
+	"gui.ability.chain.description": "Gives the user mobility by hooking blocks to thrust themselves towards the blocks. Or hook an enemy to pull them towards them.",
+	
+	"gui.ability.gravity_bomb.name": "Gravity Bomb",
+	"gui.ability.gravity_bomb.description": "Throw a powerful bomb that on impact pulls all entities, including the caster, into the center of the gravitational field increasing the damage taken. Boss Entities do not take increase damage.",
+	
+	"gui.ability.revitalise.name": "Revitalise",
+	"gui.ability.revitalise.description": "Heals the user overtime. While the health of the user is below the maximum, Revitalise will replenish what is missing as long as the user has rage points.",
+	
+	"gui.ability.reaper_of_souls.name": "Reaper of Souls",
+	"gui.ability.reaper_of_souls.description": "Gives a chance to add a soul to your balance. Current chance: ",
+	
+	"key.categories.ageoftitans": "Эра титанов",
+	"key.ability_tree": "Дерево умений",
+	"key.lockhud": "Открить закрить HUD",
+	"key.scroll_up": "Следущее заклинаниее",
+	"key.scroll_down": "Преведущие закленанее",
+	"key.fire_ability": "Огненое умения",
+
+	"effect.ageoftitans.titan": "Титан",
+	"effect.ageoftitans.berserker": "Бересеркr",
+	"effect.ageoftitans.gravity_field": "Гравитационое поле",
+	"effect.ageoftitans.holy_plains": "Святие растения",
+	"effect.ageoftitans.holy_hills": "Святие холмы",
+	"effect.ageoftitans.holy_mountains": "Святие горы",
+
+	"itemGroup.ageoftitans": "Эра титанов",
+	
+	"item.ageoftitans.fruit_of_the_gods": "\u00A7a\u00A7l\u00A7oПлод богов",
+	
+	"item.ageoftitans.orb_of_eden": "\u00A7b\u00A7lСфера Эдема",
+	"item.ageoftitans.orb_of_nether": "\u00A7c\u00A7lСфера Незера",
+	"item.ageoftitans.orb_of_end": "\u00A7a\u00A7lСфера края",
+	"item.ageoftitans.orb_of_summoning": "\u00A71\u00A7lСфера визова",
+	"item.ageoftitans.orb_of_dislocation": "\u00A74\u00A7lСфера дислокации",
+	"item.ageoftitans.orb_of_storage": "\u00A76\u00A7lСфера хранения",
+	
+	"item.ageoftitans.keystone": "\u00A74\u00A7lКаменый ключ",
+	
+	"item.ageoftitans.titanium_ingot": "\u00A7eСлиток титана",
+	
+	"item.ageoftitans.titanium_sword": "\u00A7e\u00A7nМеч с титана",
+	"item.ageoftitans.titanium_pickaxe": "\u00A7e\u00A7nКирка с титана",
+	"item.ageoftitans.titanium_axe": "\u00A7e\u00A7nТопор с титана",
+	"item.ageoftitans.titanium_shovel": "\u00A7e\u00A7nЛопата с титана",
+	"item.ageoftitans.titanium_hoe": "\u00A7e\u00A7nМотыга с титана",
+	
+	"item.ageoftitans.titanium_helmet": "\u00A7e\u00A7nШлем с титана",
+	"item.ageoftitans.titanium_chestplate": "\u00A7e\u00A7nНагрудник с титана",
+	"item.ageoftitans.titanium_leggings": "\u00A7e\u00A7nПоножи с титана",
+	"item.ageoftitans.titanium_boots": "\u00A7e\u00A7nБотинки с титана",
+	
+	"block.ageoftitans.titanium_block": "\u00A7eБлок титана",
+	"block.ageoftitans.titanium_ore": "\u00A7eТитанова руда",
+	"block.ageoftitans.titan_locker": "\u00A76\u00A7l\Титановый сейф",
+	"block.ageoftitans.eden_wood": "Едемовое дерево",
+	"block.ageoftitans.eden_wood_log": "Едемовое бревно",
+	"block.ageoftitans.eden_wood_planks": "Едемовоя доска",
+	"block.ageoftitans.eden_wood_stairs": "Едемовоя лестница",
+	"block.ageoftitans.eden_wood_slab": "Едемовый полублок",
+	"block.ageoftitans.eden_wood_pressure_plate": "Едемовая нажимная плита",
+	"block.ageoftitans.eden_wood_fence": "Едемовый забор",
+	"block.ageoftitans.eden_wood_button": "Едемовая кнопка с дерева",
+	"block.ageoftitans.eden_leaves": "Едемовая листва",
+	"block.ageoftitans.eden_sapling": "Едемовый саженец",
+	
+	"commands.addlevels": "%d's levels were added to %s!",
+	"commands.resetlevel": "%s's abilities have been reset!",
+	"commands.setlevel": "%s's level was set to %d!"
+	
+}

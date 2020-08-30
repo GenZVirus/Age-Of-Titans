@@ -7,7 +7,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -19,10 +18,11 @@ import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.ITeleporter;
 
-public class OrbOfNether extends Item {
+public class OrbOfNether extends PricedItem {
 
 	public OrbOfNether(Properties properties) {
 		super(properties);
+		this.price = 1000;
 	}
 
 	@Override

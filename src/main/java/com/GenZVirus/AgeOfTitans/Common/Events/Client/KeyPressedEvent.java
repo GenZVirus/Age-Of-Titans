@@ -2,7 +2,7 @@ package com.GenZVirus.AgeOfTitans.Common.Events.Client;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Client.GUI.HUD.ModHUD;
-import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModScreen;
+import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.AbilityTreeScreen;
 import com.GenZVirus.AgeOfTitans.Common.Init.EffectInit;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.SpellPacket;
@@ -55,7 +55,7 @@ public class KeyPressedEvent {
 				
 					// display character screen
 				
-					Minecraft.getInstance().displayGuiScreen(ModScreen.SCREEN); 
+					Minecraft.getInstance().displayGuiScreen(AbilityTreeScreen.SCREEN); 
 				
 					// send a packet to the server and tells it to send data to the player requesting it
 				
@@ -66,7 +66,7 @@ public class KeyPressedEvent {
 				
 					// closes the screen
 				
-					ModScreen.SCREEN.onClose();
+					AbilityTreeScreen.SCREEN.onClose();
 				}
 			}
 		}

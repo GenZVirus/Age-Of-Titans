@@ -104,6 +104,8 @@ public class ForgeEvents {
 			return;
 		if (event.getItem().getItem().equals(ItemInit.FRUIT_OF_THE_GODS.get())) {
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+			player.setAbsorptionAmount(player.getAbsorptionAmount() + 20);
+			player.setHealth(player.getMaxHealth());
 			for (PlayerEntity playerMSG : ForgeEventBusSubscriber.players) {
 				playerMSG.sendMessage(new TranslationTextComponent(player.getName().getFormattedText() + " has eaten the Fruit of the Gods"));
 			}

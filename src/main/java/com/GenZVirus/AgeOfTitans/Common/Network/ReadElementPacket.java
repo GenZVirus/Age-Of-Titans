@@ -3,6 +3,7 @@ package com.GenZVirus.AgeOfTitans.Common.Network;
 import java.util.UUID;
 import java.util.function.Supplier;
 
+import com.GenZVirus.AgeOfTitans.Client.GUI.ReaperShop.ReaperShopScreen;
 import com.GenZVirus.AgeOfTitans.SpellSystem.ActiveAbility;
 import com.GenZVirus.AgeOfTitans.SpellSystem.PassiveAbility;
 import com.GenZVirus.AgeOfTitans.SpellSystem.PlayerStats;
@@ -74,6 +75,10 @@ public class ReadElementPacket {
 				if(pkt.element.contains("PlayerLevel"))
 				{
 					PlayerStats.PLAYER_LEVEL = pkt.value;
+				}
+				
+				if(pkt.element.contains("Balance")) {
+					ReaperShopScreen.SCREEN.balance = pkt.value;
 				}
 			}
 		});

@@ -80,7 +80,6 @@ public class PacketHandlerCommon {
 				.encoder(RespecPacket::encode)
 				.decoder(RespecPacket::decode)
 				.consumer(RespecPacket::handle)
-				.add();
-		
+				.add();		
 	}
 }

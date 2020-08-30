@@ -26,7 +26,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ModActiveSkillButton extends Widget {
+public class ActiveSkillButton extends Widget {
 
 	private ResourceLocation BUTTONS_LOCATION;
 	public boolean isSelected = false;
@@ -34,12 +34,12 @@ public class ModActiveSkillButton extends Widget {
 	public boolean renderAS = false;
 	public ModButton add, subtract;
 	
-	public ModActiveSkillButton(int xIn, int yIn, int widthIn, int heightIn, String msg, Ability ability) {
+	public ActiveSkillButton(int xIn, int yIn, int widthIn, int heightIn, String msg, Ability ability) {
 		super(xIn, yIn, widthIn, heightIn, msg);
 		this.BUTTONS_LOCATION = ability.getIcon();
 		this.ability = (ActiveAbility) ability;
-		add = new ModADDButton(this.x, this.y, this.ability);
-		subtract = new ModSubtractButton(this.x , this.y, this.ability);
+		add = new AddButton(this.x, this.y, this.ability);
+		subtract = new SubtractButton(this.x , this.y, this.ability);
 	}
 	@SuppressWarnings("resource")
 	public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
@@ -242,9 +242,9 @@ public class ModActiveSkillButton extends Widget {
 	 
 	public void onPress() {
 		this.playDownSound(Minecraft.getInstance().getSoundHandler());
-		for(Widget button : ModScreen.SCREEN.getButtons()) {
-			if(button instanceof ModActiveSkillButton) {
-				((ModActiveSkillButton) button).isSelected = false;
+		for(Widget button : AbilityTreeScreen.SCREEN.getButtons()) {
+			if(button instanceof ActiveSkillButton) {
+				((ActiveSkillButton) button).isSelected = false;
 			}
 		}
 		if(this.ability.getLevel() > 0 && this.ability.meetsRequirements()) {

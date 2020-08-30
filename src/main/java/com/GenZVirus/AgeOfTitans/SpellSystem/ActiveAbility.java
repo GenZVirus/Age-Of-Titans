@@ -15,6 +15,7 @@ import com.GenZVirus.AgeOfTitans.Common.Network.SyncPlayerMotionPacket;
 import com.GenZVirus.AgeOfTitans.Util.Helpers.ConeShape;
 import com.google.common.collect.Lists;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -31,10 +32,9 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkDirection;
 
-public class ActiveAbility implements Ability{
+public class ActiveAbility implements Ability {
 
 	private int id;
-	private String name;
 	private ResourceLocation icon;
 	private ResourceLocation iconOff;
 	private ResourceLocation iconHUD;
@@ -45,11 +45,10 @@ public class ActiveAbility implements Ability{
 	public int cost = 0;
 	public List<Requirement> requirements = Lists.newArrayList();
 
-	public ActiveAbility(int id, ResourceLocation icon, ResourceLocation iconOff, ResourceLocation iconHUD, String name, int level, int cost) {
+	public ActiveAbility(int id, ResourceLocation icon, ResourceLocation iconOff, ResourceLocation iconHUD, int level, int cost) {
 		this.id = id;
 		this.icon = icon;
 		this.iconHUD = iconHUD;
-		this.name = name;
 		this.level = level;
 		this.iconOff = iconOff;
 		this.cost = cost;
@@ -73,50 +72,46 @@ public class ActiveAbility implements Ability{
 	public double getBaseAmount() {
 		return this.base_amount;
 	}
-	
+
 	public double getRatio() {
 		return this.ratio;
 	}
-	
+
 	public int getLevel() {
 		return this.level;
 	}
-	
+
 	public int getCooldown() {
 		return this.cooldown;
 	}
-	
+
 	public int getCost() {
 		return this.cost;
 	}
-	
+
 	public void setBaseAmount(double amount) {
 		this.base_amount = amount;
 	}
-	
+
 	public void setRatio(double ratio) {
-		this.ratio = ratio;		
+		this.ratio = ratio;
 	}
-	
+
 	public void setCooldown(int cd) {
 		this.cooldown = cd;
 	}
-	
+
 	public void setCost(int cost) {
 		this.cost = cost;
 	}
-	
+
 	@Override
 	public void setLevel(int level) {
 		this.level = level;
 	}
-	
+
 	public int getId() {
 		return this.id;
-	}
-
-	public String getName() {
-		return this.name;
 	}
 
 	public ResourceLocation getIcon() {
@@ -140,29 +135,37 @@ public class ActiveAbility implements Ability{
 		List<String> list = Lists.newArrayList();
 		return list;
 	}
-	
-	public static List<Ability> getList(){
+
+	public static List<Ability> getList() {
 		return ACTIVE_LIST;
 	}
 
 	public List<Requirement> getRequirements() {
 		return this.requirements;
 	}
-	
+
 	private static final List<Ability> ACTIVE_LIST = Lists.newArrayList();
-	private static final ActiveAbility NO_SPELL = new ActiveAbility(0, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/noicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/noicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/noiconhud.png"), "", 0, 0);
-	private static final ActiveAbility SWORD_SLASH = new ActiveAbility(1, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashiconhud.png"), "Sword Slash", 0, AOTConfig.COMMON.sword_slash_cost.get()) {
+	private static final ActiveAbility NO_SPELL = new ActiveAbility(0, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/noicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/noicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/noiconhud.png"), 0, 0);
+	private static final ActiveAbility SWORD_SLASH = new ActiveAbility(1, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/swordslashiconhud.png"), 0, AOTConfig.COMMON.sword_slash_cost.get()) {
 
 		@Override
 		public void initRequirements() {
-			this.requirements.add(new Requirement("FRUIT OF THE GODS", "\u00A74Requires the user to have eaten atleast 1 FRUIT OF THE GODS!") {
+			this.requirements.add(new Requirement("FRUIT OF THE GODS") {
+				public String getDescription() {
+					return "\u00A74" + I18n.format("gui.requirements.fruit_of_the_gods");
+				}
+
 				public boolean meetsRequirement() {
 					if (PlayerStats.APPLES_EATEN == 0)
 						return false;
 					return true;
 				};
 			});
-			this.requirements.add(new Requirement("Level", "\u00A74Requires the user to have level 0 or above!") {
+			this.requirements.add(new Requirement("Level") {
+				public String getDescription() {
+					return "\u00A74" + I18n.format("gui.requirements.level0");
+				}
+
 				public boolean meetsRequirement() {
 					if (PlayerStats.PLAYER_LEVEL < 0)
 						return false;
@@ -189,49 +192,57 @@ public class ActiveAbility implements Ability{
 			swordslashentity.rotationPitch = (float) pitch;
 			swordslashentity.rotationYaw = (float) yaw;
 			swordslashentity.setRawPosition(playerIn.getPosX(), 1.0D + playerIn.getPosY(), playerIn.getPosZ());
-			swordslashentity.setDamage(AOTConfig.COMMON.sword_slash_base_damage.get() + AOTConfig.COMMON.sword_slash_damage_ratio.get() * this.level);
+			swordslashentity.setDamage(AOTConfig.COMMON.sword_slash_base_damage.get() + AOTConfig.COMMON.sword_slash_damage_ratio.get() * Integer.parseInt(XMLFileJava.readElement(playerIn.getUniqueID(), "Spell_Level1")));
 			playerIn.world.addEntity(swordslashentity);
 			playerIn.world.playSound(null, playerIn.getPosition(), SoundInit.SWORD_SLASH_LAUNCH.get(), SoundCategory.AMBIENT, 1.0F, 1.0F);
 		}
 
 		public List<String> getDescription() {
 			List<String> list = Lists.newArrayList();
-			list.add("\u00A74\u00A7n\u00A7l" + "Sword Slash");
+			list.add("\u00A74\u00A7n\u00A7l" + I18n.format("gui.ability.sword_slash.name"));
 			list.add("");
-			list.add("Empowers the users sword with unending burning flames. " + "Upon swinging the sword the flames will fly towards the target creating an fire explosion on hit and damaging all nearby targets.");
+			list.add(I18n.format("gui.ability.sword_slash.description"));
 			list.add("");
-			list.add("Hold Shift for details");
+			list.add(I18n.format("gui.misc.hold_shift"));
 			return list;
 		}
 
 		@Override
 		public List<String> getDetails() {
 			List<String> list = Lists.newArrayList();
-			list.add("\u00A74\u00A7n\u00A7l" + "Sword Slash");
+			list.add("\u00A74\u00A7n\u00A7l" + I18n.format("gui.ability.sword_slash.name"));
 			list.add("");
-			list.add("Damage " + "(" + Double.toString(this.base_amount + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.base_amount) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
+			list.add(I18n.format("gui.misc.damage") + " (" + Double.toString(this.base_amount + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.base_amount) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
 			list.add("");
-			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
+			list.add(I18n.format("gui.misc.cooldown") + ": " + Integer.toString(this.cooldown) + " " + I18n.format("gui.misc.seconds"));
 			list.add("");
-			list.add("Cost: " + this.cost + " rage points");
+			list.add(I18n.format("gui.misc.cost") + ": " + this.cost + " " + I18n.format("gui.misc.rage_points"));
 			list.add("");
-			list.add("\u00A73" + "Base " + "\u00A7e" + "Ratio " + "\u00A74" + "Level ");
+			list.add("\u00A73" + I18n.format("gui.misc.base") + " \u00A7e" + I18n.format("gui.misc.ratio") + " \u00A74" + I18n.format("gui.misc.level"));
 			return list;
 		}
 
 	};
-	private static final ActiveAbility SHIELD_BASH = new ActiveAbility(2, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashiconhud.png"), "Shield Bash", 0, AOTConfig.COMMON.shield_bash_cost.get()) {
+	private static final ActiveAbility SHIELD_BASH = new ActiveAbility(2, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/shieldbashiconhud.png"), 0, AOTConfig.COMMON.shield_bash_cost.get()) {
 
 		@Override
 		public void initRequirements() {
-			this.requirements.add(new Requirement("FRUIT OF THE GODS", "\u00A74Requires the user to have eaten atleast 1 FRUIT OF THE GODS!") {
+			this.requirements.add(new Requirement("FRUIT OF THE GODS") {
+				public String getDescription() {
+					return "\u00A74" + I18n.format("gui.requirements.fruit_of_the_gods");
+				}
+
 				public boolean meetsRequirement() {
 					if (PlayerStats.APPLES_EATEN == 0)
 						return false;
 					return true;
 				};
 			});
-			this.requirements.add(new Requirement("Level", "\u00A74Requires the user to have level 20 or above!") {
+			this.requirements.add(new Requirement("Level") {
+				public String getDescription() {
+					return "\u00A74" + I18n.format("gui.requirements.level20");
+				}
+
 				public boolean meetsRequirement() {
 					if (PlayerStats.PLAYER_LEVEL < 20)
 						return false;
@@ -271,7 +282,7 @@ public class ActiveAbility implements Ability{
 				if (coneShape.containsPoint(entity.getPosX(), entity.getPosY(), entity.getPosZ())) {
 					Vec3d vec = new Vec3d((entity.getPosX() - playerIn.getPosX()) * offset, (entity.getPosY() - playerIn.getPosY()) * offset, (entity.getPosZ() - playerIn.getPosZ()) * offset);
 					entity.setMotion(vec.x / 2, vec.y / 2, vec.z / 2);
-					entity.attackEntityFrom(DamageSource.MAGIC, (float) (AOTConfig.COMMON.shield_bash_base_damage.get() + AOTConfig.COMMON.shield_bash_damage_ratio.get() * this.level));
+					entity.attackEntityFrom(DamageSource.MAGIC, (float) (AOTConfig.COMMON.shield_bash_base_damage.get() + AOTConfig.COMMON.shield_bash_damage_ratio.get() * Integer.parseInt(XMLFileJava.readElement(playerIn.getUniqueID(), "Spell_Level2"))));
 					if (entity instanceof PlayerEntity) {
 						PacketHandlerCommon.INSTANCE.sendTo(new SyncPlayerMotionPacket(entity.getUniqueID(), vec.getX() / 2, vec.getY() / 2, vec.getZ() / 2), ((ServerPlayerEntity) entity).connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
 					}
@@ -283,43 +294,51 @@ public class ActiveAbility implements Ability{
 
 		public List<String> getDescription() {
 			List<String> list = Lists.newArrayList();
-			list.add("\u00A74\u00A7n\u00A7l" + "Shield Bash");
+			list.add("\u00A74\u00A7n\u00A7l" + I18n.format("gui.ability.shield_bash.name"));
 			list.add("");
-			list.add("Turns any shield into a deadly weapon. " + "Upon blocking, all targets in front of the shield will be knocked back. " + "Blocks with weak resistance will colaps when hit by the shockwave.");
+			list.add(I18n.format("gui.ability.shield_bash.description"));
 			list.add("");
-			list.add("Hold Shift for details");
+			list.add(I18n.format("gui.misc.hold_shift"));
 			return list;
 		}
 
 		@Override
 		public List<String> getDetails() {
 			List<String> list = Lists.newArrayList();
-			list.add("\u00A74\u00A7n\u00A7l" + "Shield Bash");
+			list.add("\u00A74\u00A7n\u00A7l" + I18n.format("gui.ability.shield_bash.name"));
 			list.add("");
-			list.add("Damage " + "(" + Double.toString(this.base_amount + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.base_amount) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
+			list.add(I18n.format("gui.misc.damage") + " (" + Double.toString(this.base_amount + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.base_amount) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
 			list.add("");
-			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
+			list.add(I18n.format("gui.misc.cooldown") + ": " + Integer.toString(this.cooldown) + " " + I18n.format("gui.misc.seconds"));
 			list.add("");
-			list.add("Cost: " + this.cost + " rage points");
+			list.add(I18n.format("gui.misc.cost") + ": " + this.cost + " " + I18n.format("gui.misc.rage_points"));
 			list.add("");
-			list.add("\u00A73" + "Base " + "\u00A7e" + "Ratio " + "\u00A74" + "Level ");
+			list.add("\u00A73" + I18n.format("gui.misc.base") + " \u00A7e" + I18n.format("gui.misc.ratio") + " \u00A74" + I18n.format("gui.misc.level"));
 			return list;
 		}
 
 	};
 
-	private static final ActiveAbility BERSERKER = new ActiveAbility(3, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonhud.png"), "Berserker", 0, AOTConfig.COMMON.berserker_cost.get()) {
+	private static final ActiveAbility BERSERKER = new ActiveAbility(3, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/berserkericonhud.png"), 0, AOTConfig.COMMON.berserker_cost.get()) {
 
 		@Override
 		public void initRequirements() {
-			this.requirements.add(new Requirement("FRUIT OF THE GODS", "\u00A74Requires the user to have eaten atleast 1 FRUIT OF THE GODS!") {
+			this.requirements.add(new Requirement("FRUIT OF THE GODS") {
+				public String getDescription() {
+					return "\u00A74" + I18n.format("gui.requirements.fruit_of_the_gods");
+				}
+
 				public boolean meetsRequirement() {
 					if (PlayerStats.APPLES_EATEN == 0)
 						return false;
 					return true;
 				};
 			});
-			this.requirements.add(new Requirement("Level", "\u00A74Requires the user to have level 40 or above!") {
+			this.requirements.add(new Requirement("Level") {
+				public String getDescription() {
+					return "\u00A74" + I18n.format("gui.requirements.level40");
+				}
+
 				public boolean meetsRequirement() {
 					if (PlayerStats.PLAYER_LEVEL < 40)
 						return false;
@@ -330,50 +349,58 @@ public class ActiveAbility implements Ability{
 
 		@Override
 		public void effect(World worldIn, PlayerEntity playerIn) {
-			playerIn.addPotionEffect(new EffectInstance(EffectInit.BERSERKER.get(), (int) (400 + 20 * AOTConfig.COMMON.berserker_duration_ratio.get() * this.level)));
+			playerIn.addPotionEffect(new EffectInstance(EffectInit.BERSERKER.get(), (int) (400 + 20 * AOTConfig.COMMON.berserker_duration_ratio.get() * Integer.parseInt(XMLFileJava.readElement(playerIn.getUniqueID(), "Spell_Level3")))));
 		}
 
 		public List<String> getDescription() {
 			List<String> list = Lists.newArrayList();
-			list.add("\u00A74\u00A7n\u00A7l" + "Berserker");
+			list.add("\u00A74\u00A7n\u00A7l" + I18n.format("gui.ability.berseker.name"));
 			list.add("");
-			list.add("Empowers the user, giving strength and speed. Jumping over mountains is an easy fit. " + "Even blocks and enemies can't resist your punches. " + "If the target enemy doesn't have an helmet to protect his skull, a critical hit will be their undoing.");
+			list.add(I18n.format("gui.ability.berseker.description"));
 			list.add("");
-			list.add("Hold Shift for details");
+			list.add(I18n.format("gui.misc.hold_shift"));
 			return list;
 		}
 
 		@Override
 		public List<String> getDetails() {
 			List<String> list = Lists.newArrayList();
-			list.add("\u00A74\u00A7n\u00A7l" + "Berserker");
+			list.add("\u00A74\u00A7n\u00A7l" + I18n.format("gui.ability.berseker.name"));
 			list.add("");
-			list.add("Bonus damage: " + "\u00A73" + Double.toString(this.base_amount));
+			list.add(I18n.format("gui.misc.bonus_damage") + ": " + "\u00A73" + Double.toString(this.base_amount));
 			list.add("");
-			list.add("Duration " + "(" + Double.toString(20.0D + this.ratio * this.level) + "): " + "\u00A73" + "20" + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level) + "\u00A7f" + " seconds");
+			list.add(I18n.format("gui.misc.duration") + " (" + Double.toString(20.0D + this.ratio * this.level) + "): " + "\u00A73" + "20" + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level) + "\u00A7f" + " " + I18n.format("gui.misc.seconds"));
 			list.add("");
-			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
+			list.add(I18n.format("gui.misc.cooldown") + ": " + Integer.toString(this.cooldown) + " " + I18n.format("gui.misc.seconds"));
 			list.add("");
-			list.add("Cost: " + this.cost + " rage points");
+			list.add(I18n.format("gui.misc.cost") + ": " + this.cost + " " + I18n.format("gui.misc.rage_points"));
 			list.add("");
-			list.add("\u00A73" + "Base " + "\u00A7e" + "Ratio " + "\u00A74" + "Level ");
+			list.add("\u00A73" + I18n.format("gui.misc.base") + " \u00A7e" + I18n.format("gui.misc.ratio") + " \u00A74" + I18n.format("gui.misc.level"));
 			return list;
 		}
 
 	};
 
-	private static final ActiveAbility CHAIN = new ActiveAbility(4, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainiconhud.png"), "Chain", 0, AOTConfig.COMMON.chain_cost.get()) {
+	private static final ActiveAbility CHAIN = new ActiveAbility(4, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/chainiconhud.png"), 0, AOTConfig.COMMON.chain_cost.get()) {
 
 		@Override
 		public void initRequirements() {
-			this.requirements.add(new Requirement("FRUIT OF THE GODS", "\u00A74Requires the user to have eaten atleast 1 FRUIT OF THE GODS!") {
+			this.requirements.add(new Requirement("FRUIT OF THE GODS") {
+				public String getDescription() {
+					return "\u00A74" + I18n.format("gui.requirements.fruit_of_the_gods");
+				}
+
 				public boolean meetsRequirement() {
 					if (PlayerStats.APPLES_EATEN == 0)
 						return false;
 					return true;
 				};
 			});
-			this.requirements.add(new Requirement("Level", "\u00A74Requires the user to have level 20 or above!") {
+			this.requirements.add(new Requirement("Level") {
+				public String getDescription() {
+					return "\u00A74" + I18n.format("gui.requirements.level20");
+				}
+
 				public boolean meetsRequirement() {
 					if (PlayerStats.PLAYER_LEVEL < 20)
 						return false;
@@ -395,50 +422,58 @@ public class ActiveAbility implements Ability{
 			ChainEntity chainEntity = new ChainEntity(playerIn.world, playerIn, newPosX, newPosY, newPosZ);
 			chainEntity.shoot(playerIn, (float) pitch, (float) yaw, 0.0F, 1.5F, 0.0F);
 			chainEntity.setRawPosition(playerIn.getPosX(), 1.0D + playerIn.getPosY(), playerIn.getPosZ());
-			chainEntity.setDamage(AOTConfig.COMMON.chain_base_damage.get() + AOTConfig.COMMON.chain_damage_ratio.get() * this.level);
+			chainEntity.setDamage(AOTConfig.COMMON.chain_base_damage.get() + AOTConfig.COMMON.chain_damage_ratio.get() * Integer.parseInt(XMLFileJava.readElement(playerIn.getUniqueID(), "Spell_Level4")));
 			playerIn.world.addEntity(chainEntity);
 			playerIn.world.playSound(null, playerIn.getPosition(), SoundInit.CHAIN.get(), SoundCategory.AMBIENT, 1.0F, 1.0F);
 		}
 
 		public List<String> getDescription() {
 			List<String> list = Lists.newArrayList();
-			list.add("\u00A74\u00A7n\u00A7l" + "Chain");
+			list.add("\u00A74\u00A7n\u00A7l" + I18n.format("gui.ability.chain.name"));
 			list.add("");
-			list.add("Gives the user mobility by hooking blocks to thrust themselves towards the blocks. " + "Or hook an enemy to pull them towards them.");
+			list.add(I18n.format("gui.ability.chain.description"));
 			list.add("");
-			list.add("Hold Shift for details");
+			list.add(I18n.format("gui.misc.hold_shift"));
 			return list;
 		}
 
 		@Override
 		public List<String> getDetails() {
 			List<String> list = Lists.newArrayList();
-			list.add("\u00A74\u00A7n\u00A7l" + "Chain");
+			list.add("\u00A74\u00A7n\u00A7l" + I18n.format("gui.ability.chain.name"));
 			list.add("");
-			list.add("Damage " + "(" + Double.toString(this.base_amount + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.base_amount) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
+			list.add(I18n.format("gui.misc.damage") + " (" + Double.toString(this.base_amount + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.base_amount) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
 			list.add("");
-			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
+			list.add(I18n.format("gui.misc.cooldown") + ": " + Integer.toString(this.cooldown) + " " + I18n.format("gui.misc.seconds"));
 			list.add("");
-			list.add("Cost: " + this.cost + " rage points");
+			list.add(I18n.format("gui.misc.cost") + ": " + this.cost + " " + I18n.format("gui.misc.rage_points"));
 			list.add("");
-			list.add("\u00A73" + "Base " + "\u00A7e" + "Ratio " + "\u00A74" + "Level ");
+			list.add("\u00A73" + I18n.format("gui.misc.base") + " \u00A7e" + I18n.format("gui.misc.ratio") + " \u00A74" + I18n.format("gui.misc.level"));
 			return list;
 		}
 
 	};
 
-	private static final ActiveAbility GRAVITY_BOMB = new ActiveAbility(5, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/gravitybombicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/gravitybombiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/gravitybombiconhud.png"), "Gravity Bomb", 0, AOTConfig.COMMON.gravity_bomb_cost.get()) {
+	private static final ActiveAbility GRAVITY_BOMB = new ActiveAbility(5, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/gravitybombicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/gravitybombiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/gravitybombiconhud.png"), 0, AOTConfig.COMMON.gravity_bomb_cost.get()) {
 
 		@Override
 		public void initRequirements() {
-			this.requirements.add(new Requirement("FRUIT OF THE GODS", "\u00A74Requires the user to have eaten atleast 1 FRUIT OF THE GODS!") {
+			this.requirements.add(new Requirement("FRUIT OF THE GODS") {
+				public String getDescription() {
+					return "\u00A74" + I18n.format("gui.requirements.fruit_of_the_gods");
+				}
+
 				public boolean meetsRequirement() {
 					if (PlayerStats.APPLES_EATEN == 0)
 						return false;
 					return true;
 				};
 			});
-			this.requirements.add(new Requirement("Level", "\u00A74Requires the user to have level 20 or above!") {
+			this.requirements.add(new Requirement("Level") {
+				public String getDescription() {
+					return "\u00A74" + I18n.format("gui.requirements.level20");
+				}
+
 				public boolean meetsRequirement() {
 					if (PlayerStats.PLAYER_LEVEL < 20)
 						return false;
@@ -455,51 +490,59 @@ public class ActiveAbility implements Ability{
 			gravityBombEntity.shoot(playerIn, (float) pitch, (float) yaw, 0.0F, 1.5F, 0.0F);
 			gravityBombEntity.setRawPosition(playerIn.getPosX(), 1.0D + playerIn.getPosY(), playerIn.getPosZ());
 			gravityBombEntity.setBonusDamage(AOTConfig.COMMON.gravity_bomb_bonus_damage.get());
-			gravityBombEntity.setLevel(this.level == 0 ? 0 : this.level - 1);
+			gravityBombEntity.setLevel(Integer.parseInt(XMLFileJava.readElement(playerIn.getUniqueID(), "Spell_Level5")) == 0 ? 0 : Integer.parseInt(XMLFileJava.readElement(playerIn.getUniqueID(), "Spell_Level5")) - 1);
 			playerIn.world.addEntity(gravityBombEntity);
 		}
 
 		public List<String> getDescription() {
 			List<String> list = Lists.newArrayList();
-			list.add("\u00A74\u00A7n\u00A7l" + "Gravity Bomb");
+			list.add("\u00A74\u00A7n\u00A7l" + I18n.format("gui.ability.gravity_bomb.name"));
 			list.add("");
-			list.add("Throw a powerful bomb that on impact pulls all entities, including the caster, into the center of the gravitational field increasing the damage taken. Boss Entities do not take increase damage.");
+			list.add(I18n.format("gui.ability.gravity_bomb.description"));
 			list.add("");
-			list.add("Hold Shift for details");
+			list.add(I18n.format("gui.misc.hold_shift"));
 			return list;
 		}
 
 		@Override
 		public List<String> getDetails() {
 			List<String> list = Lists.newArrayList();
-			list.add("\u00A74\u00A7n\u00A7l" + "Gravity Bomb");
+			list.add("\u00A74\u00A7n\u00A7l" + I18n.format("gui.ability.gravity_bomb.name"));
 			list.add("");
-			list.add("Bonus Damage " + "(x" + Double.toString(this.base_amount + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.base_amount) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
+			list.add(I18n.format("gui.misc.bonus_damage") + " (x" + Double.toString(this.base_amount + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(this.base_amount) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
 			list.add("");
-			list.add("Duration: " + "\u00A73" + "3" + "\u00A7f" + " seconds");
+			list.add(I18n.format("gui.misc.duration") + ": \u00A73" + "3" + "\u00A7f " + I18n.format("gui.misc.seconds"));
 			list.add("");
-			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
+			list.add(I18n.format("gui.misc.cooldown") + ": " + Integer.toString(this.cooldown) + " " + I18n.format("gui.misc.seconds"));
 			list.add("");
-			list.add("Cost: " + this.cost + " rage points");
+			list.add(I18n.format("gui.misc.cost") + ": " + this.cost + " " + I18n.format("gui.misc.rage_points"));
 			list.add("");
-			list.add("\u00A73" + "Base " + "\u00A7e" + "Ratio " + "\u00A74" + "Level ");
+			list.add("\u00A73" + I18n.format("gui.misc.base") + " \u00A7e" + I18n.format("gui.misc.ratio") + " \u00A74" + I18n.format("gui.misc.ratio"));
 			return list;
 		}
 
 	};
 
-	private static final ActiveAbility REVITALISE = new ActiveAbility(6, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/revitaliseicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/revitaliseiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/revitaliseiconhud.png"), "Revitalise", 0, AOTConfig.COMMON.revitalise_cost.get()) {
+	private static final ActiveAbility REVITALISE = new ActiveAbility(6, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/revitaliseicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/revitaliseiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/revitaliseiconhud.png"), 0, AOTConfig.COMMON.revitalise_cost.get()) {
 
 		@Override
 		public void initRequirements() {
-			this.requirements.add(new Requirement("FRUIT OF THE GODS", "\u00A74Requires the user to have eaten atleast 1 FRUIT OF THE GODS!") {
+			this.requirements.add(new Requirement("FRUIT OF THE GODS") {
+				public String getDescription() {
+					return "\u00A74" + I18n.format("gui.requirements.fruit_of_the_gods");
+				}
+
 				public boolean meetsRequirement() {
 					if (PlayerStats.APPLES_EATEN == 0)
 						return false;
 					return true;
 				};
 			});
-			this.requirements.add(new Requirement("Level", "\u00A74Requires the user to have level 0 or above!") {
+			this.requirements.add(new Requirement("Level") {
+				public String getDescription() {
+					return "\u00A74" + I18n.format("gui.requirements.level0");
+				}
+
 				public boolean meetsRequirement() {
 					if (PlayerStats.PLAYER_LEVEL < 0)
 						return false;
@@ -516,26 +559,26 @@ public class ActiveAbility implements Ability{
 
 		public List<String> getDescription() {
 			List<String> list = Lists.newArrayList();
-			list.add("\u00A74\u00A7n\u00A7l" + "Revitalise");
+			list.add("\u00A74\u00A7n\u00A7l" + I18n.format("gui.ability.revitalise.name"));
 			list.add("");
-			list.add("Heals the user overtime. While the health of the user is below the maximum, Revitalise will replenish what is missing as long as the user has rage points.");
+			list.add(I18n.format("gui.ability.revitalise.description"));
 			list.add("");
-			list.add("Hold Shift for details");
+			list.add(I18n.format("gui.misc.hold_shift"));
 			return list;
 		}
 
 		@Override
 		public List<String> getDetails() {
 			List<String> list = Lists.newArrayList();
-			list.add("\u00A74\u00A7n\u00A7l" + "Revitalise");
+			list.add("\u00A74\u00A7n\u00A7l" + I18n.format("gui.ability.revitalise.name"));
 			list.add("");
-			list.add("Healing amount per tick " + "(" + Double.toString(this.base_amount + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(base_amount) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level) + "\u00A7f" + " hps");
+			list.add(I18n.format("gui.misc.health_per_tick") + " (" + Double.toString(this.base_amount + this.ratio * this.level) + "): " + "\u00A73" + Double.toString(base_amount) + "\u00A7f" + " + " + "\u00A7e" + Double.toString(this.ratio) + "\u00A7f" + " * " + "\u00A74" + Integer.toString(this.level));
 			list.add("");
-			list.add("Cooldown: " + Integer.toString(this.cooldown) + " seconds");
+			list.add(I18n.format("gui.misc.cooldown") + ": " + Integer.toString(this.cooldown) + " " + I18n.format("gui.misc.seconds"));
 			list.add("");
-			list.add("Cost: " + this.cost + " rage points");
+			list.add(I18n.format("gui.misc.cost") + ": " + this.cost + " " + I18n.format("gui.misc.rage_points"));
 			list.add("");
-			list.add("\u00A73" + "Base " + "\u00A7e" + "Ratio " + "\u00A74" + "Level ");
+			list.add("\u00A73" + I18n.format("gui.misc.base") + " \u00A7e" + I18n.format("gui.misc.ratio") + " \u00A74" + I18n.format("gui.misc.ratio"));
 			return list;
 		}
 

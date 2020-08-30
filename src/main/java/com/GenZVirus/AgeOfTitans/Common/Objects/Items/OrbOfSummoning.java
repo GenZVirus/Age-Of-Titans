@@ -7,7 +7,6 @@ import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -15,10 +14,11 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 
-public class OrbOfSummoning extends Item {
+public class OrbOfSummoning extends PricedItem {
 
 	public OrbOfSummoning(Properties properties) {
 		super(properties);
+		this.price = 2000;
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class OrbOfSummoning extends Item {
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(new StringTextComponent(""));
-		tooltip.add(new StringTextComponent("\n\u00A75Summons a random player to the user's location"));
+		tooltip.add(new StringTextComponent("\u00A75Summons a random player to the user's location"));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 

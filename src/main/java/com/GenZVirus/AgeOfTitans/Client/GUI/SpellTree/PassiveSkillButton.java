@@ -8,7 +8,6 @@ import org.lwjgl.opengl.GL11;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Ability;
 import com.GenZVirus.AgeOfTitans.SpellSystem.PassiveAbility;
 import com.GenZVirus.AgeOfTitans.SpellSystem.Requirement;
-import com.GenZVirus.AgeOfTitans.Util.Helpers.KeyboardHelper;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -26,7 +25,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ModPassiveSkillButton extends Widget {
+public class PassiveSkillButton extends Widget {
 
 	private ResourceLocation BUTTONS_LOCATION;
 	public boolean isSelected = false;
@@ -34,12 +33,12 @@ public class ModPassiveSkillButton extends Widget {
 	public boolean renderAS = false;
 	public ModButton add, subtract;
 	
-	public ModPassiveSkillButton(int xIn, int yIn, int widthIn, int heightIn, String msg, Ability ability) {
+	public PassiveSkillButton(int xIn, int yIn, int widthIn, int heightIn, String msg, Ability ability) {
 		super(xIn, yIn, widthIn, heightIn, msg);
 		this.BUTTONS_LOCATION = ability.getIcon();
 		this.ability = (PassiveAbility) ability;
-		add = new ModADDButton(this.x, this.y, this.ability);
-		subtract = new ModSubtractButton(this.x , this.y, this.ability);
+		add = new AddButton(this.x, this.y, this.ability);
+		subtract = new SubtractButton(this.x , this.y, this.ability);
 	}
 	@SuppressWarnings("resource")
 	public void renderButton(int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
@@ -65,13 +64,8 @@ public class ModPassiveSkillButton extends Widget {
 	      if(this.isHovered) {
 	    	  List<String> stringList;
 	    	  int color;
-	    	  if(KeyboardHelper.isHoldingShift()) {
-	    		  color = 16777215;
-	    		  stringList  = ability.getDetails();
-	    	  }else {
 	    		  color = 6553700;
 	    		  stringList = ability.getDescription();
-	    	  }
 	    	  
 	    	  if(!ability.meetsRequirements()) {
 	    		  stringList.add("");

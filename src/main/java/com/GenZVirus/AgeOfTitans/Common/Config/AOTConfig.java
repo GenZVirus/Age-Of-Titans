@@ -62,6 +62,9 @@ public abstract class AOTConfig {
 		public final IntValue pog_ratio;
 		public final IntValue pog_base_amount;
 
+		public final DoubleValue ros_ratio;
+		public final DoubleValue ros_base_amount;
+		
 		public final BooleanValue leveling_from_advancements;
 		public final IntValue exp_level_up;
 		public final IntValue exp_per_advancement;
@@ -232,25 +235,40 @@ public abstract class AOTConfig {
 					    			   .worldRestart()
 					    			   .defineInRange("force_field_ratio", 1.0D, 0.0D, 10.0D);
 			
-			force_field_base_amount = builder.comment("This sets the base amount of the Revitalise ability")
+			force_field_base_amount = builder.comment("This sets the base amount of the Force Field ability")
 	 								   		 .translation("force_field.configgui.force_field_base_amount")
 	 								   		 .worldRestart()
 	 								   		 .defineInRange("force_field_base_amount", 2.0D, 0.0D, 1024.0D);
 		
 			builder.pop();
 			
-			builder.comment("This config affects all players and contains the stats of the Force Field ability")
+			builder.comment("This config affects all players and contains the stats of the Presence of a God ability")
 	   	   	   	   .push("pog");
 
-			pog_ratio = builder.comment("This sets the healing multiplier of the Force Field ability")
+			pog_ratio = builder.comment("This sets the healing multiplier of the Presence of a God ability")
 				    		   .translation("pog.configgui.pog_ratio")
 				    		   .worldRestart()
 				    		   .defineInRange("pog_ratio", 1, 0, 10);
 		
-			pog_base_amount = builder.comment("This sets the base amount of the Revitalise ability")
+			pog_base_amount = builder.comment("This sets the base amount of the Presence of a God ability")
 								   	 .translation("pog.configgui.pog_base_amount")
 								   	 .worldRestart()
 								   	 .defineInRange("pog_base_amount", 1, 0, 1024);
+	
+			builder.pop();
+			
+			builder.comment("This config affects all players and contains the stats of the Reaper of Souls ability")
+				   .push("ros");
+
+			ros_ratio = builder.comment("This sets the healing multiplier of the Reaper of Souls ability")
+					    	   .translation("ros.configgui.ros_ratio")
+					    	   .worldRestart()
+					    	   .defineInRange("ros_ratio", 0.05D, 0.0D, 1.0D);
+		
+			ros_base_amount = builder.comment("This sets the base amount of the Reaper of Souls ability")
+							  		 .translation("ros.configgui.ros_base_amount")
+							   		 .worldRestart()
+							   		 .defineInRange("ros_base_amount", 0.05D, 0.0D, 1.0D);
 	
 			builder.pop();
 			

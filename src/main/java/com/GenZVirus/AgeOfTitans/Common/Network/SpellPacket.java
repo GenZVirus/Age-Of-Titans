@@ -4,7 +4,7 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 import com.GenZVirus.AgeOfTitans.Client.GUI.HUD.ModHUD;
-import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModScreen;
+import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.AbilityTreeScreen;
 import com.GenZVirus.AgeOfTitans.Common.Events.Client.KeyPressedEvent;
 import com.GenZVirus.AgeOfTitans.SpellSystem.ActiveAbility;
 import com.GenZVirus.AgeOfTitans.SpellSystem.XMLFileJava;
@@ -122,10 +122,10 @@ public class SpellPacket {
 				ModHUD.SPELL4 = (ActiveAbility) ActiveAbility.getList().get(pkt.slot4);
 				
 				if(KeyPressedEvent.wasPRESSED) {
-					ModScreen.SCREEN.slot1.ability = (ActiveAbility) ActiveAbility.getList().get(pkt.slot1);
-					ModScreen.SCREEN.slot2.ability = (ActiveAbility) ActiveAbility.getList().get(pkt.slot2);
-					ModScreen.SCREEN.slot3.ability = (ActiveAbility) ActiveAbility.getList().get(pkt.slot3);
-					ModScreen.SCREEN.slot4.ability = (ActiveAbility) ActiveAbility.getList().get(pkt.slot4);
+					AbilityTreeScreen.SCREEN.slot1.ability = (ActiveAbility) ActiveAbility.getList().get(pkt.slot1);
+					AbilityTreeScreen.SCREEN.slot2.ability = (ActiveAbility) ActiveAbility.getList().get(pkt.slot2);
+					AbilityTreeScreen.SCREEN.slot3.ability = (ActiveAbility) ActiveAbility.getList().get(pkt.slot3);
+					AbilityTreeScreen.SCREEN.slot4.ability = (ActiveAbility) ActiveAbility.getList().get(pkt.slot4);
 				}
 			}
 		});
