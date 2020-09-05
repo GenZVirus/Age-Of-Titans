@@ -1,12 +1,14 @@
 package com.GenZVirus.AgeOfTitans.Client.GUI.ReaperShop;
 
 import java.util.List;
-import java.util.Random;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
-import com.GenZVirus.AgeOfTitans.Common.Init.ItemInit;
+import com.GenZVirus.AgeOfTitans.Common.Entities.ReaperEntity;
+import com.GenZVirus.AgeOfTitans.Common.Network.EditElementPacket;
+import com.GenZVirus.AgeOfTitans.Common.Network.GivePlayerItemsPacket;
+import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
+import com.GenZVirus.AgeOfTitans.Common.Network.ReaperInteractionPacket;
 import com.GenZVirus.AgeOfTitans.Common.Objects.Items.PricedItem;
-import com.google.common.collect.Lists;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.Minecraft;
@@ -16,6 +18,7 @@ import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Matrix4f;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -31,10 +34,11 @@ public class ReaperShopScreen extends Screen {
 	public ResourceLocation BACKGROUND = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/reaper_shop_screen.png");
 
 	public ShopItemButton item1_button, item2_button, item3_button;
-	public PricedItem item1, item2, item3;
-	
+	public DealButton deal;
+	public ReaperEntity reaper;
+
 	public int balance, total;
-	
+
 	// The size of the GUI
 
 	public int xSize = 320;
@@ -45,28 +49,8 @@ public class ReaperShopScreen extends Screen {
 
 	public ReaperShopScreen(ITextComponent titleIn) {
 		super(titleIn);
-		this.resetItems();
 	}
 
-	public void resetItems() {
-		List<PricedItem> itemList = Lists.newArrayList();
-		itemList.add((PricedItem) ItemInit.ORB_OF_EDEN.get());
-		itemList.add((PricedItem) ItemInit.ORB_OF_DISLOCATION.get());
-		itemList.add((PricedItem) ItemInit.ORB_OF_END.get());
-		itemList.add((PricedItem) ItemInit.ORB_OF_NETHER.get());
-		itemList.add((PricedItem) ItemInit.ORB_OF_STORAGE.get());
-		itemList.add((PricedItem) ItemInit.ORB_OF_SUMMONING.get());
-		itemList.add((PricedItem) ItemInit.FRUIT_OF_THE_GODS.get());
-		
-		Random rand = new Random();
-		item1 = itemList.get(rand.nextInt(itemList.size()));
-		itemList.remove(item1);
-		item2 = itemList.get(rand.nextInt(itemList.size()));
-		itemList.remove(item2);
-		item3 = itemList.get(rand.nextInt(itemList.size()));
-		itemList.remove(item3);
-	}
-	
 	public ReaperShopScreen() {
 		this(getDefaultName());
 	}
@@ -74,57 +58,86 @@ public class ReaperShopScreen extends Screen {
 	public static ITextComponent getDefaultName() {
 		return new TranslationTextComponent("screen.reaper_shop");
 	}
-	
+
 	@Override
 	public boolean isPauseScreen() {
 		return false;
 	}
-	
+
 	@Override
 	public void resize(Minecraft p_resize_1_, int p_resize_2_, int p_resize_3_) {
 		super.resize(p_resize_1_, p_resize_2_, p_resize_3_);
 	}
-	
+
 	@Override
 	public void init() {
 		this.windowXPos = (this.width - this.xSize) / 2;
 		this.windowYPos = (this.height - this.ySize) / 2;
-		
-		item1_button = new ShopItemButton(windowXPos, windowYPos + 20, item1);
-		item2_button = new ShopItemButton(windowXPos + 105, windowYPos + 20, item2);
-		item3_button = new ShopItemButton(windowXPos + 210, windowYPos + 20, item3);
-		
+
+		item1_button = new ShopItemButton(windowXPos, windowYPos + 20, (PricedItem) reaper.item1);
+		item2_button = new ShopItemButton(windowXPos + 105, windowYPos + 20, (PricedItem) reaper.item2);
+		item3_button = new ShopItemButton(windowXPos + 210, windowYPos + 20, (PricedItem) reaper.item3);
+
+		this.deal = new DealButton(windowXPos + 114, windowYPos + 211) {
+			@SuppressWarnings("resource")
+			@Override
+			public void onPress() {
+				if (balance >= total) {
+					PacketHandlerCommon.INSTANCE.sendToServer(new EditElementPacket(Minecraft.getInstance().player.getUniqueID(), "Balance", -total));
+					if (item1_button.active) {
+						PacketHandlerCommon.INSTANCE.sendToServer(new GivePlayerItemsPacket(Minecraft.getInstance().player.getUniqueID(), new ItemStack(reaper.item1)));
+						reaper.outofstock = true;
+					}
+					if (item2_button.active) {
+						PacketHandlerCommon.INSTANCE.sendToServer(new GivePlayerItemsPacket(Minecraft.getInstance().player.getUniqueID(), new ItemStack(reaper.item2)));
+						reaper.outofstock = true;
+					}
+					if (item3_button.active) {
+						PacketHandlerCommon.INSTANCE.sendToServer(new GivePlayerItemsPacket(Minecraft.getInstance().player.getUniqueID(), new ItemStack(reaper.item3)));
+						reaper.outofstock = true;
+					}
+					onClose();
+				} else {
+
+				}
+				super.onPress();
+			}
+		};
+
 		this.addButtons();
 	}
-	
+
 	public void addButtons() {
 		this.buttons.clear();
 		this.buttons.add(item1_button);
 		this.buttons.add(item2_button);
 		this.buttons.add(item3_button);
+		this.buttons.add(deal);
 	}
-	
+
+	@SuppressWarnings("resource")
 	@Override
 	public void onClose() {
-		this.resetItems();
+		reaper.occupied = false;
+		PacketHandlerCommon.INSTANCE.sendToServer(new ReaperInteractionPacket(Minecraft.getInstance().player.getUniqueID(), reaper.getEntityId(), reaper.occupied, reaper.outofstock, new ItemStack(reaper.item1), new ItemStack(reaper.item2), new ItemStack(reaper.item3)));
 		super.onClose();
 	}
 
 	@Override
 	public void tick() {
 		this.total = 0;
-		if(item1_button.active) {
+		if (item1_button.active) {
 			total += item1_button.item.getPrice();
 		}
-		if(item2_button.active) {
+		if (item2_button.active) {
 			total += item2_button.item.getPrice();
 		}
-		if(item3_button.active) {
+		if (item3_button.active) {
 			total += item3_button.item.getPrice();
 		}
 		super.tick();
 	}
-	
+
 	@Override
 	public void render(int mouseX, int mouseY, float partialTicks) {
 		this.windowXPos = (this.width - this.xSize) / 2;
@@ -132,7 +145,7 @@ public class ReaperShopScreen extends Screen {
 		this.renderBackground();
 
 		this.minecraft.getTextureManager().bindTexture(this.BACKGROUND);
-		
+
 		/*
 		 * First param is the X position Second param is the y position Third param is
 		 * the blit offset Fourth param is the X position from where it starts to
@@ -159,6 +172,8 @@ public class ReaperShopScreen extends Screen {
 		font.renderString("Total", this.windowXPos + 248 - stringWidth, this.windowYPos + 208, 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
 		stringWidth = font.getStringWidth(Integer.toString(total));
 		font.renderString(Integer.toString(total), this.windowXPos + 314 - stringWidth, this.windowYPos + 208, 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
+		stringWidth = font.getStringWidth("Reaper's Stash");
+		font.renderString("Reaper's Stash", this.windowXPos + 160 - stringWidth / 2, this.windowYPos + 4, 0xFFFFFFFF, true, textLocation, renderType, false, 0, 15728880);
 		renderType.finish();
 		super.render(mouseX, mouseY, partialTicks);
 	}
@@ -166,5 +181,5 @@ public class ReaperShopScreen extends Screen {
 	public List<Widget> getButtons() {
 		return this.buttons;
 	}
-	
+
 }

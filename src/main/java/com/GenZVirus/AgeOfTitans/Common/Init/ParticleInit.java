@@ -8,7 +8,9 @@ import com.GenZVirus.AgeOfTitans.Common.Particles.GravityBombParticle.GravityBom
 import com.GenZVirus.AgeOfTitans.Common.Particles.GravityZoneCenterParticle;
 import com.GenZVirus.AgeOfTitans.Common.Particles.GravityZoneCenterParticle.GravityZoneCenterParticleData;
 import com.GenZVirus.AgeOfTitans.Common.Particles.GravityZoneParticle;
+import com.GenZVirus.AgeOfTitans.Common.Particles.SoulParticle;
 import com.GenZVirus.AgeOfTitans.Common.Particles.GravityZoneParticle.GravityZoneParticleData;
+import com.GenZVirus.AgeOfTitans.Common.Particles.SoulParticle.SoulParticleData;
 import com.GenZVirus.AgeOfTitans.Common.Particles.SwordSlashParticle;
 import com.GenZVirus.AgeOfTitans.Common.Particles.SwordSlashParticle.SwordSlashParticleData;
 
@@ -33,6 +35,8 @@ public class ParticleInit {
 	public static final RegistryObject<ParticleType<GravityZoneCenterParticleData>> GRAVITY_ZONE_CENTER = PARTICLES.register("gravity_zone_center", () -> new ParticleType<GravityZoneCenterParticleData>(false, GravityZoneCenterParticleData.DESERIALIZER));
 	public static final RegistryObject<ParticleType<GravityZoneParticleData>> GRAVITY_ZONE = PARTICLES.register("gravity_zone", () -> new ParticleType<GravityZoneParticleData>(false, GravityZoneParticleData.DESERIALIZER));
 	public static final RegistryObject<ParticleType<GravityBombParticleData>> GRAVITY_BOMB = PARTICLES.register("gravity_bomb", () -> new ParticleType<GravityBombParticleData>(false, GravityBombParticleData.DESERIALIZER));
+	public static final RegistryObject<ParticleType<SoulParticleData>> SOUL_PARTICLE = PARTICLES.register("soul_particle", () -> new ParticleType<SoulParticleData>(false, SoulParticleData.DESERIALIZER));
+
 	
 	@SuppressWarnings("resource")
 	@SubscribeEvent
@@ -42,5 +46,6 @@ public class ParticleInit {
 		Minecraft.getInstance().particles.registerFactory(ParticleInit.GRAVITY_ZONE_CENTER.get(), GravityZoneCenterParticle.Factory::new);
 		Minecraft.getInstance().particles.registerFactory(ParticleInit.GRAVITY_ZONE.get(), GravityZoneParticle.Factory::new);
 		Minecraft.getInstance().particles.registerFactory(ParticleInit.GRAVITY_BOMB.get(), GravityBombParticle.Factory::new);
+		Minecraft.getInstance().particles.registerFactory(ParticleInit.SOUL_PARTICLE.get(), SoulParticle.Factory::new);
 	}
 }

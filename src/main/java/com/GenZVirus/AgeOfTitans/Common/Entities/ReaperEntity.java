@@ -1,116 +1,182 @@
 package com.GenZVirus.AgeOfTitans.Common.Entities;
 
-import com.GenZVirus.AgeOfTitans.Common.Init.ItemInit;
+import java.util.List;
+import java.util.Random;
 
+import com.GenZVirus.AgeOfTitans.Common.Init.ItemInit;
+import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
+import com.GenZVirus.AgeOfTitans.Common.Network.ReaperInteractionPacket;
+import com.GenZVirus.AgeOfTitans.Common.Network.ReaperLoadPacket;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.PricedItem;
+import com.GenZVirus.AgeOfTitans.Util.ForgeEventBusSubscriber;
+import com.google.common.collect.Lists;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.goal.EatGrassGoal;
+import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.PanicGoal;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.TemptGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.effect.LightningBoltEntity;
+import net.minecraft.entity.monster.SkeletonEntity;
+import net.minecraft.entity.monster.ZombieEntity;
+import net.minecraft.entity.monster.ZombieVillagerEntity;
+import net.minecraft.entity.passive.horse.ZombieHorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.network.NetworkDirection;
 
-public class ReaperEntity extends CreatureEntity{
-	
-	private EatGrassGoal eatGrassGoal;
-	private int exampleTimer;
+public class ReaperEntity extends CreatureEntity {
+
 	public boolean isInvulnerable = false;
+	public boolean occupied = false;
+	public boolean outofstock = false;
+	public Item item1, item2, item3;
 
 	public ReaperEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
+		if(worldIn.isRemote) return;
+		List<PricedItem> itemList = Lists.newArrayList();
+		itemList.add((PricedItem) ItemInit.ORB_OF_EDEN.get());
+		itemList.add((PricedItem) ItemInit.ORB_OF_DISLOCATION.get());
+		itemList.add((PricedItem) ItemInit.ORB_OF_END.get());
+		itemList.add((PricedItem) ItemInit.ORB_OF_NETHER.get());
+		itemList.add((PricedItem) ItemInit.ORB_OF_STORAGE.get());
+		itemList.add((PricedItem) ItemInit.ORB_OF_SUMMONING.get());
+		itemList.add((PricedItem) ItemInit.FRUIT_OF_THE_GODS.get());
+
+		Random rand = new Random();
+		item1 = itemList.get(rand.nextInt(itemList.size()));
+		itemList.remove(item1);
+		item2 = itemList.get(rand.nextInt(itemList.size()));
+		itemList.remove(item2);
+		item3 = itemList.get(rand.nextInt(itemList.size()));
+		itemList.remove(item3);
 	}
 
-	
 	@Override
 	protected void registerGoals() {
-		this.eatGrassGoal = new EatGrassGoal(this);
 		this.goalSelector.addGoal(0, new SwimGoal(this));
-		this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
-		this.goalSelector.addGoal(3, new TemptGoal(this, 1.1D, Ingredient.fromItems(ItemInit.FRUIT_OF_THE_GODS.get()), false));
+		this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.0D, false));
 		this.goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
 		this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 6.0F));
 		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
-	}	
-	
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, ZombieEntity.class, true));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, SkeletonEntity.class, true));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, ZombieHorseEntity.class, true));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, ZombieVillagerEntity.class, true));
+		this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
+	}
+
+	@Override
+	public ActionResultType applyPlayerInteraction(PlayerEntity player, Vec3d vec, Hand hand) {
+		if (player.world.isRemote && !occupied) {
+			displayGUI();
+		}
+		return super.applyPlayerInteraction(player, vec, hand);
+	}
+
+	@Override
+	public void readAdditional(CompoundNBT compound) {
+		item1 = Item.getItemById(compound.getInt("item1"));
+		item2 = Item.getItemById(compound.getInt("item2"));
+		item3 = Item.getItemById(compound.getInt("item3"));
+		occupied = compound.getBoolean("occupied");
+		outofstock = compound.getBoolean("outofstock");
+		super.readAdditional(compound);
+		for(PlayerEntity player : ForgeEventBusSubscriber.players) {
+			PacketHandlerCommon.INSTANCE.sendTo(new ReaperLoadPacket(this.getEntityId(), occupied, outofstock, new ItemStack(item1), new ItemStack(item2), new ItemStack(item3)), ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+		}
+	}
+
+	@Override
+	public void writeAdditional(CompoundNBT compound) {
+		System.out.println("Writen to NBT: " + this.outofstock);
+		compound.putInt("item1", Item.getIdFromItem(item1));
+		compound.putInt("item2", Item.getIdFromItem(item2));
+		compound.putInt("item3", Item.getIdFromItem(item3));
+		compound.putBoolean("occupied", this.occupied);
+		compound.putBoolean("outofstock", this.outofstock);
+		super.writeAdditional(compound);
+	}
+
+	@SuppressWarnings("resource")
+	@OnlyIn(Dist.CLIENT)
+	private void displayGUI() {
+		this.occupied = true;
+		PacketHandlerCommon.INSTANCE.sendToServer(new ReaperInteractionPacket(Minecraft.getInstance().player.getUniqueID(), this.getEntityId(), occupied, outofstock, new ItemStack(item1), new ItemStack(item2), new ItemStack(item3)));
+	}
+
 	@Override
 	protected void updateAITasks() {
-		this.exampleTimer = this.eatGrassGoal.getEatingGrassTimer();
 		super.updateAITasks();
 	}
 
 	@Override
 	public void livingTick() {
-		if(this.world.isRemote) {
-			this.exampleTimer = Math.max(0, this.exampleTimer - 1);
-		}
 		super.livingTick();
 	}
-	
+
 	@Override
 	protected void registerAttributes() {
 		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(16.0D);
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.2D);
+		this.getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.35D);
+		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(20.0D);
+		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(512.0D);
+		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(50.0D);
 	}
-	 @OnlyIn(Dist.CLIENT)
-	   public void handleStatusUpdate(byte id) {
-	      if (id == 10) {
-	         this.exampleTimer = 40;
-	      } else {
-	         super.handleStatusUpdate(id);
-	      }
 
-	   }
+	@OnlyIn(Dist.CLIENT)
+	public void handleStatusUpdate(byte id) {
+		super.handleStatusUpdate(id);
+	}
 
-	   @OnlyIn(Dist.CLIENT)
-	   public float getHeadRotationPointY(float p_70894_1_) {
-	      if (this.exampleTimer <= 0) {
-	         return 0.0F;
-	      } else if (this.exampleTimer >= 4 && this.exampleTimer <= 36) {
-	         return 1.0F;
-	      } else {
-	         return this.exampleTimer < 4 ? ((float)this.exampleTimer - p_70894_1_) / 4.0F : -((float)(this.exampleTimer - 40) - p_70894_1_) / 4.0F;
-	      }
-	   }
-
-	   @OnlyIn(Dist.CLIENT)
-	   public float getHeadRotationAngleX(float p_70890_1_) {
-	      if (this.exampleTimer > 4 && this.exampleTimer <= 36) {
-	         float f = ((float)(this.exampleTimer - 4) - p_70890_1_) / 32.0F;
-	         return ((float)Math.PI / 5F) + 0.21991149F * MathHelper.sin(f * 28.7F);
-	      } else {
-	         return this.exampleTimer > 0 ? ((float)Math.PI / 5F) : this.rotationPitch * ((float)Math.PI / 180F);
-	      }
-	   }
-	   
-	   @Override
+	@Override
 	public void onStruckByLightning(LightningBoltEntity lightningBolt) {
 		this.setGlowing(true);
 	}
-	
-	   @Override
+
+	@Override
 	public boolean isInvulnerable() {
-		if(this.isInvulnerable)
+		if (this.isInvulnerable)
 			return true;
 		return super.isInvulnerable();
 	}
-	   
-	   @Override
+
+	@Override
+	public boolean canBeCollidedWith() {
+		if (isInvisible())
+			return false;
+		return true;
+	}
+
+	@Override
+	public boolean isInvisible() {
+		if (this.world.getLight(this.getPosition()) > 0) { return true; }
+		return false;
+	}
+
+	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-			if(this.isInvulnerable)
-				return true;
+		if (this.isInvulnerable)
+			return true;
 		return super.isInvulnerableTo(source);
 	}
-	   
+
 }

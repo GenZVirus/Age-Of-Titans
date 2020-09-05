@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "ageoftitans:block/soul_stone" },
+        "facing=south": { "model": "ageoftitans:block/soul_stone", "y": 180 },
+        "facing=west":  { "model": "ageoftitans:block/soul_stone", "y": 270 },
+        "facing=east":  { "model": "ageoftitans:block/soul_stone", "y": 90 }
+    }
+}

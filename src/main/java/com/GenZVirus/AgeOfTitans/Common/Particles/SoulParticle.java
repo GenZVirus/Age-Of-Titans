@@ -20,9 +20,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class GravityZoneParticle extends SpriteTexturedParticle {
+public class SoulParticle extends SpriteTexturedParticle {
 
-	public GravityZoneParticle(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, GravityZoneParticleData data, IAnimatedSprite sprite) {
+	public SoulParticle(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, SoulParticleData data, IAnimatedSprite sprite) {
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
 		this.motionX = xSpeedIn;
 		this.motionY = ySpeedIn;
@@ -31,6 +31,7 @@ public class GravityZoneParticle extends SpriteTexturedParticle {
 		this.posY = yCoordIn;
 		this.posZ = zCoordIn;
 		this.particleScale = 0.1F;
+		this.particleAlpha = data.getAlpha();
 		this.particleRed = data.getRed();
 		this.particleGreen = data.getGreen();
 		this.particleBlue = data.getBlue();
@@ -65,7 +66,7 @@ public class GravityZoneParticle extends SpriteTexturedParticle {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public static class Factory implements IParticleFactory<GravityZoneParticleData> {
+	public static class Factory implements IParticleFactory<SoulParticleData> {
 		private final IAnimatedSprite spriteSet;
 
 		public Factory(IAnimatedSprite spriteIn) {
@@ -73,16 +74,16 @@ public class GravityZoneParticle extends SpriteTexturedParticle {
 		}
 
 		@Override
-		public Particle makeParticle(GravityZoneParticleData typeIn, World worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-			GravityZoneParticle particle = new GravityZoneParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, typeIn, spriteSet);
+		public Particle makeParticle(SoulParticleData typeIn, World worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+			SoulParticle particle = new SoulParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, typeIn, spriteSet);
 			particle.selectSpriteRandomly(spriteSet);
 			return particle;
 		}
 	}
 
-	public static class GravityZoneParticleData implements IParticleData {
-		public static final IParticleData.IDeserializer<GravityZoneParticleData> DESERIALIZER = new IParticleData.IDeserializer<GravityZoneParticleData>() {
-			public GravityZoneParticleData deserialize(ParticleType<GravityZoneParticleData> particleTypeIn, StringReader reader) throws CommandSyntaxException {
+	public static class SoulParticleData implements IParticleData {
+		public static final IParticleData.IDeserializer<SoulParticleData> DESERIALIZER = new IParticleData.IDeserializer<SoulParticleData>() {
+			public SoulParticleData deserialize(ParticleType<SoulParticleData> particleTypeIn, StringReader reader) throws CommandSyntaxException {
 				reader.expect(' ');
 				float red = (float) reader.readDouble();
 				reader.expect(' ');
@@ -91,11 +92,11 @@ public class GravityZoneParticle extends SpriteTexturedParticle {
 				float blue = (float) reader.readDouble();
 				reader.expect(' ');
 				float alpha = (float) reader.readDouble();
-				return new GravityZoneParticleData(red, green, blue, alpha);
+				return new SoulParticleData(red, green, blue, alpha);
 			}
 
-			public GravityZoneParticleData read(ParticleType<GravityZoneParticleData> particleTypeIn, PacketBuffer buffer) {
-				return new GravityZoneParticleData(buffer.readFloat(), buffer.readFloat(), buffer.readFloat(), buffer.readFloat());
+			public SoulParticleData read(ParticleType<SoulParticleData> particleTypeIn, PacketBuffer buffer) {
+				return new SoulParticleData(buffer.readFloat(), buffer.readFloat(), buffer.readFloat(), buffer.readFloat());
 			};
 
 		};
@@ -105,7 +106,7 @@ public class GravityZoneParticle extends SpriteTexturedParticle {
 		private final float blue;
 		private final float alpha;
 
-		public GravityZoneParticleData(float redIn, float greenIn, float blueIn, float alphatIn) {
+		public SoulParticleData(float redIn, float greenIn, float blueIn, float alphatIn) {
 			this.red = redIn;
 			this.green = greenIn;
 			this.blue = blueIn;
@@ -113,8 +114,8 @@ public class GravityZoneParticle extends SpriteTexturedParticle {
 		}
 
 		@Override
-		public ParticleType<GravityZoneParticleData> getType() {
-			return ParticleInit.GRAVITY_ZONE.get();
+		public ParticleType<SoulParticleData> getType() {
+			return ParticleInit.SOUL_PARTICLE.get();
 		}
 
 		@Override

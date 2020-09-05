@@ -1,9 +1,9 @@
 {
     "type": "minecraft:smelting",
     "ingredient": {
-    	"item": "ageoftitans:titanium_ore"
+    	"item": "minecraft:soul_sand"
     },
-    "result": "ageoftitans:titanium_ingot",
+    "result": "ageoftitans:soul_shard",
     "experience": 5.0,
     "cookingtime": 200
 }

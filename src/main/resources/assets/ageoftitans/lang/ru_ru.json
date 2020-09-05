@@ -50,7 +50,7 @@
 	"gui.ability.revitalise.description": "Heals the user overtime. While the health of the user is below the maximum, Revitalise will replenish what is missing as long as the user has rage points.",
 	
 	"gui.ability.reaper_of_souls.name": "Reaper of Souls",
-	"gui.ability.reaper_of_souls.description": "Gives a chance to add a soul to your balance. Current chance: ",
+	"gui.ability.reaper_of_souls.description": "Gives a chance to add a soul to your balance when killing an entity. Current chance: ",
 	
 	"key.categories.ageoftitans": "Эра титанов",
 	"key.ability_tree": "Дерево умений",
@@ -91,6 +91,7 @@
 	"item.ageoftitans.titanium_chestplate": "\u00A7e\u00A7nНагрудник с титана",
 	"item.ageoftitans.titanium_leggings": "\u00A7e\u00A7nПоножи с титана",
 	"item.ageoftitans.titanium_boots": "\u00A7e\u00A7nБотинки с титана",
+	"item.ageoftitans.soul_shard": "\u00A7e\u00A7nSoul Shard",
 	
 	"block.ageoftitans.titanium_block": "\u00A7eБлок титана",
 	"block.ageoftitans.titanium_ore": "\u00A7eТитанова руда",
@@ -105,9 +106,12 @@
 	"block.ageoftitans.eden_wood_button": "Едемовая кнопка с дерева",
 	"block.ageoftitans.eden_leaves": "Едемовая листва",
 	"block.ageoftitans.eden_sapling": "Едемовый саженец",
+	"block.ageoftitans.soul_stone": "\u00A7c\u00A7lSoul Stone",
 	
-	"commands.addlevels": "%d's levels were added to %s!",
+	"commands.addsouls": "%d souls were added to %s's balance!",
+	"commands.addlevels": "%d levels were added to %s!",
 	"commands.resetlevel": "%s's abilities have been reset!",
-	"commands.setlevel": "%s's level was set to %d!"
+	"commands.setlevel": "%s's level was set to %d!",
+	"commands.setbalance": "%s's balance was set to %d!"
 	
 }

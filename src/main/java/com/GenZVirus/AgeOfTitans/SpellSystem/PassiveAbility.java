@@ -248,7 +248,7 @@ public class PassiveAbility implements Ability {
 		}
 	};
 
-	private static final PassiveAbility REAPER_OF_SOULS = new PassiveAbility(3, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/pogicon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/pogiconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/pogiconhud.png"), 0, 0) {
+	private static final PassiveAbility REAPER_OF_SOULS = new PassiveAbility(3, new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/reaper_of_souls_icon.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/reaper_of_souls_iconoff.png"), new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/reaper_of_souls_iconhud.png"), 0, 0) {
 		@Override
 		public void initRequirements() {
 			this.requirements.add(new Requirement("FRUIT OF THE GODS") {

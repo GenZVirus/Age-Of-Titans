@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Common.Config.AOTConfig;
 import com.GenZVirus.AgeOfTitans.Common.Init.DimensionInit;
+import com.GenZVirus.AgeOfTitans.Common.Network.DiscordServerMessagePacket;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.ReadElementPacket;
 import com.GenZVirus.AgeOfTitans.Common.Network.SendPlayerPassiveDetailsPacket;
@@ -100,7 +101,7 @@ public class ForgeEventBusSubscriber {
 		inCombat.add(0);
 		players.add(e.getPlayer());
 		uuids.add(e.getPlayer().getUniqueID());
-		
+		PacketHandlerCommon.INSTANCE.sendTo(new DiscordServerMessagePacket(),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		MinecraftServer mcSRV = e.getPlayer().getServer();
 		if(!(mcSRV instanceof DedicatedServer)) {
 			String folderName = mcSRV.getFolderName();

@@ -3,6 +3,7 @@ package com.GenZVirus.AgeOfTitans.Common.Events.Client;
 import java.util.List;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
+import com.GenZVirus.AgeOfTitans.Client.GUI.ReaperShop.DealButton;
 import com.GenZVirus.AgeOfTitans.Client.GUI.ReaperShop.ReaperShopScreen;
 import com.GenZVirus.AgeOfTitans.Client.GUI.ReaperShop.ShopItemButton;
 
@@ -30,6 +31,8 @@ public class ReaperShopScreenEvents {
 				if (x >= widthIn && x < widthIn + width && y >= heightIn && y < heightIn + height) {
 					if(button instanceof ShopItemButton) {
 						((ShopItemButton) button).onPress();
+					} else if(button instanceof DealButton) {
+						((DealButton) button).onPress();
 					}
 				}
 			}

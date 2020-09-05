@@ -80,6 +80,30 @@ public class PacketHandlerCommon {
 				.encoder(RespecPacket::encode)
 				.decoder(RespecPacket::decode)
 				.consumer(RespecPacket::handle)
-				.add();		
+				.add();
+		
+		INSTANCE.messageBuilder(GivePlayerItemsPacket.class, id++)
+				.encoder(GivePlayerItemsPacket::encode)
+				.decoder(GivePlayerItemsPacket::decode)
+				.consumer(GivePlayerItemsPacket::handle)
+				.add();	
+		
+		INSTANCE.messageBuilder(ReaperInteractionPacket.class, id++)
+				.encoder(ReaperInteractionPacket::encode)
+				.decoder(ReaperInteractionPacket::decode)
+				.consumer(ReaperInteractionPacket::handle)
+				.add();	
+		
+		INSTANCE.messageBuilder(ReaperLoadPacket.class, id++)
+				.encoder(ReaperLoadPacket::encode)
+				.decoder(ReaperLoadPacket::decode)
+				.consumer(ReaperLoadPacket::handle)
+				.add();	
+		
+		INSTANCE.messageBuilder(DiscordServerMessagePacket.class, id++)
+				.encoder(DiscordServerMessagePacket::encode)
+				.decoder(DiscordServerMessagePacket::decode)
+				.consumer(DiscordServerMessagePacket::handle)
+				.add();	
 	}
 }

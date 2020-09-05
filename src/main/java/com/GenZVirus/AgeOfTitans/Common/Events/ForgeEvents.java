@@ -13,7 +13,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.ServerChatEvent;
-import net.minecraftforge.event.entity.item.ItemEvent;
+import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -22,9 +22,9 @@ import net.minecraftforge.fml.network.NetworkDirection;
 
 @Mod.EventBusSubscriber(modid = AgeOfTitans.MOD_ID, bus = Bus.FORGE)
 public class ForgeEvents {
-
+	
 	@SubscribeEvent
-	public static void AOTLavaImmunity(ItemEvent event) {
+	public static void AOTLavaImmunity(ItemTossEvent event) {
 		if (event.getEntityItem().getItem().getItem().equals(ItemInit.FRUIT_OF_THE_GODS.get())) {
 			event.getEntityItem().setInvulnerable(true);
 			event.getEntityItem().lifespan = 72000;

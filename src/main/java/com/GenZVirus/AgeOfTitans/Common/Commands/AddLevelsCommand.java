@@ -39,7 +39,7 @@ public class AddLevelsCommand {
 		PacketHandlerCommon.INSTANCE.sendTo(new ReadElementPacket(uuid, "ApplesEaten", Integer.parseInt(XMLFileJava.readElement(uuid, "ApplesEaten"))),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		PacketHandlerCommon.INSTANCE.sendTo(new ReadElementPacket(uuid, "PlayerLevel", Integer.parseInt(XMLFileJava.readElement(uuid, "PlayerLevel"))),  ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		
-		source.sendFeedback(new TranslationTextComponent("commands.addlevels", player.getDisplayName().getFormattedText(), level), true);
+		source.sendFeedback(new TranslationTextComponent("commands.addlevels", level, player.getDisplayName().getFormattedText()), true);
 		return 1;
 	}
 	
