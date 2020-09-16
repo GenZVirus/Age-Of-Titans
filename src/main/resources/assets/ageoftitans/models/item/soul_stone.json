@@ -1,6 +1,3 @@
 {
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "ageoftitans:items/soul_stone_item"
-    }
+    "parent": "ageoftitans:block/soul_stone"
 }

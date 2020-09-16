@@ -13,9 +13,12 @@ import com.GenZVirus.AgeOfTitans.Common.Objects.Items.OrbOfNether;
 import com.GenZVirus.AgeOfTitans.Common.Objects.Items.OrbOfStorage;
 import com.GenZVirus.AgeOfTitans.Common.Objects.Items.OrbOfSummoning;
 import com.GenZVirus.AgeOfTitans.Common.Objects.Items.SpecialItem;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.TitaniumBoots;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.TitaniumChestplate;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.TitaniumHelmet;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.TitaniumLeggings;
 
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.Food;
 import net.minecraft.item.HoeItem;
@@ -69,10 +72,10 @@ public class ItemInit {
 	public static final RegistryObject<Item> TITANIUM_HOE = ITEMS.register("titanium_hoe", () -> new HoeItem(ModItemTier.MATERIAL_TITANIUM, 5.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
 		
 	//Armor
-	public static final RegistryObject<Item> TITANIUM_HELMET = ITEMS.register("titanium_helmet", () -> new ArmorItem(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.HEAD, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
-	public static final RegistryObject<Item> TITANIUM_CHESTPLATE = ITEMS.register("titanium_chestplate", () -> new ArmorItem(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.CHEST, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
-	public static final RegistryObject<Item> TITANIUM_LEGGINGS = ITEMS.register("titanium_leggings", () -> new ArmorItem(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.LEGS, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
-	public static final RegistryObject<Item> TITANIUM_BOOTS = ITEMS.register("titanium_boots", () -> new ArmorItem(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.FEET, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	public static final RegistryObject<Item> TITANIUM_HELMET = ITEMS.register("titanium_helmet", () -> new TitaniumHelmet(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.HEAD, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	public static final RegistryObject<Item> TITANIUM_CHESTPLATE = ITEMS.register("titanium_chestplate", () -> new TitaniumChestplate(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.CHEST, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	public static final RegistryObject<Item> TITANIUM_LEGGINGS = ITEMS.register("titanium_leggings", () -> new TitaniumLeggings(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.LEGS, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	public static final RegistryObject<Item> TITANIUM_BOOTS = ITEMS.register("titanium_boots", () -> new TitaniumBoots(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.FEET, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
 	
 	public enum ModItemTier implements IItemTier{
 		MATERIAL_TITANIUM(4, 3000, 16.0F, 7.0F, 250, () -> {

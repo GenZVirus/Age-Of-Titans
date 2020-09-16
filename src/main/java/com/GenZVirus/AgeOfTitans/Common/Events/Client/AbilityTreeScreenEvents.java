@@ -3,12 +3,13 @@ package com.GenZVirus.AgeOfTitans.Common.Events.Client;
 import java.util.List;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
+import com.GenZVirus.AgeOfTitans.Client.GUI.HUD.BetterOverlay;
 import com.GenZVirus.AgeOfTitans.Client.GUI.HUD.ModHUD;
+import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.AbilitySlot;
+import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.AbilityTreeScreen;
 import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ActiveSkillButton;
 import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModButton;
 import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.ModButtonSmall;
-import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.AbilityTreeScreen;
-import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.AbilitySlot;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.PlayerUseSpellPacket;
 import com.GenZVirus.AgeOfTitans.SpellSystem.ActiveAbility;
@@ -24,6 +25,8 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.util.Hand;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.GuiScreenEvent.MouseClickedEvent;
+import net.minecraftforge.client.event.RenderBlockOverlayEvent.OverlayType;
+import net.minecraftforge.client.event.RenderBlockOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
@@ -45,28 +48,37 @@ public class AbilityTreeScreenEvents {
 	@SubscribeEvent(receiveCanceled = true)
 	public static void onHealthBar(RenderGameOverlayEvent.Pre event) {
 		if (event.getType() == RenderGameOverlayEvent.ElementType.HEALTH) {
-			event.setCanceled(true);
-			ModHUD.renderHealth();
-		}
-		
-		if (event.getType() == RenderGameOverlayEvent.ElementType.FOOD) {
-			event.setCanceled(true);
-			ModHUD.renderFood();
-		}
-		
-		if (event.getType() == RenderGameOverlayEvent.ElementType.ARMOR) {
-			event.setCanceled(true);
-			ModHUD.renderArmor();
-		}
-		
-		if (event.getType() == RenderGameOverlayEvent.ElementType.EXPERIENCE) {
-			event.setCanceled(true);
-			ModHUD.renderExpBar();
-			if(!ModHUD.locked) {
-				ModHUD.renderRage();
+				event.setCanceled(true);
+				BetterOverlay.renderHealth();;
 			}
+		if (event.getType() == RenderGameOverlayEvent.ElementType.FOOD) {
+				event.setCanceled(true);
+				BetterOverlay.renderFood();;
+			}
+		if (event.getType() == RenderGameOverlayEvent.ElementType.ARMOR) {
+				event.setCanceled(true);
+				BetterOverlay.renderArmor();;
+			}
+		if (event.getType() == RenderGameOverlayEvent.ElementType.EXPERIENCE) {
+				event.setCanceled(true);
+				BetterOverlay.renderExpBar();;
+				if(!ModHUD.locked) {
+					ModHUD.renderRage();
+				}
+			}
+		if (event.getType() == RenderGameOverlayEvent.ElementType.HEALTHMOUNT) {
+				event.setCanceled(true);
+			}
+		if (event.getType() == RenderGameOverlayEvent.ElementType.JUMPBAR) {
+				event.setCanceled(true);
+			}
+	}
+	
+	@SubscribeEvent(receiveCanceled = true)
+	public static void FireOverlay(RenderBlockOverlayEvent event) {
+		if(event.getOverlayType() == OverlayType.FIRE) {
+			event.setCanceled(true);
 		}
-
 	}
 	
 	@SuppressWarnings("resource")
