@@ -1,0 +1,29 @@
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern":
+    [
+        "PPP",
+        "PDP",
+        "PPP"
+    ],
+    
+    "key":
+    {
+        "D":
+        {
+            "item": "ageoftitans:titanium_dagger"
+        },
+         "P":
+        {
+            "item": "minecraft:spider_eye"
+        }
+    },
+    
+    
+    "result":
+    {
+        "item": "ageoftitans:poisonous_titanium_dagger",
+        "count": 1
+    }
+}

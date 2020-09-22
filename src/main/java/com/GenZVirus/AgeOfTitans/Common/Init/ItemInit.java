@@ -57,6 +57,7 @@ public class ItemInit {
 	public static final RegistryObject<Item> KEYSTONE = ITEMS.register("keystone", () -> new Keystone(new Item.Properties().group(AgeOfTitansItemGroup.instance)));
 
 	public static final RegistryObject<Item> SOUL_SHARD = ITEMS.register("soul_shard", () -> new Item(new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	public static final RegistryObject<Item> WITHER_DUST = ITEMS.register("wither_dust", () -> new Item(new Item.Properties().group(AgeOfTitansItemGroup.instance)));
 
 	//Ingots
 	public static final RegistryObject<Item> TITANIUM_INGOT = ITEMS.register("titanium_ingot", () -> new Item(new Item.Properties().group(AgeOfTitansItemGroup.instance)));
@@ -64,12 +65,17 @@ public class ItemInit {
 	//TestItem
 	public static final RegistryObject<Item> TEST_ITEM = ITEMS.register("test_item", () -> new SpecialItem(new Item.Properties().group(AgeOfTitansItemGroup.instance).maxStackSize(1)));
 	
+	//Weapons
+	public static final RegistryObject<Item> TITANIUM_SWORD = ITEMS.register("titanium_sword", () -> new SwordItem(ModItemTier.MATERIAL_TITANIUM, 12, -2.4F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	public static final RegistryObject<Item> TITANIUM_DAGGER = ITEMS.register("titanium_dagger", () -> new SwordItem(ModItemTier.MATERIAL_TITANIUM, 7, -1.4F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));	
+	public static final RegistryObject<Item> POISONOUS_TITANIUM_DAGGER = ITEMS.register("poisonous_titanium_dagger", () -> new SwordItem(ModItemTier.MATERIAL_TITANIUM, 7, -1.4F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));	
+	public static final RegistryObject<Item> WITHERING_TITANIUM_DAGGER = ITEMS.register("withering_titanium_dagger", () -> new SwordItem(ModItemTier.MATERIAL_TITANIUM, 7, -1.4F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));	
+	
 	//Tools
-	public static final RegistryObject<Item> TITANIUM_SWORD = ITEMS.register("titanium_sword", () -> new SwordItem(ModItemTier.MATERIAL_TITANIUM, 12, 6.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
-	public static final RegistryObject<Item> TITANIUM_PICKAXE = ITEMS.register("titanium_pickaxe", () -> new PickaxeItem(ModItemTier.MATERIAL_TITANIUM, 4, 5.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
-	public static final RegistryObject<Item> TITANIUM_SHOVEL = ITEMS.register("titanium_shovel", () -> new ShovelItem(ModItemTier.MATERIAL_TITANIUM, 2, 5.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
-	public static final RegistryObject<Item> TITANIUM_AXE = ITEMS.register("titanium_axe", () -> new AxeItem(ModItemTier.MATERIAL_TITANIUM, 8, 5.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
-	public static final RegistryObject<Item> TITANIUM_HOE = ITEMS.register("titanium_hoe", () -> new HoeItem(ModItemTier.MATERIAL_TITANIUM, 5.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	public static final RegistryObject<Item> TITANIUM_PICKAXE = ITEMS.register("titanium_pickaxe", () -> new PickaxeItem(ModItemTier.MATERIAL_TITANIUM, 4, -2.8F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	public static final RegistryObject<Item> TITANIUM_SHOVEL = ITEMS.register("titanium_shovel", () -> new ShovelItem(ModItemTier.MATERIAL_TITANIUM, 2, -3.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	public static final RegistryObject<Item> TITANIUM_AXE = ITEMS.register("titanium_axe", () -> new AxeItem(ModItemTier.MATERIAL_TITANIUM, 8, -3.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	public static final RegistryObject<Item> TITANIUM_HOE = ITEMS.register("titanium_hoe", () -> new HoeItem(ModItemTier.MATERIAL_TITANIUM, 0.0F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
 		
 	//Armor
 	public static final RegistryObject<Item> TITANIUM_HELMET = ITEMS.register("titanium_helmet", () -> new TitaniumHelmet(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.HEAD, new Item.Properties().group(AgeOfTitansItemGroup.instance)));

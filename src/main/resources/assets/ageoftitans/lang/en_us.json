@@ -88,6 +88,9 @@
 	
 	"item.ageoftitans.titanium_ingot": "\u00A7eTitanium Ingot",
 	
+	"item.ageoftitans.titanium_dagger": "\u00A7e\u00A7nTitanium Dagger",
+	"item.ageoftitans.poisonous_titanium_dagger": "\u00A72\u00A7l\u00A7nPoisonous Titanium Dagger",
+	"item.ageoftitans.withering_titanium_dagger": "\u00A74\u00A7l\u00A7nWithering Titanium Dagger",
 	"item.ageoftitans.titanium_sword": "\u00A7e\u00A7nTitanium Sword",
 	"item.ageoftitans.titanium_pickaxe": "\u00A7e\u00A7nTitanium Pickaxe",
 	"item.ageoftitans.titanium_axe": "\u00A7e\u00A7nTitanium Axe",
@@ -99,6 +102,7 @@
 	"item.ageoftitans.titanium_leggings": "\u00A7e\u00A7nTitanium Leggings",
 	"item.ageoftitans.titanium_boots": "\u00A7e\u00A7nTitanium Boots",
 	"item.ageoftitans.soul_shard": "\u00A7e\u00A7nSoul Shard",
+	"item.ageoftitans.wither_dust": "\u00A74\u00A7nWither Dust",
 	
 	"block.ageoftitans.titanium_block": "\u00A7eTitanium Block",
 	"block.ageoftitans.titanium_ore": "\u00A7eTitanium Ore",

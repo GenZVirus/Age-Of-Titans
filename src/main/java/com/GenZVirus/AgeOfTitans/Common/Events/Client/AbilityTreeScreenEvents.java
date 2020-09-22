@@ -44,117 +44,121 @@ public class AbilityTreeScreenEvents {
 	private static int cooldown_Chain = 0;
 	private static int cooldown_TimeBomb = 0;
 	private static int cooldown_Revitalise = 0;
-	
+
 	@SubscribeEvent(receiveCanceled = true)
-	public static void onHealthBar(RenderGameOverlayEvent.Pre event) {
+	public static void Overlay(RenderGameOverlayEvent.Pre event) {
 		if (event.getType() == RenderGameOverlayEvent.ElementType.HEALTH) {
-				event.setCanceled(true);
-				BetterOverlay.renderHealth();;
-			}
+			event.setCanceled(true);
+			BetterOverlay.renderHealth();
+			;
+		}
 		if (event.getType() == RenderGameOverlayEvent.ElementType.FOOD) {
-				event.setCanceled(true);
-				BetterOverlay.renderFood();;
-			}
+			event.setCanceled(true);
+			BetterOverlay.renderFood();
+			;
+		}
 		if (event.getType() == RenderGameOverlayEvent.ElementType.ARMOR) {
-				event.setCanceled(true);
-				BetterOverlay.renderArmor();;
-			}
+			event.setCanceled(true);
+			BetterOverlay.renderArmor();
+			;
+		}
 		if (event.getType() == RenderGameOverlayEvent.ElementType.EXPERIENCE) {
-				event.setCanceled(true);
-				BetterOverlay.renderExpBar();;
-				if(!ModHUD.locked) {
-					ModHUD.renderRage();
-				}
+			event.setCanceled(true);
+			BetterOverlay.renderExpBar();
+			;
+			if (!ModHUD.locked) {
+				ModHUD.renderRage();
 			}
+		}
+		if (event.getType() == RenderGameOverlayEvent.ElementType.AIR) {
+			event.setCanceled(true);
+			BetterOverlay.renderWaterBreathing();
+		}
 		if (event.getType() == RenderGameOverlayEvent.ElementType.HEALTHMOUNT) {
-				event.setCanceled(true);
-			}
+			event.setCanceled(true);
+		}
 		if (event.getType() == RenderGameOverlayEvent.ElementType.JUMPBAR) {
-				event.setCanceled(true);
-			}
-	}
-	
-	@SubscribeEvent(receiveCanceled = true)
-	public static void FireOverlay(RenderBlockOverlayEvent event) {
-		if(event.getOverlayType() == OverlayType.FIRE) {
 			event.setCanceled(true);
 		}
 	}
-	
+
+	@SubscribeEvent(receiveCanceled = true)
+	public static void FireOverlay(RenderBlockOverlayEvent event) {
+		if (event.getOverlayType() == OverlayType.FIRE) {
+			event.setCanceled(true);
+		}
+	}
+
 	@SuppressWarnings("resource")
 	@SubscribeEvent
 	public static void PlayerSpellUseEvent(ClientTickEvent event) {
-		if(event.phase == Phase.START) {
-			return;
-		}
+		if (event.phase == Phase.START) { return; }
 		Minecraft mc = Minecraft.getInstance();
-		if ((mc.currentScreen != null && mc.gameSettings.chatVisibility != ChatVisibility.HIDDEN) || mc.world == null) {
-			return;
-		}
-		
-		if(cooldown_SwordSlash > 0) {
+		if ((mc.currentScreen != null && mc.gameSettings.chatVisibility != ChatVisibility.HIDDEN) || mc.world == null) { return; }
+
+		if (cooldown_SwordSlash > 0) {
 			cooldown_SwordSlash--;
 		}
-		if(cooldown_ShieldBash > 0) {
+		if (cooldown_ShieldBash > 0) {
 			cooldown_ShieldBash--;
 		}
-		if(cooldown_Berserker > 0) {
+		if (cooldown_Berserker > 0) {
 			cooldown_Berserker--;
 		}
-		if(cooldown_Chain > 0) {
+		if (cooldown_Chain > 0) {
 			cooldown_Chain--;
 		}
-		if(cooldown_TimeBomb > 0) {
+		if (cooldown_TimeBomb > 0) {
 			cooldown_TimeBomb--;
 		}
-		if(cooldown_Revitalise > 0) {
+		if (cooldown_Revitalise > 0) {
 			cooldown_Revitalise--;
 		}
 		PlayerEntity player = Minecraft.getInstance().player;
-		if(player == null) return;
-		if(ModHUD.selectedSpell.getId() == 1 && player.getHeldItemMainhand().getItem() instanceof SwordItem && cooldown_SwordSlash == 0 && PlayerStats.RAGE_POINTS >= ActiveAbility.getList().get(1).getCost()) {
-			if(mc.mouseHelper.isLeftDown()) {
+		if (player == null)
+			return;
+		if (ModHUD.selectedSpell.getId() == 1 && player.getHeldItemMainhand().getItem() instanceof SwordItem && cooldown_SwordSlash == 0 && PlayerStats.RAGE_POINTS >= ActiveAbility.getList().get(1).getCost()) {
+			if (mc.mouseHelper.isLeftDown()) {
 				cooldown_SwordSlash = ActiveAbility.getList().get(1).getCooldown();
-				PacketHandlerCommon.INSTANCE.sendToServer(new PlayerUseSpellPacket(1, player.getUniqueID())); 
+				PacketHandlerCommon.INSTANCE.sendToServer(new PlayerUseSpellPacket(1, player.getUniqueID()));
 			}
 		}
-		
-		if(ModHUD.selectedSpell.getId() == 2 && cooldown_ShieldBash == 0 && PlayerStats.RAGE_POINTS >= ActiveAbility.getList().get(2).getCost()) {
-			if(player.getActiveHand() == Hand.OFF_HAND && player.getActiveItemStack().getItem() instanceof ShieldItem) {
+
+		if (ModHUD.selectedSpell.getId() == 2 && cooldown_ShieldBash == 0 && PlayerStats.RAGE_POINTS >= ActiveAbility.getList().get(2).getCost()) {
+			if (player.getActiveHand() == Hand.OFF_HAND && player.getActiveItemStack().getItem() instanceof ShieldItem) {
 				cooldown_ShieldBash = ActiveAbility.getList().get(2).getCooldown();
 				PacketHandlerCommon.INSTANCE.sendToServer(new PlayerUseSpellPacket(2, player.getUniqueID()));
 			}
 		}
-		if(ModHUD.selectedSpell.getId() == 3 && cooldown_Berserker == 0 && PlayerStats.RAGE_POINTS >= ActiveAbility.getList().get(3).getCost()) {
-			if(KeyboardHelper.isFireAbilityKeyDown()) {
+		if (ModHUD.selectedSpell.getId() == 3 && cooldown_Berserker == 0 && PlayerStats.RAGE_POINTS >= ActiveAbility.getList().get(3).getCost()) {
+			if (KeyboardHelper.isFireAbilityKeyDown()) {
 				cooldown_Berserker = ActiveAbility.getList().get(3).getCooldown();
 				PacketHandlerCommon.INSTANCE.sendToServer(new PlayerUseSpellPacket(3, player.getUniqueID()));
 			}
 		}
-		if(ModHUD.selectedSpell.getId() == 4 && cooldown_Chain == 0 && PlayerStats.RAGE_POINTS >= ActiveAbility.getList().get(4).getCost()) {
-			if(KeyboardHelper.isFireAbilityKeyDown()) {
+		if (ModHUD.selectedSpell.getId() == 4 && cooldown_Chain == 0 && PlayerStats.RAGE_POINTS >= ActiveAbility.getList().get(4).getCost()) {
+			if (KeyboardHelper.isFireAbilityKeyDown()) {
 				cooldown_Chain = ActiveAbility.getList().get(4).getCooldown();
 				PacketHandlerCommon.INSTANCE.sendToServer(new PlayerUseSpellPacket(4, player.getUniqueID()));
 			}
 		}
-		
-		if(ModHUD.selectedSpell.getId() == 5 && cooldown_TimeBomb == 0 && PlayerStats.RAGE_POINTS >= ActiveAbility.getList().get(5).getCost()) {
-			if(KeyboardHelper.isFireAbilityKeyDown()) {
+
+		if (ModHUD.selectedSpell.getId() == 5 && cooldown_TimeBomb == 0 && PlayerStats.RAGE_POINTS >= ActiveAbility.getList().get(5).getCost()) {
+			if (KeyboardHelper.isFireAbilityKeyDown()) {
 				cooldown_TimeBomb = ActiveAbility.getList().get(5).getCooldown();
 				PacketHandlerCommon.INSTANCE.sendToServer(new PlayerUseSpellPacket(5, player.getUniqueID()));
 			}
 		}
-		
-		if(ModHUD.selectedSpell.getId() == 6 && cooldown_TimeBomb == 0 && PlayerStats.RAGE_POINTS >= ActiveAbility.getList().get(6).getCost()) {
-			if(KeyboardHelper.isFireAbilityKeyDown()) {
+
+		if (ModHUD.selectedSpell.getId() == 6 && cooldown_TimeBomb == 0 && PlayerStats.RAGE_POINTS >= ActiveAbility.getList().get(6).getCost()) {
+			if (KeyboardHelper.isFireAbilityKeyDown()) {
 				cooldown_TimeBomb = ActiveAbility.getList().get(6).getCooldown();
 				PacketHandlerCommon.INSTANCE.sendToServer(new PlayerUseSpellPacket(6, player.getUniqueID()));
 			}
 		}
-		
+
 	}
-	
-	
+
 	@SubscribeEvent
 	public static void skillSection(MouseClickedEvent.Post event) {
 		if (event.getGui() instanceof AbilityTreeScreen) {
@@ -167,7 +171,7 @@ public class AbilityTreeScreenEvents {
 				int x = (int) event.getMouseX();
 				int y = (int) event.getMouseY();
 				if (x >= widthIn && x < widthIn + width && y >= heightIn && y < heightIn + height) {
-					if(button instanceof ModButtonSmall) {
+					if (button instanceof ModButtonSmall) {
 						((ModButtonSmall) button).onPress();
 					} else if (button instanceof ModButton) {
 						((ModButton) button).onPress();

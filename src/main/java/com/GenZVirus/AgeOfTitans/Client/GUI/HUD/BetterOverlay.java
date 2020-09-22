@@ -11,6 +11,7 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Effects;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.CombatRules;
 import net.minecraft.util.FoodStats;
 import net.minecraft.util.ResourceLocation;
@@ -36,6 +37,8 @@ public class BetterOverlay {
 	public static ResourceLocation ARMOR_LEFT = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/betteroverlay/shield_armor_left.png");
 	public static ResourceLocation ARMOR_RIGHT = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/betteroverlay/shield_armor_right.png");
 	public static ResourceLocation FIRE = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/betteroverlay/fire.png");
+	public static ResourceLocation WATER_BREATHING_BAR = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/betteroverlay/water_breathing_bar.png");
+	public static ResourceLocation WATER_BREATHING_BAR_FILL = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/betteroverlay/water_breathing_bar_fill.png");
 	public static int fire_offset = 0;
 
 	private static void checkInGame() {
@@ -205,6 +208,28 @@ public class BetterOverlay {
 			mc.getProfiler().endSection();
 		}
 		RenderSystem.disableBlend();
+		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+	}
+	
+	public static void renderWaterBreathing() {
+		checkInGame();
+		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+		if (mc.player.areEyesInFluid(FluidTags.WATER) || mc.player.getAir() < mc.player.getMaxAir()) {
+			mc.getProfiler().startSection("BUXWaterBreathingBar");
+			mc.getTextureManager().bindTexture(WATER_BREATHING_BAR);
+			RenderSystem.enableBlend();
+			int k = (int) (((float)mc.player.getAir() / mc.player.getMaxAir()) * 180.0F);
+			int posX = mc.getMainWindow().getScaledWidth() / 2 - 91;
+			int posY = mc.getMainWindow().getScaledHeight() - ForgeIngameGui.left_height - 25 - (ModHUD.locked ? 0 : 17);
+			AbstractGui.blit(posX, posY, 0, 0, 0, 182, 16, 16, 182);
+			if (k > 0) {
+				mc.getTextureManager().bindTexture(WATER_BREATHING_BAR_FILL);
+				AbstractGui.blit(posX + 1, posY + 1, 0, 0, 0, k, 14, 14, 180);
+			}
+			RenderSystem.disableBlend();
+			mc.getProfiler().endSection();
+			RenderSystem.enableBlend();
+		}
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 	}
 
