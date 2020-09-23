@@ -166,7 +166,7 @@ public class ItemToolTip {
 			text.add(new TranslationTextComponent("\u00A77- Titanium Dagger (Offhand)"));
 		}
 		
-		if(player.getHeldItemMainhand().getItem().equals(ItemInit.TITANIUM_DAGGER.get()) && itemInSlot) {
+		if((player.getHeldItemMainhand().getItem().equals(ItemInit.TITANIUM_DAGGER.get()) || event.getItemStack().equals(player.getHeldItemOffhand())) && itemInSlot) {
 			text.add(new TranslationTextComponent("\u00A7a\u00A7nSet bonus:"));
 			text.add(new TranslationTextComponent("\u00A7a Damaging a target has a 10% chance reduce their health by 10% of target max health. The chance is increased to 25% if dual wielding 2 daggers."));
 		} else {
@@ -211,7 +211,7 @@ public class ItemToolTip {
 			text.add(new TranslationTextComponent("\u00A77- Poisonous Titanium Dagger (Offhand)"));
 		}
 		
-		if(player.getHeldItemMainhand().getItem().equals(ItemInit.POISONOUS_TITANIUM_DAGGER.get()) && itemInSlot) {
+		if((player.getHeldItemMainhand().getItem().equals(ItemInit.POISONOUS_TITANIUM_DAGGER.get()) || event.getItemStack().equals(player.getHeldItemOffhand()))&& itemInSlot) {
 			text.add(new TranslationTextComponent("\u00A7a\u00A7nSet bonus:"));
 			text.add(new TranslationTextComponent("\u00A7a (1)Damaging a target has a 10% chance reduce their health by 10% of target max health. The chance is increased to 25% if dual wielding 2 daggers."));
 			text.add(new TranslationTextComponent("\u00A7a (2)Damaging a target inflicts poison on it. The effect is amplified for each hit up to 5. Increase amplifier limit to 10 if dual wielding 2 daggers."));
@@ -258,7 +258,7 @@ public class ItemToolTip {
 			text.add(new TranslationTextComponent("\u00A77- Withering Titanium Dagger (Offhand)"));
 		}
 		
-		if(player.getHeldItemMainhand().getItem().equals(ItemInit.WITHERING_TITANIUM_DAGGER.get()) && itemInSlot) {
+		if((player.getHeldItemMainhand().getItem().equals(ItemInit.WITHERING_TITANIUM_DAGGER.get()) || event.getItemStack().equals(player.getHeldItemOffhand())) && itemInSlot) {
 			text.add(new TranslationTextComponent("\u00A7a\u00A7nSet bonus:"));
 			text.add(new TranslationTextComponent("\u00A7a (1)Damaging a target has a 10% chance reduce their health by 10% of target max health. The chance is increased to 25% if dual wielding 2 daggers."));
 			text.add(new TranslationTextComponent("\u00A7a (2)Damaging a target inflicts wither effect on it. The effect is amplified for each hit up to 5. Increase amplifier limit to 10 if dual wielding 2 daggers."));

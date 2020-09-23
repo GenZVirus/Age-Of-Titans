@@ -57,6 +57,20 @@ public class WitheringDaggerSetBonus {
 					event.getEntityLiving().addPotionEffect(new EffectInstance(Effects.WITHER, 100));
 				}
 			}
+		} else if(attacker.getHeldItemOffhand().getItem().equals(ItemInit.WITHERING_TITANIUM_DAGGER.get())) {
+			if(new Random().nextInt(10) == 1) {
+				event.getEntityLiving().setHealth(event.getEntityLiving().getHealth() - event.getEntityLiving().getMaxHealth() * 10 / 100);
+			}
+			if(event.getEntityLiving().isPotionActive(Effects.WITHER)) {
+				int amplifier = event.getEntityLiving().getActivePotionEffect(Effects.WITHER).getAmplifier();
+				if(amplifier < 4) {
+					amplifier++;
+				}
+				event.getEntityLiving().addPotionEffect(new EffectInstance(Effects.WITHER, 100, amplifier));
+			} else {
+				event.getEntityLiving().addPotionEffect(new EffectInstance(Effects.WITHER, 100));
+			}
+			
 		}
 	}
 

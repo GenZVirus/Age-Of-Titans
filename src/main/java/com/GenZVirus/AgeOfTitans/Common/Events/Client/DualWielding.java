@@ -20,7 +20,7 @@ public class DualWielding {
 	@SuppressWarnings("resource")
 	@SubscribeEvent
 	public static void swingLeftHand(ClickInputEvent event) {
-		if(!event.getHand().equals(Hand.MAIN_HAND)) return;
+		if(!event.isAttack()) return;
 		if(!(Minecraft.getInstance().player.getHeldItemOffhand().getItem() instanceof SwordItem) || !(Minecraft.getInstance().player.getHeldItemMainhand().getItem() instanceof SwordItem)) {
 			return;
 		}
