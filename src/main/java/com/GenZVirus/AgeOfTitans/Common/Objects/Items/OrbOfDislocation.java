@@ -9,6 +9,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -18,8 +19,10 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 
-public class OrbOfDislocation extends PricedItem {
+public class OrbOfDislocation extends Item implements PricedItem {
 
+	private int price = 0;
+	
 	public OrbOfDislocation(Properties properties) {
 		super(properties);
 		this.price = 2000;
@@ -68,5 +71,15 @@ public class OrbOfDislocation extends PricedItem {
 	@Override
 	public int getBurnTime(ItemStack itemStack) {
 		return super.getBurnTime(itemStack);
+	}
+
+	@Override
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	@Override
+	public int getPrice() {
+		return this.price;
 	}
 }

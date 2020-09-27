@@ -10,6 +10,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -22,8 +23,10 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.ITeleporter;
 
-public class OrbOfEden extends PricedItem {
+public class OrbOfEden extends Item implements PricedItem {
 
+	private int price = 0;
+	
 	public OrbOfEden(Properties properties) {
 		super(properties);
 		this.price = 1000;
@@ -80,5 +83,15 @@ public class OrbOfEden extends PricedItem {
 	            return entity;
 	        }
 	    });
+	}
+
+	@Override
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	@Override
+	public int getPrice() {
+		return this.price;
 	}
 }

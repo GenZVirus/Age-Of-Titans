@@ -8,7 +8,6 @@ import java.util.function.Supplier;
 import com.GenZVirus.AgeOfTitans.Client.GUI.ReaperShop.ReaperShopScreen;
 import com.GenZVirus.AgeOfTitans.Common.Entities.ReaperEntity;
 import com.GenZVirus.AgeOfTitans.Common.Init.ItemInit;
-import com.GenZVirus.AgeOfTitans.Common.Objects.Items.PricedItem;
 import com.GenZVirus.AgeOfTitans.Util.ForgeEventBusSubscriber;
 import com.google.common.collect.Lists;
 
@@ -16,6 +15,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.ChatVisibility;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.PacketBuffer;
@@ -66,14 +66,14 @@ public class ReaperInteractionPacket {
 					reaper.occupied = pkt.occupied;
 					if(!reaper.outofstock)
 					reaper.outofstock = pkt.outofstock;
-					List<PricedItem> itemList = Lists.newArrayList();
-					itemList.add((PricedItem) ItemInit.ORB_OF_EDEN.get());
-					itemList.add((PricedItem) ItemInit.ORB_OF_DISLOCATION.get());
-					itemList.add((PricedItem) ItemInit.ORB_OF_END.get());
-					itemList.add((PricedItem) ItemInit.ORB_OF_NETHER.get());
-					itemList.add((PricedItem) ItemInit.ORB_OF_STORAGE.get());
-					itemList.add((PricedItem) ItemInit.ORB_OF_SUMMONING.get());
-					itemList.add((PricedItem) ItemInit.FRUIT_OF_THE_GODS.get());
+					List<Item> itemList = Lists.newArrayList();
+					itemList.add(ItemInit.ORB_OF_EDEN.get());
+					itemList.add(ItemInit.ORB_OF_DISLOCATION.get());
+					itemList.add(ItemInit.ORB_OF_END.get());
+					itemList.add(ItemInit.ORB_OF_NETHER.get());
+					itemList.add(ItemInit.ORB_OF_STORAGE.get());
+					itemList.add(ItemInit.ORB_OF_SUMMONING.get());
+					itemList.add(ItemInit.FRUIT_OF_THE_GODS.get());
 					Random rand = new Random();
 					if (reaper.item1.equals(Items.AIR)) {
 						reaper.item1 = itemList.get(rand.nextInt(itemList.size()));

@@ -48,6 +48,7 @@ public class ReaperEntity extends CreatureEntity {
 	public boolean outofstock = false;
 	public Item item1, item2, item3;
 
+	@SuppressWarnings("unlikely-arg-type")
 	public ReaperEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
 		super(type, worldIn);
 		if(worldIn.isRemote) return;
@@ -59,13 +60,14 @@ public class ReaperEntity extends CreatureEntity {
 		itemList.add((PricedItem) ItemInit.ORB_OF_STORAGE.get());
 		itemList.add((PricedItem) ItemInit.ORB_OF_SUMMONING.get());
 		itemList.add((PricedItem) ItemInit.FRUIT_OF_THE_GODS.get());
+		itemList.add((PricedItem) ItemInit.DEMONIC_DAGGER.get());
 
 		Random rand = new Random();
-		item1 = itemList.get(rand.nextInt(itemList.size()));
+		item1 = (Item) itemList.get(rand.nextInt(itemList.size()));
 		itemList.remove(item1);
-		item2 = itemList.get(rand.nextInt(itemList.size()));
+		item2 = (Item) itemList.get(rand.nextInt(itemList.size()));
 		itemList.remove(item2);
-		item3 = itemList.get(rand.nextInt(itemList.size()));
+		item3 = (Item) itemList.get(rand.nextInt(itemList.size()));
 		itemList.remove(item3);
 	}
 

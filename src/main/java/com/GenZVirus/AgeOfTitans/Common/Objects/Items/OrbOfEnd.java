@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -12,8 +13,10 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 
-public class OrbOfEnd extends PricedItem {
+public class OrbOfEnd extends Item implements PricedItem {
 
+	private int price = 0;
+	
 	public OrbOfEnd(Properties properties) {
 		super(properties);
 		this.price = 1000;
@@ -49,5 +52,15 @@ public class OrbOfEnd extends PricedItem {
 	}
 	private void teleportToDimension(PlayerEntity player, DimensionType dimension) {
 	    player.changeDimension(dimension);
+	}
+
+	@Override
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	@Override
+	public int getPrice() {
+		return this.price;
 	}
 }

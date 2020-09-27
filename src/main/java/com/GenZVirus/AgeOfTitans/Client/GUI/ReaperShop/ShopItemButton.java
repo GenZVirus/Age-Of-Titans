@@ -23,6 +23,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -45,7 +46,7 @@ public class ShopItemButton extends Widget {
 		super(widthIn, heightIn, 110, 170, "");
 		this.active = false;
 		this.item = item;
-		this.stack = new ItemStack(item);
+		this.stack = new ItemStack((IItemProvider) item);
 	}
 
 	@Override
@@ -89,6 +90,9 @@ public class ShopItemButton extends Widget {
 	         list1.add(itextcomponent.getFormattedText());
 	      }
 
+	      list1.add("");
+	      list1.add("\u00A7bPrice: " + Integer.toString(((PricedItem)stack.getItem()).getPrice()) + " Souls");
+	      
 	      return list1;
 	   }
 	

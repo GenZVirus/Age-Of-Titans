@@ -1,7 +1,5 @@
 package com.GenZVirus.AgeOfTitans.Common.Events.Server;
 
-import java.util.Random;
-
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Common.Init.ItemInit;
 
@@ -30,9 +28,6 @@ public class PoisonousDaggerSetBonus {
 
 		if(attacker.getHeldItemMainhand().getItem().equals(ItemInit.POISONOUS_TITANIUM_DAGGER.get())) {
 			if(attacker.getHeldItemOffhand().getItem().equals(ItemInit.POISONOUS_TITANIUM_DAGGER.get())) {
-				if(new Random().nextInt(4) == 1) {
-					event.getEntityLiving().setHealth(event.getEntityLiving().getHealth() - event.getEntityLiving().getMaxHealth() * 10 / 100);
-				}
 				if(event.getEntityLiving().isPotionActive(Effects.POISON)) {
 					int amplifier = event.getEntityLiving().getActivePotionEffect(Effects.POISON).getAmplifier();
 					if(amplifier < 9) {
@@ -44,9 +39,6 @@ public class PoisonousDaggerSetBonus {
 				}
 				
 			} else {
-				if(new Random().nextInt(10) == 1) {
-					event.getEntityLiving().setHealth(event.getEntityLiving().getHealth() - event.getEntityLiving().getMaxHealth() * 10 / 100);
-				}
 				if(event.getEntityLiving().isPotionActive(Effects.POISON)) {
 					int amplifier = event.getEntityLiving().getActivePotionEffect(Effects.POISON).getAmplifier();
 					if(amplifier < 4) {
@@ -58,9 +50,6 @@ public class PoisonousDaggerSetBonus {
 				}
 			}
 		} else if(attacker.getHeldItemOffhand().getItem().equals(ItemInit.POISONOUS_TITANIUM_DAGGER.get())) {
-			if(new Random().nextInt(10) == 1) {
-				event.getEntityLiving().setHealth(event.getEntityLiving().getHealth() - event.getEntityLiving().getMaxHealth() * 10 / 100);
-			}
 			if(event.getEntityLiving().isPotionActive(Effects.POISON)) {
 				int amplifier = event.getEntityLiving().getActivePotionEffect(Effects.POISON).getAmplifier();
 				if(amplifier < 4) {

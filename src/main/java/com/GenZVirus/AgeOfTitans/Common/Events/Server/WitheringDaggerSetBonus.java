@@ -1,7 +1,5 @@
 package com.GenZVirus.AgeOfTitans.Common.Events.Server;
 
-import java.util.Random;
-
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Common.Init.ItemInit;
 
@@ -28,28 +26,22 @@ public class WitheringDaggerSetBonus {
 			return;
 		LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
 
-		if(attacker.getHeldItemMainhand().getItem().equals(ItemInit.WITHERING_TITANIUM_DAGGER.get())) {
-			if(attacker.getHeldItemOffhand().getItem().equals(ItemInit.WITHERING_TITANIUM_DAGGER.get())) {
-				if(new Random().nextInt(4) == 1) {
-					event.getEntityLiving().setHealth(event.getEntityLiving().getHealth() - event.getEntityLiving().getMaxHealth() * 10 / 100);
-				}
-				if(event.getEntityLiving().isPotionActive(Effects.WITHER)) {
+		if (attacker.getHeldItemMainhand().getItem().equals(ItemInit.WITHERING_TITANIUM_DAGGER.get())) {
+			if (attacker.getHeldItemOffhand().getItem().equals(ItemInit.WITHERING_TITANIUM_DAGGER.get())) {
+				if (event.getEntityLiving().isPotionActive(Effects.WITHER)) {
 					int amplifier = event.getEntityLiving().getActivePotionEffect(Effects.WITHER).getAmplifier();
-					if(amplifier < 9) {
+					if (amplifier < 9) {
 						amplifier++;
 					}
 					event.getEntityLiving().addPotionEffect(new EffectInstance(Effects.WITHER, 100, amplifier));
 				} else {
 					event.getEntityLiving().addPotionEffect(new EffectInstance(Effects.WITHER, 100));
 				}
-				
+
 			} else {
-				if(new Random().nextInt(10) == 1) {
-					event.getEntityLiving().setHealth(event.getEntityLiving().getHealth() - event.getEntityLiving().getMaxHealth() * 10 / 100);
-				}
-				if(event.getEntityLiving().isPotionActive(Effects.WITHER)) {
+				if (event.getEntityLiving().isPotionActive(Effects.WITHER)) {
 					int amplifier = event.getEntityLiving().getActivePotionEffect(Effects.WITHER).getAmplifier();
-					if(amplifier < 4) {
+					if (amplifier < 4) {
 						amplifier++;
 					}
 					event.getEntityLiving().addPotionEffect(new EffectInstance(Effects.WITHER, 100, amplifier));
@@ -57,22 +49,18 @@ public class WitheringDaggerSetBonus {
 					event.getEntityLiving().addPotionEffect(new EffectInstance(Effects.WITHER, 100));
 				}
 			}
-		} else if(attacker.getHeldItemOffhand().getItem().equals(ItemInit.WITHERING_TITANIUM_DAGGER.get())) {
-			if(new Random().nextInt(10) == 1) {
-				event.getEntityLiving().setHealth(event.getEntityLiving().getHealth() - event.getEntityLiving().getMaxHealth() * 10 / 100);
-			}
-			if(event.getEntityLiving().isPotionActive(Effects.WITHER)) {
+		} else if (attacker.getHeldItemOffhand().getItem().equals(ItemInit.WITHERING_TITANIUM_DAGGER.get())) {
+			if (event.getEntityLiving().isPotionActive(Effects.WITHER)) {
 				int amplifier = event.getEntityLiving().getActivePotionEffect(Effects.WITHER).getAmplifier();
-				if(amplifier < 4) {
+				if (amplifier < 4) {
 					amplifier++;
 				}
 				event.getEntityLiving().addPotionEffect(new EffectInstance(Effects.WITHER, 100, amplifier));
 			} else {
 				event.getEntityLiving().addPotionEffect(new EffectInstance(Effects.WITHER, 100));
 			}
-			
+
 		}
 	}
-
 
 }

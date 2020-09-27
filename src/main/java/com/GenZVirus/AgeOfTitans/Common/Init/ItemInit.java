@@ -4,6 +4,8 @@ import java.util.function.Supplier;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.AgeOfTitans.AgeOfTitansItemGroup;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.DaggerItem;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.DemonicDagger;
 import com.GenZVirus.AgeOfTitans.Common.Objects.Items.FruitOfTheGods;
 import com.GenZVirus.AgeOfTitans.Common.Objects.Items.Keystone;
 import com.GenZVirus.AgeOfTitans.Common.Objects.Items.OrbOfDislocation;
@@ -67,9 +69,10 @@ public class ItemInit {
 	
 	//Weapons
 	public static final RegistryObject<Item> TITANIUM_SWORD = ITEMS.register("titanium_sword", () -> new SwordItem(ModItemTier.MATERIAL_TITANIUM, 12, -2.4F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
-	public static final RegistryObject<Item> TITANIUM_DAGGER = ITEMS.register("titanium_dagger", () -> new SwordItem(ModItemTier.MATERIAL_TITANIUM, 7, -1.4F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));	
-	public static final RegistryObject<Item> POISONOUS_TITANIUM_DAGGER = ITEMS.register("poisonous_titanium_dagger", () -> new SwordItem(ModItemTier.MATERIAL_TITANIUM, 7, -1.4F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));	
-	public static final RegistryObject<Item> WITHERING_TITANIUM_DAGGER = ITEMS.register("withering_titanium_dagger", () -> new SwordItem(ModItemTier.MATERIAL_TITANIUM, 7, -1.4F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));	
+	public static final RegistryObject<Item> TITANIUM_DAGGER = ITEMS.register("titanium_dagger", () -> new DaggerItem(ModItemTier.MATERIAL_TITANIUM, 7, -1.4F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));	
+	public static final RegistryObject<Item> POISONOUS_TITANIUM_DAGGER = ITEMS.register("poisonous_titanium_dagger", () -> new DaggerItem(ModItemTier.MATERIAL_TITANIUM, 7, -1.4F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));	
+	public static final RegistryObject<Item> WITHERING_TITANIUM_DAGGER = ITEMS.register("withering_titanium_dagger", () -> new DaggerItem(ModItemTier.MATERIAL_TITANIUM, 7, -1.4F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));	
+	public static final RegistryObject<Item> DEMONIC_DAGGER = ITEMS.register("demonic_dagger", () -> new DemonicDagger(ModItemTier.MATERIAL_TITANIUM, 17, -1.4F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));	
 	
 	//Tools
 	public static final RegistryObject<Item> TITANIUM_PICKAXE = ITEMS.register("titanium_pickaxe", () -> new PickaxeItem(ModItemTier.MATERIAL_TITANIUM, 4, -2.8F, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
