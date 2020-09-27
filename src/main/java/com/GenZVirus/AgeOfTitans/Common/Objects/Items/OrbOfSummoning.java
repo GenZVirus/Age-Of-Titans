@@ -7,6 +7,7 @@ import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -14,8 +15,10 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 
-public class OrbOfSummoning extends PricedItem {
-
+public class OrbOfSummoning extends Item implements PricedItem {
+		
+	private int price = 0;
+		
 	public OrbOfSummoning(Properties properties) {
 		super(properties);
 		this.price = 2000;
@@ -64,5 +67,16 @@ public class OrbOfSummoning extends PricedItem {
 	@Override
 	public int getBurnTime(ItemStack itemStack) {
 		return super.getBurnTime(itemStack);
+	}
+
+	@Override
+	public void setPrice(int price) {
+		this.price = price;
+		
+	}
+
+	@Override
+	public int getPrice() {
+		return this.price;
 	}
 }

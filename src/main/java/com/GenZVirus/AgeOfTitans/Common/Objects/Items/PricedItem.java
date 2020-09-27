@@ -1,21 +1,9 @@
 package com.GenZVirus.AgeOfTitans.Common.Objects.Items;
 
-import net.minecraft.item.Item;
+public interface PricedItem {
 
-public class PricedItem extends Item {
-
-	public int price = 0;
+	public void setPrice(int price);
 	
-	public PricedItem(Properties properties) {
-		super(properties);
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
-	}
-	
-	public int getPrice() {
-		return price;
-	}
+	public int getPrice();
 	
 }
