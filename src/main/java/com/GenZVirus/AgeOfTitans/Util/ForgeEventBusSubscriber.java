@@ -21,6 +21,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.dedicated.DedicatedServer;
+import net.minecraft.util.Hand;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -48,17 +49,13 @@ public class ForgeEventBusSubscriber {
 	public static List<Integer> rage = Lists.newArrayList();
 	
 	public static List<Integer> inCombat = Lists.newArrayList();
+
+	public static List<Hand> hands = Lists.newArrayList();
 	
 	@SubscribeEvent
 	public static void onPlayerDeath(PlayerEvent.Clone e) {
-		rage.remove(players.indexOf(e.getOriginal()));
-		inCombat.remove(players.indexOf(e.getOriginal()));
-		players.remove(e.getOriginal());
-		uuids.remove(e.getOriginal().getUniqueID());
-		players.add(e.getPlayer());
-		rage.add(0);
-		inCombat.add(0);
-		uuids.add(e.getPlayer().getUniqueID());
+		removePlayer(e.getOriginal());
+		addPlayer(e.getPlayer());
 		String playerName = e.getPlayer().getName().getFormattedText();
 		UUID uuid = e.getPlayer().getUniqueID();
 		XMLFileJava.checkFileAndMake(uuid, playerName);
@@ -87,9 +84,7 @@ public class ForgeEventBusSubscriber {
 	
 	@SubscribeEvent
 	public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent e) {
-		rage.remove(players.indexOf(e.getPlayer()));
-		players.remove(e.getPlayer());
-		uuids.remove(e.getPlayer().getUniqueID());
+		removePlayer(e.getPlayer());
 		calculateAverageLevel();
 	}
 	
@@ -97,10 +92,7 @@ public class ForgeEventBusSubscriber {
 
 	@SubscribeEvent
 	public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent e) {		
-		rage.add(0);
-		inCombat.add(0);
-		players.add(e.getPlayer());
-		uuids.add(e.getPlayer().getUniqueID());
+		addPlayer(e.getPlayer());
 		PacketHandlerCommon.INSTANCE.sendTo(new DiscordServerMessagePacket(),  ((ServerPlayerEntity)e.getPlayer()).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		MinecraftServer mcSRV = e.getPlayer().getServer();
 		if(!(mcSRV instanceof DedicatedServer)) {
@@ -150,6 +142,22 @@ public class ForgeEventBusSubscriber {
 			DimensionManager.registerDimension(AgeOfTitans.EDEN_DIMENSION_TYPE, DimensionInit.EDEN.get(), null, true);
 		}
 		AgeOfTitans.LOGGER.info("Dimensions Registered!");
+	}
+	
+	private static void removePlayer(PlayerEntity player) {
+		rage.remove(players.indexOf(player));
+		hands.remove(players.indexOf(player));
+		inCombat.remove(players.indexOf(player));
+		players.remove(player);
+		uuids.remove(player.getUniqueID());
+	}
+	
+	private static void addPlayer(PlayerEntity player) {
+		rage.add(0);
+		inCombat.add(0);
+		players.add(player);
+		uuids.add(player.getUniqueID());
+		hands.add(Hand.MAIN_HAND);
 	}
 
 	private static void calculateAverageLevel() {

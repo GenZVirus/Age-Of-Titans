@@ -1,4 +1,4 @@
-package com.GenZVirus.AgeOfTitans.Client.ArmorModel;
+package com.GenZVirus.AgeOfTitans.Client.ArmorModel.HeavyTitaniumArmor;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;

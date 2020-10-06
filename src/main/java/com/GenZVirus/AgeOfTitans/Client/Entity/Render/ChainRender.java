@@ -92,16 +92,17 @@ public class ChainRender extends EntityRenderer<ChainEntity>{
    	       }, () -> {
    	          RenderSystem.disableBlend();
    	       });
+	      RenderState.AlphaState DEFAULT_ALPHA = new RenderState.AlphaState(0.003921569F);
 	      for(int j = 0; j < i ; ++j) {
 	         float f = (float)j / ((float) (i - 1));
 	         int k = (int)MathHelper.lerp(f, (float)blockLight, (float)holderBlockLight);
 	         int l = (int)MathHelper.lerp(f, (float)skyLight, (float)holderSkyLight);
 	         int i1 = LightTexture.packLight(k, l);
 	         if(j != 1) {
-	   	      IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.makeType("chain", DefaultVertexFormats.POSITION_COLOR_TEX_LIGHTMAP, 7, 262144, RenderType.State.getBuilder().transparency(TRANSLUCENT_TRANSPARENCY).texture(new RenderState.TextureState(new ResourceLocation(AgeOfTitans.MOD_ID,"textures/blocks/chain.png"), false, true)).cull(new RenderState.CullState(false)).lightmap(new RenderState.LightmapState(true)).build(true)));
+	   	      IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.makeType("chain", DefaultVertexFormats.POSITION_COLOR_TEX_LIGHTMAP, 7, 262144, RenderType.State.getBuilder().texture(new RenderState.TextureState(new ResourceLocation(AgeOfTitans.MOD_ID,"textures/blocks/chain.png"), false, true)).transparency(TRANSLUCENT_TRANSPARENCY).alpha(DEFAULT_ALPHA).cull(new RenderState.CullState(false)).lightmap(new RenderState.LightmapState(true)).build(true)));
 	        	 addVertexPair(ivertexbuilder, matrixIn, i1, p_229119_2_, p_229119_3_, p_229119_4_, p_229119_9_, posY, i, j, posX, posZ);
 	         } else {
-	   	      IVertexBuilder ivertexbuilder2 = bufferIn.getBuffer(RenderType.makeType("chain_head", DefaultVertexFormats.POSITION_COLOR_TEX_LIGHTMAP, 7, 262144, RenderType.State.getBuilder().transparency(TRANSLUCENT_TRANSPARENCY).texture(new RenderState.TextureState(new ResourceLocation(AgeOfTitans.MOD_ID,"textures/blocks/chain_head.png"), false, true)).cull(new RenderState.CullState(false)).lightmap(new RenderState.LightmapState(true)).build(true)));
+	   	      IVertexBuilder ivertexbuilder2 = bufferIn.getBuffer(RenderType.makeType("chain_head", DefaultVertexFormats.POSITION_COLOR_TEX_LIGHTMAP, 7, 262144, RenderType.State.getBuilder().texture(new RenderState.TextureState(new ResourceLocation(AgeOfTitans.MOD_ID,"textures/blocks/chain_head.png"), false, true)).transparency(TRANSLUCENT_TRANSPARENCY).alpha(DEFAULT_ALPHA).cull(new RenderState.CullState(false)).lightmap(new RenderState.LightmapState(true)).build(true)));
 	        	 addVertexPair(ivertexbuilder2, matrixIn, i1, p_229119_2_, p_229119_3_, p_229119_4_, p_229119_9_, posY, i, j, posX, posZ);
 	         }
 	      }

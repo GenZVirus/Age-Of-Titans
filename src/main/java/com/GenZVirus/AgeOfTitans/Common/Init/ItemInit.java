@@ -87,7 +87,7 @@ public class ItemInit {
 	public static final RegistryObject<Item> TITANIUM_BOOTS = ITEMS.register("titanium_boots", () -> new TitaniumBoots(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.FEET, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
 	
 	public enum ModItemTier implements IItemTier{
-		MATERIAL_TITANIUM(4, 3000, 16.0F, 7.0F, 250, () -> {
+		MATERIAL_TITANIUM(8, 4000, 16.0F, 7.0F, 250, () -> {
 			return Ingredient.fromItems(ItemInit.TITANIUM_INGOT.get());
 		}); 
 		

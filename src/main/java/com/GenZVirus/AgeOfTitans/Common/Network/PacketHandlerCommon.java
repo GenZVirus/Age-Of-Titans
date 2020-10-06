@@ -105,5 +105,11 @@ public class PacketHandlerCommon {
 				.decoder(DiscordServerMessagePacket::decode)
 				.consumer(DiscordServerMessagePacket::handle)
 				.add();	
+		
+		INSTANCE.messageBuilder(SendPlayerHandPacket.class, id++)
+				.encoder(SendPlayerHandPacket::encode)
+				.decoder(SendPlayerHandPacket::decode)
+				.consumer(SendPlayerHandPacket::handle)
+				.add();	
 	}
 }

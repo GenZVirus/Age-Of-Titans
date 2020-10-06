@@ -1,6 +1,6 @@
 package com.GenZVirus.AgeOfTitans.Common.Objects.Items;
 
-import com.GenZVirus.AgeOfTitans.Client.ArmorModel.TitaniumChestplateModel;
+import com.GenZVirus.AgeOfTitans.Client.ArmorModel.HeavyTitaniumArmor.TitaniumChestplateModel;
 
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.entity.Entity;

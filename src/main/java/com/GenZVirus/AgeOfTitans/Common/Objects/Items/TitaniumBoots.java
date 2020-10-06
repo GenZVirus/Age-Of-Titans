@@ -1,5 +1,5 @@
 package com.GenZVirus.AgeOfTitans.Common.Objects.Items;
-import com.GenZVirus.AgeOfTitans.Client.ArmorModel.TitaniumBootsModel;
+import com.GenZVirus.AgeOfTitans.Client.ArmorModel.HeavyTitaniumArmor.TitaniumBootsModel;
 
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.entity.Entity;

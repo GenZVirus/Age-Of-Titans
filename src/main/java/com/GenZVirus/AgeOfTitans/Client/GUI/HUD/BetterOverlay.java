@@ -1,6 +1,7 @@
 package com.GenZVirus.AgeOfTitans.Client.GUI.HUD;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
+import com.GenZVirus.AgeOfTitans.ModCompatibility.VampirismComp;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
@@ -18,6 +19,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.gui.ForgeIngameGui;
+import net.minecraftforge.fml.ModList;
 
 @OnlyIn(Dist.CLIENT)
 public class BetterOverlay {
@@ -39,6 +41,7 @@ public class BetterOverlay {
 	public static ResourceLocation FIRE = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/betteroverlay/fire.png");
 	public static ResourceLocation WATER_BREATHING_BAR = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/betteroverlay/water_breathing_bar.png");
 	public static ResourceLocation WATER_BREATHING_BAR_FILL = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/betteroverlay/water_breathing_bar_fill.png");
+	public static ResourceLocation BLOOD_BAR_FILL = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/betteroverlay/blood_bar_fill.png");
 	public static int fire_offset = 0;
 
 	private static void checkInGame() {
@@ -127,31 +130,38 @@ public class BetterOverlay {
 		int posX = mc.getMainWindow().getScaledWidth() / 2 + 91;
 		mc.getTextureManager().bindTexture(BAR_RIGHT);
 		AbstractGui.blit(posX - 90, posY, 0, 0, 0, 90, 10, 10, 90);
-		FoodStats stats = mc.player.getFoodStats();
-		int level = stats.getFoodLevel();
-		int percentage = (int) (88 * level / 20);
-		if (percentage > 88)
-			percentage = 88;
-		mc.getTextureManager().bindTexture(FOOD_BAR_FILL);
-		AbstractGui.blit(posX - 1, posY + 1, 0, 0, 0, -percentage, 8, 8, 88);
-		level = (int) stats.getSaturationLevel();
-		percentage = (int) (88 * level / 20);
-		if (percentage > 88)
-			percentage = 88;
-		mc.getTextureManager().bindTexture(SATURATION_BAR_FILL);
-		AbstractGui.blit(posX - 1, posY + 1, 0, 0, 0, -percentage, 8, 8, 88);
-		String food =  ((int)stats.getFoodLevel()) + " | " + ((int)stats.getSaturationLevel());
-		int stringWidth = mc.fontRenderer.getStringWidth(food);
-		mc.fontRenderer.drawString(food, posX - 45 - stringWidth / 2, posY + 1, 0xFFFFFFFF);
-		RenderSystem.disableBlend();
-		mc.getProfiler().endSection();
+		if (ModList.get().isLoaded("vampirism")) {
+			VampirismComp.bloodOverlay();
+		} else {
+			FoodStats stats = mc.player.getFoodStats();
+			int level = stats.getFoodLevel();
+			int maxLevel = 20;
+			int percentage = (int) (88 * level / maxLevel);
+			if (percentage > 88)
+				percentage = 88;
+			mc.getTextureManager().bindTexture(FOOD_BAR_FILL);
+			AbstractGui.blit(posX - 1, posY + 1, 0, 0, 0, -percentage, 8, 8, 88);
+			level = (int) stats.getSaturationLevel();
+			maxLevel = 20;
+			percentage = (int) (88 * level / maxLevel);
+			if (percentage > 88)
+				percentage = 88;
+			mc.getTextureManager().bindTexture(SATURATION_BAR_FILL);
+			AbstractGui.blit(posX - 1, posY + 1, 0, 0, 0, -percentage, 8, 8, 88);
+			String food = ((int) stats.getFoodLevel()) + " | " + ((int) stats.getSaturationLevel());
+			int stringWidth = mc.fontRenderer.getStringWidth(food);
+			mc.fontRenderer.drawString(food, posX - 45 - stringWidth / 2, posY + 1, 0xFFFFFFFF);
+			RenderSystem.disableBlend();
+			mc.getProfiler().endSection();
+		}
 	}
 
 	public static void renderArmor() {
 		checkInGame();
 		if (mc.player.isCreative()) { return; }
-		if(mc.player.getTotalArmorValue() <= 0) return;
-		
+		if (mc.player.getTotalArmorValue() <= 0)
+			return;
+
 		mc.getProfiler().startSection("BUXArmor");
 		mc.getTextureManager().bindTexture(ARMOR_LEFT);
 		RenderSystem.enableBlend();
@@ -166,17 +176,19 @@ public class BetterOverlay {
 		AbstractGui.blit((posX + 183) * 2, posY * 2, 0, 0, 0, 64, 64, 64, 64);
 		RenderSystem.scalef(2.0F, 2.0F, 2.0F);
 		float damageReduction = Math.round((100.0F - CombatRules.getDamageAfterAbsorb(100, totalArmor, toughness)) * 10) / 10.0F;
-		for(ItemStack stack : mc.player.getArmorInventoryList()) {
+		for (ItemStack stack : mc.player.getArmorInventoryList()) {
 			damageReduction += EnchantmentHelper.getEnchantmentLevel(Enchantments.PROTECTION, stack);
 		}
-		if(damageReduction > 100) damageReduction = 100;
-		String s =  damageReduction + "%";
+		if (damageReduction > 100)
+			damageReduction = 100;
+		String s = damageReduction + "%";
 		mc.fontRenderer.drawString(s, posX - 16 - mc.fontRenderer.getStringWidth(s) / 2, posY + 10, 0xFFFFFFFF);
 		damageReduction = Math.round(4.0 * totalArmor * 10) / 10;
-		for(ItemStack stack : mc.player.getArmorInventoryList()) {
+		for (ItemStack stack : mc.player.getArmorInventoryList()) {
 			damageReduction += EnchantmentHelper.getEnchantmentLevel(Enchantments.PROTECTION, stack);
 		}
-		if(damageReduction > 100) damageReduction = 100;
+		if (damageReduction > 100)
+			damageReduction = 100;
 		s = damageReduction + "%";
 		mc.fontRenderer.drawString(s, posX + 200 - mc.fontRenderer.getStringWidth(s) / 2, posY + 10, 0xFFFFFFFF);
 		RenderSystem.disableBlend();
@@ -210,7 +222,7 @@ public class BetterOverlay {
 		RenderSystem.disableBlend();
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 	}
-	
+
 	public static void renderWaterBreathing() {
 		checkInGame();
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -218,7 +230,7 @@ public class BetterOverlay {
 			mc.getProfiler().startSection("BUXWaterBreathingBar");
 			mc.getTextureManager().bindTexture(WATER_BREATHING_BAR);
 			RenderSystem.enableBlend();
-			int k = (int) (((float)mc.player.getAir() / mc.player.getMaxAir()) * 180.0F);
+			int k = (int) (((float) mc.player.getAir() / mc.player.getMaxAir()) * 180.0F);
 			int posX = mc.getMainWindow().getScaledWidth() / 2 - 91;
 			int posY = mc.getMainWindow().getScaledHeight() - ForgeIngameGui.left_height - 25 - (ModHUD.locked ? 0 : 17);
 			AbstractGui.blit(posX, posY, 0, 0, 0, 182, 16, 16, 182);

@@ -18,8 +18,8 @@ import com.GenZVirus.AgeOfTitans.Common.Init.ModTileEntityTypes;
 import com.GenZVirus.AgeOfTitans.Common.Init.ParticleInit;
 import com.GenZVirus.AgeOfTitans.Common.Init.SoundInit;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
-import com.GenZVirus.AgeOfTitans.SpellSystem.PassiveAbility;
 import com.GenZVirus.AgeOfTitans.SpellSystem.ActiveAbility;
+import com.GenZVirus.AgeOfTitans.SpellSystem.PassiveAbility;
 
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;

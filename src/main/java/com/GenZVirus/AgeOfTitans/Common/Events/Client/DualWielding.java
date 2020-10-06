@@ -1,6 +1,8 @@
 package com.GenZVirus.AgeOfTitans.Common.Events.Client;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
+import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
+import com.GenZVirus.AgeOfTitans.Common.Network.SendPlayerHandPacket;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,8 +30,10 @@ public class DualWielding {
 		if(left) {
 			event.setSwingHand(false);
 			player.swingArm(Hand.OFF_HAND);
+			PacketHandlerCommon.INSTANCE.sendToServer(new SendPlayerHandPacket(player.getUniqueID(), 1));
 			left = false;
 		} else {
+			PacketHandlerCommon.INSTANCE.sendToServer(new SendPlayerHandPacket(player.getUniqueID(), 0));
 			left = true;
 		}
 	}	
