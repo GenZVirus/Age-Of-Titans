@@ -1,6 +1,8 @@
-package com.GenZVirus.AgeOfTitans.Common.Objects.Items;
+package com.GenZVirus.AgeOfTitans.Common.Objects.Items.Daggers;
 
 import java.util.List;
+
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.PricedItem;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.IItemTier;

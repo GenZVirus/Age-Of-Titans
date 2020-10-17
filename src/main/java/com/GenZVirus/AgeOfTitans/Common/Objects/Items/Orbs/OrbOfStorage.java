@@ -1,10 +1,11 @@
-package com.GenZVirus.AgeOfTitans.Common.Objects.Items;
+package com.GenZVirus.AgeOfTitans.Common.Objects.Items.Orbs;
 
 import java.util.List;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.sendTileEntityDataPacket;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.PricedItem;
 
 import net.minecraft.block.ContainerBlock;
 import net.minecraft.client.util.ITooltipFlag;

@@ -3,7 +3,7 @@ package com.GenZVirus.AgeOfTitans.Common.Events.Server;
 import java.util.Random;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
-import com.GenZVirus.AgeOfTitans.Common.Objects.Items.DaggerItem;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.Daggers.DaggerItem;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;

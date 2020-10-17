@@ -1,4 +1,4 @@
-package com.GenZVirus.AgeOfTitans.Common.Objects.Items;
+package com.GenZVirus.AgeOfTitans.Common.Objects.Items.Daggers;
 
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.SwordItem;

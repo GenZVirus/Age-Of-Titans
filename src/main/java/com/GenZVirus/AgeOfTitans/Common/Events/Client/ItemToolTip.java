@@ -4,10 +4,10 @@ import java.util.List;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.Common.Init.ItemInit;
-import com.GenZVirus.AgeOfTitans.Common.Objects.Items.TitaniumBoots;
-import com.GenZVirus.AgeOfTitans.Common.Objects.Items.TitaniumChestplate;
-import com.GenZVirus.AgeOfTitans.Common.Objects.Items.TitaniumHelmet;
-import com.GenZVirus.AgeOfTitans.Common.Objects.Items.TitaniumLeggings;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.Armors.HeavyTitaniumArmor.TitaniumBoots;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.Armors.HeavyTitaniumArmor.TitaniumChestplate;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.Armors.HeavyTitaniumArmor.TitaniumHelmet;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.Armors.HeavyTitaniumArmor.TitaniumLeggings;
 import com.google.common.collect.Lists;
 
 import net.minecraft.entity.player.PlayerEntity;

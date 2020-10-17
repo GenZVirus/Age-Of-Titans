@@ -1,7 +1,9 @@
-package com.GenZVirus.AgeOfTitans.Common.Objects.Items;
+package com.GenZVirus.AgeOfTitans.Common.Objects.Items.Orbs;
 
 import java.util.List;
 import java.util.function.Function;
+
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.PricedItem;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;

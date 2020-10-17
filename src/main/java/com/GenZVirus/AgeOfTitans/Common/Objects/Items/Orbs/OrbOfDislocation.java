@@ -1,9 +1,10 @@
-package com.GenZVirus.AgeOfTitans.Common.Objects.Items;
+package com.GenZVirus.AgeOfTitans.Common.Objects.Items.Orbs;
 
 import java.util.List;
 import java.util.Random;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.PricedItem;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.command.CommandSource;

@@ -4,21 +4,24 @@ import java.util.function.Supplier;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
 import com.GenZVirus.AgeOfTitans.AgeOfTitans.AgeOfTitansItemGroup;
-import com.GenZVirus.AgeOfTitans.Common.Objects.Items.DaggerItem;
-import com.GenZVirus.AgeOfTitans.Common.Objects.Items.DemonicDagger;
 import com.GenZVirus.AgeOfTitans.Common.Objects.Items.FruitOfTheGods;
 import com.GenZVirus.AgeOfTitans.Common.Objects.Items.Keystone;
-import com.GenZVirus.AgeOfTitans.Common.Objects.Items.OrbOfDislocation;
-import com.GenZVirus.AgeOfTitans.Common.Objects.Items.OrbOfEden;
-import com.GenZVirus.AgeOfTitans.Common.Objects.Items.OrbOfEnd;
-import com.GenZVirus.AgeOfTitans.Common.Objects.Items.OrbOfNether;
-import com.GenZVirus.AgeOfTitans.Common.Objects.Items.OrbOfStorage;
-import com.GenZVirus.AgeOfTitans.Common.Objects.Items.OrbOfSummoning;
 import com.GenZVirus.AgeOfTitans.Common.Objects.Items.SpecialItem;
-import com.GenZVirus.AgeOfTitans.Common.Objects.Items.TitaniumBoots;
-import com.GenZVirus.AgeOfTitans.Common.Objects.Items.TitaniumChestplate;
-import com.GenZVirus.AgeOfTitans.Common.Objects.Items.TitaniumHelmet;
-import com.GenZVirus.AgeOfTitans.Common.Objects.Items.TitaniumLeggings;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.Armors.HeavyTitaniumArmor.TitaniumBoots;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.Armors.HeavyTitaniumArmor.TitaniumChestplate;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.Armors.HeavyTitaniumArmor.TitaniumHelmet;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.Armors.HeavyTitaniumArmor.TitaniumLeggings;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.Armors.LightTitaniumArmor.LightTitaniumChestplate;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.Armors.LightTitaniumArmor.LightTitaniumHood;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.Armors.LightTitaniumArmor.LightTitaniumLeggings;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.Daggers.DaggerItem;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.Daggers.DemonicDagger;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.Orbs.OrbOfDislocation;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.Orbs.OrbOfEden;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.Orbs.OrbOfEnd;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.Orbs.OrbOfNether;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.Orbs.OrbOfStorage;
+import com.GenZVirus.AgeOfTitans.Common.Objects.Items.Orbs.OrbOfSummoning;
 
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.AxeItem;
@@ -85,6 +88,11 @@ public class ItemInit {
 	public static final RegistryObject<Item> TITANIUM_CHESTPLATE = ITEMS.register("titanium_chestplate", () -> new TitaniumChestplate(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.CHEST, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
 	public static final RegistryObject<Item> TITANIUM_LEGGINGS = ITEMS.register("titanium_leggings", () -> new TitaniumLeggings(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.LEGS, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
 	public static final RegistryObject<Item> TITANIUM_BOOTS = ITEMS.register("titanium_boots", () -> new TitaniumBoots(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.FEET, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	
+	public static final RegistryObject<Item> LIGHT_TITANIUM_HOOD = ITEMS.register("light_titanium_hood", () -> new LightTitaniumHood(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.HEAD, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	public static final RegistryObject<Item> LIGHT_TITANIUM_CHESTPLATE = ITEMS.register("light_titanium_chestplate", () -> new LightTitaniumChestplate(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.CHEST, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+	public static final RegistryObject<Item> LIGHT_TITANIUM_LEGGINGS = ITEMS.register("light_titanium_leggings", () -> new LightTitaniumLeggings(ModArmorMaterial.ARMOR_MATERIAL_TITANIUM, EquipmentSlotType.LEGS, new Item.Properties().group(AgeOfTitansItemGroup.instance)));
+
 	
 	public enum ModItemTier implements IItemTier{
 		MATERIAL_TITANIUM(8, 4000, 16.0F, 7.0F, 250, () -> {
