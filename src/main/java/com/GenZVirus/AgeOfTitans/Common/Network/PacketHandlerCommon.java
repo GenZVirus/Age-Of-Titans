@@ -100,12 +100,6 @@ public class PacketHandlerCommon {
 				.consumer(ReaperLoadPacket::handle)
 				.add();	
 		
-		INSTANCE.messageBuilder(DiscordServerMessagePacket.class, id++)
-				.encoder(DiscordServerMessagePacket::encode)
-				.decoder(DiscordServerMessagePacket::decode)
-				.consumer(DiscordServerMessagePacket::handle)
-				.add();	
-		
 		INSTANCE.messageBuilder(SendPlayerHandPacket.class, id++)
 				.encoder(SendPlayerHandPacket::encode)
 				.decoder(SendPlayerHandPacket::decode)

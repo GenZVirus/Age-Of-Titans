@@ -3,10 +3,10 @@ package com.GenZVirus.AgeOfTitans.Common.Network;
 import java.util.UUID;
 import java.util.function.Supplier;
 
+import com.GenZVirus.AgeOfTitans.Common.Events.Server.PlayerEventsHandler;
 import com.GenZVirus.AgeOfTitans.SpellSystem.ActiveAbility;
 import com.GenZVirus.AgeOfTitans.SpellSystem.PassiveAbility;
 import com.GenZVirus.AgeOfTitans.SpellSystem.XMLFileJava;
-import com.GenZVirus.AgeOfTitans.Util.ForgeEventBusSubscriber;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -35,7 +35,7 @@ public static void handle(RespecPacket pkt, Supplier<NetworkEvent.Context> ctx) 
 			if (ctx.get().getDirection() == NetworkDirection.PLAY_TO_SERVER) {
 				UUID uuid = pkt.uuid;
 				int level = Integer.parseInt(XMLFileJava.readElement(uuid, "PlayerLevel"));
-				PlayerEntity player = ForgeEventBusSubscriber.players.get(ForgeEventBusSubscriber.uuids.indexOf(uuid));
+				PlayerEntity player = PlayerEventsHandler.players.get(PlayerEventsHandler.uuids.indexOf(uuid));
 				XMLFileJava.checkFileAndMake(uuid, player.getName().getFormattedText());
 				XMLFileJava.editElement(uuid, "PlayerLevel", Integer.toString(level));
 				XMLFileJava.editElement(uuid, "ApplesEaten", Integer.toString(level));

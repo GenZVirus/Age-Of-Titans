@@ -5,10 +5,10 @@ import java.util.function.Supplier;
 
 import com.GenZVirus.AgeOfTitans.Client.GUI.HUD.ModHUD;
 import com.GenZVirus.AgeOfTitans.Client.GUI.SpellTree.AbilityTreeScreen;
-import com.GenZVirus.AgeOfTitans.Common.Events.Client.KeyPressedEvent;
+import com.GenZVirus.AgeOfTitans.Common.Events.Client.KeyPressedEventsHandler;
+import com.GenZVirus.AgeOfTitans.Common.Events.Server.PlayerEventsHandler;
 import com.GenZVirus.AgeOfTitans.SpellSystem.ActiveAbility;
 import com.GenZVirus.AgeOfTitans.SpellSystem.XMLFileJava;
-import com.GenZVirus.AgeOfTitans.Util.ForgeEventBusSubscriber;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -77,7 +77,7 @@ public class SpellPacket {
 					XMLFileJava.editElement(pkt.uuid, "Slot2_Spell_ID", Integer.toString(pkt.slot2));
 					XMLFileJava.editElement(pkt.uuid, "Slot3_Spell_ID", Integer.toString(pkt.slot3));
 					XMLFileJava.editElement(pkt.uuid, "Slot4_Spell_ID", Integer.toString(pkt.slot4));
-					for (PlayerEntity player : ForgeEventBusSubscriber.players) {
+					for (PlayerEntity player : PlayerEventsHandler.players) {
 						if (player.getUniqueID().toString().contentEquals(pkt.uuid.toString())) {
 							String playerName = player.getName().getFormattedText();
 							UUID uuid = player.getUniqueID();
@@ -96,7 +96,7 @@ public class SpellPacket {
 					
 	// In case the player doesn't exist in the file which shouldn't happen because it is checked in the Login Event Handler
 					
-					for (PlayerEntity player : ForgeEventBusSubscriber.players) {
+					for (PlayerEntity player : PlayerEventsHandler.players) {
 						if (player.getUniqueID().toString().contentEquals(pkt.uuid.toString())) {
 							String playerName = player.getName().getFormattedText();
 							UUID uuid = player.getUniqueID();
@@ -121,7 +121,7 @@ public class SpellPacket {
 				ModHUD.SPELL3 = (ActiveAbility) ActiveAbility.getList().get(pkt.slot3);
 				ModHUD.SPELL4 = (ActiveAbility) ActiveAbility.getList().get(pkt.slot4);
 				
-				if(KeyPressedEvent.wasPRESSED) {
+				if(KeyPressedEventsHandler.wasPRESSED) {
 					AbilityTreeScreen.SCREEN.slot1.ability = (ActiveAbility) ActiveAbility.getList().get(pkt.slot1);
 					AbilityTreeScreen.SCREEN.slot2.ability = (ActiveAbility) ActiveAbility.getList().get(pkt.slot2);
 					AbilityTreeScreen.SCREEN.slot3.ability = (ActiveAbility) ActiveAbility.getList().get(pkt.slot3);

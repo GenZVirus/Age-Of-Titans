@@ -1,0 +1,29 @@
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern":
+    [
+        "T T",
+        "TLT",
+        "T T"
+    ],
+    
+    "key":
+    {
+        "T":
+        {
+            "item": "ageoftitans:titanium_ingot"
+        },
+        "L":
+        {
+            "item": "minecraft:leather_chestplate"
+        }
+    },
+    
+    
+    "result":
+    {
+        "item": "ageoftitans:light_titanium_chestplate",
+        "count": 1
+    }
+}

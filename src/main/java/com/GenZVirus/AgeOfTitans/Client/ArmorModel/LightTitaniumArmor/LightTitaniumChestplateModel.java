@@ -1,13 +1,13 @@
 package com.GenZVirus.AgeOfTitans.Client.ArmorModel.LightTitaniumArmor;
 
+import com.GenZVirus.AgeOfTitans.Client.ArmorModel.ArmorModelBase;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
-import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 
-public class LightTitaniumChestplateModel extends BipedModel<LivingEntity> {
+public class LightTitaniumChestplateModel extends ArmorModelBase {
 
 	private float rightArmOffsetX = -0.8F;
 	private float rightArmOffsetY = -1.0F;
@@ -21,7 +21,7 @@ public class LightTitaniumChestplateModel extends BipedModel<LivingEntity> {
 
 	
 	public LightTitaniumChestplateModel() {
-		super(0);
+		super(EquipmentSlotType.CHEST);
 		textureWidth = 128;
 		textureHeight = 128;
 

@@ -7,8 +7,8 @@ import java.util.function.Supplier;
 
 import com.GenZVirus.AgeOfTitans.Client.GUI.ReaperShop.ReaperShopScreen;
 import com.GenZVirus.AgeOfTitans.Common.Entities.ReaperEntity;
+import com.GenZVirus.AgeOfTitans.Common.Events.Server.PlayerEventsHandler;
 import com.GenZVirus.AgeOfTitans.Common.Init.ItemInit;
-import com.GenZVirus.AgeOfTitans.Util.ForgeEventBusSubscriber;
 import com.google.common.collect.Lists;
 
 import net.minecraft.client.Minecraft;
@@ -60,7 +60,7 @@ public class ReaperInteractionPacket {
 
 		ctx.get().enqueueWork(() -> {
 			if (ctx.get().getDirection() == NetworkDirection.PLAY_TO_SERVER) {
-				World world = ForgeEventBusSubscriber.players.get(ForgeEventBusSubscriber.uuids.indexOf(pkt.uuid)).world;
+				World world = PlayerEventsHandler.players.get(PlayerEventsHandler.uuids.indexOf(pkt.uuid)).world;
 				if (world.getEntityByID(pkt.id) instanceof ReaperEntity) {
 					ReaperEntity reaper = (ReaperEntity) world.getEntityByID(pkt.id);
 					reaper.occupied = pkt.occupied;
@@ -87,7 +87,7 @@ public class ReaperInteractionPacket {
 						reaper.item3 = itemList.get(rand.nextInt(itemList.size()));
 						itemList.remove(reaper.item3);
 					}
-					for (PlayerEntity player : ForgeEventBusSubscriber.players) {
+					for (PlayerEntity player : PlayerEventsHandler.players) {
 						PacketHandlerCommon.INSTANCE.sendTo(new ReaperInteractionPacket(pkt.uuid, pkt.id, reaper.occupied, reaper.outofstock, new ItemStack(reaper.item1), new ItemStack(reaper.item2), new ItemStack(reaper.item3)), ((ServerPlayerEntity) player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 					}
 				}

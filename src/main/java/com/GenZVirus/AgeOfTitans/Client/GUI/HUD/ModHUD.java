@@ -12,14 +12,13 @@ import net.minecraft.entity.player.ChatVisibility;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.gui.ForgeIngameGui;
 
 @OnlyIn(Dist.CLIENT)
 public class ModHUD {
 
-	public static ResourceLocation SPELL_HUD_TEXTURE = new ResourceLocation(AgeOfTitans.MOD_ID,"textures/gui/hud.png");
-	public static ResourceLocation BAR = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/bar.png");
-	public static ResourceLocation RAGE_BAR_FILL = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/rage_bar_fill.png");
+	public static ResourceLocation SPELL_HUD_TEXTURE = new ResourceLocation(AgeOfTitans.MOD_ID,"textures/gui/hud/hud.png");
+	public static ResourceLocation BAR = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/hud/resourceholder.png");
+	public static ResourceLocation RAGE_BAR_FILL = new ResourceLocation(AgeOfTitans.MOD_ID, "textures/gui/hud/rageresource.png");
 	public static ActiveAbility SPELL1 = (ActiveAbility) ActiveAbility.getList().get(0);
 	public static ActiveAbility SPELL2 = (ActiveAbility) ActiveAbility.getList().get(0);
 	public static ActiveAbility SPELL3 = (ActiveAbility) ActiveAbility.getList().get(0);
@@ -30,6 +29,7 @@ public class ModHUD {
 	private static final int IMAGE_SIZE = 384;
 	private static final int RESIZE = 3;
 	private static final int IMAGE_RESIZED = IMAGE_SIZE / RESIZE;
+	private static final int RESOURCEHOLDER_SIZE = 96;
 	private static int i = 0;
 	private static int j = 0;
 	private static int spellPos = j;
@@ -81,7 +81,7 @@ public class ModHUD {
 		
 		int posX = 0;
 		int posY;
-		if(mc.gameSettings.guiScale > mc.getMainWindow().getHeight() / 240) mc.gameSettings.guiScale = mc.getMainWindow().getHeight() / 240;
+//		if(mc.gameSettings.guiScale > mc.getMainWindow().getHeight() / 240) mc.gameSettings.guiScale = mc.getMainWindow().getHeight() / 240;
 		posY = mc.getMainWindow().getScaledHeight() - IMAGE_RESIZED;
 		posX = mc.getMainWindow().getScaledWidth() - IMAGE_RESIZED;
 		posX = posX * 5 / 100;
@@ -172,7 +172,7 @@ public class ModHUD {
 		if(j < 0){
 			j = 3;
 		}
-		
+		renderRage();
 	}
 	
 	public static void renderPos0(int posX, int posY, int j) {
@@ -216,22 +216,23 @@ public class ModHUD {
 		RenderSystem.enableBlend();
 		// Rage Bar
 		
-		int posY = mc.getMainWindow().getScaledHeight() - ForgeIngameGui.left_height - 17;
-		int posX = mc.getMainWindow().getScaledWidth() / 2 - 91 ;
-		mc.getTextureManager().bindTexture(BAR);
-		AbstractGui.blit(posX, posY, 0, 0, 0, 182, 16, 16, 182);
-		int percentage = 178 * PlayerStats.RAGE_POINTS / PlayerStats.MAX_RAGE_POINTS; ;
+		int posY = mc.getMainWindow().getScaledHeight() - RESOURCEHOLDER_SIZE;
+		int posX = mc.getMainWindow().getScaledWidth() - RESOURCEHOLDER_SIZE ;
+		posX = posX * 95 / 100;
+		posY = posY - posY * 5 / 100;
+		int percentage = RESOURCEHOLDER_SIZE * PlayerStats.RAGE_POINTS / PlayerStats.MAX_RAGE_POINTS; ;
 		mc.getTextureManager().bindTexture(RAGE_BAR_FILL);
-		AbstractGui.blit(posX + 2, posY + 2, 0, offset, 0, percentage, 12, 12, 178);
+		AbstractGui.blit(posX, posY + RESOURCEHOLDER_SIZE, 0, 0, 0, RESOURCEHOLDER_SIZE, -percentage, RESOURCEHOLDER_SIZE, RESOURCEHOLDER_SIZE);
+		mc.getTextureManager().bindTexture(BAR);
+		AbstractGui.blit(posX, posY, 0, 0, 0, RESOURCEHOLDER_SIZE, RESOURCEHOLDER_SIZE, RESOURCEHOLDER_SIZE, RESOURCEHOLDER_SIZE);
 		RenderSystem.disableBlend();
 		
 		// Rage Text
 		
-		String rage = Integer.toString((int)PlayerStats.RAGE_POINTS) + " / " + Integer.toString((int)PlayerStats.MAX_RAGE_POINTS);
-		String swidth = Integer.toString((int)PlayerStats.MAX_RAGE_POINTS) + " / " + Integer.toString((int)PlayerStats.MAX_RAGE_POINTS);
+		String rage = PlayerStats.RAGE_POINTS + " / " + PlayerStats.MAX_RAGE_POINTS;
+		String swidth = PlayerStats.MAX_RAGE_POINTS + " / " + PlayerStats.MAX_RAGE_POINTS;
 		int stringWidth = mc.fontRenderer.getStringWidth(swidth);
-		int offset = mc.fontRenderer.getStringWidth(rage);
-		mc.fontRenderer.drawString(rage, posX + 91 - stringWidth / 2 + (stringWidth - offset), posY + 5, 0xFFFFFFFF);
+		mc.fontRenderer.drawString(rage, posX - stringWidth / 2 + RESOURCEHOLDER_SIZE / 2 + (stringWidth - mc.fontRenderer.getStringWidth(rage)), posY + RESOURCEHOLDER_SIZE / 2, 0xFFFFFFFF);
 		RenderSystem.disableAlphaTest();
 		mc.getProfiler().endSection();
 	}

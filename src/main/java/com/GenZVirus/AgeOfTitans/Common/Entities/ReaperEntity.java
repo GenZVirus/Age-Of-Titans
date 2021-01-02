@@ -3,12 +3,12 @@ package com.GenZVirus.AgeOfTitans.Common.Entities;
 import java.util.List;
 import java.util.Random;
 
+import com.GenZVirus.AgeOfTitans.Common.Events.Server.PlayerEventsHandler;
 import com.GenZVirus.AgeOfTitans.Common.Init.ItemInit;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.ReaperInteractionPacket;
 import com.GenZVirus.AgeOfTitans.Common.Network.ReaperLoadPacket;
 import com.GenZVirus.AgeOfTitans.Common.Objects.Items.PricedItem;
-import com.GenZVirus.AgeOfTitans.Util.ForgeEventBusSubscriber;
 import com.google.common.collect.Lists;
 
 import net.minecraft.client.Minecraft;
@@ -101,7 +101,7 @@ public class ReaperEntity extends CreatureEntity {
 		occupied = compound.getBoolean("occupied");
 		outofstock = compound.getBoolean("outofstock");
 		super.readAdditional(compound);
-		for(PlayerEntity player : ForgeEventBusSubscriber.players) {
+		for(PlayerEntity player : PlayerEventsHandler.players) {
 			PacketHandlerCommon.INSTANCE.sendTo(new ReaperLoadPacket(this.getEntityId(), occupied, outofstock, new ItemStack(item1), new ItemStack(item2), new ItemStack(item3)), ((ServerPlayerEntity)player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		}
 	}

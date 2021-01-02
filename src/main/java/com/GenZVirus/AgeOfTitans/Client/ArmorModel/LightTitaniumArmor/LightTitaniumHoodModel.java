@@ -1,20 +1,22 @@
 package com.GenZVirus.AgeOfTitans.Client.ArmorModel.LightTitaniumArmor;
 
+import com.GenZVirus.AgeOfTitans.Client.ArmorModel.ArmorModelBase;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
-import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 
-public class LightTitaniumHoodModel extends BipedModel<LivingEntity> {
+public class LightTitaniumHoodModel extends ArmorModelBase {
 
+	@SuppressWarnings("unused")
 	private float offsetX = 4.0F;
 	private float offsetY = -5.0F;
+	@SuppressWarnings("unused")
 	private float offsetZ = -4.0F;
 	
 	public LightTitaniumHoodModel() {
-		super(0);
+		super(EquipmentSlotType.HEAD);
 		textureWidth = 64;
 		textureHeight = 64;
 

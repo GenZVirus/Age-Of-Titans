@@ -3,7 +3,7 @@ package com.GenZVirus.AgeOfTitans.Common.Network;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-import com.GenZVirus.AgeOfTitans.Util.ForgeEventBusSubscriber;
+import com.GenZVirus.AgeOfTitans.Common.Events.Server.PlayerEventsHandler;
 
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -35,7 +35,7 @@ public class GivePlayerItemsPacket {
 
 		ctx.get().enqueueWork(() -> {
 			if (ctx.get().getDirection() == NetworkDirection.PLAY_TO_SERVER) {
-				PlayerEntity player = ForgeEventBusSubscriber.players.get(ForgeEventBusSubscriber.uuids.indexOf(pkt.uuid));
+				PlayerEntity player = PlayerEventsHandler.players.get(PlayerEventsHandler.uuids.indexOf(pkt.uuid));
 				if (player.inventory.getFirstEmptyStack() != -1) {
 					player.addItemStackToInventory(pkt.stack);
 				} else {

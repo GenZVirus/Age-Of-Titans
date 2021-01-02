@@ -6,7 +6,7 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import com.GenZVirus.AgeOfTitans.AgeOfTitans;
-import com.GenZVirus.AgeOfTitans.Common.Events.Client.KeyPressedEvent;
+import com.GenZVirus.AgeOfTitans.Common.Events.Client.KeyPressedEventsHandler;
 import com.GenZVirus.AgeOfTitans.Common.Network.PacketHandlerCommon;
 import com.GenZVirus.AgeOfTitans.Common.Network.RespecPacket;
 import com.GenZVirus.AgeOfTitans.Common.Network.SpellPacket;
@@ -405,7 +405,7 @@ public class AbilityTreeScreen extends Screen {
 		// When the keyPressedEvent fires and the screen is already opened it sets
 		// wasPRESSED on false to not close other existing screens like chat screen
 
-		KeyPressedEvent.wasPRESSED = false;
+		KeyPressedEventsHandler.wasPRESSED = false;
 
 		// Sends a packet to the server to save to the custom playerdata file
 

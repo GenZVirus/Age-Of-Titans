@@ -97,10 +97,16 @@
 	"item.ageoftitans.titanium_shovel": "\u00A7e\u00A7nTitanium Shovel",
 	"item.ageoftitans.titanium_hoe": "\u00A7e\u00A7nTitanium Hoe",
 	
-	"item.ageoftitans.titanium_helmet": "\u00A7e\u00A7nTitanium Helmet",
-	"item.ageoftitans.titanium_chestplate": "\u00A7e\u00A7nTitanium Chestplate",
-	"item.ageoftitans.titanium_leggings": "\u00A7e\u00A7nTitanium Leggings",
-	"item.ageoftitans.titanium_boots": "\u00A7e\u00A7nTitanium Boots",
+	"item.ageoftitans.heavy_titanium_helmet": "\u00A7e\u00A7nHeavy Titanium Helmet",
+	"item.ageoftitans.heavy_titanium_chestplate": "\u00A7e\u00A7nHeavy Titanium Chestplate",
+	"item.ageoftitans.heavy_titanium_leggings": "\u00A7e\u00A7nHeavy Titanium Leggings",
+	"item.ageoftitans.heavy_titanium_boots": "\u00A7e\u00A7nHeavy Titanium Boots",
+	
+	"item.ageoftitans.light_titanium_hood": "\u00A7e\u00A7nLight Titanium Hood",
+	"item.ageoftitans.light_titanium_chestplate": "\u00A7e\u00A7nLight Titanium Chestplate",
+	"item.ageoftitans.light_titanium_leggings": "\u00A7e\u00A7nLight Titanium Leggings",
+	"item.ageoftitans.light_titanium_boots": "\u00A7e\u00A7nLight Titanium Boots",
+	
 	"item.ageoftitans.soul_shard": "\u00A7e\u00A7nSoul Shard",
 	"item.ageoftitans.wither_dust": "\u00A74\u00A7nWither Dust",
 	

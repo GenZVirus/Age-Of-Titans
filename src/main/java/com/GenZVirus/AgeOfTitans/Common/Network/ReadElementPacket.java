@@ -4,11 +4,11 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 import com.GenZVirus.AgeOfTitans.Client.GUI.ReaperShop.ReaperShopScreen;
+import com.GenZVirus.AgeOfTitans.Common.Events.Server.PlayerEventsHandler;
 import com.GenZVirus.AgeOfTitans.SpellSystem.ActiveAbility;
 import com.GenZVirus.AgeOfTitans.SpellSystem.PassiveAbility;
 import com.GenZVirus.AgeOfTitans.SpellSystem.PlayerStats;
 import com.GenZVirus.AgeOfTitans.SpellSystem.XMLFileJava;
-import com.GenZVirus.AgeOfTitans.Util.ForgeEventBusSubscriber;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -42,7 +42,7 @@ public class ReadElementPacket {
 		
 		ctx.get().enqueueWork(() ->{
 			if (ctx.get().getDirection() == NetworkDirection.PLAY_TO_SERVER) {
-				for (PlayerEntity player : ForgeEventBusSubscriber.players) {
+				for (PlayerEntity player : PlayerEventsHandler.players) {
 					if (player.getUniqueID().toString().contentEquals(pkt.uuid.toString())) {
 						String playerName = player.getName().getFormattedText();
 						UUID uuid = player.getUniqueID();

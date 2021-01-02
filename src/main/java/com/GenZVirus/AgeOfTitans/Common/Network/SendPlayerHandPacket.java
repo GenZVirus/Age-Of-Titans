@@ -3,7 +3,7 @@ package com.GenZVirus.AgeOfTitans.Common.Network;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-import com.GenZVirus.AgeOfTitans.Util.ForgeEventBusSubscriber;
+import com.GenZVirus.AgeOfTitans.Common.Events.Server.PlayerEventsHandler;
 
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Hand;
@@ -34,9 +34,9 @@ public class SendPlayerHandPacket {
 		ctx.get().enqueueWork(() ->{
 			if(ctx.get().getDirection() == NetworkDirection.PLAY_TO_SERVER) {
 				if(pkt.hand == 0) {
-					ForgeEventBusSubscriber.hands.set(ForgeEventBusSubscriber.uuids.indexOf(pkt.uuid), Hand.MAIN_HAND);
+					PlayerEventsHandler.hands.set(PlayerEventsHandler.uuids.indexOf(pkt.uuid), Hand.MAIN_HAND);
 				} else {
-					ForgeEventBusSubscriber.hands.set(ForgeEventBusSubscriber.uuids.indexOf(pkt.uuid), Hand.OFF_HAND);
+					PlayerEventsHandler.hands.set(PlayerEventsHandler.uuids.indexOf(pkt.uuid), Hand.OFF_HAND);
 				}
 			}
 		});

@@ -3,7 +3,7 @@ package com.GenZVirus.AgeOfTitans.Common.Network;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-import com.GenZVirus.AgeOfTitans.Util.ForgeEventBusSubscriber;
+import com.GenZVirus.AgeOfTitans.Common.Events.Server.PlayerEventsHandler;
 import com.GenZVirus.AgeOfTitans.Util.Helpers.HalfSphereShape;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -33,7 +33,7 @@ public static void handle(berserkerBlockBreakerPacket pkt, Supplier<NetworkEvent
 		
 		ctx.get().enqueueWork(() ->{
 			if (ctx.get().getDirection() == NetworkDirection.PLAY_TO_SERVER) {
-				for (PlayerEntity player : ForgeEventBusSubscriber.players) {
+				for (PlayerEntity player : PlayerEventsHandler.players) {
 					if (player.getUniqueID().toString().contentEquals(pkt.uuid.toString())) {
 						double offset = 3.0D;
 						double pitch = player.getPitchYaw().x;
