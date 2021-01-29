@@ -36,7 +36,7 @@ public class ClientEventsHandler {
 	
 	@SubscribeEvent
 	public static void clientSetup(FMLClientSetupEvent event) {
-		ScreenManager.registerFactory(ModContainerTypes.BLACK_HOLE.get(), ContainerScreenBasic::new);
+		ScreenManager.registerFactory(ModContainerTypes.TITANS_LOCKER.get(), ContainerScreenBasic::new);
 		RenderTypeLookup.setRenderLayer(BlockInit.EDEN_SAPLING.get(), RenderType.getCutout());
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.REAPER.get(), ReaperEntityRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SWORD_SLASH.get(), SwordSlashRender::new);

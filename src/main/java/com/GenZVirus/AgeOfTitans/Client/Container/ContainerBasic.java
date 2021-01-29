@@ -86,8 +86,8 @@ public class ContainerBasic extends Container {
 	 * @param chestContents   the inventory stored in the chest
 	 */
 	private ContainerBasic(int windowID, PlayerInventory playerInventory, ChestContents chestContents) {
-		super(ModContainerTypes.BLACK_HOLE.get(), windowID);
-		if (ModContainerTypes.BLACK_HOLE.get() == null)
+		super(ModContainerTypes.TITANS_LOCKER.get(), windowID);
+		if (ModContainerTypes.TITANS_LOCKER.get() == null)
 			throw new IllegalStateException(
 					"Must initialise containerBasicContainerType before constructing a ContainerBasic!");
 		PlayerInvWrapper playerInventoryForge = new PlayerInvWrapper(playerInventory); // wrap the IInventory in a Forge
